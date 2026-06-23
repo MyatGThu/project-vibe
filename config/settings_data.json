@@ -1,0 +1,17 @@
+{
+  "current": {
+    "heading_font": "playfair_display_n4",
+    "body_font": "inter_n4",
+    "color_bg": "#f6f3ee",
+    "color_surface": "#ffffff",
+    "color_ink": "#161413",
+    "color_muted": "#6e6a64",
+    "color_line": "#e5dfd6",
+    "color_accent": "#b08d57",
+    "color_ink_bg": "#161413",
+    "color_on_ink": "#f6f3ee",
+    "page_width": 1400,
+    "loading_enabled": true,
+    "loading_text": "Melina"
+  }
+}

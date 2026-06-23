@@ -1,0 +1,38 @@
+<section class="section">
+  <div class="container">
+    <header class="stack-sm" style="margin-bottom: var(--space-xl);">
+      <h1 data-reveal>{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="lead" data-reveal>{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- paginate collection.products by 24 -%}
+      <div class="product-grid" data-reveal-group>
+        {%- for product in collection.products -%}
+          <a href="{{ product.url }}" class="product-card" data-reveal>
+            <div class="product-card__media">
+              {%- if product.featured_media -%}
+                {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 25vw, 50vw', widths: '300, 450, 600, 800', alt: product.title }}
+              {%- endif -%}
+            </div>
+            <div class="product-card__title">{{ product.title }}</div>
+            <div class="product-card__price">{{ product.price | money }}</div>
+          </a>
+        {%- else -%}
+          <p class="lead">{{ 'collections.general.empty' | t }}</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="text-center" style="margin-top: var(--space-2xl);" aria-label="Pagination">
+          {{ paginate | default_pagination }}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collection" }
+{% endschema %}

@@ -1,0 +1,86 @@
+{%- comment -%}
+  Campaign hero — the design-system showcase.
+  - Entrance animation: [data-hero-intro] + [data-hero-stagger] (theme.js),
+    triggered after the loading screen wipes away.
+  - Subtle parallax on the media via [data-parallax] (scoped to the section).
+  - Falls back to a styled placeholder until a Melina image is added.
+{%- endcomment -%}
+<section
+  class="hero{% if section.settings.image == blank %} hero--placeholder{% endif %}"
+  data-hero-intro
+  data-parallax-scope
+>
+  <div class="hero__media" {% if section.settings.image != blank %}data-parallax="0.14"{% endif %}>
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '600, 900, 1200, 1600, 2000, 2400',
+          alt: section.settings.image.alt | default: section.settings.heading
+      }}
+    {%- endif -%}
+  </div>
+
+  <div class="container hero__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow" style="color: rgba(246, 243, 238, 0.8);">
+        <span data-hero-stagger style="display: inline-block;">{{ section.settings.eyebrow }}</span>
+      </p>
+    {%- endif -%}
+
+    <h1 class="hero__title">
+      {%- assign lines = section.settings.heading | newline_to_br | split: '<br />' -%}
+      {%- for line in lines -%}
+        <span style="display: block; overflow: hidden;">
+          <span data-hero-stagger style="display: block;">{{ line | strip }}</span>
+        </span>
+      {%- endfor -%}
+    </h1>
+
+    {%- if section.settings.text != blank -%}
+      <p class="lead" style="color: rgba(246, 243, 238, 0.85); margin-top: var(--space-md); max-width: 32ch;">
+        <span data-hero-stagger style="display: inline-block;">{{ section.settings.text }}</span>
+      </p>
+    {%- endif -%}
+
+    <div class="hero__cta" data-hero-stagger>
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent">
+          {{- section.settings.button_label -}}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button2_label != blank -%}
+        <a href="{{ section.settings.button2_link }}" class="btn btn--ghost" style="color: var(--color-on-ink);">
+          {{- section.settings.button2_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image (Melina campaign)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Spring Campaign" },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Each line animates in separately.",
+      "default": "Wear\nthe future"
+    },
+    { "type": "text", "id": "text", "label": "Subtext", "default": "Print-on-demand pieces, styled by Melina." },
+    { "type": "text", "id": "button_label", "label": "Primary button", "default": "Shop the drop" },
+    { "type": "url", "id": "button_link", "label": "Primary link" },
+    { "type": "text", "id": "button2_label", "label": "Secondary button", "default": "View lookbook" },
+    { "type": "url", "id": "button2_link", "label": "Secondary link" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

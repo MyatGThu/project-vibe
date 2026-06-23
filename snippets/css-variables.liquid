@@ -1,0 +1,33 @@
+{%- comment -%}
+  Settings-driven design tokens (fonts + colors) from the theme customizer.
+  Rendered inline in <head> so it can use Shopify's font_face/color filters.
+  Static tokens (spacing, type scale, motion) live in assets/base.css.
+{%- endcomment -%}
+{%- liquid
+  assign heading_font = settings.heading_font
+  assign body_font = settings.body_font
+  assign heading_font_bold = heading_font | font_modify: 'weight', '600'
+  assign body_font_bold = body_font | font_modify: 'weight', '600'
+-%}
+<style>
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ heading_font_bold | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+
+  :root {
+    --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+
+    --color-bg: {{ settings.color_bg }};
+    --color-surface: {{ settings.color_surface }};
+    --color-ink: {{ settings.color_ink }};
+    --color-muted: {{ settings.color_muted }};
+    --color-line: {{ settings.color_line }};
+    --color-accent: {{ settings.color_accent }};
+    --color-ink-bg: {{ settings.color_ink_bg }};
+    --color-on-ink: {{ settings.color_on_ink }};
+
+    --page-width: {{ settings.page_width }}px;
+  }
+</style>
