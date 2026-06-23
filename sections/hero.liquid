@@ -29,7 +29,8 @@
     <span class="hero__sidelabel">{{ section.settings.side_label }}</span>
   {%- endif -%}
 
-  <div class="container hero__content">
+  <div class="container">
+    <div class="hero__content">
     {%- if section.settings.eyebrow != blank -%}
       <p class="eyebrow" style="color: rgba(242, 242, 240, 0.8);">
         <span data-hero-stagger style="display: inline-block;">{{ section.settings.eyebrow }}</span>
@@ -68,6 +69,7 @@
           {{- section.settings.button2_label -}}
         </a>
       {%- endif -%}
+    </div>
     </div>
   </div>
 

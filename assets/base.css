@@ -560,12 +560,16 @@ h2 em,
 .hero {
   align-items: end;
 }
+.hero > .container {
+  align-self: end;
+  width: 100%;
+}
 .hero__content {
   align-self: end;
-  max-width: 24ch;
+  max-width: min(720px, 100%);
 }
 .hero__title {
-  font-size: clamp(3rem, 1.4rem + 7.4vw, 7.5rem);
+  font-size: clamp(2.75rem, 1.2rem + 6.4vw, 7rem);
   letter-spacing: -0.03em;
 }
 .hero__title em {
