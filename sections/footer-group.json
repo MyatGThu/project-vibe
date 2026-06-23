@@ -1,0 +1,24 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "tagline": "AI-styled, print-on-demand apparel."
+      },
+      "blocks": {
+        "shop": {
+          "type": "menu",
+          "settings": { "heading": "Shop" }
+        },
+        "about": {
+          "type": "menu",
+          "settings": { "heading": "About" }
+        }
+      },
+      "block_order": ["shop", "about"]
+    }
+  },
+  "order": ["footer"]
+}

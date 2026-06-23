@@ -1,0 +1,26 @@
+{
+  "name": "project-shopify",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Custom Shopify Online Store 2.0 theme for a POD apparel brand (Melina).",
+  "scripts": {
+    "dev": "shopify theme dev",
+    "push": "shopify theme push",
+    "pull": "shopify theme pull",
+    "lint": "shopify theme check",
+    "format": "prettier --write \"**/*.{liquid,css,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{liquid,css,js,json,md}\""
+  },
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.9.3",
+    "prettier": "^3.5.3"
+  },
+  "prettier": {
+    "plugins": ["@shopify/prettier-plugin-liquid"],
+    "singleQuote": false,
+    "printWidth": 100
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

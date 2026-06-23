@@ -1,0 +1,24 @@
+# Shopify Theme Check configuration
+# https://shopify.dev/docs/themes/tools/theme-check
+root: "."
+
+# Start from the recommended ruleset
+extends: :theme_app_extension
+
+ParserBlockingScript:
+  enabled: true
+
+# We intentionally load GSAP from a CDN during scaffolding; revisit when we
+# self-host for production performance.
+RemoteAsset:
+  enabled: false
+
+# Scaffold does not yet include every template/translation; relax until built.
+MissingTemplate:
+  enabled: false
+TranslationKeyExists:
+  enabled: false
+UndefinedObject:
+  enabled: true
+  exclude:
+    - "snippets/css-variables.liquid"

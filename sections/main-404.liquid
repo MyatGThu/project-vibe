@@ -1,0 +1,12 @@
+<section class="section" style="min-height: 60vh; display: grid; place-items: center; text-align: center;">
+  <div class="container container--narrow stack">
+    <p class="eyebrow" data-reveal="fade">404</p>
+    <h1 class="display" data-reveal>{{ 'general.404.title' | t }}</h1>
+    <p class="lead" data-reveal>{{ 'general.404.subtext' | t }}</p>
+    <div data-reveal="fade"><a href="{{ routes.root_url }}" class="btn">{{ 'general.404.link' | t }}</a></div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404" }
+{% endschema %}

@@ -1,0 +1,50 @@
+<section class="section">
+  <div class="container">
+    <h1 data-reveal style="margin-bottom: var(--space-xl);">{{ 'sections.cart.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      {%- form 'cart', cart -%}
+        <div class="stack" data-reveal>
+          {%- for item in cart.items -%}
+            <div style="display: grid; grid-template-columns: 88px 1fr auto; gap: var(--space-md); align-items: center; border-bottom: 1px solid var(--color-line); padding-bottom: var(--space-md);">
+              <div class="product-card__media" style="aspect-ratio: 1; width: 88px;">
+                {%- if item.image -%}{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.title }}{%- endif -%}
+              </div>
+              <div class="stack-sm">
+                <a href="{{ item.url }}" class="product-card__title" style="margin: 0;">{{ item.product.title }}</a>
+                {%- unless item.variant.title contains 'Default' -%}
+                  <p class="muted" style="font-size: var(--fs-300);">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="{{ 'products.product.quantity' | t }}" style="width: 80px; padding: 0.4em; border: 1px solid var(--color-line);">
+              </div>
+              <div class="text-center stack-sm">
+                <div>{{ item.final_line_price | money }}</div>
+                <a href="{{ item.url_to_remove }}" class="muted" style="font-size: var(--fs-300);">{{ 'sections.cart.remove' | t }}</a>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-xl); flex-wrap: wrap; gap: var(--space-md);" data-reveal="fade">
+          <div>
+            <p class="eyebrow">{{ 'sections.cart.subtotal' | t }}</p>
+            <p class="lead" style="color: var(--color-ink);">{{ cart.total_price | money }}</p>
+          </div>
+          <div style="display: flex; gap: var(--space-sm);">
+            <button type="submit" name="update" class="btn btn--ghost">Update</button>
+            <button type="submit" name="checkout" class="btn">{{ 'sections.cart.checkout' | t }}</button>
+          </div>
+        </div>
+      {%- endform -%}
+    {%- else -%}
+      <div class="stack" data-reveal>
+        <p class="lead">{{ 'sections.cart.empty' | t }}</p>
+        <div><a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'sections.cart.continue' | t }}</a></div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Cart" }
+{% endschema %}

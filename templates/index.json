@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Spring Campaign",
+        "heading": "Wear\nthe future",
+        "text": "Print-on-demand pieces, styled by Melina.",
+        "button_label": "Shop the drop",
+        "button2_label": "View lookbook"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "New in",
+        "heading": "The latest drop",
+        "products_to_show": 4,
+        "show_view_all": true
+      }
+    },
+    "story": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Our story",
+        "heading": "Designed to stand out",
+        "text": "<p>Every piece is made to order and styled by Melina, our digital muse — so you get standout apparel with zero waste.</p>",
+        "dark": true
+      }
+    }
+  },
+  "order": ["hero", "featured", "story"]
+}
