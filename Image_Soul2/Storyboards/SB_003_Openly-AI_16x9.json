@@ -1,0 +1,15 @@
+{
+  "slug": "SB_003_Openly-AI_16x9",
+  "title": "Openly AI",
+  "character": "Melina Jones Voss",
+  "type": "storyboard",
+  "pillar": "AI",
+  "concept": "Only-AI-can-do: photoreal, glitch reveal, two of her, whole",
+  "aspect_ratio": "16:9",
+  "layout": "2x2 four-panel board",
+  "engine": "higgsfield:gpt_image_2 (GPT Image 2)",
+  "identity_via": "element Melina-JV (0ca6a093-92c1-4ef7-a50e-e3e7af7e214e)",
+  "job_id": "0a6bd9e2-86c2-4029-ba1b-d8fa6a322023",
+  "cdn_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260707_061024_0a6bd9e2-86c2-4029-ba1b-d8fa6a322023.png",
+  "file": "SB_003_Openly-AI_16x9.png"
+}

@@ -1,0 +1,16 @@
+{
+  "slug": "MEL_006_AI_Intro-Anchor-Portrait__SlowPushIn_5s",
+  "title": "Intro Anchor — Openly AI · Slow Push-In",
+  "character": "Melina Jones Voss",
+  "type": "video",
+  "source_image_slug": "MEL_006_AI_Intro-Anchor-Portrait_9x16",
+  "source_image_job_id": "93ae005e-eff1-4356-967a-cd6bece2dd89",
+  "engine": "higgsfield:seedance_2_0",
+  "camera_move": "Slow Push-In (Low drift)",
+  "duration_s": 5,
+  "aspect_ratio": "9:16",
+  "dimensions": "720x1280",
+  "job_id": "95e76c11-c236-4f90-9cb0-ac2a7c186eed",
+  "cdn_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260707_055934_95e76c11-c236-4f90-9cb0-ac2a7c186eed.mp4",
+  "file": "MEL_006_AI_Intro-Anchor-Portrait__SlowPushIn_5s.mp4"
+}

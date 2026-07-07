@@ -1,0 +1,15 @@
+{
+  "slug": "SB_002_The-Job_16x9",
+  "title": "The Job",
+  "character": "Melina Jones Voss",
+  "type": "storyboard",
+  "pillar": "JOB",
+  "concept": "The working-model reality behind the glamour",
+  "aspect_ratio": "16:9",
+  "layout": "2x2 four-panel board",
+  "engine": "higgsfield:gpt_image_2 (GPT Image 2)",
+  "identity_via": "element Melina-JV (0ca6a093-92c1-4ef7-a50e-e3e7af7e214e)",
+  "job_id": "ee97faf5-4035-4c2f-ab2c-32ea8a6a2edc",
+  "cdn_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260707_061020_ee97faf5-4035-4c2f-ab2c-32ea8a6a2edc.png",
+  "file": "SB_002_The-Job_16x9.png"
+}
