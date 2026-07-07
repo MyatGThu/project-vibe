@@ -1,11 +1,7 @@
 # Dependencies
 node_modules/
 
-# Shopify CLI
-.shopify/
-*.theme-check-output
-
-# Env / secrets — never commit store tokens or API keys
+# Env / secrets
 .env
 .env.*
 !.env.example
