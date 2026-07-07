@@ -206,7 +206,11 @@ generation's tone, palette and creative direction. Under the hood it is applied 
 **Connector limitation (verified 2026-07-07):** the MCP `generate_image` **Soul 2 tool ignores
 `style_id`/`style_strength`** — it returns *"Higgsfield Soul 2.0 does not support this parameter"* and
 falls back to the default **General** style. There is also **no MCP tool to browse or select
-moodboards**. So today, **moodboards are effectively UI-only** through the connector.
+moodboards** — checked MCP resources, `presets_show`, `shorts_studio_list_presets`,
+`show_marketing_studio`, and `models_explore`; each exposes a *different* preset system, none the Soul
+moodboard library. So today, **moodboards are effectively UI-only** through the connector.
+**See `docs/Moodboards.md`** for the full enumeration-surface findings, the harvested `style_id`
+registry, and the capture procedure.
 
 **How to "add it into the setup" anyway (workarounds):**
 1. **Replicate the moodboard as a reference `Element`** (§7.2) — build an Element from the moodboard's
