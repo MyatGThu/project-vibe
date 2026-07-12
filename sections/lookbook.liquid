@@ -1,0 +1,54 @@
+<section class="lookbook section" data-lookbook>
+  <div class="container">
+    <div class="collection-head reveal">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="h-md" style="margin-top:.5rem">{{ section.settings.heading }}</h2>
+      </div>
+      <p class="muted" style="max-width:32ch">{{ section.settings.subtext }}</p>
+    </div>
+  </div>
+
+  <div class="lookbook__viewport">
+    <div class="lookbook__track">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          if block.settings.image != blank
+            assign src = block.settings.image | image_url: width: 1400
+          elsif block.settings.image_url != blank
+            assign src = block.settings.image_url
+          else
+            assign src = 'ph-figure.svg' | asset_url
+          endif
+        -%}
+        <div class="lookbook__slide{% if block.settings.wide %} lookbook__slide--wide{% endif %}" {{ block.shopify_attributes }}>
+          <figure>
+            <img src="{{ src }}" alt="{{ block.settings.caption | escape }}" loading="lazy">
+          </figure>
+          <figcaption><span>{{ block.settings.caption }}</span><span>{{ block.settings.tag }}</span></figcaption>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Lookbook",
+    "settings": [
+      { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Campaign" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Worn by Melina" },
+      { "type": "text", "id": "subtext", "label": "Subtext", "default": "Scroll through the season. Every frame is generated — every frame is disclosed." }
+    ],
+    "blocks": [
+      { "type": "slide", "name": "Slide", "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Look 01" },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "Autumn" },
+        { "type": "checkbox", "id": "wide", "label": "Wide slide", "default": false }
+      ] }
+    ],
+    "presets": [{ "name": "Lookbook" }]
+  }
+  {% endschema %}
+</section>

@@ -1,0 +1,53 @@
+<section class="section">
+  <div class="container" style="max-width: 460px;">
+    <header class="reveal" style="margin-bottom: 2rem;">
+      <p class="eyebrow">Account</p>
+      <h1 class="h-md">Log in</h1>
+    </header>
+
+    {% form 'customer_login' %}
+      {{ form.errors | default_errors }}
+
+      <div class="option">
+        <label class="label" for="customer_email">Email</label>
+        <input type="email" name="customer[email]" id="customer_email" autocomplete="email" autocapitalize="off" autofocus>
+      </div>
+
+      <div class="option">
+        <label class="label" for="customer_password">Password</label>
+        <input type="password" name="customer[password]" id="customer_password" autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn btn--block btn--lg" data-magnetic="0.2">Log in</button>
+    {% endform %}
+
+    <p class="muted" style="margin-top: 1.5rem;">
+      <a href="{{ routes.account_register_url }}" class="link-underline">Create account</a>
+      <span style="margin: 0 .5rem;">/</span>
+      <a href="#recover" class="link-underline" onclick="document.getElementById('recover-form').style.display='block';return false;">Forgot password?</a>
+    </p>
+
+    <div id="recover-form" style="display:none; margin-top: 2rem;">
+      <h2 class="h-sm">Reset your password</h2>
+      <p class="muted" style="margin-bottom: 1rem;">We will send you an email to reset it.</p>
+      {% form 'recover_customer_password' %}
+        {{ form.errors | default_errors }}
+        {% if form.posted_successfully? %}
+          <p class="muted">We have sent you an email with a link to update your password.</p>
+        {% endif %}
+        <div class="option">
+          <label class="label" for="recover_email">Email</label>
+          <input type="email" name="email" id="recover_email" autocomplete="email" autocapitalize="off">
+        </div>
+        <button type="submit" class="btn btn--block">Send reset link</button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Login",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+<section class="section">
+  <div class="container">
+    <header class="reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; margin-bottom:2.5rem;">
+      <div>
+        <p class="eyebrow">Melina</p>
+        <h1 class="h-md">{{ 'customer.account.title' | t | default: 'Account' }}</h1>
+      </div>
+      <p class="muted" style="margin:0;">
+        <a href="{{ routes.account_addresses_url }}" class="link-underline">Addresses</a>
+        <span style="margin:0 .6rem;">/</span>
+        <a href="{{ routes.account_logout_url }}" class="link-underline">Log out</a>
+      </p>
+    </header>
+
+    <div class="reveal" data-reveal-delay="0.1">
+      <p class="eyebrow" style="margin-bottom:1.25rem;">Orders</p>
+
+      {% if customer.orders.size > 0 %}
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; text-align:left;">
+            <thead>
+              <tr class="label">
+                <th style="padding:.75rem 1rem .75rem 0;">Order</th>
+                <th style="padding:.75rem 1rem;">Date</th>
+                <th style="padding:.75rem 1rem;">Payment</th>
+                <th style="padding:.75rem 1rem;">Fulfillment</th>
+                <th style="padding:.75rem 0 .75rem 1rem; text-align:right;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+                <tr style="border-top:1px solid var(--hairline, currentColor);">
+                  <td style="padding:1rem 1rem 1rem 0;">
+                    <a href="{{ order.customer_url }}" class="link-underline">{{ order.name }}</a>
+                  </td>
+                  <td style="padding:1rem;" class="muted">{{ order.created_at | date: '%b %e, %Y' }}</td>
+                  <td style="padding:1rem;" class="muted">{{ order.financial_status_label }}</td>
+                  <td style="padding:1rem;" class="muted">{{ order.fulfillment_status_label }}</td>
+                  <td style="padding:1rem 0 1rem 1rem; text-align:right;">{{ order.total_price | money }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="muted">No orders yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Account",
+  "settings": []
+}
+{% endschema %}

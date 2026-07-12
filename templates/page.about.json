@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "about": {
+      "type": "about-melina",
+      "settings": {},
+      "blocks": {
+        "st1": { "type": "stat", "settings": { "number": "100%", "label": "Generated" } },
+        "st2": { "type": "stat", "settings": { "number": "0", "label": "Retouching hours" } },
+        "st3": { "type": "stat", "settings": { "number": "1", "label": "Muse" } },
+        "st4": { "type": "stat", "settings": { "number": "∞", "label": "Looks" } }
+      },
+      "block_order": ["st1", "st2", "st3", "st4"]
+    },
+    "model_call": { "type": "model-call", "settings": {} }
+  },
+  "order": ["about", "model_call"]
+}

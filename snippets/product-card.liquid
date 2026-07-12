@@ -1,0 +1,59 @@
+{%- comment -%}
+  Product card. Front image hides the model's face (crop) until hover reveals the
+  full model shot. Click / quick-add opens the quick-view overlay (no page nav).
+  Params: product (required), reveal_index (optional int for stagger)
+{%- endcomment -%}
+{%- liquid
+  assign front = product.featured_image
+  assign hover = product.images[1] | default: product.featured_image
+  assign model3d = product.media | where: 'media_type', 'model' | first
+  assign glb = model3d.sources | where: 'format', 'glb' | first
+  assign hide_face = settings.card_hide_face
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+-%}
+<article class="card{% if hide_face %} card--hide-face{% endif %} reveal"
+  data-product data-handle="{{ product.handle }}" data-product-url="{{ product.url }}"
+  data-title="{{ product.title | escape }}"{% if glb %} data-model-src="{{ glb.url }}"{% endif %}
+  {% if settings.card_quick_view == false %}data-quick-view="false"{% endif %}
+  {% if reveal_index %}data-reveal-delay="{{ reveal_index | times: 0.05 }}"{% endif %}>
+
+  <div class="card__media" data-quick-view-trigger tabindex="0" role="button"
+    aria-haspopup="dialog" aria-label="{{ 'products.product.quick_view' | t }}: {{ product.title | escape }}">
+
+    {%- if front != blank -%}
+      {{ front | image_tag: class: 'card__img card__img--front', loading: 'lazy', widths: '400,600,900,1200', sizes: '(max-width: 900px) 50vw, 25vw', alt: product.title }}
+    {%- else -%}
+      <img class="card__img card__img--front" src="{{ 'ph-figure.svg' | asset_url }}" width="900" height="1200" alt="{{ product.title | escape }}">
+    {%- endif -%}
+
+    {%- if settings.card_hover_reveal and hover != blank -%}
+      {{ hover | image_tag: class: 'card__img card__img--model', loading: 'lazy', widths: '400,600,900', sizes: '(max-width: 900px) 50vw, 25vw', alt: product.title | append: ' worn by Melina' }}
+    {%- endif -%}
+
+    <div class="card__badges">
+      {%- if product.available == false -%}<span class="badge">{{ 'products.product.sold_out' | t }}</span>{%- endif -%}
+      {%- if on_sale and product.available -%}<span class="badge badge--accent">{{ 'products.product.on_sale' | t }}</span>{%- endif -%}
+      {%- if glb -%}<span class="badge">3D</span>{%- endif -%}
+    </div>
+
+    <div class="card__tools">
+      {%- if glb -%}<button type="button" class="icon-btn card__toggle-3d" data-toggle-3d data-model-src="{{ glb.url }}" aria-label="View in 3D">3D</button>{%- endif -%}
+      <button type="button" class="icon-btn" data-quick-add aria-label="{{ 'products.product.choose_options' | t }}">+</button>
+    </div>
+  </div>
+
+  <a class="card__body" href="{{ product.url }}">
+    <div>
+      <h3 class="card__title">{{ product.title }}</h3>
+      {%- if product.type != blank -%}<p class="card__cat">{{ product.type }}</p>{%- endif -%}
+    </div>
+    <p class="card__price">
+      {%- if on_sale -%}<span class="price--was">{{ product.compare_at_price | money }}</span><span class="price--sale">{{ product.price | money }}</span>
+      {%- elsif product.price_varies -%}{{ 'products.product.from_price' | t: price: product.price | money }}
+      {%- else -%}{{ product.price | money }}{%- endif -%}
+    </p>
+  </a>
+</article>

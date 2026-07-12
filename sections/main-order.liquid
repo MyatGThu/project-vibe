@@ -1,0 +1,81 @@
+<section class="section">
+  <div class="container">
+    <header class="reveal" style="margin-bottom:2.5rem;">
+      <p class="eyebrow">
+        <a href="{{ routes.account_url }}" class="link-underline">Account</a>
+      </p>
+      <h1 class="h-md">{{ 'customer.order.title' | t | default: 'Order' }} {{ order.name }}</h1>
+      <p class="muted" style="margin-top:.5rem;">Placed {{ order.created_at | date: '%b %e, %Y' }}</p>
+    </header>
+
+    <div class="reveal" data-reveal-delay="0.1" style="overflow-x:auto; margin-bottom:2.5rem;">
+      <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr class="label">
+            <th style="padding:.75rem 1rem .75rem 0;">Item</th>
+            <th style="padding:.75rem 1rem; text-align:center;">Qty</th>
+            <th style="padding:.75rem 0 .75rem 1rem; text-align:right;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for line in order.line_items %}
+            <tr style="border-top:1px solid var(--hairline, currentColor);">
+              <td style="padding:1rem 1rem 1rem 0;">
+                {{ line.title }}
+                {% unless line.variant.title == blank or line.variant.title == 'Default Title' %}
+                  <span class="muted"> — {{ line.variant.title }}</span>
+                {% endunless %}
+              </td>
+              <td style="padding:1rem; text-align:center;" class="muted">{{ line.quantity }}</td>
+              <td style="padding:1rem 0 1rem 1rem; text-align:right;">{{ line.final_line_price | money }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" style="padding:1rem 1rem 0 0; text-align:right;" class="muted">Subtotal</td>
+            <td style="padding:1rem 0 0 1rem; text-align:right;">{{ order.subtotal_price | money }}</td>
+          </tr>
+          {% for shipping in order.shipping_methods %}
+            <tr>
+              <td colspan="2" style="padding:.4rem 1rem 0 0; text-align:right;" class="muted">Shipping — {{ shipping.title }}</td>
+              <td style="padding:.4rem 0 0 1rem; text-align:right;">{{ shipping.price | money }}</td>
+            </tr>
+          {% endfor %}
+          {% for tax_line in order.tax_lines %}
+            <tr>
+              <td colspan="2" style="padding:.4rem 1rem 0 0; text-align:right;" class="muted">Tax — {{ tax_line.title }}</td>
+              <td style="padding:.4rem 0 0 1rem; text-align:right;">{{ tax_line.price | money }}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="2" style="padding:1rem 1rem 0 0; text-align:right;" class="label">Total</td>
+            <td style="padding:1rem 0 0 1rem; text-align:right;">{{ order.total_price | money }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="reveal" data-reveal-delay="0.15" style="display:grid; gap:2rem; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));">
+      {% if order.shipping_address %}
+        <div>
+          <p class="eyebrow" style="margin-bottom:1rem;">Shipping address</p>
+          <div class="rte muted">{{ order.shipping_address | format_address }}</div>
+        </div>
+      {% endif %}
+      {% if order.billing_address %}
+        <div>
+          <p class="eyebrow" style="margin-bottom:1rem;">Billing address</p>
+          <div class="rte muted">{{ order.billing_address | format_address }}</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Order",
+  "settings": []
+}
+{% endschema %}

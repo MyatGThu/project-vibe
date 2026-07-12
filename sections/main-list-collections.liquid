@@ -1,0 +1,34 @@
+<section class="section">
+  <div class="container">
+    <header class="reveal" style="margin-bottom:3rem">
+      <p class="eyebrow">Index</p>
+      <h1 class="h-md">Collections</h1>
+    </header>
+
+    {%- if collections.size > 0 -%}
+      <div class="product-grid">
+        {%- for collection in collections -%}
+          <a class="card reveal" href="{{ collection.url }}" data-reveal-delay="{{ forloop.index0 | times: 0.05 }}">
+            <div class="card__media">
+              {%- if collection.featured_image != blank -%}
+                {{ collection.featured_image | image_url: width: 900 | image_tag: class: 'card__img card__img--front', loading: 'lazy', widths: '400,600,900,1200', sizes: '(max-width: 900px) 50vw, 25vw', alt: collection.title | escape }}
+              {%- else -%}
+                <img class="card__img card__img--front" src="{{ 'ph-figure.svg' | asset_url }}" alt="{{ collection.title | escape }}">
+              {%- endif -%}
+            </div>
+            <div class="card__body">
+              <h2 class="card__title">{{ collection.title }}</h2>
+              <p class="card__cat">{{ collection.products_count }} pieces</p>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="empty-state"><p class="lede muted">No collections yet. Melina is still assembling the wardrobe.</p></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "List collections", "settings": [] }
+{% endschema %}

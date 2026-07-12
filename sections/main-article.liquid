@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="container" style="max-width:760px">
+    <article>
+      <header class="reveal" style="margin-bottom:2.4rem">
+        <p class="eyebrow">{{ article.published_at | date: '%B %e, %Y' }}</p>
+        <h1 class="h-lg">{{ article.title }}</h1>
+      </header>
+
+      {%- if article.image != blank -%}
+        {{ article.image | image_tag: class: 'reveal', loading: 'eager', widths: '600,900,1200,1600', sizes: '(max-width: 760px) 100vw, 760px', style: 'width:100%;height:auto;border-radius:var(--radius);margin-bottom:2.4rem', alt: article.title }}
+      {%- endif -%}
+
+      <div class="rte reveal">{{ article.content }}</div>
+    </article>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

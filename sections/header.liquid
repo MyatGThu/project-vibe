@@ -1,0 +1,73 @@
+<header class="header" data-header>
+  <nav class="header__nav" aria-label="Primary">
+    {%- for link in linklists[section.settings.menu].links limit: 4 -%}
+      <a href="{{ link.url }}" class="link-underline">{{ link.title }}</a>
+    {%- endfor -%}
+  </nav>
+
+  <div class="header__brand">
+    <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: class: 'header__logo', style: 'width:' | append: settings.logo_width | append: 'px', alt: shop.name }}
+      {%- else -%}
+        <span class="wordmark">{{ settings.brand_name | default: shop.name }}</span>
+      {%- endif -%}
+    </a>
+  </div>
+
+  <div class="header__actions">
+    <button class="nav-toggle" data-nav-toggle aria-label="{{ 'accessibility.menu' | t }}">{{ 'accessibility.menu' | t }}</button>
+    <a href="{{ routes.search_url }}" class="link-underline" aria-label="{{ 'general.search.search' | t }}">{{ 'general.search.search' | t }}</a>
+    <button data-cart-toggle aria-label="{{ 'accessibility.cart' | t }}">{{ 'accessibility.cart' | t }} <span class="cart-count" data-count="{{ cart.item_count }}">{{ cart.item_count }}</span></button>
+  </div>
+</header>
+
+{%- comment -%} Mobile nav (progressive: full menu list) {%- endcomment -%}
+<div class="drawer" id="NavDrawer" data-nav-drawer hidden>
+  <div class="drawer__head"><span class="eyebrow">{{ 'accessibility.menu' | t }}</span><button data-nav-toggle aria-label="{{ 'accessibility.close' | t }}">&times;</button></div>
+  <nav class="drawer__items" aria-label="Mobile">
+    {%- for link in linklists[section.settings.menu].links -%}
+      <a href="{{ link.url }}" class="h-sm" style="font-family:var(--display-font)">{{ link.title }}</a>
+    {%- endfor -%}
+  </nav>
+</div>
+
+{%- comment -%} Cart drawer, controlled by store.js {%- endcomment -%}
+<div class="drawer__overlay" data-drawer-overlay></div>
+<aside class="drawer" id="CartDrawer" aria-label="{{ 'cart.general.title' | t }}">
+  <div class="drawer__head">
+    <span class="eyebrow">{{ 'cart.general.title' | t }}</span>
+    <button data-cart-close aria-label="{{ 'accessibility.close' | t }}">&times;</button>
+  </div>
+  <div class="drawer__items" data-cart-items>
+    <p class="muted">{{ 'cart.general.empty' | t }}</p>
+  </div>
+  <div class="drawer__foot">
+    <div class="drawer__subtotal"><span>{{ 'cart.general.subtotal' | t }}</span><span data-cart-subtotal>{{ cart.total_price | money }}</span></div>
+    <p class="muted" style="font-size:var(--step--1)">{{ 'cart.general.taxes_note' | t }}</p>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn--block btn--lg" data-magnetic="0.2">{{ 'cart.general.checkout' | t }}</button>
+    </form>
+  </div>
+</aside>
+
+<script>
+  // Mobile nav toggle (tiny; kept inline with its markup)
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-nav-toggle]')) {
+      var d = document.getElementById('NavDrawer'); if (!d) return;
+      var open = d.hasAttribute('hidden'); if (open) d.removeAttribute('hidden');
+      requestAnimationFrame(function () { d.classList.toggle('is-open', open); });
+      if (!open) setTimeout(function () { d.setAttribute('hidden', ''); }, 500);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

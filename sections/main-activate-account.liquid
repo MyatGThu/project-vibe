@@ -1,0 +1,33 @@
+<section class="section">
+  <div class="container" style="max-width: 460px;">
+    <header class="reveal" style="margin-bottom: 2rem;">
+      <p class="eyebrow">Account</p>
+      <h1 class="h-md">Activate account</h1>
+      <p class="muted">Create a password to activate your account.</p>
+    </header>
+
+    {% form 'activate_customer_password' %}
+      {{ form.errors | default_errors }}
+
+      <div class="option">
+        <label class="label" for="activate_password">Password</label>
+        <input type="password" name="customer[password]" id="activate_password" autocomplete="new-password" autofocus>
+      </div>
+
+      <div class="option">
+        <label class="label" for="activate_password_confirmation">Confirm password</label>
+        <input type="password" name="customer[password_confirmation]" id="activate_password_confirmation" autocomplete="new-password">
+      </div>
+
+      <button type="submit" name="commit" class="btn btn--block btn--lg" data-magnetic="0.2">Activate account</button>
+      <button type="submit" name="decline" class="btn btn--ghost btn--block" style="margin-top: .75rem;">Decline invitation</button>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Activate account",
+  "settings": []
+}
+{% endschema %}

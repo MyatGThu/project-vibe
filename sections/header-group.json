@@ -1,0 +1,21 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "announcement",
+      "settings": {
+        "text": "Complimentary shipping on all made-to-order pieces — worldwide.",
+        "link_text": "The making of Melina",
+        "link": "/pages/about"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

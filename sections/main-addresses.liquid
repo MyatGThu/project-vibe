@@ -1,0 +1,142 @@
+<section class="section">
+  <div class="container">
+    <header class="reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; margin-bottom:2.5rem;">
+      <div>
+        <p class="eyebrow">
+          <a href="{{ routes.account_url }}" class="link-underline">Account</a>
+        </p>
+        <h1 class="h-md">Addresses</h1>
+      </div>
+    </header>
+
+    <details class="reveal" style="margin-bottom:3rem;">
+      <summary class="btn btn--ghost" style="cursor:pointer; display:inline-flex;">Add a new address</summary>
+      <div style="max-width:520px; margin-top:1.5rem;">
+        {% form 'customer_address', customer.new_address %}
+          {{ form.errors | default_errors }}
+
+          <div class="option">
+            <label class="label" for="new_first_name">First name</label>
+            <input type="text" id="new_first_name" name="address[first_name]" autocomplete="given-name">
+          </div>
+          <div class="option">
+            <label class="label" for="new_last_name">Last name</label>
+            <input type="text" id="new_last_name" name="address[last_name]" autocomplete="family-name">
+          </div>
+          <div class="option">
+            <label class="label" for="new_address1">Address</label>
+            <input type="text" id="new_address1" name="address[address1]" autocomplete="address-line1">
+          </div>
+          <div class="option">
+            <label class="label" for="new_address2">Apartment, suite, etc.</label>
+            <input type="text" id="new_address2" name="address[address2]" autocomplete="address-line2">
+          </div>
+          <div class="option">
+            <label class="label" for="new_city">City</label>
+            <input type="text" id="new_city" name="address[city]" autocomplete="address-level2">
+          </div>
+          <div class="option">
+            <label class="label" for="new_province">Province / State</label>
+            <input type="text" id="new_province" name="address[province]" autocomplete="address-level1">
+          </div>
+          <div class="option">
+            <label class="label" for="new_zip">Postal / ZIP code</label>
+            <input type="text" id="new_zip" name="address[zip]" autocomplete="postal-code">
+          </div>
+          <div class="option">
+            <label class="label" for="new_country">Country</label>
+            <select id="new_country" name="address[country]" autocomplete="country">{{ country_option_tags }}</select>
+          </div>
+          <div class="option">
+            <label class="label" for="new_phone">Phone</label>
+            <input type="tel" id="new_phone" name="address[phone]" autocomplete="tel">
+          </div>
+
+          <button type="submit" class="btn btn--lg">Save address</button>
+        {% endform %}
+      </div>
+    </details>
+
+    {% if customer.addresses.size > 0 %}
+      <div class="reveal" data-reveal-delay="0.1" style="display:grid; gap:2rem; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));">
+        {% for address in customer.addresses %}
+          <div style="border-top:1px solid var(--hairline, currentColor); padding-top:1.25rem;">
+            {% if address == customer.default_address %}
+              <p class="eyebrow" style="margin-bottom:.75rem;">Default</p>
+            {% endif %}
+
+            <div class="rte muted">{{ address | format_address }}</div>
+
+            <div style="display:flex; gap:.5rem; align-items:center; margin-top:1rem; flex-wrap:wrap;">
+              <details>
+                <summary class="link-underline" style="cursor:pointer;">Edit</summary>
+                <div style="max-width:520px; margin-top:1.25rem;">
+                  {% form 'customer_address', address %}
+                    {{ form.errors | default_errors }}
+
+                    <div class="option">
+                      <label class="label" for="first_name_{{ address.id }}">First name</label>
+                      <input type="text" id="first_name_{{ address.id }}" name="address[first_name]" value="{{ address.first_name }}" autocomplete="given-name">
+                    </div>
+                    <div class="option">
+                      <label class="label" for="last_name_{{ address.id }}">Last name</label>
+                      <input type="text" id="last_name_{{ address.id }}" name="address[last_name]" value="{{ address.last_name }}" autocomplete="family-name">
+                    </div>
+                    <div class="option">
+                      <label class="label" for="address1_{{ address.id }}">Address</label>
+                      <input type="text" id="address1_{{ address.id }}" name="address[address1]" value="{{ address.address1 }}" autocomplete="address-line1">
+                    </div>
+                    <div class="option">
+                      <label class="label" for="address2_{{ address.id }}">Apartment, suite, etc.</label>
+                      <input type="text" id="address2_{{ address.id }}" name="address[address2]" value="{{ address.address2 }}" autocomplete="address-line2">
+                    </div>
+                    <div class="option">
+                      <label class="label" for="city_{{ address.id }}">City</label>
+                      <input type="text" id="city_{{ address.id }}" name="address[city]" value="{{ address.city }}" autocomplete="address-level2">
+                    </div>
+                    <div class="option">
+                      <label class="label" for="province_{{ address.id }}">Province / State</label>
+                      <input type="text" id="province_{{ address.id }}" name="address[province]" value="{{ address.province }}" autocomplete="address-level1">
+                    </div>
+                    <div class="option">
+                      <label class="label" for="zip_{{ address.id }}">Postal / ZIP code</label>
+                      <input type="text" id="zip_{{ address.id }}" name="address[zip]" value="{{ address.zip }}" autocomplete="postal-code">
+                    </div>
+                    <div class="option">
+                      <label class="label" for="country_{{ address.id }}">Country</label>
+                      <select id="country_{{ address.id }}" name="address[country]" autocomplete="country">{{ country_option_tags }}</select>
+                    </div>
+                    <div class="option">
+                      <label class="label" for="phone_{{ address.id }}">Phone</label>
+                      <input type="tel" id="phone_{{ address.id }}" name="address[phone]" value="{{ address.phone }}" autocomplete="tel">
+                    </div>
+
+                    <button type="submit" class="btn">Update address</button>
+                  {% endform %}
+                </div>
+              </details>
+
+              <span class="muted">/</span>
+
+              <form method="post" action="{{ address.url }}" onsubmit="return confirm('Delete this address?');">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="link-underline" style="background:none; border:0; padding:0; cursor:pointer; font:inherit; color:inherit;">Delete</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <p class="muted">No saved addresses yet.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Addresses",
+  "settings": []
+}
+{% endschema %}

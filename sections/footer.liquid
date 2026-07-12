@@ -1,0 +1,64 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <span class="wordmark">{{ settings.brand_name | default: shop.name }}</span>
+        <p class="muted" style="margin-top:1rem;max-width:30ch">{{ settings.brand_tagline }}</p>
+        <form class="footer__newsletter" style="margin-top:1.6rem" action="/contact#newsletter" method="post" accept-charset="UTF-8">
+          <input type="hidden" name="form_type" value="customer"><input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" aria-label="{{ 'general.newsletter.label' | t }}" required>
+          <button type="submit">{{ 'general.newsletter.button' | t }} →</button>
+        </form>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="footer__col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.heading }}</h4>
+            {%- for link in linklists[block.settings.menu].links -%}
+              <a href="{{ link.url }}" class="link-underline">{{ link.title }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div class="footer__col">
+        <h4>Connect</h4>
+        {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" class="link-underline">Instagram</a>{%- endif -%}
+        {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" class="link-underline">TikTok</a>{%- endif -%}
+        <a href="/pages/about" class="link-underline">The making of Melina</a>
+        {%- if settings.social_email != blank -%}<a href="mailto:{{ settings.social_email }}" class="link-underline">{{ settings.social_email }}</a>{%- endif -%}
+      </div>
+
+      {%- if section.settings.show_disclosure -%}
+        <div class="footer__disclosure">
+          <span>{{ section.settings.disclosure_text }}</span>
+          <span>{{ 'footer.copyright' | t: year: 'now' | date: '%Y', name: settings.brand_name | default: shop.name }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "checkbox", "id": "show_disclosure", "label": "Show AI-model disclosure", "default": true },
+    { "type": "text", "id": "disclosure_text", "label": "Disclosure", "default": "Melina Jones Voss is an AI model. Every campaign image is generated, disclosed, and made with intent." }
+  ],
+  "blocks": [
+    { "type": "menu", "name": "Menu column", "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Atelier" },
+      { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+    ] }
+  ],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "menu", "settings": { "heading": "Atelier" } },
+      { "type": "menu", "settings": { "heading": "Client care" } }
+    ]
+  }
+}
+{% endschema %}
