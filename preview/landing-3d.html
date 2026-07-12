@@ -1,10 +1,8 @@
 <!doctype html>
 <!--
-  DEV PREVIEW ONLY (not part of the Shopify theme).
-  Mirrors sections/landing-3d.liquid (scroll-driven slideshow). Slides use flat
-  colours + a label so the active slide is legible in a static screenshot.
-  Plain load = live (initial hero). #mid freezes a mid-slideshow slide.
-  #exit freezes the outward zoom + blur exit.
+  DEV PREVIEW ONLY. Mirrors sections/landing-3d.liquid + the Collection 01 hand-off.
+  Slides use flat colours + a label so the active slide is legible in a screenshot.
+  Plain load = live. #parallax / #fast / #exit freeze representative frames.
 -->
 <html lang="en" class="no-js">
 <head>
@@ -13,22 +11,23 @@
   <title>Te Amo — scroll landing (preview)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap">
   <link rel="stylesheet" href="../assets/base.css">
-  <style>.l3d__slide .pvn { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display-font); font-size: 22vmin; color: rgba(246,243,238,0.28); }</style>
+  <style>.l3d__slide .pvn { position: absolute; inset: auto 0 34% 0; text-align: center; font-family: var(--display-font); font-size: 4vmin; color: rgba(246,243,238,0.6); z-index: 1; }</style>
   <script>document.documentElement.className = 'js';</script>
 </head>
 <body class="template-index">
   <section class="l3d" data-l3d>
     <div class="l3d__viewport" data-l3d-viewport>
       <div class="l3d__slides" data-l3d-slides>
-        <div class="l3d__slide" data-cap="Autumn — Collection 01" style="background:#2c2622"><span class="pvn">Hero</span></div>
-        <div class="l3d__slide" data-cap="The Monolith Coat" data-tag="Outerwear" style="background:#3a4654"><span class="pvn">1</span></div>
-        <div class="l3d__slide" data-cap="The Liquid Slip" data-tag="Dresses" style="background:#5a4636"><span class="pvn">2</span></div>
-        <div class="l3d__slide" data-cap="The Null Suit" data-tag="Tailoring" style="background:#3b3b46"><span class="pvn">3</span></div>
-        <div class="l3d__slide" data-cap="The Vapor Knit" data-tag="Knitwear" style="background:#4a5a52"><span class="pvn">4</span></div>
-        <div class="l3d__slide" data-cap="The Obsidian Trouser" data-tag="Tailoring" style="background:#2e343a"><span class="pvn">5</span></div>
-        <div class="l3d__slide" data-cap="The Halo Gown" data-tag="Eveningwear" style="background:#6a5a4a"><span class="pvn">6</span></div>
+        <div class="l3d__slide" data-cap="Autumn — Collection 01" data-upcoming="false" style="background:#2c2622"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Hero</span></div>
+        <div class="l3d__slide" data-cap="The Monolith Coat" data-tag="Outerwear" data-upcoming="false" style="background:#3a4654"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Existing 1</span></div>
+        <div class="l3d__slide" data-cap="The Null Suit" data-tag="Tailoring" data-upcoming="false" style="background:#3b3b46"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Existing 2</span></div>
+        <div class="l3d__slide" data-cap="The Halo Gown" data-tag="Eveningwear" data-upcoming="false" style="background:#5a4636"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Existing 3</span></div>
+        <div class="l3d__slide" data-cap="The Sanguine Trench" data-tag="Outerwear" data-upcoming="true" style="background:#4a2a2a"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Upcoming 1</span></div>
+        <div class="l3d__slide" data-cap="The Cirrus Knit" data-tag="Knitwear" data-upcoming="true" style="background:#4a5a52"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Upcoming 2</span></div>
+        <div class="l3d__slide" data-cap="The Meridian Cape" data-tag="Outerwear" data-upcoming="true" style="background:#6a5a4a"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Upcoming 3</span></div>
       </div>
       <div class="l3d__scrim"></div>
+      <div class="l3d__badge" data-l3d-badge aria-hidden="true">Next drop</div>
 
       <div class="l3d__hud" data-l3d-hud>
         <p class="eyebrow l3d__eyebrow">Autumn — Collection 01</p>
@@ -41,7 +40,15 @@
       <div class="l3d__cue" data-l3d-cue aria-hidden="true">Scroll to enter</div>
     </div>
   </section>
-  <section class="section"><div class="container"><p class="lede muted">(Rest of the homepage continues here.)</p></div></section>
+
+  <section class="section"><div class="container">
+    <div class="collection-head"><div><p class="eyebrow">Collection 01</p><h2 class="h-md" style="margin-top:.5rem">The Autumn capsule</h2></div><a class="link-underline" href="#">View all →</a></div>
+    <div class="product-grid">
+      <article class="card"><div class="card__media" style="aspect-ratio:3/4;background:#e4ded4"></div><div class="card__body"><div><h3 class="card__title">The Monolith Coat</h3><p class="card__cat">Outerwear</p></div><p class="card__price">$1,290.00</p></div></article>
+      <article class="card"><div class="card__media" style="aspect-ratio:3/4;background:#e4ded4"></div><div class="card__body"><div><h3 class="card__title">The Liquid Slip</h3><p class="card__cat">Dresses</p></div><p class="card__price">$690.00</p></div></article>
+      <article class="card"><div class="card__media" style="aspect-ratio:3/4;background:#e4ded4"></div><div class="card__body"><div><h3 class="card__title">The Null Suit</h3><p class="card__cat">Tailoring</p></div><p class="card__price">$1,450.00</p></div></article>
+    </div>
+  </div></section>
 
   <script>
     window.Theme = { motion: { smooth: true, reveal: true } };
@@ -53,12 +60,14 @@
         l.classList.add('is-live');
         slides.forEach(function (s) { s.classList.remove('is-active'); });
         slides[i].classList.add('is-active');
+        l.classList.toggle('show-badge', slides[i].dataset.upcoming === 'true');
         if (cap) { var s = slides[i]; cap.innerHTML = '<span>' + (s.dataset.cap || '') + '</span>' + (s.dataset.tag ? '<span>' + s.dataset.tag + '</span>' : ''); }
       }
-      if (location.hash === '#mid') { activate(3); l.querySelector('[data-l3d-hud]').style.opacity = '0'; return; }
+      if (location.hash === '#parallax') { activate(2); l.querySelector('[data-l3d-hud]').style.opacity = '0'; var im = slides[2].querySelector('img'); if (im) im.style.transform = 'scale(1.14) translateY(1.5%)'; return; }
+      if (location.hash === '#fast') { activate(5); l.querySelector('[data-l3d-hud]').style.opacity = '0'; return; }
       if (location.hash === '#exit') {
-        activate(5);
-        var sw = l.querySelector('[data-l3d-slides]'); sw.style.transform = 'scale(1.16)'; sw.style.filter = 'blur(12px)'; sw.style.opacity = '0.35';
+        activate(6);
+        var sw = l.querySelector('[data-l3d-slides]'); sw.style.transform = 'scale(1.06)'; sw.style.filter = 'blur(8px)'; sw.style.opacity = '0.25';
         l.querySelector('[data-l3d-hud]').style.opacity = '0';
         l.querySelector('[data-l3d-viewport]').style.background = getComputedStyle(document.body).backgroundColor;
         return;

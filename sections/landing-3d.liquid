@@ -2,8 +2,9 @@
   Te Amo — scroll landing.
   Progressive enhancement: the first slide + headline are a plain hero without JS.
   With GSAP + ScrollTrigger (already vendored) motion.js adds `is-live`, pins the
-  viewport, runs a fast scroll-driven slideshow of the looks, then an outward zoom
-  + blur into the next section — no new dependency.
+  viewport, and scroll-drives: existing outfits with a parallax drift, then the
+  "upcoming" outfits as a fast slideshow, then a short dissolve into the next
+  section (Collection 01) — no new dependency.
 {%- endcomment -%}
 {%- liquid
   assign heading = section.settings.heading
@@ -24,7 +25,7 @@
       </div>
       {%- comment -%} Look slides — eager so the fast slideshow never flips to a blank frame {%- endcomment -%}
       {%- for block in section.blocks -%}
-        <div class="l3d__slide" data-cap="{{ block.settings.caption | escape }}" data-tag="{{ block.settings.tag | escape }}" {{ block.shopify_attributes }}>
+        <div class="l3d__slide" data-cap="{{ block.settings.caption | escape }}" data-tag="{{ block.settings.tag | escape }}" data-upcoming="{{ block.settings.upcoming }}" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
             {{ block.settings.image | image_tag: widths: '800,1200,1800', sizes: '100vw', loading: 'eager', alt: block.settings.caption }}
           {%- elsif block.settings.image_url != blank -%}
@@ -36,6 +37,7 @@
       {%- endfor -%}
     </div>
     <div class="l3d__scrim"></div>
+    <div class="l3d__badge" data-l3d-badge aria-hidden="true">{{ section.settings.badge_label | default: 'Next drop' }}</div>
 
     <div class="l3d__hud" data-l3d-hud>
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow l3d__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
@@ -62,22 +64,24 @@
     { "type": "text", "id": "cta_text", "label": "Button", "default": "Enter the collection" },
     { "type": "url", "id": "cta_link", "label": "Button link" },
     { "type": "text", "id": "scroll_label", "label": "Scroll cue", "default": "Scroll to enter" },
+    { "type": "text", "id": "badge_label", "label": "Upcoming badge", "default": "Next drop" },
     { "type": "image_picker", "id": "bg_image", "label": "Background image" },
     { "type": "text", "id": "bg_image_url", "label": "Background image URL (fallback)", "info": "Used until you upload a background image." }
   ],
   "blocks": [
     {
       "type": "look",
-      "name": "Look panel",
+      "name": "Look",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
         { "type": "text", "id": "caption", "label": "Caption" },
-        { "type": "text", "id": "tag", "label": "Tag" }
+        { "type": "text", "id": "tag", "label": "Tag" },
+        { "type": "checkbox", "id": "upcoming", "label": "Upcoming (fast slideshow, not yet in the store)", "default": false }
       ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 16,
   "presets": [
     { "name": "3D landing", "blocks": [ { "type": "look" }, { "type": "look" }, { "type": "look" }, { "type": "look" } ] }
   ]
