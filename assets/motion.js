@@ -86,72 +86,41 @@
       gsap.from(heroWords, { yPercent: 120, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.15 });
     }
 
-    /* ---- Scroll landing: existing outfits with a parallax drift, then the
-           upcoming outfits as a fast slideshow, then a short dissolve into
-           the next section (Collection 01). ---- */
+    /* ---- 3D scroll landing: pin the viewport, scrub a CSS-3D flythrough through
+           the look-panels, then an outward zoom + blur that dissolves into the
+           next section (Collection 01). ---- */
     var l3d = document.querySelector('[data-l3d]');
     if (l3d) {
-      var slidesWrap = l3d.querySelector('[data-l3d-slides]');
-      var slides = slidesWrap ? Array.prototype.slice.call(slidesWrap.querySelectorAll('.l3d__slide')) : [];
-      if (slidesWrap && slides.length) {
-        l3d.classList.add('is-live');                      // JS now owns which slide shows (static hero until now)
+      var scene = l3d.querySelector('[data-l3d-scene]');
+      var panels = scene ? scene.querySelectorAll('.l3d__panel') : [];
+      if (scene && panels.length) {
+        l3d.classList.add('is-3d');                        // opt in to the 3D layer (static hero until now)
         var vp = l3d.querySelector('[data-l3d-viewport]');
+        var bg = l3d.querySelector('.l3d__bg');
         var hud = l3d.querySelector('[data-l3d-hud]');
         var cue = l3d.querySelector('[data-l3d-cue]');
-        var capEl = l3d.querySelector('[data-l3d-cap]');
-        var N = slides.length;
-        var nUp = slides.filter(function (s) { return s.dataset.upcoming === 'true'; }).length;
-        var nBase = N - nUp;                               // existing outfits (+ hero) → parallax beat
-        if (nBase < 1) { nBase = N; nUp = 0; }
-        var bone = getComputedStyle(document.body).backgroundColor;   // the field we dissolve into (Collection 01)
-        var A = nUp ? 0.62 : 0.86;                         // end of the parallax beat
-        var B = 0.88;                                      // end of the fast beat; tail is the dissolve
-        var current = -1;
-        function show(i) {
-          if (i === current || i < 0 || i >= N) return;
-          if (current >= 0) {
-            slides[current].classList.remove('is-active');
-            var prev = slides[current].querySelector('img'); if (prev) prev.style.transform = 'scale(1.06)';
-          }
-          slides[i].classList.add('is-active');
-          current = i;
-          l3d.classList.toggle('show-badge', slides[i].dataset.upcoming === 'true');
-          if (capEl) { var s = slides[i]; capEl.innerHTML = '<span>' + (s.dataset.cap || '') + '</span>' + (s.dataset.tag ? '<span>' + s.dataset.tag + '</span>' : ''); }
-        }
-        show(0);
-        gsap.set(slidesWrap, { filter: 'blur(0px)' });
+        var step = parseFloat(getComputedStyle(l3d).getPropertyValue('--l3d-step')) || 380;
+        var start = -1400;                                 // rest the panels well back so the headline reads clean
+        var fly = panels.length * step + 300;              // travel far enough to pass the last panel
+        var nextBg = getComputedStyle(document.body).backgroundColor; // the section we dissolve into
+        gsap.set(scene, { z: start, rotationY: -3, transformOrigin: '50% 50%' });
+        gsap.set([scene, bg], { filter: 'blur(0px)' });    // seed filter so the exit blur interpolates cleanly
 
+        // One scrubbed timeline drives the whole pin so the exit lands exactly at the end.
         var tl = gsap.timeline({
           scrollTrigger: {
-            trigger: l3d, start: 'top top',
-            // existing looks dwell (parallax); upcoming looks flip fast; + a short exit.
-            end: function () { return '+=' + Math.round(window.innerHeight * (nBase * 0.5 + nUp * 0.28 + 0.5)); },
-            pin: vp, scrub: 0.35, invalidateOnRefresh: true, anticipatePin: 1,
-            onUpdate: function (self) {
-              var p = self.progress;
-              if (p < A) {                                  // beat 1 — existing outfits, parallax Ken Burns
-                var f = (p / A) * nBase;
-                var idx = Math.min(nBase - 1, Math.floor(f));
-                show(idx);
-                var local = f - Math.floor(f);
-                var img = slides[idx] && slides[idx].querySelector('img');
-                if (img) img.style.transform = 'scale(' + (1.04 + local * 0.12).toFixed(3) + ') translateY(' + ((local - 0.5) * 3).toFixed(2) + '%)';
-              } else if (p < B && nUp) {                    // beat 2 — upcoming outfits, fast hard cuts
-                var f2 = (p - A) / (B - A);
-                show(nBase + Math.min(nUp - 1, Math.floor(f2 * nUp)));
-              } else {
-                show(N - 1);
-              }
-            }
+            trigger: l3d, start: 'top top', end: '+=' + Math.round(fly * 1.1),
+            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1
           }
         });
-        tl.to(hud, { yPercent: -16, opacity: 0, ease: 'power2.in', duration: 0.3 }, 0);      // headline clears early
-        if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.06 }, 0);
-        if (capEl) tl.fromTo(capEl, { opacity: 0 }, { opacity: 1, ease: 'none', duration: 0.05 }, 0.05);
-        // Short dissolve (last ~12%): a gentle zoom + light blur into Collection 01's field — no lingering blank.
-        tl.to(slidesWrap, { scale: 1.08, filter: 'blur(9px)', opacity: 0, ease: 'power2.in', duration: 0.12 }, 0.88);
-        tl.to(vp, { backgroundColor: bone, ease: 'power2.in', duration: 0.12 }, 0.88);
-        if (capEl) tl.to(capEl, { opacity: 0, ease: 'none', duration: 0.08 }, 0.88);
+        tl.to(scene, { z: fly, rotationY: 3, ease: 'none', duration: 1 }, 0);            // dive through the panels
+        tl.to(hud, { z: -440, opacity: 0, ease: 'none', duration: 0.4 }, 0);            // headline recedes early
+        if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.08 }, 0);
+        // Resolve in place: the whole viewport fades to reveal Collection 01, which sits pulled
+        // up underneath (see .l3d underlap CSS) — the grid appears where the animation was, no
+        // blurry dead zone. ponytail: blur ceiling 8px (emil: < 20px, costly in Safari).
+        tl.to(scene, { scale: 1.32, filter: 'blur(8px)', ease: 'power2.in', duration: 0.2 }, 0.8);
+        tl.to(vp, { opacity: 0, ease: 'power2.in', duration: 0.2 }, 0.8);
       }
     }
 

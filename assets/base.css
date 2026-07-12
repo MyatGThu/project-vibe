@@ -534,40 +534,58 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-collection-gym ::selection { background: #E11D2A; color: #fff; }
 
 /* ============================================================
-   SCROLL LANDING (.l3d)
-   Static-first: the first slide + headline are a plain hero. motion.js adds
-   `.is-live`, pins the viewport, and scroll-drives:
-     beat 1 — existing outfits with a parallax (Ken Burns) drift;
-     beat 2 — new/upcoming outfits as a fast slideshow (with a "Next drop" badge);
-     beat 3 — a short dissolve straight into the next section (Collection 01).
-   Only transform/opacity/filter animate; reduced-motion never reaches `.is-live`.
+   3D SCROLL LANDING (.l3d) — pinned, scroll-scrubbed CSS-3D flythrough
+   Static-first: without JS it's a hero (bg + HUD). motion.js adds `.is-3d`,
+   pins the viewport and flies the camera forward through the look-panels
+   (existing outfits + "upcoming" looks, tagged "Next drop"), then an outward
+   zoom + blur that dissolves into the next section (Collection 01).
+   Only transform/opacity/filter animate; reduced-motion never reaches `.is-3d`.
    ============================================================ */
-.l3d { position: relative; }
+.l3d { --l3d-step: 380px; position: relative; }
 .l3d__viewport {
   position: relative; height: 100svh; overflow: hidden;
   display: grid; place-items: center;
+  perspective: 1100px; perspective-origin: 50% 42%;
   background: var(--ink);
 }
-.l3d__slides { position: absolute; inset: 0; z-index: 0; will-change: transform, filter, opacity; }
-.l3d__slide { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
-.l3d__slide:first-child { opacity: 1; }              /* first slide shows before JS (static hero) */
-.l3d.is-live .l3d__slide { opacity: 0; }             /* once live, JS controls which is visible */
-.l3d.is-live .l3d__slide.is-active { opacity: 1; }   /* hard cut = crisp, fast slideshow */
-.l3d__slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); will-change: transform; }
-.l3d__scrim { position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(20,17,15,0.34) 0%, rgba(20,17,15,0.12) 38%, rgba(20,17,15,0.78) 100%); }
+.l3d__bg { position: absolute; inset: 0; z-index: 0; }
+.l3d__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+.l3d__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,15,0.34) 0%, rgba(20,17,15,0.12) 38%, rgba(20,17,15,0.78) 100%); }
 
 .l3d__hud { position: relative; z-index: 3; text-align: center; max-width: min(58rem, 92vw); padding: 0 var(--gutter); color: var(--bg); will-change: transform, opacity; }
 .l3d__eyebrow { color: rgba(246,243,238,0.75); }
 .l3d__title { font-size: var(--step-5); line-height: 0.94; color: var(--bg); margin-top: 0.6rem; }
 .l3d__title .reveal-word { display: inline-block; }
 .l3d__sub { margin: 1.3rem auto 2rem; max-width: 48ch; color: rgba(246,243,238,0.82); font-size: var(--step-1); }
-.l3d__slidecap { position: absolute; z-index: 3; left: var(--gutter); bottom: 1.4rem; display: flex; gap: 0.8rem; align-items: baseline; color: rgba(246,243,238,0.85); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.12em; }
-.l3d__slidecap span:last-child { color: var(--accent); }
 .l3d__cue { position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%); z-index: 3; color: rgba(246,243,238,0.7); font-size: var(--step--1); letter-spacing: 0.2em; text-transform: uppercase; }
-.l3d__badge { position: absolute; z-index: 3; top: 1.6rem; left: 50%; transform: translateX(-50%); padding: 0.45em 1.1em; border: 1px solid rgba(246,243,238,0.45); border-radius: 999px; color: var(--bg); font-size: var(--step--1); letter-spacing: 0.22em; text-transform: uppercase; opacity: 0; transition: opacity 0.35s ease; }
-.l3d.show-badge .l3d__badge { opacity: 1; }
-@media (max-width: 560px) { .l3d__slidecap { display: none; } }
+
+/* 3D scene — enabled by motion.js only */
+.l3d__scene { display: none; }
+.l3d.is-3d .l3d__scene { display: block; position: absolute; inset: 0; z-index: 2; transform-style: preserve-3d; will-change: transform; }
+.l3d__panel {
+  position: absolute; top: 50%; left: 50%; margin: 0;
+  width: clamp(180px, 22vw, 340px);
+  transform: translate(-50%, -50%) translate3d(var(--x, 0), var(--y, 0), var(--z, 0)) rotateY(var(--ry, 0deg));
+  border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 40px 90px -30px rgba(0,0,0,0.7);
+  backface-visibility: hidden;
+}
+.l3d.is-3d .l3d__panel { --z: calc(var(--i) * var(--l3d-step) * -1); }
+.l3d__panel:nth-child(4n+1) { --x: -30vw; --y: -9vh; --ry: 18deg; }
+.l3d__panel:nth-child(4n+2) { --x: 31vw;  --y: 7vh;  --ry: -18deg; }
+.l3d__panel:nth-child(4n+3) { --x: -21vw; --y: 13vh; --ry: 13deg; }
+.l3d__panel:nth-child(4n+4) { --x: 25vw;  --y: -13vh;--ry: -13deg; }
+.l3d__panel img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.l3d__cap { position: absolute; inset: auto 0 0 0; padding: 0.7rem 0.9rem; display: flex; justify-content: space-between; gap: 0.6rem; background: linear-gradient(0deg, rgba(0,0,0,0.65), transparent); color: #fff; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; }
+.l3d__flag { position: absolute; z-index: 2; top: 0.7rem; left: 0.7rem; padding: 0.3em 0.7em; border-radius: 999px; background: rgba(20,17,15,0.6); color: var(--bg); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; }
+@media (max-width: 760px) { .l3d__panel { width: clamp(150px, 44vw, 240px); } }
+
+/* In-place resolution: the pinned landing sits above the following section, which is pulled up
+   underneath it — so as the viewport fades at the end, Collection 01 is revealed exactly where the
+   animation was (no blurry dead zone). Covers the Shopify wrapper and the dev-preview structure. */
+.shopify-section:has(> .l3d), section.l3d { position: relative; z-index: 2; }
+.shopify-section:has(> .l3d) + .shopify-section,
+section.l3d + .shopify-section, section.l3d + .section { margin-top: -100svh; position: relative; z-index: 1; }
 
 /* ---- Footer social icons (placeholders until URLs are set) ---- */
 .footer__social { display: flex; gap: 0.55rem; margin-top: 0.9rem; flex-wrap: wrap; }
