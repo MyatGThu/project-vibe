@@ -49,7 +49,7 @@
         '<figcaption class="l3d__cap"><span>' + l[0] + '</span><span>' + l[1] + '</span></figcaption></figure>';
     }).join('');
 
-    window.Theme = { motion: { smooth: true, reveal: true } };
+    window.Theme = window.Theme || { motion: { smooth: true, reveal: true } };
     (function () {
       var l = document.querySelector('.l3d');
       if (location.hash === '#inplace') {
