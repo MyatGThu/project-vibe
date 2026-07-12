@@ -6,8 +6,8 @@
       "type": "announcement",
       "settings": {
         "text": "Complimentary shipping on all made-to-order pieces — worldwide.",
-        "link_text": "The making of Melina",
-        "link": "/pages/about"
+        "link_text": "Meet Melina — AI model",
+        "link": "/pages/melina"
       }
     },
     "header": {

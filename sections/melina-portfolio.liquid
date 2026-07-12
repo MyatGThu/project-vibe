@@ -1,0 +1,127 @@
+{%- liquid
+  assign store = section.settings.store_url | default: routes.root_url
+  assign name_words = section.settings.name | split: ' '
+  if section.settings.portrait != blank
+    assign portrait = section.settings.portrait | image_url: width: 1400
+  else
+    assign portrait = section.settings.portrait_url
+  endif
+-%}
+<div class="pf" id="top">
+
+  <section class="pf-hero">
+    <div class="pf-hero__media">
+      {%- if portrait != blank -%}<img src="{{ portrait }}" alt="{{ section.settings.name | escape }}">{%- else -%}<img src="{{ 'ph-figure.svg' | asset_url }}" alt="{{ section.settings.name | escape }}">{%- endif -%}
+    </div>
+    <div class="pf-hero__body">
+      <span class="pf-pill reveal"><span class="disclosure__dot" aria-hidden="true"></span> {{ section.settings.pill }}</span>
+      <h1 class="pf-hero__name display reveal-words">{% for w in name_words %}<span class="reveal-word">{{ w }}</span> {% endfor %}</h1>
+      <p class="pf-hero__role reveal">{{ section.settings.role }}</p>
+      <p class="lede reveal" style="color:rgba(246,243,238,.8);max-width:46ch">{{ section.settings.intro }}</p>
+      <div class="reveal" style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#work" class="btn" style="--btn-bg:var(--bg);--btn-fg:var(--ink)" data-magnetic="0.3">See the work</a>
+        <a href="{{ store }}" class="btn btn--ghost" style="--btn-fg:var(--bg);border-color:rgba(246,243,238,.4)" data-magnetic="0.3">Shop the looks</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight"><div class="container">
+    <div class="pf-comp reveal">
+      {%- for block in section.blocks -%}{%- if block.type == 'stat' -%}
+        <div class="stat" {{ block.shopify_attributes }}><span class="stat__num">{{ block.settings.number }}</span><span class="stat__label">{{ block.settings.label }}</span></div>
+      {%- endif -%}{%- endfor -%}
+    </div>
+  </div></section>
+
+  <section class="section" id="about"><div class="container editorial-split">
+    <div class="reveal">
+      <p class="eyebrow" style="margin-bottom:1.4rem">About</p>
+      <div class="lede" style="color:var(--bg)">{{ section.settings.bio }}</div>
+    </div>
+    <div class="reveal">
+      <div class="disclosure" style="background:transparent;border-color:rgba(246,243,238,.25)">
+        <span class="disclosure__dot" aria-hidden="true"></span>
+        <p style="color:rgba(246,243,238,.85)">{{ section.settings.disclosure }}</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="section" id="work"><div class="container">
+    <div class="collection-head reveal">
+      <div><p class="eyebrow">Selected work</p><h2 class="h-md" style="color:var(--bg);margin-top:.5rem">The looks</h2></div>
+      <a href="{{ store }}" class="link-underline">Shop all →</a>
+    </div>
+    <div class="pf-work">
+      {%- for block in section.blocks -%}{%- if block.type == 'work' -%}
+        {%- assign wl = block.settings.link | default: store -%}
+        <a class="pf-work__item reveal" href="{{ wl }}" {{ block.shopify_attributes }}>
+          <img src="{{ block.settings.image_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          <span class="pf-work__cap"><span>{{ block.settings.title }}</span><span>{{ block.settings.tag }}</span></span>
+        </a>
+      {%- endif -%}{%- endfor -%}
+    </div>
+  </div></section>
+
+  <section class="section" id="campaigns"><div class="container">
+    <p class="eyebrow reveal" id="campaigns-label">Campaigns</p>
+    <h2 class="h-md reveal" style="color:var(--bg);margin:.5rem 0 2.5rem">Seen this season</h2>
+    <div class="editorial-split">
+      {%- for block in section.blocks -%}{%- if block.type == 'campaign' -%}
+        <div class="editorial-split__media reveal" {{ block.shopify_attributes }}><img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="lazy"></div>
+      {%- endif -%}{%- endfor -%}
+    </div>
+  </div></section>
+
+  <section class="section" id="contact"><div class="container" style="text-align:center">
+    <p class="eyebrow reveal">Booking &amp; collaboration</p>
+    <h2 class="h-lg reveal" style="color:var(--bg);max-width:16ch;margin:.5rem auto 0">{{ section.settings.contact_heading }}</h2>
+    <p class="lede reveal" style="color:rgba(246,243,238,.75);max-width:50ch;margin:1.5rem auto 2rem">{{ section.settings.contact_text }}</p>
+    <a href="mailto:{{ section.settings.contact_email }}" class="btn reveal" style="--btn-bg:var(--bg);--btn-fg:var(--ink)" data-magnetic="0.3">{{ section.settings.contact_cta }}</a>
+  </div></section>
+
+  <footer class="pf-footer">
+    <span class="muted" style="max-width:52ch">{{ section.settings.footer_disclosure }}</span>
+    <a href="{{ store }}" class="link-underline">← Back to the store</a>
+  </footer>
+</div>
+
+{% schema %}
+{
+  "name": "Melina portfolio",
+  "settings": [
+    { "type": "url", "id": "store_url", "label": "Store link" },
+    { "type": "text", "id": "name", "label": "Name", "default": "Melina Jones Voss" },
+    { "type": "text", "id": "pill", "label": "Disclosure pill", "default": "Openly AI-generated" },
+    { "type": "text", "id": "role", "label": "Role", "default": "AI Model · Digital Muse" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>A digital muse who can wear any look, in any light — no photoshoot required. The face of the house, and available for campaigns.</p>" },
+    { "type": "image_picker", "id": "portrait", "label": "Portrait" },
+    { "type": "text", "id": "portrait_url", "label": "Portrait URL (fallback)", "default": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png" },
+    { "type": "header", "content": "About" },
+    { "type": "richtext", "id": "bio", "label": "Bio", "default": "<p>Melina Jones Voss was created as the permanent face of a made-to-order fashion house — an AI model who lets the atelier design freely and photograph nothing.</p>" },
+    { "type": "textarea", "id": "disclosure", "label": "AI disclosure", "default": "Melina is an AI model. She is not a real person. Every image here is generated with her likeness, and disclosed as such — on this page, in the store, and in every campaign." },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "contact_heading", "label": "Contact heading", "default": "Cast Melina in your next campaign." },
+    { "type": "richtext", "id": "contact_text", "label": "Contact text", "default": "<p>Available for lookbooks, product try-on, and editorial — alongside the real models and makers we cast. Tell us what you're building.</p>" },
+    { "type": "text", "id": "contact_email", "label": "Contact email", "default": "casting@melina.example" },
+    { "type": "text", "id": "contact_cta", "label": "Contact button", "default": "Book Melina" },
+    { "type": "textarea", "id": "footer_disclosure", "label": "Footer note", "default": "Melina Jones Voss is an AI model. All imagery is generated and openly disclosed." }
+  ],
+  "blocks": [
+    { "type": "stat", "name": "Stat", "settings": [
+      { "type": "text", "id": "number", "label": "Number", "default": "100%" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Generated" }
+    ] },
+    { "type": "work", "name": "Work / look", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Look" },
+      { "type": "text", "id": "tag", "label": "Tag", "default": "Editorial" },
+      { "type": "text", "id": "image_url", "label": "Image URL" },
+      { "type": "url", "id": "link", "label": "Link (defaults to store)" }
+    ] },
+    { "type": "campaign", "name": "Campaign image", "settings": [
+      { "type": "text", "id": "caption", "label": "Caption", "default": "Campaign" },
+      { "type": "text", "id": "image_url", "label": "Image URL" }
+    ] }
+  ],
+  "presets": [{ "name": "Melina portfolio" }]
+}
+{% endschema %}
