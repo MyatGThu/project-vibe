@@ -542,6 +542,12 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
    zoom + blur that dissolves into the next section (Collection 01).
    Only transform/opacity/filter animate; reduced-motion never reaches `.is-3d`.
    ============================================================ */
+/* --flyz is animated (per-frame) inside the panel transform's calc(). An UNREGISTERED custom
+   property changed via style.setProperty does NOT reliably re-render a transform in Chromium — the
+   matrix stays frozen and the panels never move. Registering it as a typed <length> makes the
+   transform recompute on every change. This is THE fix for "the panels don't animate". */
+@property --flyz { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
 .l3d { --l3d-step: 380px; position: relative; }
 /* is-3d (JS-only): the section grows tall and the viewport STICKS natively — no GSAP pin.
    A GSAP pin uses position:fixed + a spacer and hijacks the scroll, which is the one thing that
