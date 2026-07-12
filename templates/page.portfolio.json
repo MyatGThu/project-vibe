@@ -1,9 +1,5 @@
 {
   "sections": {
-    "pf_header": {
-      "type": "portfolio-header",
-      "settings": { "name": "MELINA", "tag": "AI Model", "store_label": "Enter the store ↗" }
-    },
     "portfolio": {
       "type": "melina-portfolio",
       "settings": {
@@ -31,5 +27,5 @@
       "block_order": ["s1", "s2", "s3", "s4", "w1", "w2", "w3", "w4", "w5", "w6", "c1", "c2"]
     }
   },
-  "order": ["pf_header", "portfolio"]
+  "order": ["portfolio"]
 }
