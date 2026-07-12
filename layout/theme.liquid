@@ -59,6 +59,8 @@
     <dialog id="QuickView" class="quick-view" aria-label="{{ 'products.product.quick_view' | t: default: 'Product quick view' }}">
       <div class="quick-view__inner" data-quick-view-content>
         <button class="quick-view__close" data-quick-view-close aria-label="{{ 'accessibility.close' | t: default: 'Close' }}">&times;</button>
+        <button class="quick-view__nav quick-view__nav--prev" data-quick-view-prev aria-label="{{ 'accessibility.previous' | t: default: 'Previous product' }}" hidden>&lsaquo;</button>
+        <button class="quick-view__nav quick-view__nav--next" data-quick-view-next aria-label="{{ 'accessibility.next' | t: default: 'Next product' }}" hidden>&rsaquo;</button>
         <div class="quick-view__skeleton" data-quick-view-skeleton>
           <div class="skeleton skeleton--media"></div>
           <div class="skeleton-stack">

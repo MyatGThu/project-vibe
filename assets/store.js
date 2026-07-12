@@ -69,26 +69,48 @@
   }
 
   /* ---------- quick view ---------- */
-  var qvState = null;
+  var qvState = null, navCards = [], navIndex = -1;
 
-  function openQuickView(card) {
-    if (!dialog) return;
+  function collectCards() {
+    return Array.prototype.slice.call(document.querySelectorAll('[data-product]'))
+      .filter(function (c) { return c.getAttribute('data-quick-view') !== 'false'; });
+  }
+
+  function updateArrows() {
+    var show = navCards.length > 1;
+    Array.prototype.slice.call(dialog.querySelectorAll('[data-quick-view-prev], [data-quick-view-next]'))
+      .forEach(function (b) { b.hidden = !show; });
+  }
+
+  // Render a product into the (already open) dialog. Used for both open and prev/next.
+  function loadCard(card) {
     var content = dialog.querySelector('[data-quick-view-content]');
     var skeleton = dialog.querySelector('[data-quick-view-skeleton]');
-    if (skeleton) skeleton.style.display = '';
-    // clear previous product body (keep close btn + skeleton)
     Array.prototype.slice.call(content.querySelectorAll('.qv-body')).forEach(function (n) { n.remove(); });
-
-    if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
-    lockScroll(true);
-
-    getProduct(card).then(function (p) {
+    if (skeleton) skeleton.style.display = '';
+    return getProduct(card).then(function (p) {
       if (skeleton) skeleton.style.display = 'none';
       renderQuickView(content, p, card);
     }).catch(function () {
       if (skeleton) skeleton.style.display = 'none';
       content.appendChild(el('<div class="qv-body" style="padding:2rem">Unable to load this product. <a class="link-underline" href="' + esc(card.getAttribute('data-product-url') || '#') + '">View full details</a></div>'));
     });
+  }
+
+  function navigate(dir) {
+    if (navCards.length < 2) return;
+    navIndex = (navIndex + dir + navCards.length) % navCards.length;
+    loadCard(navCards[navIndex]);
+  }
+
+  function openQuickView(card) {
+    if (!dialog) return;
+    navCards = collectCards();
+    navIndex = navCards.indexOf(card);
+    updateArrows();
+    if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
+    lockScroll(true);
+    loadCard(card);
   }
 
   function renderQuickView(content, p, card) {
@@ -203,6 +225,9 @@
       }
       return;
     }
+    // quick-view prev / next
+    if (e.target.closest('[data-quick-view-prev]')) { e.preventDefault(); navigate(-1); return; }
+    if (e.target.closest('[data-quick-view-next]')) { e.preventDefault(); navigate(1); return; }
     // close
     if (e.target.closest('[data-quick-view-close]')) { e.preventDefault(); closeQuickView(); return; }
     // qty buttons
@@ -224,6 +249,13 @@
   // click on dialog backdrop closes (native <dialog> click target is the dialog itself)
   if (dialog) dialog.addEventListener('click', function (e) { if (e.target === dialog) closeQuickView(); });
   document.addEventListener('cancel', function (e) { if (e.target === dialog) { e.preventDefault(); closeQuickView(); } });
+
+  // Arrow keys move between products (ignore while typing in the quantity field)
+  if (dialog) dialog.addEventListener('keydown', function (e) {
+    if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); navigate(1); }
+  });
 
   /* ---------- add to bag ---------- */
   function addToBag(btn) {
