@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+    {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+
+    {% render 'meta-tags' %}
+
+    {%- comment -%} Fonts: distinctive editorial pairing (ponytail: Google Fonts CDN, vendor into assets/ only if privacy/perf demands) {%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap">
+
+    {%- style -%}
+      :root {
+        --bg: {{ settings.color_bg }};
+        --surface: {{ settings.color_surface }};
+        --ink: {{ settings.color_ink }};
+        --muted: {{ settings.color_muted }};
+        --accent: {{ settings.color_accent }};
+        --line: {{ settings.color_line }};
+        --display-font: {{ settings.display_font }};
+        --type-scale: {{ settings.type_scale }};
+        --page-width: {{ settings.page_width }}px;
+        --radius: {{ settings.corner_radius }}px;
+        --reveal-intensity: {{ settings.reveal_intensity | divided_by: 100.0 }};
+      }
+    {%- endstyle -%}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}">
+    <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- comment -%} Quick-view overlay: single dialog reused for every product (ponytail: one dialog, populated by JS) {%- endcomment -%}
+    <dialog id="QuickView" class="quick-view" aria-label="{{ 'products.product.quick_view' | t: default: 'Product quick view' }}">
+      <div class="quick-view__inner" data-quick-view-content>
+        <button class="quick-view__close" data-quick-view-close aria-label="{{ 'accessibility.close' | t: default: 'Close' }}">&times;</button>
+        <div class="quick-view__skeleton" data-quick-view-skeleton>
+          <div class="skeleton skeleton--media"></div>
+          <div class="skeleton-stack">
+            <div class="skeleton skeleton--line"></div>
+            <div class="skeleton skeleton--line short"></div>
+            <div class="skeleton skeleton--block"></div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    {%- comment -%} Motion + store JS. Libraries vendored in assets/ (self-contained). model-viewer lazy-loads only when a 3D block is present. {%- endcomment -%}
+    {{ 'lenis.min.js' | asset_url | script_tag }}
+    {{ 'gsap.min.js' | asset_url | script_tag }}
+    {{ 'scrolltrigger.min.js' | asset_url | script_tag }}
+    {{ 'motion.js' | asset_url | script_tag }}
+    {{ 'store.js' | asset_url | script_tag }}
+
+    <script>
+      window.Theme = {
+        routes: {
+          cartAdd: '{{ routes.cart_add_url }}.js',
+          cartChange: '{{ routes.cart_change_url }}.js',
+          cart: '{{ routes.cart_url }}.js',
+          productBase: '{{ routes.all_products_collection_url }}'
+        },
+        moneyFormat: {{ shop.money_format | json }},
+        modelViewerSrc: '{{ 'model-viewer.min.js' | asset_url }}',
+        motion: { smooth: {{ settings.smooth_scroll | default: true }}, reveal: {{ settings.scroll_reveal | default: true }} },
+        strings: {
+          addToCart: {{ 'products.product.add_to_cart' | t | json }},
+          soldOut: {{ 'products.product.sold_out' | t | json }},
+          unavailable: {{ 'products.product.unavailable' | t | json }}
+        }
+      };
+    </script>
+  </body>
+</html>

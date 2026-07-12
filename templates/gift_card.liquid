@@ -1,0 +1,119 @@
+{% layout 'gift_card' %}
+
+{%- comment -%} MELINA — gift card. The gift_card layout is bare, so this template is self-contained. {%- endcomment -%}
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+    color: var(--ink, #14110F);
+    background: var(--bg, #EDE9E3);
+    -webkit-font-smoothing: antialiased;
+  }
+  .gc {
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vw, 5rem) 1.5rem;
+    text-align: center;
+  }
+  .gc__eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted, #6B655E);
+    margin: 0 0 2rem;
+  }
+  .gc__shop {
+    font-family: var(--display-font, "Fraunces", Georgia, serif);
+    font-weight: 340;
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1;
+    margin: 0 0 0.5rem;
+  }
+  .gc__note { color: var(--muted, #6B655E); margin: 0 0 2.75rem; }
+  .gc__amount {
+    font-family: var(--display-font, "Fraunces", Georgia, serif);
+    font-size: clamp(3rem, 14vw, 5rem);
+    line-height: 1;
+    margin: 0;
+  }
+  .gc__balance {
+    font-size: 0.85rem;
+    color: var(--muted, #6B655E);
+    margin: 0.75rem 0 0;
+  }
+  .gc__card {
+    margin: 2.75rem 0;
+    padding: 1.5rem 1rem;
+    background: var(--surface, #F6F3EE);
+    border: 1px solid var(--line, #D6CFC5);
+    border-radius: var(--radius, 2px);
+  }
+  .gc__card-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted, #6B655E);
+    margin: 0 0 0.75rem;
+  }
+  .gc__code {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: clamp(1.15rem, 5vw, 1.6rem);
+    letter-spacing: 0.12em;
+    word-break: break-all;
+    margin: 0;
+  }
+  .gc__actions { display: flex; flex-direction: column; gap: 0.9rem; align-items: center; }
+  .gc__btn {
+    display: inline-block;
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+    background: var(--ink, #14110F);
+    color: var(--bg, #EDE9E3);
+    border: 1px solid var(--ink, #14110F);
+    font: inherit;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .gc__link {
+    font-size: 0.82rem;
+    color: var(--muted, #6B655E);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+  {% if gift_card.expired %}
+    .gc__amount { color: var(--muted, #6B655E); }
+  {% endif %}
+  @media print {
+    .gc__actions { display: none; }
+    body { background: #fff; }
+  }
+</style>
+
+<main class="gc">
+  <p class="gc__eyebrow">Gift Card</p>
+  <h1 class="gc__shop">{{ shop.name }}</h1>
+  <p class="gc__note">A little something, chosen with care.</p>
+
+  <p class="gc__amount">{{ gift_card.initial_value | money }}</p>
+  {%- if gift_card.balance != gift_card.initial_value -%}
+    <p class="gc__balance">Balance remaining {{ gift_card.balance | money }}</p>
+  {%- endif -%}
+  {%- if gift_card.expired -%}
+    <p class="gc__balance">This card has expired.</p>
+  {%- endif -%}
+
+  <div class="gc__card">
+    <p class="gc__card-label">Redemption code</p>
+    <p class="gc__code">{{ gift_card.code | format_code }}</p>
+  </div>
+
+  <div class="gc__actions">
+    <button type="button" class="gc__btn" onclick="window.print()">Print card</button>
+    <a class="gc__link" href="{{ shop.url }}">Visit {{ shop.name }}</a>
+  </div>
+</main>

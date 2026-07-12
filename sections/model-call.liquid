@@ -1,0 +1,38 @@
+<section class="section">
+  <div class="container">
+    <div class="model-call reveal">
+      <span class="model-call__glow" aria-hidden="true"></span>
+      <div class="model-call__inner">
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow" style="color:rgba(246,243,238,.7)">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="model-call__title">{{ section.settings.heading_pre }} <span class="chrome-text">{{ section.settings.heading_accent }}</span> {{ section.settings.heading_post }}</h2>
+        <p class="lede" style="color:rgba(246,243,238,.85);max-width:52ch">{{ section.settings.subtext }}</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+          {%- if section.settings.cta_text != blank -%}
+            <a href="{{ section.settings.cta_link }}" class="btn" style="--btn-bg:var(--bg);--btn-fg:var(--ink)" data-magnetic="0.3">{{ section.settings.cta_text }}</a>
+          {%- endif -%}
+          {%- if section.settings.cta2_text != blank -%}
+            <a href="{{ section.settings.cta2_link }}" class="btn btn--ghost" style="--btn-fg:var(--bg);border-color:rgba(246,243,238,.4)" data-magnetic="0.3">{{ section.settings.cta2_text }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Model call",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Casting & collaboration" },
+    { "type": "text", "id": "heading_pre", "label": "Heading (before accent)", "default": "For models, makers and" },
+    { "type": "text", "id": "heading_accent", "label": "Accent word", "default": "muses" },
+    { "type": "text", "id": "heading_post", "label": "Heading (after accent)", "default": "— human and rendered." },
+    { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "We build campaigns with real models and AI muses side by side, fully credited and disclosed. Bring us a face, a fabric, or an idea." },
+    { "type": "text", "id": "cta_text", "label": "Primary button", "default": "Apply to be cast" },
+    { "type": "url", "id": "cta_link", "label": "Primary link" },
+    { "type": "text", "id": "cta2_text", "label": "Secondary button", "default": "Collaborate with us" },
+    { "type": "url", "id": "cta2_link", "label": "Secondary link" }
+  ],
+  "presets": [{ "name": "Model call" }]
+}
+{% endschema %}

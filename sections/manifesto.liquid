@@ -1,0 +1,27 @@
+{%- liquid
+  assign words = section.settings.text | split: ' '
+-%}
+<section class="section manifesto">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow reveal" style="margin-bottom:2rem">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <p class="manifesto__text reveal-words">{% for w in words %}<span class="reveal-word">{{ w }}</span> {% endfor %}</p>
+    {%- if section.settings.cta_text != blank -%}
+      <div class="reveal" style="margin-top:3rem">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--ghost" data-magnetic="0.3">{{ section.settings.cta_text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Manifesto",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The house" },
+    { "type": "textarea", "id": "text", "label": "Statement", "default": "We dress an idea. Melina is not photographed — she is rendered, disclosed, and dressed in clothes you can actually own." },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Meet Melina" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Manifesto" }]
+}
+{% endschema %}

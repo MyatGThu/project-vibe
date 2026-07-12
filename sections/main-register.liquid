@@ -1,0 +1,46 @@
+<section class="section">
+  <div class="container" style="max-width: 460px;">
+    <header class="reveal" style="margin-bottom: 2rem;">
+      <p class="eyebrow">Account</p>
+      <h1 class="h-md">Create account</h1>
+    </header>
+
+    {% form 'create_customer' %}
+      {{ form.errors | default_errors }}
+
+      <div class="option">
+        <label class="label" for="first_name">First name</label>
+        <input type="text" name="customer[first_name]" id="first_name" autocomplete="given-name" autofocus>
+      </div>
+
+      <div class="option">
+        <label class="label" for="last_name">Last name</label>
+        <input type="text" name="customer[last_name]" id="last_name" autocomplete="family-name">
+      </div>
+
+      <div class="option">
+        <label class="label" for="register_email">Email</label>
+        <input type="email" name="customer[email]" id="register_email" autocomplete="email" autocapitalize="off">
+      </div>
+
+      <div class="option">
+        <label class="label" for="register_password">Password</label>
+        <input type="password" name="customer[password]" id="register_password" autocomplete="new-password">
+      </div>
+
+      <button type="submit" class="btn btn--block btn--lg" data-magnetic="0.2">Create account</button>
+    {% endform %}
+
+    <p class="muted" style="margin-top: 1.5rem;">
+      Already have an account?
+      <a href="{{ routes.account_login_url }}" class="link-underline">Log in</a>
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Register",
+  "settings": []
+}
+{% endschema %}

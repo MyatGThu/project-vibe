@@ -1,0 +1,27 @@
+{
+  "current": {
+    "brand_name": "MELINA",
+    "brand_tagline": "Digital couture, worn by an AI muse.",
+    "logo_width": 120,
+    "color_bg": "#EDE9E3",
+    "color_surface": "#F6F3EE",
+    "color_ink": "#14110F",
+    "color_muted": "#6B655E",
+    "color_accent": "#8A6A4B",
+    "color_line": "#D6CFC5",
+    "display_font": "'Fraunces', Georgia, serif",
+    "type_scale": 1.24,
+    "page_width": 1560,
+    "corner_radius": 2,
+    "card_hover_reveal": true,
+    "card_quick_view": true,
+    "card_hide_face": true,
+    "smooth_scroll": true,
+    "scroll_reveal": true,
+    "reveal_intensity": 100,
+    "social_instagram": "",
+    "social_tiktok": "",
+    "social_email": ""
+  },
+  "presets": {}
+}

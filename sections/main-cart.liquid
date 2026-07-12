@@ -1,0 +1,46 @@
+<section class="section">
+  <div class="container" style="max-width:960px">
+    <h1 class="h-md reveal" style="margin-bottom:2.5rem">{{ 'cart.general.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" id="CartForm">
+        {%- for item in cart.items -%}
+          <div class="cart-line">
+            <a href="{{ item.url }}">
+              {%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.product.title | escape }}">{%- else -%}<img src="{{ 'ph-figure.svg' | asset_url }}" alt="">{%- endif -%}
+            </a>
+            <div>
+              <a href="{{ item.url }}" class="card__title" style="font-size:var(--step-0)">{{ item.product.title }}</a>
+              {%- unless item.variant.title contains 'Default' -%}<p class="muted">{{ item.variant.title }}</p>{%- endunless -%}
+              <a href="{{ item.url_to_remove }}" class="link-underline muted" style="font-size:var(--step--1)">{{ 'cart.general.remove' | t }}</a>
+            </div>
+            <div class="qty">
+              <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}" aria-label="Decrease">–</a>
+              <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" aria-label="Quantity" style="width:2.6rem;text-align:center;border:none;background:transparent">
+              <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" aria-label="Increase">+</a>
+            </div>
+            <div>{{ item.final_line_price | money }}</div>
+          </div>
+        {%- endfor -%}
+
+        <div class="cart-foot">
+          <button type="submit" name="update" class="link-underline muted">Update bag</button>
+          <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap">
+            <span class="lede">{{ 'cart.general.subtotal' | t }} — {{ cart.total_price | money }}</span>
+            <button type="submit" name="checkout" class="btn btn--lg" data-magnetic="0.2">{{ 'cart.general.checkout' | t }}</button>
+          </div>
+        </div>
+        <p class="muted" style="margin-top:1rem;font-size:var(--step--1)">{{ 'cart.general.taxes_note' | t }}</p>
+      </form>
+    {%- else -%}
+      <div class="empty-state">
+        <p class="lede muted">{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn" style="margin-top:1.5rem" data-magnetic="0.3">{{ 'cart.general.continue' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

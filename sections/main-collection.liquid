@@ -1,0 +1,30 @@
+<section class="section">
+  <div class="container">
+    <header class="collection-hero reveal">
+      <p class="eyebrow">{{ collection.products_count }} {% if collection.products_count == 1 %}piece{% else %}pieces{% endif %}</p>
+      <h1>{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<div class="rte muted" style="max-width:60ch;margin:1.2rem auto 0">{{ collection.description }}</div>{%- endif -%}
+    </header>
+
+    {% paginate collection.products by 16 %}
+      {%- if collection.products.size > 0 -%}
+        <div class="product-grid">
+          {%- for product in collection.products -%}{% render 'product-card', product: product, reveal_index: forloop.index0 %}{%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="eyebrow" style="display:flex;gap:2rem;justify-content:center;margin-top:4rem" aria-label="Pagination">
+            {%- if paginate.previous -%}<a class="link-underline" href="{{ paginate.previous.url }}">← {{ 'general.pagination.previous' | t }}</a>{%- endif -%}
+            <span>{{ paginate.current_page }} / {{ paginate.pages }}</span>
+            {%- if paginate.next -%}<a class="link-underline" href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }} →</a>{%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <div class="empty-state"><p class="lede muted">This collection is being tailored. Once Tapstitch products sync in, they’ll appear here.</p></div>
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collection", "settings": [] }
+{% endschema %}

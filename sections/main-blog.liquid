@@ -1,0 +1,47 @@
+{% paginate blog.articles by 9 %}
+<section class="section">
+  <div class="container">
+    <header class="reveal" style="margin-bottom:3rem">
+      <p class="eyebrow">Journal</p>
+      <h1 class="h-md">{{ blog.title }}</h1>
+    </header>
+
+    {%- if blog.articles.size > 0 -%}
+      <div class="product-grid">
+        {%- for article in blog.articles -%}
+          <a class="card reveal" href="{{ article.url }}" data-reveal-delay="{{ forloop.index0 | times: 0.05 }}">
+            <div class="card__media">
+              {%- if article.image != blank -%}
+                {{ article.image | image_url: width: 900 | image_tag: class: 'card__img card__img--front', loading: 'lazy', widths: '400,600,900,1200', sizes: '(max-width: 900px) 50vw, 25vw', alt: article.title | escape }}
+              {%- else -%}
+                <img class="card__img card__img--front" src="{{ 'ph-wide.svg' | asset_url }}" alt="{{ article.title | escape }}">
+              {%- endif -%}
+            </div>
+            <div class="card__body" style="flex-direction:column;justify-content:flex-start;gap:0.5rem">
+              <p class="card__cat">{{ article.published_at | date: '%B %e, %Y' }}</p>
+              <h2 class="card__title">{{ article.title }}</h2>
+              {%- if article.excerpt_or_content != blank -%}
+                <p class="muted" style="font-size:var(--step--1)">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="eyebrow" style="display:flex;gap:2rem;justify-content:center;margin-top:4rem" aria-label="Pagination">
+          {%- if paginate.previous -%}<a class="link-underline" href="{{ paginate.previous.url }}">← {{ 'general.pagination.previous' | t }}</a>{%- endif -%}
+          <span>{{ paginate.current_page }} / {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a class="link-underline" href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }} →</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- else -%}
+      <div class="empty-state"><p class="lede muted">No stories yet. Melina is still writing.</p></div>
+    {%- endif -%}
+  </div>
+</section>
+{% endpaginate %}
+
+{% schema %}
+{ "name": "Blog", "settings": [] }
+{% endschema %}

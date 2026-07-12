@@ -1,0 +1,54 @@
+<section class="section">
+  <div class="container">
+    <header class="reveal" style="margin-bottom:2rem">
+      <p class="eyebrow">Search</p>
+      <h1 class="h-md">Find your piece</h1>
+    </header>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="reveal" style="margin-bottom:2.5rem">
+      <div class="option">
+        <label class="label" for="q">Search</label>
+        <input type="search" id="q" name="q" value="{{ search.terms | escape }}" placeholder="Search" autocomplete="off">
+      </div>
+      <button type="submit" class="btn">Search</button>
+    </form>
+
+    {% if search.performed %}
+      {% paginate search.results by 12 %}
+        <p class="muted reveal" style="margin-bottom:1.5rem">{{ search.results_count }} results for &ldquo;{{ search.terms | escape }}&rdquo;</p>
+
+        {% if search.results.size > 0 %}
+          <div class="product-grid">
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {% render 'product-card', product: item %}
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if paginate.pages > 1 %}
+            <nav class="section--tight" style="text-align:center">
+              {% if paginate.previous %}
+                <a class="link-underline" href="{{ paginate.previous.url }}">Previous</a>
+              {% endif %}
+              {% if paginate.next %}
+                <a class="link-underline" href="{{ paginate.next.url }}" style="margin-left:1.5rem">Next</a>
+              {% endif %}
+            </nav>
+          {% endif %}
+        {% else %}
+          <div class="empty-state">
+            <p class="lede muted">No results.</p>
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": []
+}
+{% endschema %}

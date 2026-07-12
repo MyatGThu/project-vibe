@@ -1,0 +1,11 @@
+# Shopify Theme Check — https://shopify.dev/docs/storefronts/themes/tools/theme-check
+extends: theme-check:recommended
+
+# The signature scroll/3D libraries are vendored in assets/ and loaded intentionally.
+ParserBlockingScript:
+  enabled: false
+
+# Every image sits in a CSS aspect-ratio container that reserves its space,
+# so there is no layout shift even without literal width/height attributes.
+ImgWidthAndHeight:
+  enabled: false

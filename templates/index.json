@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Autumn — Collection 01",
+        "heading": "Couture, rendered.",
+        "subtext": "A women's-wear house dressed on an AI muse. Made-to-order, worldwide.",
+        "cta_text": "Enter the collection",
+        "cta_link": "shopify://collections/all",
+        "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085753_a8c0a932-a16c-43e6-bc52-c1bda2be8b74.png"
+      }
+    },
+    "marquee": { "type": "marquee", "settings": {} },
+    "capsule": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Collection 01",
+        "heading": "The Autumn capsule",
+        "products_to_show": 8,
+        "link_text": "View all",
+        "link": "shopify://collections/all"
+      },
+      "blocks": {
+        "p1": { "type": "product", "settings": { "title": "The Monolith Coat", "category": "Outerwear", "price": "$1,290.00", "price_cents": 129000, "sizes": "XS, S, M, L", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png", "description": "<p>A sculptural double-breasted overcoat in dry charcoal wool. Cinched waist, architectural lapels. Made to order in 3–4 weeks.</p>" } },
+        "p2": { "type": "product", "settings": { "title": "The Liquid Slip", "category": "Dresses", "price": "$690.00", "price_cents": 69000, "sizes": "XS, S, M, L", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png", "description": "<p>A bias-cut slip in oyster satin with a soft cowl neck. Liquid drape, weightless finish.</p>" } },
+        "p3": { "type": "product", "settings": { "title": "The Null Suit", "category": "Tailoring", "price": "$1,450.00", "price_cents": 145000, "sizes": "XS, S, M, L", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png", "description": "<p>Sharp single-button blazer and straight trouser in ink wool, worn over a silk shell. Power tailoring, quietly.</p>" } },
+        "p4": { "type": "product", "settings": { "title": "The Vapor Knit", "category": "Knitwear", "price": "$520.00", "price_cents": 52000, "sizes": "XS, S, M, L", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe.png", "description": "<p>A sheer fine-gauge column dress in smoke grey with a slip lining. Ethereal, layerable.</p>" } },
+        "p5": { "type": "product", "settings": { "title": "The Obsidian Trouser", "category": "Tailoring", "price": "$580.00", "price_cents": 58000, "sizes": "XS, S, M, L", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png", "description": "<p>High-waisted wide-leg trouser in ink wool, styled with a champagne silk shell and a minimal leather belt.</p>" } },
+        "p6": { "type": "product", "settings": { "title": "The Halo Gown", "category": "Eveningwear", "price": "$2,400.00", "price_cents": 240000, "sizes": "XS, S, M, L", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png", "description": "<p>An architectural one-shoulder gown in bone crepe with a sculpted train. Couture, made to measure.</p>" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6"]
+    },
+    "lookbook": {
+      "type": "lookbook",
+      "settings": { "eyebrow": "Campaign", "heading": "Worn by Melina", "subtext": "Scroll through the season. Every frame is generated — every frame is disclosed." },
+      "blocks": {
+        "s1": { "type": "slide", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085753_a8c0a932-a16c-43e6-bc52-c1bda2be8b74.png", "caption": "Look 01 — Ivory", "tag": "Coat", "wide": true } },
+        "s2": { "type": "slide", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png", "caption": "Look 02 — Halo", "tag": "Gown" } },
+        "s3": { "type": "slide", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png", "caption": "Look 03 — Oyster", "tag": "Slip" } },
+        "s4": { "type": "slide", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png", "caption": "Look 04 — Ink", "tag": "Suit", "wide": true } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "manifesto": {
+      "type": "manifesto",
+      "settings": {
+        "eyebrow": "The house",
+        "text": "We dress an idea. Melina is not photographed — she is rendered, disclosed, and dressed in clothes you can actually own.",
+        "cta_text": "Meet Melina",
+        "cta_link": "shopify://pages/about"
+      }
+    },
+    "model_call": { "type": "model-call", "settings": {} }
+  },
+  "order": ["hero", "marquee", "capsule", "lookbook", "manifesto", "model_call"]
+}

@@ -1,0 +1,56 @@
+{
+  "general": {
+    "meta": { "tags": "Tagged \"{{ tags }}\"", "page": "Page {{ page }}" },
+    "search": { "search": "Search", "placeholder": "Search", "no_results": "No results for “{{ terms }}”." },
+    "404": { "title": "Page not found", "subtext": "This look has moved on. The collection has not.", "link": "Return to the atelier" },
+    "newsletter": { "label": "Email", "placeholder": "Your email", "button": "Subscribe", "success": "Thank you — you’re on the list." },
+    "pagination": { "previous": "Previous", "next": "Next" },
+    "password_page": { "login_form_error": "Wrong password. Try again.", "password_label": "Password", "password_placeholder": "Password" }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "menu": "Menu",
+    "cart": "Cart",
+    "loading": "Loading",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to bag",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quick_view": "Quick view",
+      "view_full": "View full details",
+      "price": "Price",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "from_price": "From {{ price }}",
+      "size": "Size",
+      "quantity": "Quantity",
+      "on_sale": "On sale",
+      "choose_options": "Choose options"
+    },
+    "facets": { "sort_by": "Sort", "filter": "Filter" }
+  },
+  "cart": {
+    "general": {
+      "title": "Your bag",
+      "empty": "Your bag is empty.",
+      "continue": "Continue shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "taxes_note": "Shipping and taxes calculated at checkout.",
+      "item_count": "{{ count }} item(s)"
+    }
+  },
+  "customer": {
+    "account": { "title": "Account", "details": "Details", "logout": "Log out", "orders": "Orders" },
+    "login": { "title": "Log in", "email": "Email", "password": "Password", "submit": "Log in", "register": "Create account" },
+    "register": { "title": "Create account", "submit": "Create" },
+    "order": { "title": "Order" }
+  },
+  "footer": { "copyright": "© {{ year }} {{ name }}. All rights reserved." }
+}

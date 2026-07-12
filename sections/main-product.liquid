@@ -1,0 +1,101 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+-%}
+<section class="section">
+  <div class="container">
+    <nav class="eyebrow reveal" style="margin-bottom:2rem"><a href="{{ collection.url | default: routes.all_products_collection_url }}" class="link-underline">← {{ collection.title | default: 'All' }}</a></nav>
+    <div class="pdp">
+      <div class="pdp__media reveal">
+        {%- if product.media.size > 0 -%}
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              {{ media.preview_image | image_tag: widths: '600,900,1400', sizes: '(max-width: 900px) 82vw, 45vw', loading: 'lazy', alt: media.alt | default: product.title }}
+            {%- else -%}
+              {{ media | media_tag: image_size: '1400x' }}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <img src="{{ 'ph-figure.svg' | asset_url }}" alt="{{ product.title | escape }}">
+        {%- endif -%}
+      </div>
+
+      <div class="pdp__info reveal" data-reveal-delay="0.1">
+        {%- if product.type != blank -%}<p class="eyebrow">{{ product.type }}</p>{%- endif -%}
+        <h1 class="pdp__title">{{ product.title }}</h1>
+        <p class="pdp__price" data-price>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="price--was">{{ product.compare_at_price | money }}</span><span class="price--sale">{{ product.price | money }}</span>
+          {%- else -%}{{ current.price | money }}{%- endif -%}
+        </p>
+
+        {%- if product.description != blank -%}<div class="pdp__rte">{{ product.description }}</div>{%- endif -%}
+
+        {% form 'product', product, id: 'ProductForm', class: 'stack' %}
+          <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="option">
+                <div class="option__label"><span class="label">{{ option.name }}</span><span class="muted" data-opt-current="{{ option.position }}">{{ option.selected_value }}</span></div>
+                <div class="swatches" role="group" aria-label="{{ option.name }}">
+                  {%- for value in option.values -%}
+                    <button type="button" class="swatch" data-option-position="{{ option.position }}" data-value="{{ value | escape }}" aria-pressed="{% if value == option.selected_value %}true{% else %}false{% endif %}">{{ value }}</button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <div class="option"><span class="label">{{ 'products.product.quantity' | t }}</span>
+            <div class="qty"><button type="button" data-qty="-1" aria-label="Decrease">–</button><input type="number" name="quantity" min="1" value="1" data-qty-input aria-label="Quantity"><button type="button" data-qty="1" aria-label="Increase">+</button></div>
+          </div>
+
+          <button type="submit" name="add" class="btn btn--block btn--lg" data-magnetic="0.2" {% unless current.available %}disabled{% endunless %}>
+            {%- if current.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+          </button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-product-json>{{ product.variants | json }}</script>
+  <script>
+    // PDP variant picker: swatches -> hidden id + price + button state (native form still works without this)
+    (function () {
+      var form = document.getElementById('ProductForm'); if (!form) return;
+      var variants = JSON.parse(document.querySelector('[data-product-json]').textContent);
+      var prices = { {% for v in product.variants %}"{{ v.id }}": {{ v.price | money | json }}{% unless forloop.last %}, {% endunless %}{% endfor %} };
+      var idField = form.querySelector('[data-variant-id]');
+      var priceEl = document.querySelector('[data-price]');
+      var addBtn = form.querySelector('[name=add]');
+      var strings = (window.Theme && window.Theme.strings) || {};
+      var selected = {{ product.selected_or_first_available_variant.options | json }};
+      form.addEventListener('click', function (e) {
+        var sw = e.target.closest('.swatch');
+        if (sw) {
+          var pos = +sw.getAttribute('data-option-position');
+          selected[pos - 1] = sw.getAttribute('data-value');
+          form.querySelectorAll('.swatch[data-option-position="' + pos + '"]').forEach(function (s) { s.setAttribute('aria-pressed', 'false'); });
+          sw.setAttribute('aria-pressed', 'true');
+          var cur = form.querySelector('[data-opt-current="' + pos + '"]'); if (cur) cur.textContent = sw.getAttribute('data-value');
+          var match = variants.find(function (v) { return v.options.every(function (o, i) { return o === selected[i]; }); });
+          if (match) {
+            idField.value = match.id;
+            if (priceEl && prices[match.id]) priceEl.textContent = prices[match.id];
+            addBtn.disabled = !match.available;
+            addBtn.textContent = match.available ? (strings.addToCart || 'Add to bag') : (strings.soldOut || 'Sold out');
+          }
+          return;
+        }
+        var q = e.target.closest('[data-qty]');
+        if (q) {
+          var input = form.querySelector('[data-qty-input]');
+          input.value = Math.max(1, (parseInt(input.value, 10) || 1) + parseInt(q.getAttribute('data-qty'), 10));
+        }
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{ "name": "Product", "settings": [] }
+{% endschema %}

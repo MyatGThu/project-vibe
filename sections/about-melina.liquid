@@ -1,0 +1,75 @@
+{%- liquid
+  if section.settings.image != blank
+    assign portrait = section.settings.image | image_url: width: 1400
+  else
+    assign portrait = section.settings.image_url
+  endif
+-%}
+<section class="about-hero">
+  <div class="about-hero__media">
+    {%- if portrait != blank -%}<img src="{{ portrait }}" alt="{{ section.settings.name | escape }}">{%- else -%}<img src="{{ 'ph-figure.svg' | asset_url }}" alt="{{ section.settings.name }}">{%- endif -%}
+  </div>
+  <div class="about-hero__body">
+    <p class="eyebrow reveal">{{ section.settings.eyebrow }}</p>
+    <h1 class="h-lg reveal">{{ section.settings.name }}</h1>
+    <div class="disclosure reveal">
+      <span class="disclosure__dot" aria-hidden="true"></span>
+      <p>{{ section.settings.disclosure }}</p>
+    </div>
+    <div class="lede reveal">{{ section.settings.intro }}</div>
+  </div>
+</section>
+
+<section class="section--tight">
+  <div class="container">
+    <div class="stat-row reveal">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'stat' -%}
+          <div class="stat" {{ block.shopify_attributes }}><span class="stat__num">{{ block.settings.number }}</span><span class="stat__label">{{ block.settings.label }}</span></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container editorial-split">
+    <div class="reveal">
+      <p class="eyebrow" style="margin-bottom:1.5rem">{{ section.settings.story_eyebrow }}</p>
+      <div class="lede">{{ section.settings.story }}</div>
+    </div>
+    <div class="editorial-split__media reveal">
+      {%- if section.settings.story_image != blank -%}
+        <img src="{{ section.settings.story_image | image_url: width: 1200 }}" alt="{{ section.settings.name }}">
+      {%- elsif section.settings.story_image_url != blank -%}
+        <img src="{{ section.settings.story_image_url }}" alt="{{ section.settings.name }}">
+      {%- else -%}<img src="{{ 'ph-figure.svg' | asset_url }}" alt="{{ section.settings.name }}">{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Melina",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The muse" },
+    { "type": "text", "id": "name", "label": "Name", "default": "Melina Jones Voss" },
+    { "type": "textarea", "id": "disclosure", "label": "AI disclosure", "default": "Melina is an AI model. She is not a real person. Every image on this site is generated with her likeness — and we tell you, every time." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Born from a single idea and a diffusion model, Melina is the face of the house: a digital muse who can wear any look, in any light, without a photoshoot.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Portrait" },
+    { "type": "text", "id": "image_url", "label": "Portrait URL (fallback)", "default": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png" },
+    { "type": "header", "content": "Story" },
+    { "type": "text", "id": "story_eyebrow", "label": "Story eyebrow", "default": "On being honest about it" },
+    { "type": "richtext", "id": "story", "label": "Story", "default": "<p>We think AI in fashion only works with radical transparency. Melina is disclosed on every page, in the footer, and here. She lets us design freely and photograph nothing — and she works alongside the real models and makers we cast.</p>" },
+    { "type": "image_picker", "id": "story_image", "label": "Story image" },
+    { "type": "text", "id": "story_image_url", "label": "Story image URL (fallback)", "default": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085753_a8c0a932-a16c-43e6-bc52-c1bda2be8b74.png" }
+  ],
+  "blocks": [
+    { "type": "stat", "name": "Stat", "settings": [
+      { "type": "text", "id": "number", "label": "Number", "default": "100%" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Generated" }
+    ] }
+  ],
+  "presets": [{ "name": "About Melina" }]
+}
+{% endschema %}

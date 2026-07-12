@@ -1,0 +1,74 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Melina",
+    "theme_version": "1.0.0",
+    "theme_author": "project-vibe",
+    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes",
+    "theme_support_url": "https://shopify.dev/docs/storefronts/themes"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "MELINA" },
+      { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Digital couture, worn by an AI muse." },
+      { "type": "image_picker", "id": "logo", "label": "Logo (optional, overrides text)" },
+      { "type": "range", "id": "logo_width", "min": 60, "max": 240, "step": 10, "unit": "px", "label": "Logo width", "default": 120 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_bg", "label": "Background (bone)", "default": "#EDE9E3" },
+      { "type": "color", "id": "color_surface", "label": "Surface", "default": "#F6F3EE" },
+      { "type": "color", "id": "color_ink", "label": "Ink (text)", "default": "#14110F" },
+      { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#6B655E" },
+      { "type": "color", "id": "color_accent", "label": "Accent", "default": "#8A6A4B" },
+      { "type": "color", "id": "color_line", "label": "Hairlines", "default": "#D6CFC5" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "select", "id": "display_font", "label": "Display font", "default": "'Fraunces', Georgia, serif",
+        "options": [
+          { "value": "'Fraunces', Georgia, serif", "label": "Fraunces (serif)" },
+          { "value": "'Space Grotesk', system-ui, sans-serif", "label": "Space Grotesk (grotesque)" }
+        ] },
+      { "type": "range", "id": "type_scale", "min": 1.0, "max": 1.4, "step": 0.1, "unit": "x", "label": "Heading scale", "default": 1.2 }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "min": 1200, "max": 1800, "step": 20, "unit": "px", "label": "Max page width", "default": 1560 },
+      { "type": "range", "id": "corner_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Corner radius", "default": 2 }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      { "type": "checkbox", "id": "card_hover_reveal", "label": "Reveal model image on hover", "default": true },
+      { "type": "checkbox", "id": "card_quick_view", "label": "Open products as an overlay (quick view)", "default": true },
+      { "type": "checkbox", "id": "card_hide_face", "label": "Hide model face on card (reveal on hover)", "default": true }
+    ]
+  },
+  {
+    "name": "Motion",
+    "settings": [
+      { "type": "checkbox", "id": "smooth_scroll", "label": "Smooth scrolling (Lenis)", "default": true },
+      { "type": "checkbox", "id": "scroll_reveal", "label": "Scroll reveal animations", "default": true },
+      { "type": "range", "id": "reveal_intensity", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Reveal intensity", "default": 100 },
+      { "type": "paragraph", "content": "Motion always respects the visitor's reduced-motion setting." }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok URL" },
+      { "type": "text", "id": "social_email", "label": "Contact email" }
+    ]
+  }
+]
