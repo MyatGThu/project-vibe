@@ -1,0 +1,55 @@
+<!doctype html>
+<!--
+  DEV PREVIEW ONLY (not part of the Shopify theme).
+  Mirrors sections/landing-3d.liquid with the REAL assets so the 3D scroll
+  flythrough can be verified. Load plain for the static hero (initial state);
+  load with #fly to freeze a mid-flythrough frame (skips motion.js) for QA.
+-->
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Te Amo — 3D landing (preview)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap">
+  <link rel="stylesheet" href="../assets/base.css">
+  <script>document.documentElement.className = 'js';</script>
+</head>
+<body class="template-index">
+  <section class="l3d" data-l3d>
+    <div class="l3d__viewport" data-l3d-viewport>
+      <div class="l3d__bg"><img src="../assets/ph-wide.svg" alt=""></div>
+      <div class="l3d__scene" data-l3d-scene aria-hidden="true" id="scene"></div>
+      <div class="l3d__hud" data-l3d-hud>
+        <p class="eyebrow l3d__eyebrow">Autumn — Collection 01</p>
+        <h1 class="l3d__title display reveal-words"><span class="reveal-word">Couture,</span> <span class="reveal-word">rendered.</span></h1>
+        <p class="l3d__sub">A fashion house dressed on an AI muse — scroll to step inside the atelier.</p>
+        <a href="#" class="btn" data-magnetic="0.3">Enter the collection</a>
+      </div>
+      <div class="l3d__cue" data-l3d-cue aria-hidden="true">Scroll to enter</div>
+    </div>
+  </section>
+  <section class="section"><div class="container"><p class="lede muted">(Rest of the homepage continues here.)</p></div></section>
+
+  <script>
+    // Build the look-panels (placeholders stand in for Melina's on-model shots).
+    var LOOKS = [["The Monolith Coat","Outerwear"],["The Liquid Slip","Dresses"],["The Null Suit","Tailoring"],["The Vapor Knit","Knitwear"],["The Obsidian Trouser","Tailoring"],["The Halo Gown","Eveningwear"]];
+    document.getElementById('scene').innerHTML = LOOKS.map(function (l, i) {
+      return '<figure class="l3d__panel" style="--i:' + i + '"><img src="../assets/ph-figure.svg" alt=""><figcaption class="l3d__cap"><span>' + l[0] + '</span><span>' + l[1] + '</span></figcaption></figure>';
+    }).join('');
+
+    window.Theme = { motion: { smooth: true, reveal: true } };
+    (function () {
+      if (location.hash === '#fly') {
+        // Freeze a representative mid-flythrough frame for a static screenshot.
+        var l = document.querySelector('.l3d'); l.classList.add('is-3d');
+        l.querySelector('[data-l3d-scene]').style.transform = 'translateZ(1250px) rotateY(2deg)';
+        var hud = l.querySelector('[data-l3d-hud]'); hud.style.opacity = '0.12'; hud.style.transform = 'translateZ(-380px)';
+        return;
+      }
+      ['lenis.min.js', 'gsap.min.js', 'scrolltrigger.min.js', 'motion.js'].forEach(function (s) {
+        document.write('<scr' + 'ipt src="../assets/' + s + '"></scr' + 'ipt>');
+      });
+    })();
+  </script>
+</body>
+</html>

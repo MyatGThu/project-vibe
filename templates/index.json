@@ -1,15 +1,25 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "landing3d": {
+      "type": "landing-3d",
       "settings": {
         "eyebrow": "Autumn — Collection 01",
         "heading": "Couture, rendered.",
-        "subtext": "A fashion house dressed on an AI muse — eveningwear to swimwear to gym. Made-to-order, worldwide.",
+        "subtext": "A fashion house dressed on an AI muse — scroll to step inside the atelier.",
         "cta_text": "Enter the collection",
         "cta_link": "shopify://collections/all",
-        "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101609_eafe04a9-e9bf-4b93-96a5-6612507a3113.png"
-      }
+        "scroll_label": "Scroll to enter",
+        "bg_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101609_eafe04a9-e9bf-4b93-96a5-6612507a3113.png"
+      },
+      "blocks": {
+        "l1": { "type": "look", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png", "caption": "The Monolith Coat", "tag": "Outerwear" } },
+        "l2": { "type": "look", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png", "caption": "The Liquid Slip", "tag": "Dresses" } },
+        "l3": { "type": "look", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png", "caption": "The Null Suit", "tag": "Tailoring" } },
+        "l4": { "type": "look", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe.png", "caption": "The Vapor Knit", "tag": "Knitwear" } },
+        "l5": { "type": "look", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png", "caption": "The Obsidian Trouser", "tag": "Tailoring" } },
+        "l6": { "type": "look", "settings": { "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png", "caption": "The Halo Gown", "tag": "Eveningwear" } }
+      },
+      "block_order": ["l1", "l2", "l3", "l4", "l5", "l6"]
     },
     "marquee": { "type": "marquee", "settings": {} },
     "capsule": {
@@ -53,5 +63,5 @@
     },
     "model_call": { "type": "model-call", "settings": {} }
   },
-  "order": ["hero", "marquee", "capsule", "lookbook", "manifesto", "model_call"]
+  "order": ["landing3d", "capsule", "lookbook", "manifesto", "model_call", "marquee"]
 }

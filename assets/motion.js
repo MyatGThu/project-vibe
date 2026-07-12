@@ -86,6 +86,35 @@
       gsap.from(heroWords, { yPercent: 120, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.15 });
     }
 
+    /* ---- 3D scroll landing: pin the viewport, scrub a CSS-3D flythrough ---- */
+    var l3d = document.querySelector('[data-l3d]');
+    if (l3d) {
+      var scene = l3d.querySelector('[data-l3d-scene]');
+      var panels = scene ? scene.querySelectorAll('.l3d__panel') : [];
+      if (scene && panels.length) {
+        l3d.classList.add('is-3d');                        // opt in to the 3D layer (static hero until now)
+        var vp = l3d.querySelector('[data-l3d-viewport]');
+        var step = parseFloat(getComputedStyle(l3d).getPropertyValue('--l3d-step')) || 680;
+        var start = -900;                                  // rest the panels in the distance so the headline reads clean
+        var fly = panels.length * step + 300;              // travel far enough to pass the last panel
+        gsap.set(scene, { z: start, rotationY: -3, transformOrigin: '50% 50%' });
+        gsap.to(scene, {
+          z: fly, rotationY: 3, ease: 'none',
+          scrollTrigger: {
+            trigger: l3d, start: 'top top', end: '+=' + Math.round(fly * 1.15),
+            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1
+          }
+        });
+        // Headline recedes + fades as you dive in (first ~40% of the pin).
+        gsap.to(l3d.querySelector('[data-l3d-hud]'), {
+          z: -440, opacity: 0, ease: 'none',
+          scrollTrigger: { trigger: l3d, start: 'top top', end: '+=' + Math.round(fly * 0.4), scrub: true }
+        });
+        var cue = l3d.querySelector('[data-l3d-cue]');
+        if (cue) gsap.to(cue, { opacity: 0, ease: 'none', scrollTrigger: { trigger: l3d, start: 'top top', end: '+=160', scrub: true } });
+      }
+    }
+
     /* ---- Lookbook horizontal pin ---- */
     var lookbook = document.querySelector('[data-lookbook]');
     if (lookbook) {

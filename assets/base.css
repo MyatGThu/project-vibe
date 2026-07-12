@@ -135,11 +135,11 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .announcement .container { display: flex; justify-content: center; gap: 1.5rem; padding-block: 0.7rem; text-align: center; }
 .announcement a { text-decoration: underline; text-underline-offset: 3px; }
 
-.marquee { overflow: hidden; border-block: 1px solid var(--line); padding-block: clamp(1.2rem, 3vw, 2.4rem); }
-.marquee__track { display: flex; gap: 3rem; width: max-content; animation: marquee 34s linear infinite; }
+.marquee { overflow: hidden; border-block: 1px solid var(--line); padding-block: clamp(0.65rem, 1.6vw, 1.1rem); }
+.marquee__track { display: flex; gap: 2rem; width: max-content; animation: marquee 40s linear infinite; }
 .marquee:hover .marquee__track { animation-play-state: paused; }
-.marquee__item { font-family: var(--display-font); font-size: var(--step-3); font-style: italic; color: var(--ink); white-space: nowrap; opacity: 0.85; }
-.marquee__item::after { content: "✳"; margin-left: 3rem; color: var(--accent); font-style: normal; }
+.marquee__item { font-family: var(--display-font); font-size: var(--step-1); font-style: italic; color: var(--muted); white-space: nowrap; opacity: 0.75; }
+.marquee__item::after { content: "✳"; margin-left: 2rem; color: var(--accent); font-style: normal; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---- Header ---- */
@@ -332,10 +332,12 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .footer__col h4 { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em; color: color-mix(in oklab, var(--bg) 70%, var(--ink)); margin-bottom: 1rem; }
 .footer__col a { display: block; padding-block: 0.35rem; }
 .footer__disclosure { grid-column: 1 / -1; border-top: 1px solid rgba(246,243,238,0.15); margin-top: 2rem; padding-top: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: var(--step--1); color: color-mix(in oklab, var(--bg) 65%, var(--ink)); }
-.footer__newsletter { display: flex; gap: 0.5rem; border-bottom: 1px solid rgba(246,243,238,0.3); padding-bottom: 0.5rem; }
-.footer__newsletter input { flex: 1; background: transparent; border: none; color: var(--bg); font: inherit; }
-.footer__newsletter input::placeholder { color: rgba(246,243,238,0.5); }
-.footer__newsletter button { text-transform: uppercase; letter-spacing: 0.14em; font-size: var(--step--1); }
+.footer__newsletter { display: flex; gap: 0.5rem; margin-top: 1.6rem; }
+.footer .footer__newsletter input { flex: 1; width: auto; min-width: 0; background: rgba(246,243,238,0.08); border: 1px solid rgba(246,243,238,0.28); border-radius: 999px; padding: 0.7em 1.1em; color: var(--bg); font: inherit; }
+.footer .footer__newsletter input::placeholder { color: rgba(246,243,238,0.7); }
+.footer .footer__newsletter input:focus { outline: none; border-color: rgba(246,243,238,0.6); }
+.footer .footer__newsletter input:-webkit-autofill { -webkit-text-fill-color: var(--bg); -webkit-box-shadow: 0 0 0 1000px var(--ink) inset; }
+.footer__newsletter button { text-transform: uppercase; letter-spacing: 0.14em; font-size: var(--step--1); padding-inline: 0.4rem; white-space: nowrap; }
 
 /* ---- Forms ---- */
 input[type=email], input[type=text], input[type=password], input[type=search], textarea, select {
@@ -527,3 +529,56 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-collection-gym .footer a { color: color-mix(in oklab, #F5ECEC 78%, #060403); }
 .template-collection-gym .footer a:hover { color: #fff; }
 .template-collection-gym ::selection { background: #E11D2A; color: #fff; }
+
+/* ============================================================
+   3D SCROLL LANDING (.l3d)
+   Static-first: without JS it's a hero (bg + HUD). motion.js adds `.is-3d`,
+   pins the viewport and scrubs a CSS-3D flythrough of the look-panels.
+   Only transform/opacity animate; reduced-motion never reaches `.is-3d`.
+   ============================================================ */
+.l3d { --l3d-step: 680px; position: relative; }
+.l3d__viewport {
+  position: relative; height: 100svh; overflow: hidden;
+  display: grid; place-items: center;
+  perspective: 1100px; perspective-origin: 50% 42%;
+  background: var(--ink);
+}
+.l3d__bg { position: absolute; inset: 0; z-index: 0; }
+.l3d__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+.l3d__bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,17,15,0.34) 0%, rgba(20,17,15,0.12) 38%, rgba(20,17,15,0.78) 100%);
+}
+
+.l3d__hud { position: relative; z-index: 3; text-align: center; max-width: min(58rem, 92vw); padding: 0 var(--gutter); color: var(--bg); will-change: transform, opacity; }
+.l3d__eyebrow { color: rgba(246,243,238,0.75); }
+.l3d__title { font-size: var(--step-5); line-height: 0.94; color: var(--bg); margin-top: 0.6rem; }
+.l3d__title .reveal-word { display: inline-block; }
+.l3d__sub { margin: 1.3rem auto 2rem; max-width: 48ch; color: rgba(246,243,238,0.82); font-size: var(--step-1); }
+.l3d__cue { position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%); z-index: 3; color: rgba(246,243,238,0.7); font-size: var(--step--1); letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* 3D scene — enabled by motion.js only */
+.l3d__scene { display: none; }
+.l3d.is-3d .l3d__scene { display: block; position: absolute; inset: 0; z-index: 2; transform-style: preserve-3d; will-change: transform; }
+.l3d__panel {
+  position: absolute; top: 50%; left: 50%; margin: 0;
+  width: clamp(180px, 22vw, 340px);
+  transform: translate(-50%, -50%) translate3d(var(--x, 0), var(--y, 0), var(--z, 0)) rotateY(var(--ry, 0deg));
+  border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 40px 90px -30px rgba(0,0,0,0.7);
+  backface-visibility: hidden;
+}
+.l3d.is-3d .l3d__panel { --z: calc(var(--i) * var(--l3d-step) * -1); }
+.l3d__panel:nth-child(4n+1) { --x: -30vw; --y: -9vh; --ry: 18deg; }
+.l3d__panel:nth-child(4n+2) { --x: 31vw;  --y: 7vh;  --ry: -18deg; }
+.l3d__panel:nth-child(4n+3) { --x: -21vw; --y: 13vh; --ry: 13deg; }
+.l3d__panel:nth-child(4n+4) { --x: 25vw;  --y: -13vh;--ry: -13deg; }
+.l3d__panel img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.l3d__cap { position: absolute; inset: auto 0 0 0; padding: 0.7rem 0.9rem; display: flex; justify-content: space-between; gap: 0.6rem; background: linear-gradient(0deg, rgba(0,0,0,0.65), transparent); color: #fff; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; }
+@media (max-width: 760px) { .l3d__panel { width: clamp(150px, 44vw, 240px); } }
+
+/* ---- Footer social icons (placeholders until URLs are set) ---- */
+.footer__social { display: flex; gap: 0.55rem; margin-top: 0.9rem; flex-wrap: wrap; }
+.footer__social a { display: inline-flex; align-items: center; justify-content: center; width: 2.3rem; height: 2.3rem; padding: 0; border: 1px solid rgba(246,243,238,0.25); border-radius: 999px; color: color-mix(in oklab, var(--bg) 80%, var(--ink)); transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease; }
+.footer__social a:hover { color: var(--ink); background: var(--bg); border-color: var(--bg); }
+.footer__social svg { width: 16px; height: 16px; display: block; }
