@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "pf_header": {
+      "type": "portfolio-header",
+      "settings": { "name": "MELINA", "tag": "AI Model", "store_label": "Enter the store ↗" }
+    },
+    "portfolio": {
+      "type": "melina-portfolio",
+      "settings": {
+        "store_url": "shopify://collections/all",
+        "name": "Melina Jones Voss",
+        "pill": "Openly AI-generated",
+        "role": "AI Model · Digital Muse",
+        "portrait_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png",
+        "contact_email": "casting@melina.example"
+      },
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "100%", "label": "Generated" } },
+        "s2": { "type": "stat", "settings": { "number": "0", "label": "Retouching hrs" } },
+        "s3": { "type": "stat", "settings": { "number": "∞", "label": "Looks" } },
+        "s4": { "type": "stat", "settings": { "number": "1", "label": "Muse" } },
+        "w1": { "type": "work", "settings": { "title": "The Monolith Coat", "tag": "Outerwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png" } },
+        "w2": { "type": "work", "settings": { "title": "The Halo Gown", "tag": "Eveningwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png" } },
+        "w3": { "type": "work", "settings": { "title": "The Liquid Slip", "tag": "Dress", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png" } },
+        "w4": { "type": "work", "settings": { "title": "The Null Suit", "tag": "Tailoring", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png" } },
+        "w5": { "type": "work", "settings": { "title": "The Obsidian Trouser", "tag": "Tailoring", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png" } },
+        "w6": { "type": "work", "settings": { "title": "The Vapor Knit", "tag": "Knitwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe.png" } },
+        "c1": { "type": "campaign", "settings": { "caption": "Autumn — Ivory", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101609_eafe04a9-e9bf-4b93-96a5-6612507a3113.png" } },
+        "c2": { "type": "campaign", "settings": { "caption": "Autumn — Atrium", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101625_a62edf8d-0309-4acf-a7e8-ccac64417485.png" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "w1", "w2", "w3", "w4", "w5", "w6", "c1", "c2"]
+    }
+  },
+  "order": ["pf_header", "portfolio"]
+}

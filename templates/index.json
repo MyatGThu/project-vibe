@@ -48,7 +48,7 @@
         "eyebrow": "The house",
         "text": "We dress an idea. Melina is not photographed — she is rendered, disclosed, and dressed in clothes you can actually own.",
         "cta_text": "Meet Melina",
-        "cta_link": "shopify://pages/about"
+        "cta_link": "shopify://pages/melina"
       }
     },
     "model_call": { "type": "model-call", "settings": {} }

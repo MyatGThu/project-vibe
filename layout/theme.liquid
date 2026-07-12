@@ -44,16 +44,23 @@
     {{ content_for_header }}
   </head>
 
-  <body class="template-{{ request.page_type | handle }}">
+  <body class="template-{{ request.page_type | handle }}{% if template.suffix %} template-{{ request.page_type }}-{{ template.suffix }}{% endif %}">
     <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 
-    {% sections 'header-group' %}
+    {%- comment -%} Portfolio pages are a self-contained microsite with their own chrome. {%- endcomment -%}
+    {%- if template.suffix == 'portfolio' -%}
+      {% section 'portfolio-header' %}
+    {%- else -%}
+      {% sections 'header-group' %}
+    {%- endif -%}
 
     <main id="MainContent" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    {% sections 'footer-group' %}
+    {%- unless template.suffix == 'portfolio' -%}
+      {% sections 'footer-group' %}
+    {%- endunless -%}
 
     {%- comment -%} Quick-view overlay: single dialog reused for every product (ponytail: one dialog, populated by JS) {%- endcomment -%}
     <dialog id="QuickView" class="quick-view" aria-label="{{ 'products.product.quick_view' | t: default: 'Product quick view' }}">

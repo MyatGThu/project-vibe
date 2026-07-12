@@ -1,0 +1,25 @@
+<header class="pf-header">
+  <a class="pf-header__brand" href="#top" aria-label="{{ section.settings.name }}">
+    <span class="wordmark">{{ section.settings.name | default: 'MELINA' }}</span>
+    <span class="pf-header__tag">{{ section.settings.tag | default: 'AI Model' }}</span>
+  </a>
+  <nav class="pf-nav" aria-label="Portfolio">
+    <a href="#work" class="link-underline">Work</a>
+    <a href="#campaigns" class="link-underline">Campaigns</a>
+    <a href="#about" class="link-underline">About</a>
+    <a href="#contact" class="link-underline">Contact</a>
+    <a class="pf-nav__store" href="{{ section.settings.store_url | default: routes.root_url }}">{{ section.settings.store_label | default: 'Enter the store ↗' }}</a>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Portfolio header",
+  "settings": [
+    { "type": "text", "id": "name", "label": "Name", "default": "MELINA" },
+    { "type": "text", "id": "tag", "label": "Tag", "default": "AI Model" },
+    { "type": "url", "id": "store_url", "label": "Store link", "info": "Links back into the shop." },
+    { "type": "text", "id": "store_label", "label": "Store link label", "default": "Enter the store ↗" }
+  ]
+}
+{% endschema %}
