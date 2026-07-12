@@ -60,9 +60,15 @@
         return;
       }
       if (location.hash === '#fly') {
+        // Simulate mid-scroll: each panel at its OWN staggered --flyz (independent depths).
         l.classList.add('is-3d');
-        l.querySelector('[data-l3d-scene]').style.transform = 'translateZ(1500px) rotateY(2deg)';
-        var hud = l.querySelector('[data-l3d-hud]'); hud.style.opacity = '0.1'; hud.style.transform = 'translateZ(-380px)';
+        var ps = l.querySelectorAll('.l3d__panel'), N = ps.length, step = 380, rest = 1400, perDur = 0.34, flyEnd = 0.82;
+        var stag = (flyEnd - perDur) / (N - 1), p = 0.44;
+        ps.forEach(function (panel, i) {
+          var lp = Math.max(0, Math.min(1, (p - i * stag) / perDur));
+          panel.style.setProperty('--flyz', (lp * (rest + i * step + 1000)) + 'px');
+        });
+        l.querySelector('[data-l3d-hud]').style.opacity = '0.1';
         return;
       }
       if (location.hash === '#exit') {

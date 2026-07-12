@@ -86,41 +86,49 @@
       gsap.from(heroWords, { yPercent: 120, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.15 });
     }
 
-    /* ---- 3D scroll landing: pin the viewport, scrub a CSS-3D flythrough through
-           the look-panels, then an outward zoom + blur that dissolves into the
-           next section (Collection 01). ---- */
+    /* ---- 3D scroll landing: pin the viewport; each look-panel flies in on its OWN
+           staggered track (independent motion, not one block), then the viewport fades
+           to resolve in place into the next section (Collection 01). ---- */
     var l3d = document.querySelector('[data-l3d]');
     if (l3d) {
       var scene = l3d.querySelector('[data-l3d-scene]');
-      var panels = scene ? scene.querySelectorAll('.l3d__panel') : [];
+      var panels = scene ? Array.prototype.slice.call(scene.querySelectorAll('.l3d__panel')) : [];
       if (scene && panels.length) {
         l3d.classList.add('is-3d');                        // opt in to the 3D layer (static hero until now)
         var vp = l3d.querySelector('[data-l3d-viewport]');
-        var bg = l3d.querySelector('.l3d__bg');
         var hud = l3d.querySelector('[data-l3d-hud]');
         var cue = l3d.querySelector('[data-l3d-cue]');
         var step = parseFloat(getComputedStyle(l3d).getPropertyValue('--l3d-step')) || 380;
-        var start = -1400;                                 // rest the panels well back so the headline reads clean
-        var fly = panels.length * step + 300;              // travel far enough to pass the last panel
-        var nextBg = getComputedStyle(document.body).backgroundColor; // the section we dissolve into
-        gsap.set(scene, { z: start, rotationY: -3, transformOrigin: '50% 50%' });
-        gsap.set([scene, bg], { filter: 'blur(0px)' });    // seed filter so the exit blur interpolates cleanly
+        var N = panels.length;
+        var rest = 1400;                                   // matches the -1400px rest offset in .l3d__panel CSS
+        gsap.set(scene, { filter: 'blur(0px)' });          // seed filter so the exit blur interpolates cleanly
 
-        // One scrubbed timeline drives the whole pin so the exit lands exactly at the end.
+        var perDur = 0.34;                                 // how long one panel takes to fly past
+        var flyEnd = 0.82;                                 // all panels done before the in-place resolution
+        var stag = N > 1 ? (flyEnd - perDur) / (N - 1) : 0;
+        function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
         var tl = gsap.timeline({
           scrollTrigger: {
-            trigger: l3d, start: 'top top', end: '+=' + Math.round(fly * 1.1),
-            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1
+            trigger: l3d, start: 'top top',
+            end: function () { return '+=' + Math.round(window.innerHeight * (N * 0.42 + 1.2)); },
+            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1,
+            onUpdate: function (self) {
+              var p = self.progress;
+              for (var i = 0; i < N; i++) {
+                var lp = clamp01((p - i * stag) / perDur);          // this panel's own progress
+                var travel = rest + i * step + 1000;                // rest depth → well past the camera
+                panels[i].style.setProperty('--flyz', (lp * travel).toFixed(1) + 'px');
+              }
+            }
           }
         });
-        tl.to(scene, { z: fly, rotationY: 3, ease: 'none', duration: 1 }, 0);            // dive through the panels
-        tl.to(hud, { z: -440, opacity: 0, ease: 'none', duration: 0.4 }, 0);            // headline recedes early
+        tl.to(hud, { z: -440, opacity: 0, ease: 'none', duration: 0.34 }, 0);           // headline recedes early
         if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.08 }, 0);
-        // Resolve in place: the whole viewport fades to reveal Collection 01, which sits pulled
-        // up underneath (see .l3d underlap CSS) — the grid appears where the animation was, no
-        // blurry dead zone. ponytail: blur ceiling 8px (emil: < 20px, costly in Safari).
-        tl.to(scene, { scale: 1.32, filter: 'blur(8px)', ease: 'power2.in', duration: 0.2 }, 0.8);
-        tl.to(vp, { opacity: 0, ease: 'power2.in', duration: 0.2 }, 0.8);
+        // Resolve in place: fade the viewport to reveal Collection 01 pulled up underneath (see .l3d
+        // underlap CSS). ponytail: blur ceiling 8px (emil: < 20px, costly in Safari).
+        tl.to(scene, { scale: 1.28, filter: 'blur(8px)', ease: 'power2.in', duration: 0.18 }, 0.82);
+        tl.to(vp, { opacity: 0, ease: 'power2.in', duration: 0.18 }, 0.82);
       }
     }
 
