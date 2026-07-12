@@ -1,62 +1,70 @@
 <!doctype html>
 <!--
   DEV PREVIEW ONLY (not part of the Shopify theme).
-  Mirrors sections/landing-3d.liquid with the REAL assets so the 3D scroll
-  flythrough can be verified. Load plain for the static hero (initial state);
-  load with #fly to freeze a mid-flythrough frame (skips motion.js) for QA.
+  Mirrors sections/landing-3d.liquid (scroll-driven slideshow). Slides use flat
+  colours + a label so the active slide is legible in a static screenshot.
+  Plain load = live (initial hero). #mid freezes a mid-slideshow slide.
+  #exit freezes the outward zoom + blur exit.
 -->
 <html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Te Amo — 3D landing (preview)</title>
+  <title>Te Amo — scroll landing (preview)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap">
   <link rel="stylesheet" href="../assets/base.css">
+  <style>.l3d__slide .pvn { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display-font); font-size: 22vmin; color: rgba(246,243,238,0.28); }</style>
   <script>document.documentElement.className = 'js';</script>
 </head>
 <body class="template-index">
   <section class="l3d" data-l3d>
     <div class="l3d__viewport" data-l3d-viewport>
-      <div class="l3d__bg"><img src="../assets/ph-wide.svg" alt=""></div>
-      <div class="l3d__scene" data-l3d-scene aria-hidden="true" id="scene"></div>
+      <div class="l3d__slides" data-l3d-slides>
+        <div class="l3d__slide" data-cap="Autumn — Collection 01" style="background:#2c2622"><span class="pvn">Hero</span></div>
+        <div class="l3d__slide" data-cap="The Monolith Coat" data-tag="Outerwear" style="background:#3a4654"><span class="pvn">1</span></div>
+        <div class="l3d__slide" data-cap="The Liquid Slip" data-tag="Dresses" style="background:#5a4636"><span class="pvn">2</span></div>
+        <div class="l3d__slide" data-cap="The Null Suit" data-tag="Tailoring" style="background:#3b3b46"><span class="pvn">3</span></div>
+        <div class="l3d__slide" data-cap="The Vapor Knit" data-tag="Knitwear" style="background:#4a5a52"><span class="pvn">4</span></div>
+        <div class="l3d__slide" data-cap="The Obsidian Trouser" data-tag="Tailoring" style="background:#2e343a"><span class="pvn">5</span></div>
+        <div class="l3d__slide" data-cap="The Halo Gown" data-tag="Eveningwear" style="background:#6a5a4a"><span class="pvn">6</span></div>
+      </div>
+      <div class="l3d__scrim"></div>
+
       <div class="l3d__hud" data-l3d-hud>
         <p class="eyebrow l3d__eyebrow">Autumn — Collection 01</p>
         <h1 class="l3d__title display reveal-words"><span class="reveal-word">Couture,</span> <span class="reveal-word">rendered.</span></h1>
         <p class="l3d__sub">A fashion house dressed on an AI muse — scroll to step inside the atelier.</p>
         <a href="#" class="btn" data-magnetic="0.3">Enter the collection</a>
       </div>
+
+      <div class="l3d__slidecap" data-l3d-cap aria-hidden="true"></div>
       <div class="l3d__cue" data-l3d-cue aria-hidden="true">Scroll to enter</div>
     </div>
   </section>
   <section class="section"><div class="container"><p class="lede muted">(Rest of the homepage continues here.)</p></div></section>
 
   <script>
-    // Build the look-panels (placeholders stand in for Melina's on-model shots).
-    var LOOKS = [["The Monolith Coat","Outerwear"],["The Liquid Slip","Dresses"],["The Null Suit","Tailoring"],["The Vapor Knit","Knitwear"],["The Obsidian Trouser","Tailoring"],["The Halo Gown","Eveningwear"]];
-    document.getElementById('scene').innerHTML = LOOKS.map(function (l, i) {
-      return '<figure class="l3d__panel" style="--i:' + i + '"><img src="../assets/ph-figure.svg" alt=""><figcaption class="l3d__cap"><span>' + l[0] + '</span><span>' + l[1] + '</span></figcaption></figure>';
-    }).join('');
-
     window.Theme = { motion: { smooth: true, reveal: true } };
     (function () {
-      if (location.hash === '#fly') {
-        // Freeze a representative mid-flythrough frame for a static screenshot.
-        var l = document.querySelector('.l3d'); l.classList.add('is-3d');
-        l.querySelector('[data-l3d-scene]').style.transform = 'translateZ(1250px) rotateY(2deg)';
-        var hud = l.querySelector('[data-l3d-hud]'); hud.style.opacity = '0.12'; hud.style.transform = 'translateZ(-380px)';
-        return;
+      var l = document.querySelector('.l3d');
+      var slides = l.querySelectorAll('.l3d__slide');
+      var cap = l.querySelector('[data-l3d-cap]');
+      function activate(i) {
+        l.classList.add('is-live');
+        slides.forEach(function (s) { s.classList.remove('is-active'); });
+        slides[i].classList.add('is-active');
+        if (cap) { var s = slides[i]; cap.innerHTML = '<span>' + (s.dataset.cap || '') + '</span>' + (s.dataset.tag ? '<span>' + s.dataset.tag + '</span>' : ''); }
       }
+      if (location.hash === '#mid') { activate(3); l.querySelector('[data-l3d-hud]').style.opacity = '0'; return; }
       if (location.hash === '#exit') {
-        // Freeze the outward-expansion + blur exit frame.
-        var le = document.querySelector('.l3d'); le.classList.add('is-3d');
-        var sc = le.querySelector('[data-l3d-scene]'); sc.style.transform = 'translateZ(3600px) rotateY(3deg) scale(1.4)'; sc.style.filter = 'blur(12px)'; sc.style.opacity = '0.4';
-        var bg = le.querySelector('.l3d__bg'); bg.style.transform = 'scale(1.35)'; bg.style.filter = 'blur(12px)'; bg.style.opacity = '0.4';
-        le.querySelector('[data-l3d-hud]').style.opacity = '0';
-        le.querySelector('[data-l3d-viewport]').style.background = getComputedStyle(document.body).backgroundColor;
+        activate(5);
+        var sw = l.querySelector('[data-l3d-slides]'); sw.style.transform = 'scale(1.16)'; sw.style.filter = 'blur(12px)'; sw.style.opacity = '0.35';
+        l.querySelector('[data-l3d-hud]').style.opacity = '0';
+        l.querySelector('[data-l3d-viewport]').style.background = getComputedStyle(document.body).backgroundColor;
         return;
       }
       ['lenis.min.js', 'gsap.min.js', 'scrolltrigger.min.js', 'motion.js'].forEach(function (s) {
-        document.write('<scr' + 'ipt src="../assets/' + s + '"></scr' + 'ipt>');
+        document.write('<scr' + 'ipt src="../assets/' + s + '"><\/scr' + 'ipt>');
       });
     })();
   </script>

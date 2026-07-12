@@ -1,8 +1,9 @@
 {%- comment -%}
-  Te Amo — 3D scroll landing.
-  Progressive enhancement: without JS/motion it is a clean hero (background + HUD).
-  With GSAP + ScrollTrigger (already vendored) motion.js adds `is-3d`, pins the
-  viewport and scrubs a CSS-3D flythrough of the look-panels — no new dependency.
+  Te Amo — scroll landing.
+  Progressive enhancement: the first slide + headline are a plain hero without JS.
+  With GSAP + ScrollTrigger (already vendored) motion.js adds `is-live`, pins the
+  viewport, runs a fast scroll-driven slideshow of the looks, then an outward zoom
+  + blur into the next section — no new dependency.
 {%- endcomment -%}
 {%- liquid
   assign heading = section.settings.heading
@@ -10,32 +11,31 @@
 -%}
 <section class="l3d" data-l3d>
   <div class="l3d__viewport" data-l3d-viewport>
-    <div class="l3d__bg">
-      {%- if section.settings.bg_image != blank -%}
-        {{ section.settings.bg_image | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: '' }}
-      {%- elsif section.settings.bg_image_url != blank -%}
-        <img src="{{ section.settings.bg_image_url }}" alt="" fetchpriority="high">
-      {%- else -%}
-        <img src="{{ 'ph-wide.svg' | asset_url }}" alt="">
-      {%- endif -%}
-    </div>
-
-    <div class="l3d__scene" data-l3d-scene aria-hidden="true">
+    <div class="l3d__slides" data-l3d-slides>
+      {%- comment -%} Slide 0 — background hero {%- endcomment -%}
+      <div class="l3d__slide" data-cap="{{ section.settings.eyebrow | escape }}">
+        {%- if section.settings.bg_image != blank -%}
+          {{ section.settings.bg_image | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: '' }}
+        {%- elsif section.settings.bg_image_url != blank -%}
+          <img src="{{ section.settings.bg_image_url }}" alt="" fetchpriority="high">
+        {%- else -%}
+          <img src="{{ 'ph-wide.svg' | asset_url }}" alt="">
+        {%- endif -%}
+      </div>
+      {%- comment -%} Look slides — eager so the fast slideshow never flips to a blank frame {%- endcomment -%}
       {%- for block in section.blocks -%}
-        <figure class="l3d__panel" style="--i: {{ forloop.index0 }}" {{ block.shopify_attributes }}>
+        <div class="l3d__slide" data-cap="{{ block.settings.caption | escape }}" data-tag="{{ block.settings.tag | escape }}" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_tag: widths: '300,480,720', sizes: '24vw', loading: 'lazy', alt: block.settings.caption }}
+            {{ block.settings.image | image_tag: widths: '800,1200,1800', sizes: '100vw', loading: 'eager', alt: block.settings.caption }}
           {%- elsif block.settings.image_url != blank -%}
-            <img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="lazy">
+            <img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="eager">
           {%- else -%}
-            <img src="{{ 'ph-figure.svg' | asset_url }}" alt="" loading="lazy">
+            <img src="{{ 'ph-figure.svg' | asset_url }}" alt="" loading="eager">
           {%- endif -%}
-          {%- if block.settings.caption != blank -%}
-            <figcaption class="l3d__cap"><span>{{ block.settings.caption }}</span><span>{{ block.settings.tag }}</span></figcaption>
-          {%- endif -%}
-        </figure>
+        </div>
       {%- endfor -%}
     </div>
+    <div class="l3d__scrim"></div>
 
     <div class="l3d__hud" data-l3d-hud>
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow l3d__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
@@ -46,6 +46,7 @@
       {%- endif -%}
     </div>
 
+    <div class="l3d__slidecap" data-l3d-cap aria-hidden="true"></div>
     <div class="l3d__cue" data-l3d-cue aria-hidden="true">{{ section.settings.scroll_label | default: 'Scroll to enter' }}</div>
   </div>
 </section>
