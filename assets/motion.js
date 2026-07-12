@@ -104,7 +104,10 @@
         var step = parseFloat(getComputedStyle(l3d).getPropertyValue('--l3d-step')) || 380;
         var N = panels.length;
         var rest = 1400;                                   // matches the -1400px rest offset in .l3d__panel CSS
-        gsap.set(scene, { filter: 'blur(0px)' });          // seed filter so the exit blur interpolates cleanly
+        // Seed the exit filter on the VIEWPORT, never the scene. A filter (even blur(0px)) forces
+        // transform-style:flat, so putting one on the preserve-3d scene collapses the whole 3D depth
+        // (panels stop flying). The viewport hosts the perspective (it is itself flat), so it is safe.
+        gsap.set(vp, { filter: 'blur(0px)' });
 
         var perDur = 0.34;                                 // how long one panel takes to fly past
         var flyEnd = 0.82;                                 // all panels done before the in-place resolution
@@ -132,10 +135,11 @@
         });
         tl.to(hud, { z: -440, opacity: 0, ease: 'none', duration: 0.34 }, 0);           // headline recedes early
         if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.08 }, 0);
-        // Resolve in place: fade the viewport to reveal Collection 01 pulled up underneath (see .l3d
-        // underlap CSS). ponytail: blur ceiling 8px (emil: < 20px, costly in Safari).
-        tl.to(scene, { scale: 1.28, filter: 'blur(8px)', ease: 'power2.in', duration: 0.18 }, 0.82);
-        tl.to(vp, { opacity: 0, ease: 'power2.in', duration: 0.18 }, 0.82);
+        // Resolve in place: expand + blur + fade the whole VIEWPORT (the perspective host, safe to
+        // filter) to reveal Collection 01 pulled up underneath (see .l3d underlap CSS). The blur lives
+        // on the viewport, not the 3D scene, so the flythrough stays truly 3D until the dissolve.
+        // ponytail: blur ceiling 8px (emil: < 20px, costly in Safari).
+        tl.to(vp, { scale: 1.12, filter: 'blur(8px)', opacity: 0, ease: 'power2.in', duration: 0.18 }, 0.82);
       }
     }
 
