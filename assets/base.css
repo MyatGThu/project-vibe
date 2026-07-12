@@ -583,6 +583,9 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .l3d.is-3d { height: var(--l3d-h, 640svh); }
 .l3d__viewport {
   position: relative; height: 100svh; overflow: hidden;
+  /* clip-path also clips 3D-transformed children — iOS Safari ignores overflow:hidden for those,
+     which let a ballooned panel bleed past the right edge as a stuck strip. */
+  clip-path: inset(0);
   display: grid; place-items: center;
   perspective: 1100px; perspective-origin: 50% 42%;
   background: var(--ink);
@@ -619,7 +622,14 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .l3d__panel img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .l3d__cap { position: absolute; inset: auto 0 0 0; padding: 0.7rem 0.9rem; display: flex; justify-content: space-between; gap: 0.6rem; background: linear-gradient(0deg, rgba(0,0,0,0.65), transparent); color: #fff; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; }
 .l3d__flag { position: absolute; z-index: 2; top: 0.7rem; left: 0.7rem; padding: 0.3em 0.7em; border-radius: 999px; background: rgba(20,17,15,0.6); color: var(--bg); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; }
-@media (max-width: 760px) { .l3d__panel { width: clamp(150px, 44vw, 240px); } }
+@media (max-width: 760px) {
+  .l3d__panel { width: clamp(150px, 44vw, 240px); }
+  /* tighter horizontal spread so panels stay centred on a narrow screen (cleaner, no edge crowding) */
+  .l3d__panel:nth-child(4n+1) { --x: -18vw; --y: -7vh; }
+  .l3d__panel:nth-child(4n+2) { --x: 18vw;  --y: 6vh;  }
+  .l3d__panel:nth-child(4n+3) { --x: -13vw; --y: 10vh; }
+  .l3d__panel:nth-child(4n+4) { --x: 15vw;  --y: -9vh; }
+}
 
 /* In-place resolution: the pinned landing sits above the following section, which is pulled up
    underneath it — so as the viewport fades at the end, Collection 01 is revealed exactly where the
