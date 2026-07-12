@@ -116,10 +116,11 @@
         tl.to(scene, { z: fly, rotationY: 3, ease: 'none', duration: 1 }, 0);            // dive through the panels
         tl.to(hud, { z: -440, opacity: 0, ease: 'none', duration: 0.4 }, 0);            // headline recedes early
         if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.08 }, 0);
-        // Exit (last ~24%): expand outward, blur, and dissolve into Collection 01's field.
-        // ponytail: blur ceiling 16px (emil: keep < 20px, costly in Safari) — brief, scrubbed, exit-only.
-        tl.to([scene, bg], { scale: 1.5, filter: 'blur(16px)', opacity: 0, ease: 'power2.in', duration: 0.24 }, 0.76);
-        tl.to(vp, { backgroundColor: nextBg, ease: 'power2.in', duration: 0.24 }, 0.76);
+        // Resolve in place: the whole viewport fades to reveal Collection 01, which sits pulled
+        // up underneath (see .l3d underlap CSS) — the grid appears where the animation was, no
+        // blurry dead zone. ponytail: blur ceiling 8px (emil: < 20px, costly in Safari).
+        tl.to(scene, { scale: 1.32, filter: 'blur(8px)', ease: 'power2.in', duration: 0.2 }, 0.8);
+        tl.to(vp, { opacity: 0, ease: 'power2.in', duration: 0.2 }, 0.8);
       }
     }
 

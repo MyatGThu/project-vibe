@@ -52,6 +52,13 @@
     window.Theme = { motion: { smooth: true, reveal: true } };
     (function () {
       var l = document.querySelector('.l3d');
+      if (location.hash === '#inplace') {
+        l.classList.add('is-3d');
+        var si = l.querySelector('[data-l3d-scene]'); si.style.transform = 'translateZ(3900px) rotateY(3deg) scale(1.3)'; si.style.filter = 'blur(8px)';
+        l.querySelector('[data-l3d-hud]').style.opacity = '0';
+        l.querySelector('[data-l3d-viewport]').style.opacity = '0.12';   // fade viewport → Collection 01 shows through underneath
+        return;
+      }
       if (location.hash === '#fly') {
         l.classList.add('is-3d');
         l.querySelector('[data-l3d-scene]').style.transform = 'translateZ(1500px) rotateY(2deg)';
