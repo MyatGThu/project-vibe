@@ -86,15 +86,18 @@
       gsap.from(heroWords, { yPercent: 120, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.15 });
     }
 
-    /* ---- 3D scroll landing: pin the viewport; each look-panel flies in on its OWN
-           staggered track (independent motion, not one block), then the viewport fades
-           to resolve in place into the next section (Collection 01). ---- */
+    /* ---- 3D scroll landing: a tall section whose viewport is held by native CSS position:sticky
+           (NOT a GSAP pin — a pin hijacks scroll and can trap the user "in the frame"). We scrub only
+           the panel depths: each look-panel flies in on its OWN staggered track (independent motion,
+           not one block), then the viewport fades to resolve in place into Collection 01. ---- */
     var l3d = document.querySelector('[data-l3d]');
     if (l3d) {
       var scene = l3d.querySelector('[data-l3d-scene]');
       var panels = scene ? Array.prototype.slice.call(scene.querySelectorAll('.l3d__panel')) : [];
       if (scene && panels.length) {
         l3d.classList.add('is-3d');                        // opt in to the 3D layer (static hero until now)
+        // Build marker — confirms the live theme is running this sticky build (rules out a stale deploy).
+        try { console.info('[te-amo] l3d flythrough · sticky build · panels=' + panels.length); } catch (e) {}
         var vp = l3d.querySelector('[data-l3d-viewport]');
         var hud = l3d.querySelector('[data-l3d-hud]');
         var cue = l3d.querySelector('[data-l3d-cue]');
@@ -107,11 +110,13 @@
         var flyEnd = 0.82;                                 // all panels done before the in-place resolution
         var stag = N > 1 ? (flyEnd - perDur) / (N - 1) : 0;
 
+        // Scale the tall section to the panel count, then let native position:sticky (CSS) hold the
+        // viewport while we scrub only the panel depths. NO GSAP pin => scroll can never be trapped.
+        l3d.style.setProperty('--l3d-h', ((N * 0.5 + 1.4) * 100).toFixed(0) + 'svh');
         var tl = gsap.timeline({
           scrollTrigger: {
-            trigger: l3d, start: 'top top',
-            end: function () { return '+=' + Math.round(window.innerHeight * (N * 0.42 + 1.2)); },
-            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1
+            trigger: l3d, start: 'top top', end: 'bottom bottom',
+            scrub: 0.5, invalidateOnRefresh: true
           }
         });
         // Each panel flies in on its OWN staggered track. A real tween drives a proxy value

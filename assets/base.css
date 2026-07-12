@@ -534,20 +534,27 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-collection-gym ::selection { background: #E11D2A; color: #fff; }
 
 /* ============================================================
-   3D SCROLL LANDING (.l3d) — pinned, scroll-scrubbed CSS-3D flythrough
-   Static-first: without JS it's a hero (bg + HUD). motion.js adds `.is-3d`,
-   pins the viewport and flies the camera forward through the look-panels
+   3D SCROLL LANDING (.l3d) — sticky, scroll-scrubbed CSS-3D flythrough
+   Static-first: without JS it's a hero (bg + HUD). motion.js adds `.is-3d`;
+   native position:sticky holds the viewport (no scroll-trapping pin) and the
+   scrub flies the camera forward through the look-panels
    (existing outfits + "upcoming" looks, tagged "Next drop"), then an outward
    zoom + blur that dissolves into the next section (Collection 01).
    Only transform/opacity/filter animate; reduced-motion never reaches `.is-3d`.
    ============================================================ */
 .l3d { --l3d-step: 380px; position: relative; }
+/* is-3d (JS-only): the section grows tall and the viewport STICKS natively — no GSAP pin.
+   A GSAP pin uses position:fixed + a spacer and hijacks the scroll, which is the one thing that
+   can trap a user ("stuck in the frame"). position:sticky physically cannot trap scroll: if JS
+   ever fails mid-way, the page still scrolls normally. --l3d-h is set by motion.js from panel count. */
+.l3d.is-3d { height: var(--l3d-h, 640svh); }
 .l3d__viewport {
   position: relative; height: 100svh; overflow: hidden;
   display: grid; place-items: center;
   perspective: 1100px; perspective-origin: 50% 42%;
   background: var(--ink);
 }
+.l3d.is-3d .l3d__viewport { position: sticky; top: 0; }
 .l3d__bg { position: absolute; inset: 0; z-index: 0; }
 .l3d__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
 .l3d__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,15,0.34) 0%, rgba(20,17,15,0.12) 38%, rgba(20,17,15,0.78) 100%); }
