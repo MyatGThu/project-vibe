@@ -46,6 +46,15 @@
         var hud = l.querySelector('[data-l3d-hud]'); hud.style.opacity = '0.12'; hud.style.transform = 'translateZ(-380px)';
         return;
       }
+      if (location.hash === '#exit') {
+        // Freeze the outward-expansion + blur exit frame.
+        var le = document.querySelector('.l3d'); le.classList.add('is-3d');
+        var sc = le.querySelector('[data-l3d-scene]'); sc.style.transform = 'translateZ(3600px) rotateY(3deg) scale(1.4)'; sc.style.filter = 'blur(12px)'; sc.style.opacity = '0.4';
+        var bg = le.querySelector('.l3d__bg'); bg.style.transform = 'scale(1.35)'; bg.style.filter = 'blur(12px)'; bg.style.opacity = '0.4';
+        le.querySelector('[data-l3d-hud]').style.opacity = '0';
+        le.querySelector('[data-l3d-viewport]').style.background = getComputedStyle(document.body).backgroundColor;
+        return;
+      }
       ['lenis.min.js', 'gsap.min.js', 'scrolltrigger.min.js', 'motion.js'].forEach(function (s) {
         document.write('<scr' + 'ipt src="../assets/' + s + '"></scr' + 'ipt>');
       });
