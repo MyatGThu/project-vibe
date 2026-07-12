@@ -106,22 +106,24 @@
         var perDur = 0.34;                                 // how long one panel takes to fly past
         var flyEnd = 0.82;                                 // all panels done before the in-place resolution
         var stag = N > 1 ? (flyEnd - perDur) / (N - 1) : 0;
-        function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
 
         var tl = gsap.timeline({
           scrollTrigger: {
             trigger: l3d, start: 'top top',
             end: function () { return '+=' + Math.round(window.innerHeight * (N * 0.42 + 1.2)); },
-            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1,
-            onUpdate: function (self) {
-              var p = self.progress;
-              for (var i = 0; i < N; i++) {
-                var lp = clamp01((p - i * stag) / perDur);          // this panel's own progress
-                var travel = rest + i * step + 1000;                // rest depth → well past the camera
-                panels[i].style.setProperty('--flyz', (lp * travel).toFixed(1) + 'px');
-              }
-            }
+            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1
           }
+        });
+        // Each panel flies in on its OWN staggered track. A real tween drives a proxy value
+        // (version-independent), whose onUpdate writes the panel's --flyz depth — so the scrub owns it.
+        panels.forEach(function (panel, i) {
+          var travel = rest + i * step + 1000;             // rest depth → well past the camera
+          var proxy = { fz: 0 };
+          panel.style.setProperty('--flyz', '0px');
+          tl.to(proxy, {
+            fz: travel, ease: 'none', duration: perDur,
+            onUpdate: function () { panel.style.setProperty('--flyz', proxy.fz.toFixed(1) + 'px'); }
+          }, i * stag);
         });
         tl.to(hud, { z: -440, opacity: 0, ease: 'none', duration: 0.34 }, 0);           // headline recedes early
         if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.08 }, 0);
