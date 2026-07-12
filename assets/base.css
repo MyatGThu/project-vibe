@@ -55,7 +55,7 @@ body {
   font-weight: 350;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;            /* clip (not hidden) so it never becomes a scroll container that breaks sticky */
 }
 
 img, model-viewer, video { display: block; max-width: 100%; height: auto; }
@@ -143,8 +143,11 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---- Header ---- */
+/* Make the menu permanent: the whole header group sticks (its containing block is
+   <body>, so it never un-sticks) and sits above the pinned landing. */
+.shopify-section-group-header-group { position: sticky; top: 0; z-index: 100; }
 .header {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky; top: 0; z-index: 60;
   display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
   gap: 1rem; padding: 1.1rem var(--gutter);
   background: color-mix(in oklab, var(--bg) 78%, transparent);
@@ -533,8 +536,10 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 /* ============================================================
    SCROLL LANDING (.l3d)
    Static-first: the first slide + headline are a plain hero. motion.js adds
-   `.is-live`, pins the viewport, runs a fast scroll-driven slideshow of the
-   look images, then an outward zoom + blur into the next section.
+   `.is-live`, pins the viewport, and scroll-drives:
+     beat 1 — existing outfits with a parallax (Ken Burns) drift;
+     beat 2 — new/upcoming outfits as a fast slideshow (with a "Next drop" badge);
+     beat 3 — a short dissolve straight into the next section (Collection 01).
    Only transform/opacity/filter animate; reduced-motion never reaches `.is-live`.
    ============================================================ */
 .l3d { position: relative; }
@@ -544,11 +549,11 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
   background: var(--ink);
 }
 .l3d__slides { position: absolute; inset: 0; z-index: 0; will-change: transform, filter, opacity; }
-.l3d__slide { position: absolute; inset: 0; opacity: 0; }
+.l3d__slide { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
 .l3d__slide:first-child { opacity: 1; }              /* first slide shows before JS (static hero) */
 .l3d.is-live .l3d__slide { opacity: 0; }             /* once live, JS controls which is visible */
 .l3d.is-live .l3d__slide.is-active { opacity: 1; }   /* hard cut = crisp, fast slideshow */
-.l3d__slide img { width: 100%; height: 100%; object-fit: cover; }
+.l3d__slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); will-change: transform; }
 .l3d__scrim { position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: linear-gradient(180deg, rgba(20,17,15,0.34) 0%, rgba(20,17,15,0.12) 38%, rgba(20,17,15,0.78) 100%); }
 
@@ -560,6 +565,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .l3d__slidecap { position: absolute; z-index: 3; left: var(--gutter); bottom: 1.4rem; display: flex; gap: 0.8rem; align-items: baseline; color: rgba(246,243,238,0.85); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.12em; }
 .l3d__slidecap span:last-child { color: var(--accent); }
 .l3d__cue { position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%); z-index: 3; color: rgba(246,243,238,0.7); font-size: var(--step--1); letter-spacing: 0.2em; text-transform: uppercase; }
+.l3d__badge { position: absolute; z-index: 3; top: 1.6rem; left: 50%; transform: translateX(-50%); padding: 0.45em 1.1em; border: 1px solid rgba(246,243,238,0.45); border-radius: 999px; color: var(--bg); font-size: var(--step--1); letter-spacing: 0.22em; text-transform: uppercase; opacity: 0; transition: opacity 0.35s ease; }
+.l3d.show-badge .l3d__badge { opacity: 1; }
 @media (max-width: 560px) { .l3d__slidecap { display: none; } }
 
 /* ---- Footer social icons (placeholders until URLs are set) ---- */

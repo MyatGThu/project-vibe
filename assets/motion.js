@@ -86,12 +86,13 @@
       gsap.from(heroWords, { yPercent: 120, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.15 });
     }
 
-    /* ---- Scroll landing: fast scroll-driven slideshow of the looks, then an
-           outward zoom + blur that dissolves into the next section. ---- */
+    /* ---- Scroll landing: existing outfits with a parallax drift, then the
+           upcoming outfits as a fast slideshow, then a short dissolve into
+           the next section (Collection 01). ---- */
     var l3d = document.querySelector('[data-l3d]');
     if (l3d) {
       var slidesWrap = l3d.querySelector('[data-l3d-slides]');
-      var slides = slidesWrap ? slidesWrap.querySelectorAll('.l3d__slide') : [];
+      var slides = slidesWrap ? Array.prototype.slice.call(slidesWrap.querySelectorAll('.l3d__slide')) : [];
       if (slidesWrap && slides.length) {
         l3d.classList.add('is-live');                      // JS now owns which slide shows (static hero until now)
         var vp = l3d.querySelector('[data-l3d-viewport]');
@@ -99,13 +100,22 @@
         var cue = l3d.querySelector('[data-l3d-cue]');
         var capEl = l3d.querySelector('[data-l3d-cap]');
         var N = slides.length;
-        var nextBg = getComputedStyle(document.body).backgroundColor;
+        var nUp = slides.filter(function (s) { return s.dataset.upcoming === 'true'; }).length;
+        var nBase = N - nUp;                               // existing outfits (+ hero) → parallax beat
+        if (nBase < 1) { nBase = N; nUp = 0; }
+        var bone = getComputedStyle(document.body).backgroundColor;   // the field we dissolve into (Collection 01)
+        var A = nUp ? 0.62 : 0.86;                         // end of the parallax beat
+        var B = 0.88;                                      // end of the fast beat; tail is the dissolve
         var current = -1;
         function show(i) {
           if (i === current || i < 0 || i >= N) return;
-          if (current >= 0) slides[current].classList.remove('is-active');
+          if (current >= 0) {
+            slides[current].classList.remove('is-active');
+            var prev = slides[current].querySelector('img'); if (prev) prev.style.transform = 'scale(1.06)';
+          }
           slides[i].classList.add('is-active');
           current = i;
+          l3d.classList.toggle('show-badge', slides[i].dataset.upcoming === 'true');
           if (capEl) { var s = slides[i]; capEl.innerHTML = '<span>' + (s.dataset.cap || '') + '</span>' + (s.dataset.tag ? '<span>' + s.dataset.tag + '</span>' : ''); }
         }
         show(0);
@@ -114,22 +124,34 @@
         var tl = gsap.timeline({
           scrollTrigger: {
             trigger: l3d, start: 'top top',
-            end: function () { return '+=' + Math.round(window.innerHeight * 0.3 * N); }, // ~0.3vh per slide → fast
+            // existing looks dwell (parallax); upcoming looks flip fast; + a short exit.
+            end: function () { return '+=' + Math.round(window.innerHeight * (nBase * 0.5 + nUp * 0.28 + 0.5)); },
             pin: vp, scrub: 0.35, invalidateOnRefresh: true, anticipatePin: 1,
             onUpdate: function (self) {
-              var p = Math.min(1, self.progress / 0.72);   // run the looks over the first ~72%, hold the last for the exit
-              show(Math.min(N - 1, Math.floor(p * N)));
+              var p = self.progress;
+              if (p < A) {                                  // beat 1 — existing outfits, parallax Ken Burns
+                var f = (p / A) * nBase;
+                var idx = Math.min(nBase - 1, Math.floor(f));
+                show(idx);
+                var local = f - Math.floor(f);
+                var img = slides[idx] && slides[idx].querySelector('img');
+                if (img) img.style.transform = 'scale(' + (1.04 + local * 0.12).toFixed(3) + ') translateY(' + ((local - 0.5) * 3).toFixed(2) + '%)';
+              } else if (p < B && nUp) {                    // beat 2 — upcoming outfits, fast hard cuts
+                var f2 = (p - A) / (B - A);
+                show(nBase + Math.min(nUp - 1, Math.floor(f2 * nUp)));
+              } else {
+                show(N - 1);
+              }
             }
           }
         });
-        tl.to(hud, { yPercent: -18, opacity: 0, ease: 'power2.in', duration: 0.32 }, 0);   // headline clears early
-        if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.08 }, 0);
-        if (capEl) tl.fromTo(capEl, { opacity: 0 }, { opacity: 1, ease: 'none', duration: 0.06 }, 0.06);
-        // Exit (last ~28%): expand outward, blur, and dissolve into the next section's field.
-        // ponytail: blur ceiling 16px (emil: keep < 20px, costly in Safari) — brief, scrubbed, exit-only.
-        tl.to(slidesWrap, { scale: 1.18, filter: 'blur(16px)', opacity: 0, ease: 'power2.in', duration: 0.28 }, 0.72);
-        tl.to(vp, { backgroundColor: nextBg, ease: 'power2.in', duration: 0.28 }, 0.72);
-        if (capEl) tl.to(capEl, { opacity: 0, ease: 'none', duration: 0.1 }, 0.72);
+        tl.to(hud, { yPercent: -16, opacity: 0, ease: 'power2.in', duration: 0.3 }, 0);      // headline clears early
+        if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.06 }, 0);
+        if (capEl) tl.fromTo(capEl, { opacity: 0 }, { opacity: 1, ease: 'none', duration: 0.05 }, 0.05);
+        // Short dissolve (last ~12%): a gentle zoom + light blur into Collection 01's field — no lingering blank.
+        tl.to(slidesWrap, { scale: 1.08, filter: 'blur(9px)', opacity: 0, ease: 'power2.in', duration: 0.12 }, 0.88);
+        tl.to(vp, { backgroundColor: bone, ease: 'power2.in', duration: 0.12 }, 0.88);
+        if (capEl) tl.to(capEl, { opacity: 0, ease: 'none', duration: 0.08 }, 0.88);
       }
     }
 
