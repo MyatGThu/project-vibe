@@ -1,9 +1,9 @@
 <header class="header" data-header>
-  <nav class="header__nav" aria-label="Primary">
-    {%- for link in linklists[section.settings.menu].links limit: 4 -%}
-      <a href="{{ link.url }}" class="link-underline">{{ link.title }}</a>
-    {%- endfor -%}
-  </nav>
+  <div class="header__left">
+    <button class="header__icon" data-nav-toggle aria-label="{{ 'accessibility.menu' | t }}" aria-controls="NavDrawer" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+    </button>
+  </div>
 
   <div class="header__brand">
     <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
@@ -16,28 +16,37 @@
   </div>
 
   <div class="header__actions">
-    <button class="nav-toggle" data-nav-toggle aria-label="{{ 'accessibility.menu' | t }}">{{ 'accessibility.menu' | t }}</button>
-    <a href="{{ routes.search_url }}" class="link-underline" aria-label="{{ 'general.search.search' | t }}">{{ 'general.search.search' | t }}</a>
-    <button data-cart-toggle aria-label="{{ 'accessibility.cart' | t }}">{{ 'accessibility.cart' | t }} <span class="cart-count" data-count="{{ cart.item_count }}">{{ cart.item_count }}</span></button>
+    <a href="{{ routes.search_url }}" class="header__icon" aria-label="{{ 'general.search.search' | t }}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5 17 17" stroke-linecap="round"/></svg>
+    </a>
+    <button class="header__icon" data-cart-toggle aria-label="{{ 'accessibility.cart' | t }}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" stroke-linecap="round"/></svg>
+      <span class="cart-count" data-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+    </button>
   </div>
 </header>
 
-{%- comment -%} Mobile nav (progressive: full menu list) {%- endcomment -%}
-<div class="drawer" id="NavDrawer" data-nav-drawer hidden>
-  <div class="drawer__head"><span class="eyebrow">{{ 'accessibility.menu' | t }}</span><button data-nav-toggle aria-label="{{ 'accessibility.close' | t }}">&times;</button></div>
-  <nav class="drawer__items" aria-label="Mobile">
+{%- comment -%} Menu drawer, opened by the burger. Slides in from the left. {%- endcomment -%}
+<div class="drawer__overlay" data-nav-overlay></div>
+<nav class="drawer drawer--left" id="NavDrawer" aria-label="{{ 'accessibility.menu' | t }}" hidden>
+  <div class="drawer__head">
+    <span class="eyebrow">{{ 'accessibility.menu' | t }}</span>
+    <button class="header__icon" data-nav-toggle aria-label="{{ 'accessibility.close' | t }}" style="font-size:1.5rem">&times;</button>
+  </div>
+  <div class="drawer__items">
     {%- for link in linklists[section.settings.menu].links -%}
       <a href="{{ link.url }}" class="h-sm" style="font-family:var(--display-font)">{{ link.title }}</a>
     {%- endfor -%}
-  </nav>
-</div>
+    <a href="{{ routes.search_url }}" class="h-sm" style="font-family:var(--display-font)">{{ 'general.search.search' | t }}</a>
+  </div>
+</nav>
 
 {%- comment -%} Cart drawer, controlled by store.js {%- endcomment -%}
 <div class="drawer__overlay" data-drawer-overlay></div>
 <aside class="drawer" id="CartDrawer" aria-label="{{ 'cart.general.title' | t }}">
   <div class="drawer__head">
     <span class="eyebrow">{{ 'cart.general.title' | t }}</span>
-    <button data-cart-close aria-label="{{ 'accessibility.close' | t }}">&times;</button>
+    <button class="header__icon" data-cart-close aria-label="{{ 'accessibility.close' | t }}" style="font-size:1.5rem">&times;</button>
   </div>
   <div class="drawer__items" data-cart-items>
     <p class="muted">{{ 'cart.general.empty' | t }}</p>
@@ -52,15 +61,29 @@
 </aside>
 
 <script>
-  // Mobile nav toggle (tiny; kept inline with its markup)
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-nav-toggle]')) {
-      var d = document.getElementById('NavDrawer'); if (!d) return;
-      var open = d.hasAttribute('hidden'); if (open) d.removeAttribute('hidden');
-      requestAnimationFrame(function () { d.classList.toggle('is-open', open); });
+  // Menu drawer open/close (burger, overlay, links, Esc)
+  (function () {
+    var d = document.getElementById('NavDrawer');
+    var ov = document.querySelector('[data-nav-overlay]');
+    if (!d) return;
+    function setOpen(open) {
+      if (open) d.removeAttribute('hidden');
+      requestAnimationFrame(function () {
+        d.classList.toggle('is-open', open);
+        if (ov) ov.classList.toggle('is-open', open);
+        document.documentElement.style.overflow = open ? 'hidden' : '';
+        document.dispatchEvent(new CustomEvent('theme:scroll-lock', { detail: open }));
+        var t = document.querySelector('.header [data-nav-toggle]'); if (t) t.setAttribute('aria-expanded', open);
+      });
       if (!open) setTimeout(function () { d.setAttribute('hidden', ''); }, 500);
     }
-  });
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-nav-toggle]')) { e.preventDefault(); setOpen(d.hasAttribute('hidden')); }
+      else if (e.target.closest('[data-nav-overlay]')) { setOpen(false); }
+      else if (e.target.closest('#NavDrawer a')) { setOpen(false); }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !d.hasAttribute('hidden')) setOpen(false); });
+  })();
 </script>
 
 {% schema %}

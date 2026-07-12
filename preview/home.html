@@ -21,16 +21,19 @@
   <div class="announcement"><div class="container"><span>Complimentary shipping on all made-to-order pieces — worldwide.</span><a class="link-underline" href="#">The making of Melina</a></div></div>
 
   <header class="header" data-header>
-    <nav class="header__nav" aria-label="Primary">
-      <a href="#" class="link-underline">Collection</a><a href="#" class="link-underline">Lookbook</a><a href="#" class="link-underline">Melina</a><a href="#" class="link-underline">Casting</a>
-    </nav>
+    <div class="header__left"><button class="header__icon" data-nav-toggle aria-label="Menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg></button></div>
     <div class="header__brand"><a href="#"><span class="wordmark">MELINA</span></a></div>
     <div class="header__actions">
-      <button class="nav-toggle" data-nav-toggle>Menu</button>
-      <a href="#" class="link-underline">Search</a>
-      <button data-cart-toggle>Cart <span class="cart-count" data-count="0">0</span></button>
+      <a href="#" class="header__icon" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5 17 17" stroke-linecap="round"/></svg></a>
+      <button class="header__icon" data-cart-toggle aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" stroke-linecap="round"/></svg><span class="cart-count" data-count="0">0</span></button>
     </div>
   </header>
+  <div class="drawer__overlay" data-nav-overlay></div>
+  <nav class="drawer drawer--left" id="NavDrawer" hidden>
+    <div class="drawer__head"><span class="eyebrow">Menu</span><button class="header__icon" data-nav-toggle style="font-size:1.5rem">&times;</button></div>
+    <div class="drawer__items"><a href="#" class="h-sm" style="font-family:var(--display-font)">Home</a><a href="#" class="h-sm" style="font-family:var(--display-font)">Catalog</a><a href="#" class="h-sm" style="font-family:var(--display-font)">Contact</a><a href="#" class="h-sm" style="font-family:var(--display-font)">Melina's identity</a></div>
+  </nav>
+  <script>(function(){var d=document.getElementById('NavDrawer'),ov=document.querySelector('[data-nav-overlay]');if(!d)return;function setOpen(o){if(o)d.removeAttribute('hidden');requestAnimationFrame(function(){d.classList.toggle('is-open',o);if(ov)ov.classList.toggle('is-open',o);});if(!o)setTimeout(function(){d.setAttribute('hidden','');},500);}document.addEventListener('click',function(e){if(e.target.closest('[data-nav-toggle]')){e.preventDefault();setOpen(d.hasAttribute('hidden'));}else if(e.target.closest('[data-nav-overlay]')){setOpen(false);}else if(e.target.closest('#NavDrawer a')){setOpen(false);}});})();</script>
 
   <main id="MainContent">
     <section class="hero" data-hero>
