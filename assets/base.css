@@ -416,8 +416,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .pf-header__brand .wordmark { font-family: var(--display-font); font-size: clamp(1.1rem, 2vw, 1.5rem); letter-spacing: 0.24em; color: var(--bg); text-indent: 0.24em; }
 .pf-header__tag { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bg); border: 1px solid rgba(246,243,238,0.35); padding: 0.25em 0.6em; border-radius: 999px; }
 .pf-nav { display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); }
-.pf-nav a { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em; color: rgba(246,243,238,0.8); }
-.pf-nav a:hover { color: var(--bg); }
+.pf-nav a { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em; color: var(--bg); }
+.pf-nav a:hover { color: var(--accent); }
 .pf-nav__store { border: 1px solid rgba(246,243,238,0.4); border-radius: 999px; padding: 0.6em 1.1em; color: var(--bg); transition: background 0.3s ease, color 0.3s ease; }
 .pf-nav__store:hover { background: var(--bg); color: var(--ink); }
 @media (max-width: 760px) { .pf-nav a:not(.pf-nav__store) { display: none; } }
