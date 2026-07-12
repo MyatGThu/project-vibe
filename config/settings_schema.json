@@ -68,7 +68,9 @@
     "settings": [
       { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
       { "type": "text", "id": "social_tiktok", "label": "TikTok URL" },
-      { "type": "text", "id": "social_email", "label": "Contact email" }
+      { "type": "text", "id": "social_facebook", "label": "Facebook / Meta URL" },
+      { "type": "text", "id": "social_twitter", "label": "X (Twitter) URL" },
+      { "type": "text", "id": "social_email", "label": "Contact email (Gmail)" }
     ]
   }
 ]

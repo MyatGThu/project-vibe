@@ -1,0 +1,84 @@
+{%- comment -%}
+  Te Amo — 3D scroll landing.
+  Progressive enhancement: without JS/motion it is a clean hero (background + HUD).
+  With GSAP + ScrollTrigger (already vendored) motion.js adds `is-3d`, pins the
+  viewport and scrubs a CSS-3D flythrough of the look-panels — no new dependency.
+{%- endcomment -%}
+{%- liquid
+  assign heading = section.settings.heading
+  assign words = heading | split: ' '
+-%}
+<section class="l3d" data-l3d>
+  <div class="l3d__viewport" data-l3d-viewport>
+    <div class="l3d__bg">
+      {%- if section.settings.bg_image != blank -%}
+        {{ section.settings.bg_image | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: '' }}
+      {%- elsif section.settings.bg_image_url != blank -%}
+        <img src="{{ section.settings.bg_image_url }}" alt="" fetchpriority="high">
+      {%- else -%}
+        <img src="{{ 'ph-wide.svg' | asset_url }}" alt="">
+      {%- endif -%}
+    </div>
+
+    <div class="l3d__scene" data-l3d-scene aria-hidden="true">
+      {%- for block in section.blocks -%}
+        <figure class="l3d__panel" style="--i: {{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_tag: widths: '300,480,720', sizes: '24vw', loading: 'lazy', alt: block.settings.caption }}
+          {%- elsif block.settings.image_url != blank -%}
+            <img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="lazy">
+          {%- else -%}
+            <img src="{{ 'ph-figure.svg' | asset_url }}" alt="" loading="lazy">
+          {%- endif -%}
+          {%- if block.settings.caption != blank -%}
+            <figcaption class="l3d__cap"><span>{{ block.settings.caption }}</span><span>{{ block.settings.tag }}</span></figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+    </div>
+
+    <div class="l3d__hud" data-l3d-hud>
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow l3d__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h1 class="l3d__title display reveal-words">{% for w in words %}<span class="reveal-word">{{ w }}</span> {% endfor %}</h1>
+      {%- if section.settings.subtext != blank -%}<p class="l3d__sub">{{ section.settings.subtext }}</p>{%- endif -%}
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_link }}" class="btn" data-magnetic="0.3">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="l3d__cue" data-l3d-cue aria-hidden="true">{{ section.settings.scroll_label | default: 'Scroll to enter' }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "3D landing",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Autumn — Collection 01" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Couture, rendered." },
+    { "type": "text", "id": "subtext", "label": "Subtext", "default": "A fashion house dressed on an AI muse — scroll to step inside the atelier." },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Enter the collection" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "text", "id": "scroll_label", "label": "Scroll cue", "default": "Scroll to enter" },
+    { "type": "image_picker", "id": "bg_image", "label": "Background image" },
+    { "type": "text", "id": "bg_image_url", "label": "Background image URL (fallback)", "info": "Used until you upload a background image." }
+  ],
+  "blocks": [
+    {
+      "type": "look",
+      "name": "Look panel",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
+        { "type": "text", "id": "caption", "label": "Caption" },
+        { "type": "text", "id": "tag", "label": "Tag" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    { "name": "3D landing", "blocks": [ { "type": "look" }, { "type": "look" }, { "type": "look" }, { "type": "look" } ] }
+  ]
+}
+{% endschema %}
