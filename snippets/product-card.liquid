@@ -13,6 +13,13 @@
   if product.compare_at_price > product.price
     assign on_sale = true
   endif
+  assign mto = false
+  if settings.made_to_order and product.available
+    assign mto = true
+    if product.tags contains 'in-stock'
+      assign mto = false
+    endif
+  endif
 -%}
 <article class="card{% if hide_face %} card--hide-face{% endif %} reveal"
   data-product data-handle="{{ product.handle }}" data-product-url="{{ product.url }}"
@@ -36,6 +43,7 @@
     <div class="card__badges">
       {%- if product.available == false -%}<span class="badge">{{ 'products.product.sold_out' | t }}</span>{%- endif -%}
       {%- if on_sale and product.available -%}<span class="badge badge--accent">{{ 'products.product.on_sale' | t }}</span>{%- endif -%}
+      {%- if mto -%}<span class="badge badge--mto">Made to order</span>{%- endif -%}
       {%- if glb -%}<span class="badge">3D</span>{%- endif -%}
     </div>
 

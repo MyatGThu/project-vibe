@@ -1,5 +1,13 @@
 {%- liquid
   assign current = product.selected_or_first_available_variant
+  assign mto = false
+  if settings.made_to_order and product.available
+    assign mto = true
+    if product.tags contains 'in-stock'
+      assign mto = false
+    endif
+  endif
+  assign lead = settings.made_to_order_lead | default: '3–4 weeks'
 -%}
 <section class="section">
   <div class="container">
@@ -28,6 +36,8 @@
           {%- else -%}{{ current.price | money }}{%- endif -%}
         </p>
 
+        {%- if mto -%}<p class="mto-note"><span class="mto-note__dot" aria-hidden="true"></span>Made to order · ships in {{ lead }}</p>{%- endif -%}
+
         {%- if product.description != blank -%}<div class="pdp__rte">{{ product.description }}</div>{%- endif -%}
 
         {% form 'product', product, id: 'ProductForm', class: 'stack' %}
@@ -43,6 +53,7 @@
                 </div>
               </div>
             {%- endfor -%}
+            {% render 'size-guide' %}
           {%- endunless -%}
 
           <div class="option"><span class="label">{{ 'products.product.quantity' | t }}</span>
@@ -53,6 +64,14 @@
             {%- if current.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
           </button>
         {% endform %}
+
+        {%- if mto -%}
+          <ol class="mto-steps" aria-label="How made-to-order works">
+            <li><span class="mto-steps__n">1</span><div><h4>You order</h4><p>Reserve your piece and size — payment confirms your slot.</p></div></li>
+            <li><span class="mto-steps__n">2</span><div><h4>We make it</h4><p>Cut and sewn to order in the atelier, just for you.</p></div></li>
+            <li><span class="mto-steps__n">3</span><div><h4>It ships</h4><p>On its way to you in {{ lead }}, tracked to your door.</p></div></li>
+          </ol>
+        {%- endif -%}
       </div>
     </div>
   </div>

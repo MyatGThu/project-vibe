@@ -55,6 +55,13 @@
     ]
   },
   {
+    "name": "Made to order",
+    "settings": [
+      { "type": "checkbox", "id": "made_to_order", "label": "Made-to-order house", "info": "Show the made-to-order badge, lead time, and “how it works” on every product. Opt a stocked item out by adding the product tag: in-stock", "default": true },
+      { "type": "text", "id": "made_to_order_lead", "label": "Lead time", "default": "3–4 weeks" }
+    ]
+  },
+  {
     "name": "Motion",
     "settings": [
       { "type": "checkbox", "id": "smooth_scroll", "label": "Smooth scrolling (Lenis)", "default": true },

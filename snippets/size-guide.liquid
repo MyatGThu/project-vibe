@@ -1,0 +1,27 @@
+{%- comment -%}
+  Size guide — native <details> disclosure (no JS). General womenswear body
+  measurements; made-to-order means we can also cut to a customer's own numbers.
+  Starting chart — confirm final grading against your factory's block/sample.
+{%- endcomment -%}
+<details class="size-guide">
+  <summary class="size-guide__summary">Size guide</summary>
+  <div class="size-guide__body">
+    <div class="size-guide__scroll">
+      <table class="size-guide__table">
+        <thead>
+          <tr><th>Size</th><th>Bust</th><th>Waist</th><th>Hip</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>XS</th><td>32" / 81cm</td><td>24" / 61cm</td><td>34" / 86cm</td></tr>
+          <tr><th>S</th><td>34" / 86cm</td><td>26" / 66cm</td><td>36" / 91cm</td></tr>
+          <tr><th>M</th><td>36" / 91cm</td><td>28" / 71cm</td><td>38" / 97cm</td></tr>
+          <tr><th>L</th><td>38" / 97cm</td><td>30" / 76cm</td><td>40" / 102cm</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="size-guide__note">Measurements are body, not garment. Between sizes? Size up for outerwear and knits.</p>
+    {%- if settings.made_to_order -%}
+      <p class="size-guide__note size-guide__note--mto"><strong>Custom fit:</strong> because each piece is made to order, we can cut to your own measurements — add them in the order notes at checkout, or contact us before ordering.</p>
+    {%- endif -%}
+  </div>
+</details>

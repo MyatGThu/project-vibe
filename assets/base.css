@@ -210,6 +210,7 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .card__badges { position: absolute; top: 0.9rem; left: 0.9rem; z-index: 4; display: flex; gap: 0.4rem; }
 .badge { background: var(--bg); color: var(--ink); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35em 0.7em; border-radius: 999px; }
 .badge--accent { background: var(--ink); color: var(--bg); }
+.badge--mto { background: color-mix(in oklab, var(--ink) 82%, transparent); color: var(--bg); backdrop-filter: blur(6px); }
 
 .card__tools { position: absolute; right: 0.9rem; bottom: 0.9rem; z-index: 4; display: flex; gap: 0.5rem; opacity: 0; transform: translateY(0.5rem); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
 .card__media:hover .card__tools, .card__media:focus-within .card__tools { opacity: 1; transform: none; }
@@ -364,6 +365,32 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .pdp__price { font-size: var(--step-1); }
 .pdp__rte { color: var(--muted); line-height: 1.75; }
 .pdp__rte p + p { margin-top: 0.8em; }
+
+/* ---- Made-to-order treatment (badge lives with .badge above) ---- */
+.mto-note { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.mto-note__dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent); animation: mto-pulse 2.6s var(--ease) infinite; }
+@keyframes mto-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 55%, transparent); } 70%,100% { box-shadow: 0 0 0 0.5rem transparent; } }
+@media (prefers-reduced-motion: reduce) { .mto-note__dot { animation: none; } }
+
+.mto-steps { list-style: none; margin: 2rem 0 0; padding: 1.4rem 0 0; border-top: 1px solid var(--line); display: grid; gap: 1.1rem; }
+.mto-steps li { display: grid; grid-template-columns: auto 1fr; gap: 0.9rem; align-items: start; }
+.mto-steps__n { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; border: 1px solid var(--line); font-family: var(--ui-font); font-size: var(--step--1); color: var(--ink); }
+.mto-steps h4 { font-size: var(--step-0); margin: 0.1rem 0 0.15rem; }
+.mto-steps p { color: var(--muted); font-size: var(--step--1); line-height: 1.6; margin: 0; }
+
+.size-guide { margin-top: 0.4rem; border-top: 1px solid var(--line); }
+.size-guide__summary { cursor: pointer; padding: 0.9rem 0; font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+.size-guide__summary::-webkit-details-marker { display: none; }
+.size-guide__summary::after { content: "+"; font-size: 1.1em; color: var(--muted); }
+.size-guide[open] .size-guide__summary::after { content: "–"; }
+.size-guide__body { padding-bottom: 1rem; }
+.size-guide__scroll { overflow-x: auto; }
+.size-guide__table { width: 100%; border-collapse: collapse; font-size: var(--step--1); }
+.size-guide__table th, .size-guide__table td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.size-guide__table thead th { color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.66rem; }
+.size-guide__table tbody th { font-weight: 500; }
+.size-guide__note { margin-top: 0.8rem; color: var(--muted); font-size: var(--step--1); line-height: 1.6; }
+.size-guide__note--mto strong { color: var(--ink); }
 .pdp select { appearance: none; background-image: none; }
 
 /* ---- Collection ---- */
