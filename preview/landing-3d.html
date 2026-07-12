@@ -1,42 +1,29 @@
 <!doctype html>
 <!--
-  DEV PREVIEW ONLY. Mirrors sections/landing-3d.liquid + the Collection 01 hand-off.
-  Slides use flat colours + a label so the active slide is legible in a screenshot.
-  Plain load = live. #parallax / #fast / #exit freeze representative frames.
+  DEV PREVIEW ONLY. Mirrors sections/landing-3d.liquid (CSS-3D flythrough) + the
+  Collection 01 hand-off. Plain load = live. #fly freezes a mid-flythrough frame.
+  #exit freezes the outward zoom + blur dissolve.
 -->
 <html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Te Amo — scroll landing (preview)</title>
+  <title>Te Amo — 3D flythrough (preview)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap">
   <link rel="stylesheet" href="../assets/base.css">
-  <style>.l3d__slide .pvn { position: absolute; inset: auto 0 34% 0; text-align: center; font-family: var(--display-font); font-size: 4vmin; color: rgba(246,243,238,0.6); z-index: 1; }</style>
   <script>document.documentElement.className = 'js';</script>
 </head>
 <body class="template-index">
   <section class="l3d" data-l3d>
     <div class="l3d__viewport" data-l3d-viewport>
-      <div class="l3d__slides" data-l3d-slides>
-        <div class="l3d__slide" data-cap="Autumn — Collection 01" data-upcoming="false" style="background:#2c2622"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Hero</span></div>
-        <div class="l3d__slide" data-cap="The Monolith Coat" data-tag="Outerwear" data-upcoming="false" style="background:#3a4654"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Existing 1</span></div>
-        <div class="l3d__slide" data-cap="The Null Suit" data-tag="Tailoring" data-upcoming="false" style="background:#3b3b46"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Existing 2</span></div>
-        <div class="l3d__slide" data-cap="The Halo Gown" data-tag="Eveningwear" data-upcoming="false" style="background:#5a4636"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Existing 3</span></div>
-        <div class="l3d__slide" data-cap="The Sanguine Trench" data-tag="Outerwear" data-upcoming="true" style="background:#4a2a2a"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Upcoming 1</span></div>
-        <div class="l3d__slide" data-cap="The Cirrus Knit" data-tag="Knitwear" data-upcoming="true" style="background:#4a5a52"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Upcoming 2</span></div>
-        <div class="l3d__slide" data-cap="The Meridian Cape" data-tag="Outerwear" data-upcoming="true" style="background:#6a5a4a"><img src="../assets/ph-figure.svg" alt=""><span class="pvn">Upcoming 3</span></div>
-      </div>
-      <div class="l3d__scrim"></div>
-      <div class="l3d__badge" data-l3d-badge aria-hidden="true">Next drop</div>
-
+      <div class="l3d__bg"><img src="../assets/ph-wide.svg" alt=""></div>
+      <div class="l3d__scene" data-l3d-scene aria-hidden="true" id="scene"></div>
       <div class="l3d__hud" data-l3d-hud>
         <p class="eyebrow l3d__eyebrow">Autumn — Collection 01</p>
         <h1 class="l3d__title display reveal-words"><span class="reveal-word">Couture,</span> <span class="reveal-word">rendered.</span></h1>
         <p class="l3d__sub">A fashion house dressed on an AI muse — scroll to step inside the atelier.</p>
         <a href="#" class="btn" data-magnetic="0.3">Enter the collection</a>
       </div>
-
-      <div class="l3d__slidecap" data-l3d-cap aria-hidden="true"></div>
       <div class="l3d__cue" data-l3d-cue aria-hidden="true">Scroll to enter</div>
     </div>
   </section>
@@ -51,23 +38,29 @@
   </div></section>
 
   <script>
+    var LOOKS = [
+      ["The Monolith Coat","Outerwear",0],["The Liquid Slip","Dresses",0],["The Null Suit","Tailoring",0],
+      ["The Vapor Knit","Knitwear",0],["The Obsidian Trouser","Tailoring",0],["The Halo Gown","Eveningwear",0],
+      ["The Sanguine Trench","Outerwear",1],["The Cirrus Knit","Knitwear",1],["The Ashfall Gown","Eveningwear",1],["The Meridian Cape","Outerwear",1]
+    ];
+    document.getElementById('scene').innerHTML = LOOKS.map(function (l, i) {
+      return '<figure class="l3d__panel" style="--i:' + i + '"><img src="../assets/ph-figure.svg" alt="">' +
+        (l[2] ? '<span class="l3d__flag">Next drop</span>' : '') +
+        '<figcaption class="l3d__cap"><span>' + l[0] + '</span><span>' + l[1] + '</span></figcaption></figure>';
+    }).join('');
+
     window.Theme = { motion: { smooth: true, reveal: true } };
     (function () {
       var l = document.querySelector('.l3d');
-      var slides = l.querySelectorAll('.l3d__slide');
-      var cap = l.querySelector('[data-l3d-cap]');
-      function activate(i) {
-        l.classList.add('is-live');
-        slides.forEach(function (s) { s.classList.remove('is-active'); });
-        slides[i].classList.add('is-active');
-        l.classList.toggle('show-badge', slides[i].dataset.upcoming === 'true');
-        if (cap) { var s = slides[i]; cap.innerHTML = '<span>' + (s.dataset.cap || '') + '</span>' + (s.dataset.tag ? '<span>' + s.dataset.tag + '</span>' : ''); }
+      if (location.hash === '#fly') {
+        l.classList.add('is-3d');
+        l.querySelector('[data-l3d-scene]').style.transform = 'translateZ(1500px) rotateY(2deg)';
+        var hud = l.querySelector('[data-l3d-hud]'); hud.style.opacity = '0.1'; hud.style.transform = 'translateZ(-380px)';
+        return;
       }
-      if (location.hash === '#parallax') { activate(2); l.querySelector('[data-l3d-hud]').style.opacity = '0'; var im = slides[2].querySelector('img'); if (im) im.style.transform = 'scale(1.14) translateY(1.5%)'; return; }
-      if (location.hash === '#fast') { activate(5); l.querySelector('[data-l3d-hud]').style.opacity = '0'; return; }
       if (location.hash === '#exit') {
-        activate(6);
-        var sw = l.querySelector('[data-l3d-slides]'); sw.style.transform = 'scale(1.06)'; sw.style.filter = 'blur(8px)'; sw.style.opacity = '0.25';
+        l.classList.add('is-3d');
+        var sc = l.querySelector('[data-l3d-scene]'); sc.style.transform = 'translateZ(3900px) rotateY(3deg) scale(1.4)'; sc.style.filter = 'blur(12px)'; sc.style.opacity = '0.35';
         l.querySelector('[data-l3d-hud]').style.opacity = '0';
         l.querySelector('[data-l3d-viewport]').style.background = getComputedStyle(document.body).backgroundColor;
         return;

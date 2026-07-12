@@ -1,10 +1,9 @@
 {%- comment -%}
-  Te Amo — scroll landing.
-  Progressive enhancement: the first slide + headline are a plain hero without JS.
-  With GSAP + ScrollTrigger (already vendored) motion.js adds `is-live`, pins the
-  viewport, and scroll-drives: existing outfits with a parallax drift, then the
-  "upcoming" outfits as a fast slideshow, then a short dissolve into the next
-  section (Collection 01) — no new dependency.
+  Te Amo — pinned, scroll-scrubbed CSS-3D flythrough.
+  Progressive enhancement: without JS/motion it is a clean hero (background + HUD).
+  motion.js adds `is-3d`, pins the viewport and flies the camera forward through
+  the look-panels (existing outfits + tagged "upcoming" looks), then an outward
+  zoom + blur that dissolves into the next section (Collection 01) — no new dependency.
 {%- endcomment -%}
 {%- liquid
   assign heading = section.settings.heading
@@ -12,32 +11,33 @@
 -%}
 <section class="l3d" data-l3d>
   <div class="l3d__viewport" data-l3d-viewport>
-    <div class="l3d__slides" data-l3d-slides>
-      {%- comment -%} Slide 0 — background hero {%- endcomment -%}
-      <div class="l3d__slide" data-cap="{{ section.settings.eyebrow | escape }}">
-        {%- if section.settings.bg_image != blank -%}
-          {{ section.settings.bg_image | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: '' }}
-        {%- elsif section.settings.bg_image_url != blank -%}
-          <img src="{{ section.settings.bg_image_url }}" alt="" fetchpriority="high">
-        {%- else -%}
-          <img src="{{ 'ph-wide.svg' | asset_url }}" alt="">
-        {%- endif -%}
-      </div>
-      {%- comment -%} Look slides — eager so the fast slideshow never flips to a blank frame {%- endcomment -%}
+    <div class="l3d__bg">
+      {%- if section.settings.bg_image != blank -%}
+        {{ section.settings.bg_image | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: '' }}
+      {%- elsif section.settings.bg_image_url != blank -%}
+        <img src="{{ section.settings.bg_image_url }}" alt="" fetchpriority="high">
+      {%- else -%}
+        <img src="{{ 'ph-wide.svg' | asset_url }}" alt="">
+      {%- endif -%}
+    </div>
+
+    <div class="l3d__scene" data-l3d-scene aria-hidden="true">
       {%- for block in section.blocks -%}
-        <div class="l3d__slide" data-cap="{{ block.settings.caption | escape }}" data-tag="{{ block.settings.tag | escape }}" data-upcoming="{{ block.settings.upcoming }}" {{ block.shopify_attributes }}>
+        <figure class="l3d__panel" style="--i: {{ forloop.index0 }}" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_tag: widths: '800,1200,1800', sizes: '100vw', loading: 'eager', alt: block.settings.caption }}
+            {{ block.settings.image | image_tag: widths: '300,480,720', sizes: '24vw', loading: 'lazy', alt: block.settings.caption }}
           {%- elsif block.settings.image_url != blank -%}
-            <img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="eager">
+            <img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="lazy">
           {%- else -%}
-            <img src="{{ 'ph-figure.svg' | asset_url }}" alt="" loading="eager">
+            <img src="{{ 'ph-figure.svg' | asset_url }}" alt="" loading="lazy">
           {%- endif -%}
-        </div>
+          {%- if block.settings.upcoming -%}<span class="l3d__flag">{{ section.settings.badge_label | default: 'Next drop' }}</span>{%- endif -%}
+          {%- if block.settings.caption != blank -%}
+            <figcaption class="l3d__cap"><span>{{ block.settings.caption }}</span><span>{{ block.settings.tag }}</span></figcaption>
+          {%- endif -%}
+        </figure>
       {%- endfor -%}
     </div>
-    <div class="l3d__scrim"></div>
-    <div class="l3d__badge" data-l3d-badge aria-hidden="true">{{ section.settings.badge_label | default: 'Next drop' }}</div>
 
     <div class="l3d__hud" data-l3d-hud>
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow l3d__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
@@ -48,7 +48,6 @@
       {%- endif -%}
     </div>
 
-    <div class="l3d__slidecap" data-l3d-cap aria-hidden="true"></div>
     <div class="l3d__cue" data-l3d-cue aria-hidden="true">{{ section.settings.scroll_label | default: 'Scroll to enter' }}</div>
   </div>
 </section>
@@ -64,7 +63,7 @@
     { "type": "text", "id": "cta_text", "label": "Button", "default": "Enter the collection" },
     { "type": "url", "id": "cta_link", "label": "Button link" },
     { "type": "text", "id": "scroll_label", "label": "Scroll cue", "default": "Scroll to enter" },
-    { "type": "text", "id": "badge_label", "label": "Upcoming badge", "default": "Next drop" },
+    { "type": "text", "id": "badge_label", "label": "Upcoming tag", "default": "Next drop" },
     { "type": "image_picker", "id": "bg_image", "label": "Background image" },
     { "type": "text", "id": "bg_image_url", "label": "Background image URL (fallback)", "info": "Used until you upload a background image." }
   ],
@@ -77,7 +76,7 @@
         { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
         { "type": "text", "id": "caption", "label": "Caption" },
         { "type": "text", "id": "tag", "label": "Tag" },
-        { "type": "checkbox", "id": "upcoming", "label": "Upcoming (fast slideshow, not yet in the store)", "default": false }
+        { "type": "checkbox", "id": "upcoming", "label": "Upcoming (tagged, not yet in the store)", "default": false }
       ]
     }
   ],
