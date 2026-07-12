@@ -1,5 +1,5 @@
 /* ============================================================
-   MELINA — base.css
+   Te Amo — base.css
    One stylesheet: tokens, type, layout, components, motion.
    ============================================================ */
 
@@ -444,3 +444,86 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .pf-footer { border-top: 1px solid rgba(246,243,238,0.15); padding: clamp(2.5rem, 6vw, 5rem) clamp(1.15rem, 4vw, 3.25rem); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; align-items: center; }
 @media (max-width: 900px) { .pf-hero { grid-template-columns: 1fr; } .pf-hero__media { min-height: 56svh; } .pf-work { columns: 2; } }
 @media (max-width: 560px) { .pf-work { columns: 1; } }
+
+/* ============================================================
+   SIGNATURE COLLECTION THEMES
+   Each themed collection re-skins the whole page by overriding the
+   design tokens on the <body> template-suffix class. In Shopify admin
+   set a collection's theme template to "collection.swimwear" or
+   "collection.gym" and it inherits the palette below — no per-page work.
+   ============================================================ */
+
+/* ---- Swimwear — bright blues + sunny yellows (beach, open water, sunlight) ---- */
+.template-collection-swimwear {
+  --bg: #E9F7FF;
+  --surface: #FFFFFF;
+  --ink: #063A5E;          /* deep ocean — readable headings/text */
+  --muted: #3E7CA6;        /* muted sea blue */
+  --accent: #00A6E0;       /* bright azure */
+  --accent-2: #FFD23F;     /* sunny yellow */
+  --line: #BFE6FA;
+  --chrome: linear-gradient(115deg, #00A6E0, #7FE0FF 40%, #FFD23F 75%, #FFE9A8);
+  --radius: 14px;
+  background:
+    radial-gradient(120% 80% at 85% -12%, rgba(255,210,63,0.45), rgba(255,210,63,0) 55%),
+    linear-gradient(180deg, #DBF2FF 0%, #EEFAFF 42%, #FFFDF3 100%);
+  background-attachment: fixed;
+}
+.template-collection-swimwear .collection-hero {
+  color: #fff;
+  border-radius: 22px;
+  margin-block: clamp(1.2rem, 3vw, 2rem) clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(2.6rem, 6vw, 5rem) clamp(1.5rem, 5vw, 3rem);
+  background: linear-gradient(120deg, #0090D6 0%, #23B6EE 42%, #6FD4F5 66%, #FFD23F 112%);
+  box-shadow: 0 30px 70px -34px rgba(0,120,180,0.6);
+  overflow: hidden;
+}
+.template-collection-swimwear .collection-hero .eyebrow { color: #FFF6D6; }
+.template-collection-swimwear .eyebrow,
+.template-collection-swimwear .label { color: var(--accent); }
+.template-collection-swimwear .btn { --btn-bg: #00A6E0; --btn-fg: #fff; }
+.template-collection-swimwear .btn::before { background: var(--accent-2); }
+.template-collection-swimwear .btn:hover { color: #063A5E; }
+.template-collection-swimwear .marquee__item::after { color: var(--accent-2); }
+.template-collection-swimwear ::selection { background: #00A6E0; color: #fff; }
+
+/* ---- Gym / activewear — shades of red + black (solidity, power, love, strength) ---- */
+.template-collection-gym {
+  --bg: #0C0908;
+  --surface: #17100F;
+  --ink: #F5ECEC;          /* warm off-white on black */
+  --muted: #C08A8A;        /* muted rose-grey */
+  --accent: #E11D2A;       /* power red */
+  --accent-2: #7A0C12;     /* blood red */
+  --line: #3A1E1E;
+  --chrome: linear-gradient(115deg, #E11D2A, #7A0C12 45%, #1A0E0E 80%);
+  --radius: 6px;
+  background:
+    radial-gradient(120% 80% at 50% -12%, rgba(225,29,42,0.30), rgba(225,29,42,0) 58%),
+    linear-gradient(180deg, #0C0908 0%, #160C0C 100%);
+  background-attachment: fixed;
+}
+.template-collection-gym .collection-hero {
+  color: #fff;
+  border-radius: 10px;
+  margin-block: clamp(1.2rem, 3vw, 2rem) clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(2.6rem, 6vw, 5rem) clamp(1.5rem, 5vw, 3rem);
+  background: linear-gradient(120deg, #E11D2A 0%, #A50E18 45%, #3A0A0D 78%, #0C0908 112%);
+  border: 1px solid rgba(225,29,42,0.35);
+  box-shadow: 0 30px 80px -34px rgba(225,29,42,0.55);
+}
+.template-collection-gym .collection-hero h1 { text-transform: uppercase; letter-spacing: 0.015em; }
+.template-collection-gym .collection-hero .eyebrow { color: #FFC9CC; }
+.template-collection-gym .eyebrow,
+.template-collection-gym .label { color: var(--accent); }
+.template-collection-gym .btn { --btn-bg: #E11D2A; --btn-fg: #fff; }
+.template-collection-gym .btn::before { background: var(--accent-2); }
+.template-collection-gym .btn--ghost { --btn-fg: #F5ECEC; border-color: rgba(245,236,236,0.45); }
+.template-collection-gym .btn--ghost::before { background: #F5ECEC; }
+.template-collection-gym .btn--ghost:hover { color: #0C0908; }
+/* keep the shared chrome dark even though --ink is now light */
+.template-collection-gym .announcement { background: #060403; color: #F5ECEC; }
+.template-collection-gym .footer { background: #060403; color: #F5ECEC; }
+.template-collection-gym .footer a { color: color-mix(in oklab, #F5ECEC 78%, #060403); }
+.template-collection-gym .footer a:hover { color: #fff; }
+.template-collection-gym ::selection { background: #E11D2A; color: #fff; }

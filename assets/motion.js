@@ -1,5 +1,5 @@
 /* ============================================================
-   MELINA — motion.js
+   Te Amo — motion.js
    Lenis smooth scroll + GSAP ScrollTrigger orchestration.
    Progressive enhancement: no motion until libs load; reduced-motion fully honoured.
    ============================================================ */

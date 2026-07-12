@@ -1,7 +1,8 @@
-# MELINA — a Shopify theme
+# Te Amo — a Shopify theme
 
-A women's-wear Shopify **Online Store 2.0** theme fronted by an AI muse (Melina Jones Voss),
-built for scroll-stopping motion and in-place product discovery. Sell made-to-order fashion
+A fashion Shopify **Online Store 2.0** theme fronted by an AI muse (Melina Jones Voss),
+built for scroll-stopping motion and in-place product discovery. Sells every kind of
+clothing — eveningwear, everyday, **swimwear**, and **gym / activewear** — made-to-order
 via **Tapstitch**; every campaign image is AI-generated and openly disclosed.
 
 ## What's inside
