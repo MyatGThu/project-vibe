@@ -86,39 +86,50 @@
       gsap.from(heroWords, { yPercent: 120, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.15 });
     }
 
-    /* ---- 3D scroll landing: pin the viewport, scrub a CSS-3D flythrough,
-           then an outward zoom + blur that dissolves into the next section. ---- */
+    /* ---- Scroll landing: fast scroll-driven slideshow of the looks, then an
+           outward zoom + blur that dissolves into the next section. ---- */
     var l3d = document.querySelector('[data-l3d]');
     if (l3d) {
-      var scene = l3d.querySelector('[data-l3d-scene]');
-      var panels = scene ? scene.querySelectorAll('.l3d__panel') : [];
-      if (scene && panels.length) {
-        l3d.classList.add('is-3d');                        // opt in to the 3D layer (static hero until now)
+      var slidesWrap = l3d.querySelector('[data-l3d-slides]');
+      var slides = slidesWrap ? slidesWrap.querySelectorAll('.l3d__slide') : [];
+      if (slidesWrap && slides.length) {
+        l3d.classList.add('is-live');                      // JS now owns which slide shows (static hero until now)
         var vp = l3d.querySelector('[data-l3d-viewport]');
-        var bg = l3d.querySelector('.l3d__bg');
         var hud = l3d.querySelector('[data-l3d-hud]');
         var cue = l3d.querySelector('[data-l3d-cue]');
-        var step = parseFloat(getComputedStyle(l3d).getPropertyValue('--l3d-step')) || 680;
-        var start = -900;                                  // rest the panels in the distance so the headline reads clean
-        var fly = panels.length * step + 300;              // travel far enough to pass the last panel
-        var nextBg = getComputedStyle(document.body).backgroundColor; // the section we dissolve into
-        gsap.set(scene, { z: start, rotationY: -3, transformOrigin: '50% 50%' });
-        gsap.set([scene, bg], { filter: 'blur(0px)' });    // seed filter so the exit blur interpolates cleanly
+        var capEl = l3d.querySelector('[data-l3d-cap]');
+        var N = slides.length;
+        var nextBg = getComputedStyle(document.body).backgroundColor;
+        var current = -1;
+        function show(i) {
+          if (i === current || i < 0 || i >= N) return;
+          if (current >= 0) slides[current].classList.remove('is-active');
+          slides[i].classList.add('is-active');
+          current = i;
+          if (capEl) { var s = slides[i]; capEl.innerHTML = '<span>' + (s.dataset.cap || '') + '</span>' + (s.dataset.tag ? '<span>' + s.dataset.tag + '</span>' : ''); }
+        }
+        show(0);
+        gsap.set(slidesWrap, { filter: 'blur(0px)' });
 
-        // One scrubbed timeline drives the whole pin so the exit lands exactly at the end.
         var tl = gsap.timeline({
           scrollTrigger: {
-            trigger: l3d, start: 'top top', end: '+=' + Math.round(fly * 1.1),
-            pin: vp, scrub: 0.5, invalidateOnRefresh: true, anticipatePin: 1
+            trigger: l3d, start: 'top top',
+            end: function () { return '+=' + Math.round(window.innerHeight * 0.3 * N); }, // ~0.3vh per slide → fast
+            pin: vp, scrub: 0.35, invalidateOnRefresh: true, anticipatePin: 1,
+            onUpdate: function (self) {
+              var p = Math.min(1, self.progress / 0.72);   // run the looks over the first ~72%, hold the last for the exit
+              show(Math.min(N - 1, Math.floor(p * N)));
+            }
           }
         });
-        tl.to(scene, { z: fly, rotationY: 3, ease: 'none', duration: 1 }, 0);            // dive through the panels
-        tl.to(hud, { z: -440, opacity: 0, ease: 'none', duration: 0.4 }, 0);            // headline recedes early
+        tl.to(hud, { yPercent: -18, opacity: 0, ease: 'power2.in', duration: 0.32 }, 0);   // headline clears early
         if (cue) tl.to(cue, { opacity: 0, ease: 'none', duration: 0.08 }, 0);
+        if (capEl) tl.fromTo(capEl, { opacity: 0 }, { opacity: 1, ease: 'none', duration: 0.06 }, 0.06);
         // Exit (last ~28%): expand outward, blur, and dissolve into the next section's field.
-        // ponytail: blur ceiling 18px (emil: keep < 20px, costly in Safari) — brief, scrubbed, exit-only.
-        tl.to([scene, bg], { scale: 1.5, filter: 'blur(18px)', opacity: 0, ease: 'power2.in', duration: 0.28 }, 0.72);
+        // ponytail: blur ceiling 16px (emil: keep < 20px, costly in Safari) — brief, scrubbed, exit-only.
+        tl.to(slidesWrap, { scale: 1.18, filter: 'blur(16px)', opacity: 0, ease: 'power2.in', duration: 0.28 }, 0.72);
         tl.to(vp, { backgroundColor: nextBg, ease: 'power2.in', duration: 0.28 }, 0.72);
+        if (capEl) tl.to(capEl, { opacity: 0, ease: 'none', duration: 0.1 }, 0.72);
       }
     }
 
