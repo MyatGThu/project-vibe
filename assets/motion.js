@@ -155,6 +155,8 @@
       var track = lookbook.querySelector('.lookbook__track');
       var scrollLen = function () { return track.scrollWidth - window.innerWidth; };
       if (scrollLen() > 0) {
+        // Hand scrolling to the pin: kills the native swipe fallback (see .lookbook.is-pinned CSS).
+        lookbook.classList.add('is-pinned');
         gsap.to(track, {
           x: function () { return -scrollLen(); }, ease: 'none',
           scrollTrigger: {
