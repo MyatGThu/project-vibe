@@ -127,20 +127,13 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 }
 .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
 
-/* ---- Announcement / marquee ---- */
+/* ---- Announcement ---- */
 .announcement {
   background: var(--ink); color: var(--bg);
   font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase;
 }
 .announcement .container { display: flex; justify-content: center; gap: 1.5rem; padding-block: 0.7rem; text-align: center; }
 .announcement a { text-decoration: underline; text-underline-offset: 3px; }
-
-.marquee { overflow: hidden; border-block: 1px solid var(--line); padding-block: clamp(0.65rem, 1.6vw, 1.1rem); }
-.marquee__track { display: flex; gap: 2rem; width: max-content; animation: marquee 40s linear infinite; }
-.marquee:hover .marquee__track { animation-play-state: paused; }
-.marquee__item { font-family: var(--display-font); font-size: var(--step-1); font-style: italic; color: var(--muted); white-space: nowrap; opacity: 0.75; }
-.marquee__item::after { content: "✳"; margin-left: 2rem; color: var(--accent); font-style: normal; }
-@keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---- Header ---- */
 /* Make the menu permanent: the whole header group sticks (its containing block is
@@ -466,7 +459,6 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1 !important; transform: none !important; }
-  .marquee__track { animation: none; }
 }
 
 /* ============================================================
@@ -548,7 +540,6 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-collection-swimwear .btn { --btn-bg: #00A6E0; --btn-fg: #fff; }
 .template-collection-swimwear .btn::before { background: var(--accent-2); }
 .template-collection-swimwear .btn:hover { color: #063A5E; }
-.template-collection-swimwear .marquee__item::after { color: var(--accent-2); }
 .template-collection-swimwear ::selection,
 .template-page-swimwear ::selection { background: #00A6E0; color: #fff; }
 
@@ -705,8 +696,11 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
    underneath it — so as the viewport fades at the end, Collection 01 is revealed exactly where the
    animation was (no blurry dead zone). Covers the Shopify wrapper and the dev-preview structure. */
 .shopify-section:has(> .l3d), section.l3d { position: relative; z-index: 2; }
-.shopify-section:has(> .l3d) + .shopify-section,
-section.l3d + .shopify-section, section.l3d + .section { margin-top: -100svh; position: relative; z-index: 1; }
+/* The underlap only makes sense while the flythrough is running (.is-3d, desktop). On mobile the
+   flythrough is disabled and the hero is a plain 100svh block, so the next section must flow below it,
+   not get pulled up over it. */
+.shopify-section:has(> .l3d.is-3d) + .shopify-section,
+section.l3d.is-3d + .shopify-section, section.l3d.is-3d + .section { margin-top: -100svh; position: relative; z-index: 1; }
 
 /* ---- Footer social icons (placeholders until URLs are set) ---- */
 .footer__social { display: flex; gap: 0.55rem; margin-top: 0.9rem; flex-wrap: wrap; }

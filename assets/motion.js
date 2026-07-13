@@ -46,6 +46,10 @@
     // address-bar resize (real orientation/width changes still refresh) keeps the scrub stable.
     ScrollTrigger.config({ ignoreMobileResize: true });
 
+    // Touch / handset: skip the scroll-jacking 3D flythrough AND the horizontal pin. On mobile they fall
+    // back to a static hero and a native swipe strip — a calm, non-hijacked scroll (per user request).
+    var noScrollFX = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 900px)').matches;
+
     /* ---- Lenis smooth scroll, driving ScrollTrigger ---- */
     if (cfg.smooth && window.Lenis) {
       var lenis = new window.Lenis({ duration: 1.1, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }, smoothWheel: true });
@@ -96,7 +100,7 @@
            the panel depths: each look-panel flies in on its OWN staggered track (independent motion,
            not one block), then the viewport fades to resolve in place into Collection 01. ---- */
     var l3d = document.querySelector('[data-l3d]');
-    if (l3d) {
+    if (l3d && !noScrollFX) {
       var scene = l3d.querySelector('[data-l3d-scene]');
       var panels = scene ? Array.prototype.slice.call(scene.querySelectorAll('.l3d__panel')) : [];
       if (scene && panels.length) {
@@ -156,7 +160,7 @@
 
     /* ---- Lookbook horizontal pin ---- */
     var lookbook = document.querySelector('[data-lookbook]');
-    if (lookbook) {
+    if (lookbook && !noScrollFX) {
       var track = lookbook.querySelector('.lookbook__track');
       var scrollLen = function () { return track.scrollWidth - window.innerWidth; };
       if (scrollLen() > 0) {
