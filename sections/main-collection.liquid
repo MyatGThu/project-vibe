@@ -1,13 +1,17 @@
 <section class="section">
   <div class="container">
     <header class="collection-hero reveal">
-      <p class="eyebrow">{{ collection.products_count }} {% if collection.products_count == 1 %}piece{% else %}pieces{% endif %}</p>
+      {%- if collection.products_count > 0 -%}
+        <p class="eyebrow">{{ collection.products_count }} {% if collection.products_count == 1 %}piece{% else %}pieces{% endif %}</p>
+      {%- elsif section.blocks.size > 0 -%}
+        <p class="eyebrow">{{ section.blocks.size }} {% if section.blocks.size == 1 %}piece{% else %}pieces{% endif %}</p>
+      {%- endif -%}
       <h1>{{ collection.title }}</h1>
       {%- if collection.description != blank -%}<div class="rte muted" style="max-width:60ch;margin:1.2rem auto 0">{{ collection.description }}</div>{%- endif -%}
     </header>
 
-    {% paginate collection.products by 16 %}
-      {%- if collection.products.size > 0 -%}
+    {%- if collection.products.size > 0 -%}
+      {% paginate collection.products by 16 %}
         <div class="product-grid">
           {%- for product in collection.products -%}{% render 'product-card', product: product, reveal_index: forloop.index0 %}{%- endfor -%}
         </div>
@@ -18,13 +22,36 @@
             {%- if paginate.next -%}<a class="link-underline" href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }} →</a>{%- endif -%}
           </nav>
         {%- endif -%}
-      {%- else -%}
-        <div class="empty-state"><p class="lede muted">This collection is being tailored. Once Tapstitch products sync in, they’ll appear here.</p></div>
-      {%- endif -%}
-    {% endpaginate %}
+      {% endpaginate %}
+    {%- elsif section.blocks.size > 0 -%}
+      {%- comment -%} No store products yet → show the demo capsule so the catalogue isn't empty.
+        Real products replace these automatically once they sync in. {%- endcomment -%}
+      <div class="product-grid">
+        {% render 'demo-product-card' for section.blocks as block %}
+      </div>
+      {% render 'demo-preview-data', blocks: section.blocks %}
+    {%- else -%}
+      <div class="empty-state"><p class="lede muted">This collection is being tailored. Once Tapstitch products sync in, they’ll appear here.</p></div>
+    {%- endif -%}
   </div>
 </section>
 
 {% schema %}
-{ "name": "Collection", "settings": [] }
+{
+  "name": "Collection",
+  "settings": [],
+  "blocks": [
+    { "type": "product", "name": "Demo product", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "The Monolith Coat" },
+      { "type": "text", "id": "category", "label": "Category", "default": "Outerwear" },
+      { "type": "text", "id": "price", "label": "Price (display)", "default": "$1,290.00" },
+      { "type": "number", "id": "price_cents", "label": "Price (cents, for cart)", "default": 129000 },
+      { "type": "text", "id": "sizes", "label": "Sizes (comma)", "default": "XS, S, M, L" },
+      { "type": "text", "id": "image_url", "label": "Image URL" },
+      { "type": "text", "id": "hover_image_url", "label": "Hover image URL (close-up / detail)", "info": "Revealed on hover — a tighter, different-angle shot of the same piece. Falls back to the main image if left blank." },
+      { "type": "richtext", "id": "description", "label": "Description" }
+    ] }
+  ],
+  "max_blocks": 12
+}
 {% endschema %}

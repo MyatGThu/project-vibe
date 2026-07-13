@@ -21,53 +21,15 @@
           {% render 'product-card', product: product, reveal_index: forloop.index0 %}
         {%- endfor -%}
       {%- else -%}
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign handle = block.settings.title | handle
-            if block.settings.image_url != blank
-              assign card_img = block.settings.image_url
-            else
-              assign card_img = 'ph-figure.svg' | asset_url
-            endif
-          -%}
-          <article class="card card--hide-face reveal" data-product data-handle="{{ handle }}" data-product-url="#"
-            data-title="{{ block.settings.title | escape }}" data-reveal-delay="{{ forloop.index0 | times: 0.05 }}" {{ block.shopify_attributes }}>
-            <div class="card__media" data-quick-view-trigger tabindex="0" role="button" aria-haspopup="dialog" aria-label="{{ 'products.product.quick_view' | t }}: {{ block.settings.title | escape }}">
-              <img class="card__img card__img--front" src="{{ card_img }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-              <img class="card__img card__img--model" src="{{ card_img }}" alt="{{ block.settings.title | escape }} worn by Melina" loading="lazy">
-              {%- if settings.made_to_order -%}<div class="card__badges"><span class="badge badge--mto">Made to order</span></div>{%- endif -%}
-              <div class="card__tools"><button type="button" class="icon-btn" data-quick-add aria-label="{{ 'products.product.choose_options' | t }}">+</button></div>
-            </div>
-            <div class="card__body">
-              <div><h3 class="card__title">{{ block.settings.title }}</h3><p class="card__cat">{{ block.settings.category }}</p></div>
-              <p class="card__price">{{ block.settings.price }}</p>
-            </div>
-          </article>
-        {%- endfor -%}
+        {%- comment -%} No store collection yet → render the demo blocks as cards. {%- endcomment -%}
+        {% render 'demo-product-card' for section.blocks as block %}
       {%- endif -%}
     </div>
   </div>
 
   {%- unless has_products -%}
     {%- comment -%} Demo mode: make quick-view work with no store products yet {%- endcomment -%}
-    <script>
-      window.__PREVIEW_PRODUCTS__ = Object.assign(window.__PREVIEW_PRODUCTS__ || {}, {
-        {%- for block in section.blocks -%}
-          {%- assign handle = block.settings.title | handle -%}
-          {%- assign sizes = block.settings.sizes | split: ',' -%}
-          {{ handle | json }}: {
-            "title": {{ block.settings.title | json }},
-            "type": {{ block.settings.category | json }},
-            "price": {{ block.settings.price_cents | default: 0 }},
-            "url": "#",
-            "description": {{ block.settings.description | json }},
-            "images": [{{ block.settings.image_url | json }}],
-            "options": [{ "name": "Size", "position": 1, "values": [{% for s in sizes %}{{ s | strip | json }}{% unless forloop.last %},{% endunless %}{% endfor %}] }],
-            "variants": [{% for s in sizes %}{ "id": {{ block.id | append: '-' | append: forloop.index | json }}, "title": {{ s | strip | json }}, "option1": {{ s | strip | json }}, "price": {{ block.settings.price_cents | default: 0 }}, "available": true }{% unless forloop.last %},{% endunless %}{% endfor %}]
-          }{% unless forloop.last %},{% endunless %}
-        {%- endfor -%}
-      });
-    </script>
+    {% render 'demo-preview-data', blocks: section.blocks %}
   {%- endunless -%}
 </section>
 
@@ -90,6 +52,7 @@
       { "type": "number", "id": "price_cents", "label": "Price (cents, for cart)", "default": 129000 },
       { "type": "text", "id": "sizes", "label": "Sizes (comma)", "default": "XS, S, M, L" },
       { "type": "text", "id": "image_url", "label": "Image URL" },
+      { "type": "text", "id": "hover_image_url", "label": "Hover image URL (close-up / detail)", "info": "Revealed on hover — a tighter, different-angle shot of the same piece (jewelry-style). Falls back to the main image if left blank." },
       { "type": "richtext", "id": "description", "label": "Description" }
     ] }
   ],

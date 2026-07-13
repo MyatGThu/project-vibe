@@ -11,13 +11,15 @@
 -%}
 <section class="l3d" data-l3d>
   <div class="l3d__viewport" data-l3d-viewport>
-    <div class="l3d__bg">
+    <div class="l3d__bg{% if section.settings.bg_image == blank and section.settings.bg_image_url == blank %} l3d__bg--brand{% endif %}">
       {%- if section.settings.bg_image != blank -%}
         {{ section.settings.bg_image | image_url: width: 1600 | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: '' }}
       {%- elsif section.settings.bg_image_url != blank -%}
         <img src="{{ section.settings.bg_image_url }}" alt="" fetchpriority="high">
       {%- else -%}
-        <img src="{{ 'ph-wide.svg' | asset_url }}" alt="">
+        {%- comment -%} No photo → the hero showcases the house itself: a warm tonal field with the
+          wordmark set large and ghosted as atmosphere behind the headline. {%- endcomment -%}
+        <span class="l3d__wordmark" aria-hidden="true">{{ settings.brand_name | default: shop.name }}</span>
       {%- endif -%}
     </div>
 

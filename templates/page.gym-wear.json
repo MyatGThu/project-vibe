@@ -16,21 +16,183 @@
         "back_url": "shopify://collections/all"
       },
       "blocks": {
-        "st1": { "type": "stat", "settings": { "number": "2–3 wks", "label": "Made to order" } },
-        "st2": { "type": "stat", "settings": { "number": "0", "label": "Waste" } },
-        "st3": { "type": "stat", "settings": { "number": "100%", "label": "Your size" } },
-        "st4": { "type": "stat", "settings": { "number": "1", "label": "Melina" } },
-        "l1": { "type": "look", "settings": { "title": "The Forge Legging", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png" } },
-        "l2": { "type": "look", "settings": { "title": "The Power Sports Bra", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png" } },
-        "l3": { "type": "look", "settings": { "title": "The Strength Tank", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png" } },
-        "l4": { "type": "look", "settings": { "title": "The Iron Training Short", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050448_a749d860-170e-410f-a27f-f9a8de813d3c.png" } },
-        "l5": { "type": "look", "settings": { "title": "The Pulse Crop", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042209_f760ff66-5785-45b3-b94d-721c9742b6bd.png" } },
-        "l6": { "type": "look", "settings": { "title": "The Anchor Jogger", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042510_0990a3e2-c389-455a-9b52-ffb0466560d7.png" } },
-        "c1": { "type": "campaign", "settings": { "caption": "Power — Ember", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png" } },
-        "c2": { "type": "campaign", "settings": { "caption": "Power — Obsidian", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c.png" } }
+        "st1": {
+          "type": "stat",
+          "settings": {
+            "number": "2–3 wks",
+            "label": "Made to order"
+          }
+        },
+        "st2": {
+          "type": "stat",
+          "settings": {
+            "number": "0",
+            "label": "Waste"
+          }
+        },
+        "st3": {
+          "type": "stat",
+          "settings": {
+            "number": "100%",
+            "label": "Your size"
+          }
+        },
+        "st4": {
+          "type": "stat",
+          "settings": {
+            "number": "1",
+            "label": "Melina"
+          }
+        },
+        "l1": {
+          "type": "look",
+          "settings": {
+            "title": "The Forge Legging",
+            "tag": "Activewear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png"
+          }
+        },
+        "l2": {
+          "type": "look",
+          "settings": {
+            "title": "The Power Sports Bra",
+            "tag": "Activewear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png"
+          }
+        },
+        "l3": {
+          "type": "look",
+          "settings": {
+            "title": "The Strength Tank",
+            "tag": "Activewear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png"
+          }
+        },
+        "l4": {
+          "type": "look",
+          "settings": {
+            "title": "The Iron Training Short",
+            "tag": "Activewear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050448_a749d860-170e-410f-a27f-f9a8de813d3c.png"
+          }
+        },
+        "l5": {
+          "type": "look",
+          "settings": {
+            "title": "The Pulse Crop",
+            "tag": "Activewear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042209_f760ff66-5785-45b3-b94d-721c9742b6bd.png"
+          }
+        },
+        "l6": {
+          "type": "look",
+          "settings": {
+            "title": "The Anchor Jogger",
+            "tag": "Activewear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042510_0990a3e2-c389-455a-9b52-ffb0466560d7.png"
+          }
+        },
+        "c1": {
+          "type": "campaign",
+          "settings": {
+            "caption": "Power — Ember",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png"
+          }
+        },
+        "c2": {
+          "type": "campaign",
+          "settings": {
+            "caption": "Power — Obsidian",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c.png"
+          }
+        }
       },
-      "block_order": ["st1", "st2", "st3", "st4", "l1", "l2", "l3", "l4", "l5", "l6", "c1", "c2"]
+      "block_order": [
+        "st1",
+        "st2",
+        "st3",
+        "st4",
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5",
+        "l6",
+        "c1",
+        "c2"
+      ]
+    },
+    "products": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "The gym edit",
+        "heading": "Shop the pieces",
+        "products_to_show": 4
+      },
+      "blocks": {
+        "p1": {
+          "type": "product",
+          "settings": {
+            "title": "The Forge Legging",
+            "category": "Activewear",
+            "price": "$120.00",
+            "price_cents": 12000,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "title": "The Power Sports Bra",
+            "category": "Activewear",
+            "price": "$78.00",
+            "price_cents": 7800,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "title": "The Strength Tank",
+            "category": "Activewear",
+            "price": "$64.00",
+            "price_cents": 6400,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042209_f760ff66-5785-45b3-b94d-721c9742b6bd.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        },
+        "p4": {
+          "type": "product",
+          "settings": {
+            "title": "The Iron Training Short",
+            "category": "Activewear",
+            "price": "$72.00",
+            "price_cents": 7200,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050448_a749d860-170e-410f-a27f-f9a8de813d3c.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042510_0990a3e2-c389-455a-9b52-ffb0466560d7.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
     }
   },
-  "order": ["story"]
+  "order": [
+    "story",
+    "products"
+  ]
 }

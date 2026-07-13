@@ -132,8 +132,10 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
   background: var(--ink); color: var(--bg);
   font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase;
 }
-.announcement .container { display: flex; justify-content: center; gap: 1.5rem; padding-block: 0.7rem; text-align: center; }
-.announcement a { text-decoration: underline; text-underline-offset: 3px; }
+.announcement .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.1rem 1.5rem; padding-block: 0.7rem; text-align: center; }
+/* Keep the "Meet Melina" link atomic so it drops to its own line whole (never splits mid-phrase with
+   a broken underline) when the bar can't fit both items on one row — e.g. tablet-portrait ~768px. */
+.announcement a { text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 
 /* ---- Header ---- */
 /* Make the menu permanent: the whole header group sticks (its containing block is
@@ -217,7 +219,9 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .card__toggle-3d { font-family: var(--ui-font); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; width: auto; padding-inline: 0.9em; }
 
 .card__body { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.95rem; }
-.card__title { font-family: var(--display-font); font-size: var(--step-1); font-weight: 360; }
+/* Reserve two lines so a wrapping title ("The Marina Board Short") keeps its category tag and the
+   neighbouring cards' tags on a shared baseline across the row. */
+.card__title { font-family: var(--display-font); font-size: var(--step-1); font-weight: 360; line-height: 1.2; min-height: 2.4em; }
 .card__cat { font-size: var(--step--1); color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; }
 .card__price { font-family: var(--ui-font); font-size: var(--step-0); white-space: nowrap; }
 .price--sale { color: var(--accent); }
@@ -333,6 +337,10 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .drawer__overlay.is-open { opacity: 1; visibility: visible; }
 .drawer__head { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem; border-bottom: 1px solid var(--line); }
 .drawer__items { flex: 1; overflow-y: auto; padding: 1.4rem; display: flex; flex-direction: column; gap: 1.2rem; }
+/* Gym + Swimwear quick tabs, mirrored into the drawer for mobile. Desktop already shows them inline
+   beside the burger, so hide this copy ≥901px to avoid doubling them up. */
+.drawer__featured { display: flex; flex-direction: column; gap: 1.2rem; }
+@media (min-width: 901px) { .drawer__featured { display: none; } }
 /* Nested menu → expandable dropdown (native <details>, no JS needed).
    Note: do NOT set display:flex on the <details> itself — it stops Chromium hiding the
    collapsed content, leaking the sub-links open. Keep it block; style the summary instead. */
@@ -488,6 +496,9 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .pf-comp { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--gutter); border-block: 1px solid rgba(246,243,238,0.15); }
 .pf-comp .stat { padding-block: 1.6rem; }
 .pf-comp .stat__num { color: var(--bg); }
+/* Labels sit on the portfolio's dark ground; default --muted (#6B655E) reads ~3.3:1 there and fails
+   AA. Lift to a dimmed off-white — passes contrast while staying subordinate to the bright numerals. */
+.pf-comp .stat__label { color: rgba(246, 243, 238, 0.72); }
 .pf-work { columns: 3; column-gap: var(--gutter); }
 .pf-work__item { break-inside: avoid; margin-bottom: var(--gutter); position: relative; display: block; overflow: hidden; border-radius: var(--radius); background: #201c19; }
 .pf-work__item img { width: 100%; display: block; transition: transform 1.2s var(--ease); }
@@ -655,6 +666,20 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .l3d__bg { position: absolute; inset: 0; z-index: 0; }
 .l3d__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
 .l3d__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,15,0.34) 0%, rgba(20,17,15,0.12) 38%, rgba(20,17,15,0.78) 100%); }
+/* Brand backdrop (no photo): the hero showcases the house itself — a warm tonal field lit by a soft
+   bronze glow, with the wordmark set large and ghosted as atmosphere behind the headline. */
+.l3d__bg--brand {
+  background:
+    radial-gradient(120% 85% at 50% 12%, rgba(138,106,75,0.32) 0%, rgba(138,106,75,0) 58%),
+    linear-gradient(180deg, #241c17 0%, #17130f 56%, #0d0a08 100%);
+}
+.l3d__bg--brand::after { background: linear-gradient(180deg, rgba(13,10,8,0) 42%, rgba(13,10,8,0.5) 100%); }
+.l3d__wordmark {
+  position: absolute; inset: 0; margin: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--display-font); font-weight: 300; font-style: italic;
+  font-size: clamp(3rem, 27vw, 24rem); line-height: 0.9; letter-spacing: -0.02em;
+  white-space: nowrap; color: rgba(246, 243, 238, 0.09); user-select: none;
+}
 
 .l3d__hud { position: relative; z-index: 3; text-align: center; max-width: min(58rem, 92vw); padding: 0 var(--gutter); color: var(--bg); will-change: transform, opacity; }
 .l3d__eyebrow { color: rgba(246,243,238,0.75); }
@@ -662,6 +687,9 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .l3d__title .reveal-word { display: inline-block; }
 .l3d__sub { margin: 1.3rem auto 2rem; max-width: 48ch; color: rgba(246,243,238,0.82); font-size: var(--step-1); }
 .l3d__cue { position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%); z-index: 3; color: rgba(246,243,238,0.7); font-size: var(--step--1); letter-spacing: 0.2em; text-transform: uppercase; }
+/* Tablet-landscape only: 92vw lets the big display headline run nearly edge-to-edge and crowd the
+   scroll cue. Tighten the HUD width in this band; ≥1280 keeps the intentional full-bleed desktop hero. */
+@media (min-width: 901px) and (max-width: 1279px) { .l3d__hud { max-width: min(46rem, 78vw); } }
 
 /* 3D scene — enabled by motion.js only */
 .l3d__scene { display: none; }
