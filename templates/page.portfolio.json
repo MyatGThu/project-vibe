@@ -6,7 +6,7 @@
         "store_url": "shopify://collections/all",
         "name": "Melina Jones Voss",
         "pill": "Openly AI-generated",
-        "role": "AI Model",
+        "role": "Face of the house",
         "portrait_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png",
         "contact_email": "casting@melina.example"
       },
@@ -14,7 +14,7 @@
         "s1": { "type": "stat", "settings": { "number": "100%", "label": "Generated" } },
         "s2": { "type": "stat", "settings": { "number": "0", "label": "Retouching hrs" } },
         "s3": { "type": "stat", "settings": { "number": "∞", "label": "Looks" } },
-        "s4": { "type": "stat", "settings": { "number": "1", "label": "AI model" } },
+        "s4": { "type": "stat", "settings": { "number": "1", "label": "Melina" } },
         "w1": { "type": "work", "settings": { "title": "The Monolith Coat", "tag": "Outerwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png" } },
         "w2": { "type": "work", "settings": { "title": "The Halo Gown", "tag": "Eveningwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png" } },
         "w3": { "type": "work", "settings": { "title": "The Liquid Slip", "tag": "Dress", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png" } },

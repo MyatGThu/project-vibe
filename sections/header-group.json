@@ -5,8 +5,8 @@
     "announcement": {
       "type": "announcement",
       "settings": {
-        "text": "Complimentary shipping on all made-to-order pieces — worldwide.",
-        "link_text": "Meet Melina — AI model",
+        "text": "Made to order and sent to you, worldwide. Shipping is on us.",
+        "link_text": "Meet Melina",
         "link": "/pages/melina"
       }
     },
