@@ -666,6 +666,20 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .l3d__bg { position: absolute; inset: 0; z-index: 0; }
 .l3d__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
 .l3d__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,15,0.34) 0%, rgba(20,17,15,0.12) 38%, rgba(20,17,15,0.78) 100%); }
+/* Brand backdrop (no photo): the hero showcases the house itself — a warm tonal field lit by a soft
+   bronze glow, with the wordmark set large and ghosted as atmosphere behind the headline. */
+.l3d__bg--brand {
+  background:
+    radial-gradient(120% 85% at 50% 12%, rgba(138,106,75,0.32) 0%, rgba(138,106,75,0) 58%),
+    linear-gradient(180deg, #241c17 0%, #17130f 56%, #0d0a08 100%);
+}
+.l3d__bg--brand::after { background: linear-gradient(180deg, rgba(13,10,8,0) 42%, rgba(13,10,8,0.5) 100%); }
+.l3d__wordmark {
+  position: absolute; inset: 0; margin: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--display-font); font-weight: 300; font-style: italic;
+  font-size: clamp(3rem, 27vw, 24rem); line-height: 0.9; letter-spacing: -0.02em;
+  white-space: nowrap; color: rgba(246, 243, 238, 0.09); user-select: none;
+}
 
 .l3d__hud { position: relative; z-index: 3; text-align: center; max-width: min(58rem, 92vw); padding: 0 var(--gutter); color: var(--bg); will-change: transform, opacity; }
 .l3d__eyebrow { color: rgba(246,243,238,0.75); }
