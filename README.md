@@ -1,6 +1,6 @@
 # Te Amo — a Shopify theme
 
-A fashion Shopify **Online Store 2.0** theme fronted by an AI muse (Melina Jones Voss),
+A fashion Shopify **Online Store 2.0** theme fronted by an AI model (Melina Jones Voss),
 built for scroll-stopping motion and in-place product discovery. Sells every kind of
 clothing — eveningwear, everyday, **swimwear**, and **gym / activewear** — made-to-order
 via **Tapstitch**; every campaign image is AI-generated and openly disclosed.

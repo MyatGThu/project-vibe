@@ -11,7 +11,7 @@
     "name": "Brand",
     "settings": [
       { "type": "text", "id": "brand_name", "label": "Brand name", "default": "Te Amo" },
-      { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Clothing made to be loved — worn by an AI muse." },
+      { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Clothing made to be loved — modelled using an AI model." },
       { "type": "image_picker", "id": "logo", "label": "Logo (optional, overrides text)" },
       { "type": "range", "id": "logo_width", "min": 60, "max": 240, "step": 10, "unit": "px", "label": "Logo width", "default": 120 },
       { "type": "image_picker", "id": "favicon", "label": "Favicon" }
