@@ -29,7 +29,8 @@
   <div class="header__brand">
     <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
       {%- if settings.logo != blank -%}
-        {{ settings.logo | image_url: width: 480 | image_tag: class: 'header__logo', style: 'width:' | append: settings.logo_width | append: 'px', alt: shop.name }}
+        {%- assign logo_style = 'width:' | append: settings.logo_width | append: 'px' -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: class: 'header__logo', style: logo_style, alt: shop.name }}
       {%- else -%}
         <span class="wordmark">{{ settings.brand_name | default: shop.name }}</span>
       {%- endif -%}
