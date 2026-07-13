@@ -29,12 +29,13 @@
             else
               assign card_img = 'ph-figure.svg' | asset_url
             endif
+            assign hover_img = block.settings.hover_image_url | default: card_img
           -%}
           <article class="card card--hide-face reveal" data-product data-handle="{{ handle }}" data-product-url="#"
             data-title="{{ block.settings.title | escape }}" data-reveal-delay="{{ forloop.index0 | times: 0.05 }}" {{ block.shopify_attributes }}>
             <div class="card__media" data-quick-view-trigger tabindex="0" role="button" aria-haspopup="dialog" aria-label="{{ 'products.product.quick_view' | t }}: {{ block.settings.title | escape }}">
               <img class="card__img card__img--front" src="{{ card_img }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-              <img class="card__img card__img--model" src="{{ card_img }}" alt="{{ block.settings.title | escape }} worn by Melina" loading="lazy">
+              <img class="card__img card__img--model" src="{{ hover_img }}" alt="{{ block.settings.title | escape }} — close-up detail" loading="lazy">
               {%- if settings.made_to_order -%}<div class="card__badges"><span class="badge badge--mto">Made to order</span></div>{%- endif -%}
               <div class="card__tools"><button type="button" class="icon-btn" data-quick-add aria-label="{{ 'products.product.choose_options' | t }}">+</button></div>
             </div>
@@ -61,7 +62,7 @@
             "price": {{ block.settings.price_cents | default: 0 }},
             "url": "#",
             "description": {{ block.settings.description | json }},
-            "images": [{{ block.settings.image_url | json }}],
+            "images": [{{ block.settings.image_url | json }}{% if block.settings.hover_image_url != blank %}, {{ block.settings.hover_image_url | json }}{% endif %}],
             "options": [{ "name": "Size", "position": 1, "values": [{% for s in sizes %}{{ s | strip | json }}{% unless forloop.last %},{% endunless %}{% endfor %}] }],
             "variants": [{% for s in sizes %}{ "id": {{ block.id | append: '-' | append: forloop.index | json }}, "title": {{ s | strip | json }}, "option1": {{ s | strip | json }}, "price": {{ block.settings.price_cents | default: 0 }}, "available": true }{% unless forloop.last %},{% endunless %}{% endfor %}]
           }{% unless forloop.last %},{% endunless %}
@@ -90,6 +91,7 @@
       { "type": "number", "id": "price_cents", "label": "Price (cents, for cart)", "default": 129000 },
       { "type": "text", "id": "sizes", "label": "Sizes (comma)", "default": "XS, S, M, L" },
       { "type": "text", "id": "image_url", "label": "Image URL" },
+      { "type": "text", "id": "hover_image_url", "label": "Hover image URL (close-up / detail)", "info": "Revealed on hover — a tighter, different-angle shot of the same piece (jewelry-style). Falls back to the main image if left blank." },
       { "type": "richtext", "id": "description", "label": "Description" }
     ] }
   ],
