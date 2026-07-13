@@ -6,7 +6,7 @@
         "eyebrow": "The Gym Edit",
         "heading": "Made to move with you.",
         "subtext": "Second-skin activewear with real hold — sculpted seams, matte power fabric, cut to order in red and black. Worn by Melina, made for you.",
-        "hero_image_url": "",
+        "hero_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042123_b0a0916d-069c-4886-bb6b-96d27ccc0650.png",
         "collection_url": "shopify://collections/gym-collection",
         "collection_cta": "Shop the collection",
         "looks_heading": "The gym edit",
@@ -20,14 +20,14 @@
         "st2": { "type": "stat", "settings": { "number": "0", "label": "Waste" } },
         "st3": { "type": "stat", "settings": { "number": "100%", "label": "Your size" } },
         "st4": { "type": "stat", "settings": { "number": "1", "label": "Melina" } },
-        "l1": { "type": "look", "settings": { "title": "The Forge Legging", "tag": "Activewear", "image_url": "" } },
-        "l2": { "type": "look", "settings": { "title": "The Power Sports Bra", "tag": "Activewear", "image_url": "" } },
-        "l3": { "type": "look", "settings": { "title": "The Strength Tank", "tag": "Activewear", "image_url": "" } },
-        "l4": { "type": "look", "settings": { "title": "The Iron Training Short", "tag": "Activewear", "image_url": "" } },
-        "l5": { "type": "look", "settings": { "title": "The Pulse Crop", "tag": "Activewear", "image_url": "" } },
-        "l6": { "type": "look", "settings": { "title": "The Anchor Jogger", "tag": "Activewear", "image_url": "" } },
-        "c1": { "type": "campaign", "settings": { "caption": "Power — Ember", "image_url": "" } },
-        "c2": { "type": "campaign", "settings": { "caption": "Power — Obsidian", "image_url": "" } }
+        "l1": { "type": "look", "settings": { "title": "The Forge Legging", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042140_1eaf8873-ddcf-4d30-960b-1796960fcc19.png" } },
+        "l2": { "type": "look", "settings": { "title": "The Power Sports Bra", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042147_2b8aa99e-be2c-4842-81a8-39b027e55941.png" } },
+        "l3": { "type": "look", "settings": { "title": "The Strength Tank", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042153_f46c917b-16f5-4694-8871-c983384759ca.png" } },
+        "l4": { "type": "look", "settings": { "title": "The Iron Training Short", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042159_78ae731f-0276-497f-9f6d-d0e32f420565.png" } },
+        "l5": { "type": "look", "settings": { "title": "The Pulse Crop", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042209_f760ff66-5785-45b3-b94d-721c9742b6bd.png" } },
+        "l6": { "type": "look", "settings": { "title": "The Anchor Jogger", "tag": "Activewear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042510_0990a3e2-c389-455a-9b52-ffb0466560d7.png" } },
+        "c1": { "type": "campaign", "settings": { "caption": "Power — Ember", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042227_eaf3452e-0868-4c55-b0ce-13dcf8d5eba4.png" } },
+        "c2": { "type": "campaign", "settings": { "caption": "Power — Obsidian", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042234_0d4ca66e-e54a-4fcc-8acd-3cea3bdca7ee.png" } }
       },
       "block_order": ["st1", "st2", "st3", "st4", "l1", "l2", "l3", "l4", "l5", "l6", "c1", "c2"]
     }

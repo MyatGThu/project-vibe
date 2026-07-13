@@ -6,7 +6,7 @@
         "eyebrow": "The Swim Edit",
         "heading": "Sun-ready, made to order.",
         "subtext": "Cut for open water and long afternoons — sunfast azure and sunflower yellow, shapes that stay put when you dive. Worn by Melina, made for you.",
-        "hero_image_url": "",
+        "hero_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042305_ef73265b-fa48-4243-988c-1099baf01e74.png",
         "collection_url": "shopify://collections/swimwear-collection",
         "collection_cta": "Shop the collection",
         "looks_heading": "The swim edit",
@@ -20,14 +20,14 @@
         "st2": { "type": "stat", "settings": { "number": "0", "label": "Waste" } },
         "st3": { "type": "stat", "settings": { "number": "100%", "label": "Your size" } },
         "st4": { "type": "stat", "settings": { "number": "1", "label": "Melina" } },
-        "l1": { "type": "look", "settings": { "title": "The Riviera One-Piece", "tag": "Swimwear", "image_url": "" } },
-        "l2": { "type": "look", "settings": { "title": "The Solstice Bikini", "tag": "Swimwear", "image_url": "" } },
-        "l3": { "type": "look", "settings": { "title": "The Lido Wrap", "tag": "Cover-up", "image_url": "" } },
-        "l4": { "type": "look", "settings": { "title": "The Cove Maillot", "tag": "Swimwear", "image_url": "" } },
-        "l5": { "type": "look", "settings": { "title": "The Marina Board Short", "tag": "Swimwear", "image_url": "" } },
-        "l6": { "type": "look", "settings": { "title": "The Noon Rashguard", "tag": "Swimwear", "image_url": "" } },
+        "l1": { "type": "look", "settings": { "title": "The Riviera One-Piece", "tag": "Swimwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042314_3bcf3c6d-9fe3-4142-bd73-cd24ddd983d9.png" } },
+        "l2": { "type": "look", "settings": { "title": "The Solstice Bikini", "tag": "Swimwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042321_daa68170-e9b4-44c5-8c00-63d1ce7c408a.png" } },
+        "l3": { "type": "look", "settings": { "title": "The Lido Wrap", "tag": "Cover-up", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042327_0d330762-4e2a-42d9-8a97-0e0e4a1ac901.png" } },
+        "l4": { "type": "look", "settings": { "title": "The Cove Maillot", "tag": "Swimwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042334_abfafd03-a80e-471e-9f32-33367be0931a.png" } },
+        "l5": { "type": "look", "settings": { "title": "The Marina Board Short", "tag": "Swimwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042340_5ba6f7fe-c60f-4e2a-af34-beb8ba2a18c8.png" } },
+        "l6": { "type": "look", "settings": { "title": "The Noon Rashguard", "tag": "Swimwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042348_6ab73105-0ae3-4f56-8ce9-fabbab2a635e.png" } },
         "c1": { "type": "campaign", "settings": { "caption": "Sun — Azure", "image_url": "" } },
-        "c2": { "type": "campaign", "settings": { "caption": "Sun — Citrus", "image_url": "" } }
+        "c2": { "type": "campaign", "settings": { "caption": "Sun — Citrus", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042407_00dc75c5-3427-42f4-8219-0320c5ee103a.png" } }
       },
       "block_order": ["st1", "st2", "st3", "st4", "l1", "l2", "l3", "l4", "l5", "l6", "c1", "c2"]
     }
