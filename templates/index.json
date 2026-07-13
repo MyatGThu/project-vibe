@@ -7,7 +7,7 @@
         "heading": "Couture, rendered.",
         "subtext": "A house that dresses one woman, Melina, and then dresses you. Scroll in.",
         "cta_text": "Step inside",
-        "cta_link": "shopify://collections/all",
+        "cta_link": "shopify://collections/collection-01-the-autumn-capsule",
         "scroll_label": "Come closer",
         "bg_image_url": ""
       },
@@ -115,9 +115,10 @@
       "settings": {
         "eyebrow": "Made to order",
         "heading": "Autumn, held close",
+        "collection": "collection-01-the-autumn-capsule",
         "products_to_show": 8,
         "link_text": "View all",
-        "link": "shopify://collections/all"
+        "link": "shopify://collections/collection-01-the-autumn-capsule"
       },
       "blocks": {
         "p1": {
