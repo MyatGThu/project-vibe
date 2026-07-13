@@ -24,7 +24,7 @@
 
       <div class="footer__col">
         <h4>Connect</h4>
-        <a href="/pages/melina" class="link-underline">Melina — AI model</a>
+        <a href="/pages/melina" class="link-underline">Melina</a>
         {%- comment -%} Social icons render as placeholders (→ '#') until URLs are set in theme settings. {%- endcomment -%}
         <div class="footer__social">
           <a href="{{ settings.social_instagram | default: '#' }}" aria-label="Instagram">
@@ -60,7 +60,7 @@
   "name": "Footer",
   "settings": [
     { "type": "checkbox", "id": "show_disclosure", "label": "Show AI-model disclosure", "default": true },
-    { "type": "text", "id": "disclosure_text", "label": "Disclosure", "default": "Melina Jones Voss is an AI model. Every campaign image is generated, disclosed, and made with intent." }
+    { "type": "text", "id": "disclosure_text", "label": "Disclosure", "default": "Melina Jones Voss is an AI model. Every image of her is generated, disclosed, and made with love." }
   ],
   "blocks": [
     { "type": "menu", "name": "Menu column", "settings": [
