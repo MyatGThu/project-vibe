@@ -157,11 +157,16 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 }
 .header.is-scrolled { border-bottom-color: var(--line); padding-block: 0.7rem; }
 .header__nav { display: flex; gap: clamp(1rem, 2vw, 2.2rem); align-items: center; }
-.header__nav a { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink); }
+.header__nav a { position: relative; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink); transition: color 0.25s ease; }
+.header__nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -0.35em; height: 1px; background: currentColor; transition: right 0.3s var(--ease); }
+.header__nav a:hover { color: var(--accent); }
+.header__nav a:hover::after, .header__nav a[aria-current]::after { right: 0; }
 .header__brand { justify-self: center; text-align: center; }
 .header__brand .wordmark { font-family: var(--display-font); font-size: clamp(1.3rem, 2.2vw, 1.9rem); letter-spacing: 0.28em; font-weight: 360; text-indent: 0.28em; }
 .header__actions { justify-self: end; display: flex; gap: 0.2rem; align-items: center; }
-.header__left { justify-self: start; display: flex; align-items: center; }
+.header__left { justify-self: start; display: flex; align-items: center; gap: clamp(0.6rem, 1.6vw, 1.5rem); }
+/* Inline menu tabs sit next to the burger on desktop; on narrow screens they collapse back into the drawer. */
+@media (max-width: 900px) { .header__nav { display: none; } }
 .header__icon { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; color: var(--ink); background: none; transition: background 0.3s ease, color 0.3s ease; }
 .header__icon:hover { background: color-mix(in oklab, var(--ink) 9%, transparent); }
 .header__icon svg { width: 20px; height: 20px; display: block; }
