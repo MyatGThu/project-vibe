@@ -1,15 +1,29 @@
+{%- comment -%}
+  Two menus: `featured_menu` powers the always-visible inline tabs beside the burger
+  (meant for just Gym + Swimwear), and `menu` is the full navigation that lives in the
+  drawer. If no featured menu is assigned, the tabs fall back to Gym + Swimwear so the
+  header is never over-stuffed and never empty.
+{%- endcomment -%}
+{%- liquid
+  assign featured = linklists[section.settings.featured_menu]
+  assign main_menu = linklists[section.settings.menu]
+-%}
 <header class="header" data-header>
   <div class="header__left">
     <button class="header__icon" data-nav-toggle aria-label="{{ 'accessibility.menu' | t }}" aria-controls="NavDrawer" aria-expanded="false">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
     </button>
-    {%- if linklists[section.settings.menu].links.size > 0 -%}
-      <nav class="header__nav" aria-label="{{ 'accessibility.menu' | t }}">
-        {%- for link in linklists[section.settings.menu].links -%}
+    <nav class="header__nav" aria-label="{{ 'accessibility.featured_menu' | t | default: 'Featured' }}">
+      {%- if featured.links.size > 0 -%}
+        {%- for link in featured.links -%}
           <a href="{{ link.url }}"{% if link.active or link.child_active %} aria-current="page"{% endif %}>{{ link.title }}</a>
         {%- endfor -%}
-      </nav>
-    {%- endif -%}
+      {%- else -%}
+        {%- comment -%} No featured menu assigned yet — surface the two collections by default. {%- endcomment -%}
+        <a href="{{ pages['gym-wear'].url | default: '/pages/gym-wear' }}"{% if request.path contains 'gym' %} aria-current="page"{% endif %}>Gym</a>
+        <a href="{{ pages.swimwear.url | default: '/pages/swimwear' }}"{% if request.path contains 'swim' %} aria-current="page"{% endif %}>Swimwear</a>
+      {%- endif -%}
+    </nav>
   </div>
 
   <div class="header__brand">
@@ -41,7 +55,16 @@
     <button class="header__icon" data-nav-toggle aria-label="{{ 'accessibility.close' | t }}" style="font-size:1.5rem">&times;</button>
   </div>
   <div class="drawer__items">
-    {%- for link in linklists[section.settings.menu].links -%}
+    {%- comment -%} Featured destinations first — on mobile the inline tabs are hidden, so the drawer is where Gym/Swim stay reachable — then the full menu. {%- endcomment -%}
+    {%- if featured.links.size > 0 -%}
+      {%- for link in featured.links -%}
+        <a href="{{ link.url }}" class="h-sm" style="font-family:var(--display-font)">{{ link.title }}</a>
+      {%- endfor -%}
+    {%- else -%}
+      <a href="{{ pages['gym-wear'].url | default: '/pages/gym-wear' }}" class="h-sm" style="font-family:var(--display-font)">Gym</a>
+      <a href="{{ pages.swimwear.url | default: '/pages/swimwear' }}" class="h-sm" style="font-family:var(--display-font)">Swimwear</a>
+    {%- endif -%}
+    {%- for link in main_menu.links -%}
       <a href="{{ link.url }}" class="h-sm" style="font-family:var(--display-font)">{{ link.title }}</a>
     {%- endfor -%}
     <a href="{{ routes.search_url }}" class="h-sm" style="font-family:var(--display-font)">{{ 'general.search.search' | t }}</a>
@@ -97,7 +120,8 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+    { "type": "link_list", "id": "featured_menu", "label": "Featured tabs (beside the menu button)", "info": "Always-visible tabs next to the burger — meant for just Gym + Swimwear. Leave blank to show those two by default. Everything in the main menu below stays in the drawer." },
+    { "type": "link_list", "id": "menu", "label": "Main menu (in the drawer)", "default": "main-menu" }
   ]
 }
 {% endschema %}
