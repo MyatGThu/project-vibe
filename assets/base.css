@@ -488,8 +488,11 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
    "collection.gym" and it inherits the palette below — no per-page work.
    ============================================================ */
 
-/* ---- Swimwear — bright blues + sunny yellows (beach, open water, sunlight) ---- */
-.template-collection-swimwear {
+/* ---- Swimwear — bright blues + sunny yellows (beach, open water, sunlight) ----
+   Shared by the collection page (template-collection-swimwear) and the dedicated
+   /pages/swimwear story page (template-page-swimwear). */
+.template-collection-swimwear,
+.template-page-swimwear {
   --bg: #E9F7FF;
   --surface: #FFFFFF;
   --ink: #063A5E;          /* deep ocean — readable headings/text */
@@ -520,10 +523,14 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-collection-swimwear .btn::before { background: var(--accent-2); }
 .template-collection-swimwear .btn:hover { color: #063A5E; }
 .template-collection-swimwear .marquee__item::after { color: var(--accent-2); }
-.template-collection-swimwear ::selection { background: #00A6E0; color: #fff; }
+.template-collection-swimwear ::selection,
+.template-page-swimwear ::selection { background: #00A6E0; color: #fff; }
 
-/* ---- Gym / activewear — shades of red + black (solidity, power, love, strength) ---- */
-.template-collection-gym {
+/* ---- Gym / activewear — shades of red + black (solidity, power, love, strength) ----
+   Shared by the collection page (template-collection-gym) and the dedicated
+   /pages/gym-wear story page (template-page-gym-wear). */
+.template-collection-gym,
+.template-page-gym-wear {
   --bg: #0C0908;
   --surface: #17100F;
   --ink: #F5ECEC;          /* warm off-white on black */
@@ -557,11 +564,45 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-collection-gym .btn--ghost::before { background: #F5ECEC; }
 .template-collection-gym .btn--ghost:hover { color: #0C0908; }
 /* keep the shared chrome dark even though --ink is now light */
-.template-collection-gym .announcement { background: #060403; color: #F5ECEC; }
-.template-collection-gym .footer { background: #060403; color: #F5ECEC; }
-.template-collection-gym .footer a { color: color-mix(in oklab, #F5ECEC 78%, #060403); }
-.template-collection-gym .footer a:hover { color: #fff; }
-.template-collection-gym ::selection { background: #E11D2A; color: #fff; }
+.template-collection-gym .announcement,
+.template-page-gym-wear .announcement { background: #060403; color: #F5ECEC; }
+.template-collection-gym .footer,
+.template-page-gym-wear .footer { background: #060403; color: #F5ECEC; }
+.template-collection-gym .footer a,
+.template-page-gym-wear .footer a { color: color-mix(in oklab, #F5ECEC 78%, #060403); }
+.template-collection-gym .footer a:hover,
+.template-page-gym-wear .footer a:hover { color: #fff; }
+.template-collection-gym ::selection,
+.template-page-gym-wear ::selection { background: #E11D2A; color: #fff; }
+.template-page-gym-wear .cstory-hero__title { text-transform: uppercase; letter-spacing: 0.012em; }
+
+/* ---- Collection story page (Gym / Swim) — self-themes off the inherited palette above ---- */
+.cstory { background: var(--bg); color: var(--ink); }
+.cstory .eyebrow, .cstory-eyebrow { color: var(--accent); }
+.cstory-hero { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 82svh; }
+.cstory-hero__media { position: relative; overflow: hidden; background: var(--surface); }
+.cstory-hero__media img { width: 100%; height: 100%; object-fit: cover; }
+.cstory-hero__body { display: flex; flex-direction: column; justify-content: center; gap: 1.3rem; padding: var(--space) clamp(1.15rem, 4vw, 3.25rem); }
+.cstory-hero__title { font-size: var(--step-4); line-height: 0.98; max-width: 14ch; }
+.cstory-hero__sub { color: var(--muted); max-width: 44ch; }
+.cstory-hero__cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.cstory-ethos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--gutter); border-block: 1px solid var(--line); }
+.cstory-stat { padding-block: 1.6rem; }
+.cstory-stat__num { display: block; font-family: var(--display-font); font-size: var(--step-3); line-height: 1; color: var(--ink); }
+.cstory-stat__label { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+.cstory-looks { columns: 3; column-gap: var(--gutter); }
+.cstory-look { break-inside: avoid; margin-bottom: var(--gutter); position: relative; display: block; overflow: hidden; border-radius: var(--radius); background: var(--surface); }
+.cstory-look img { width: 100%; display: block; transition: transform 1.2s var(--ease); }
+.cstory-look:hover img { transform: scale(1.045); }
+.cstory-look__cap { position: absolute; inset: auto 0 0 0; padding: 1rem 1.1rem; display: flex; justify-content: space-between; gap: 1rem; background: linear-gradient(0deg, color-mix(in oklab, var(--bg) 82%, transparent), transparent); color: var(--ink); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0; transform: translateY(0.5rem); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
+.cstory-look:hover .cstory-look__cap { opacity: 1; transform: none; }
+.cstory-statement { text-align: center; }
+.cstory-statement p { font-family: var(--display-font); font-size: var(--step-4); line-height: 1.06; max-width: 20ch; margin-inline: auto; font-weight: 320; }
+.cstory-mto { text-align: center; }
+.cstory-mto .lede { max-width: 46ch; margin: 1rem auto 2rem; color: var(--muted); }
+.cstory-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; align-items: center; padding-block: clamp(2.5rem, 6vw, 5rem); border-top: 1px solid var(--line); }
+@media (max-width: 900px) { .cstory-hero { grid-template-columns: 1fr; } .cstory-hero__media { min-height: 54svh; } .cstory-looks { columns: 2; } }
+@media (max-width: 560px) { .cstory-looks { columns: 1; } }
 
 /* ============================================================
    3D SCROLL LANDING (.l3d) — sticky, scroll-scrubbed CSS-3D flythrough

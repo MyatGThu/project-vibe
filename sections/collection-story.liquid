@@ -1,0 +1,152 @@
+{%- comment -%}
+  Te Amo — Collection story page (Gym / Swimwear).
+  A bespoke, portfolio-calibre destination for a single collection. Self-themes off the page's
+  palette variables (--bg/--ink/--accent/--surface/--line), which the assigned template suffix sets
+  via body class (template-page-gym-wear / template-page-swimwear → collection palettes in base.css).
+  Hero → ethos → lookbook → statement → campaign → made-to-order → back. Links through to the real
+  collection for shopping. Progressive: clean and readable with no JS.
+{%- endcomment -%}
+{%- liquid
+  assign store = section.settings.back_url | default: routes.root_url
+  assign shop = section.settings.collection_url | default: store
+  assign words = section.settings.heading | split: ' '
+  if section.settings.hero_image != blank
+    assign hero = section.settings.hero_image | image_url: width: 1600
+  else
+    assign hero = section.settings.hero_image_url
+  endif
+-%}
+<div class="cstory">
+
+  <section class="cstory-hero">
+    <div class="cstory-hero__media">
+      {%- if hero != blank -%}<img src="{{ hero }}" alt="{{ section.settings.heading | escape }}" fetchpriority="high">
+      {%- else -%}<img src="{{ 'ph-figure.svg' | asset_url }}" alt="">{%- endif -%}
+    </div>
+    <div class="cstory-hero__body">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow cstory-eyebrow reveal">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h1 class="cstory-hero__title display reveal-words">{% for w in words %}<span class="reveal-word">{{ w }}</span> {% endfor %}</h1>
+      {%- if section.settings.subtext != blank -%}<p class="lede cstory-hero__sub reveal">{{ section.settings.subtext }}</p>{%- endif -%}
+      <div class="cstory-hero__cta reveal">
+        <a class="btn" href="{{ shop }}" style="--btn-bg:var(--accent);--btn-fg:#fff" data-magnetic="0.3">{{ section.settings.collection_cta | default: 'Shop the collection' }}</a>
+        <a class="btn btn--ghost" href="#cs-looks" data-magnetic="0.3">See the looks</a>
+      </div>
+    </div>
+  </section>
+
+  {%- assign stat_count = 0 -%}
+  {%- for block in section.blocks -%}{%- if block.type == 'stat' -%}{%- assign stat_count = stat_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+  {%- if stat_count > 0 -%}
+    <section class="section--tight"><div class="container">
+      <div class="cstory-ethos reveal">
+        {%- for block in section.blocks -%}{%- if block.type == 'stat' -%}
+          <div class="cstory-stat" {{ block.shopify_attributes }}><span class="cstory-stat__num">{{ block.settings.number }}</span><span class="cstory-stat__label">{{ block.settings.label }}</span></div>
+        {%- endif -%}{%- endfor -%}
+      </div>
+    </div></section>
+  {%- endif -%}
+
+  <section class="section" id="cs-looks"><div class="container">
+    <div class="collection-head reveal">
+      <div><p class="eyebrow">The looks</p><h2 class="h-md" style="margin-top:.5rem">{{ section.settings.looks_heading | default: 'This season' }}</h2></div>
+      <a href="{{ shop }}" class="link-underline">Shop all →</a>
+    </div>
+    <div class="cstory-looks">
+      {%- for block in section.blocks -%}{%- if block.type == 'look' -%}
+        {%- liquid
+          if block.settings.image != blank
+            assign li = block.settings.image | image_url: width: 900
+          elsif block.settings.image_url != blank
+            assign li = block.settings.image_url
+          else
+            assign li = 'ph-figure.svg' | asset_url
+          endif
+        -%}
+        <a class="cstory-look reveal" href="{{ block.settings.link | default: shop }}" {{ block.shopify_attributes }}>
+          <img src="{{ li }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          <span class="cstory-look__cap"><span>{{ block.settings.title }}</span><span>{{ block.settings.tag }}</span></span>
+        </a>
+      {%- endif -%}{%- endfor -%}
+    </div>
+  </div></section>
+
+  {%- if section.settings.statement != blank -%}
+    <section class="section cstory-statement"><div class="container">
+      <p class="reveal">{{ section.settings.statement }}</p>
+    </div></section>
+  {%- endif -%}
+
+  {%- assign camp_count = 0 -%}
+  {%- for block in section.blocks -%}{%- if block.type == 'campaign' -%}{%- assign camp_count = camp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+  {%- if camp_count > 0 -%}
+    <section class="section"><div class="container">
+      <div class="editorial-split">
+        {%- for block in section.blocks -%}{%- if block.type == 'campaign' -%}
+          {%- liquid
+            if block.settings.image != blank
+              assign ci = block.settings.image | image_url: width: 1400
+            elsif block.settings.image_url != blank
+              assign ci = block.settings.image_url
+            else
+              assign ci = 'ph-figure.svg' | asset_url
+            endif
+          -%}
+          <div class="editorial-split__media reveal" {{ block.shopify_attributes }}><img src="{{ ci }}" alt="{{ block.settings.caption | escape }}" loading="lazy"></div>
+        {%- endif -%}{%- endfor -%}
+      </div>
+    </div></section>
+  {%- endif -%}
+
+  <section class="section cstory-mto"><div class="container">
+    <p class="eyebrow reveal">Made to order</p>
+    {%- if section.settings.mto_note != blank -%}<p class="lede reveal">{{ section.settings.mto_note }}</p>{%- endif -%}
+    <a class="btn reveal" href="{{ shop }}" style="--btn-bg:var(--accent);--btn-fg:#fff" data-magnetic="0.3">{{ section.settings.collection_cta | default: 'Shop the collection' }}</a>
+  </div></section>
+
+  <footer class="cstory-footer container">
+    {%- if section.settings.disclosure != blank -%}<span class="muted" style="max-width:52ch">{{ section.settings.disclosure }}</span>{%- endif -%}
+    <a href="{{ store }}" class="link-underline">← Back to the store</a>
+  </footer>
+</div>
+
+{% schema %}
+{
+  "name": "Collection story",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made to order." },
+    { "type": "textarea", "id": "subtext", "label": "Subtext" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "text", "id": "hero_image_url", "label": "Hero image URL (fallback)" },
+    { "type": "url", "id": "collection_url", "label": "Collection link (Shop)" },
+    { "type": "text", "id": "collection_cta", "label": "Shop button", "default": "Shop the collection" },
+    { "type": "header", "content": "Looks" },
+    { "type": "text", "id": "looks_heading", "label": "Looks heading", "default": "This season" },
+    { "type": "header", "content": "Statement" },
+    { "type": "textarea", "id": "statement", "label": "Statement" },
+    { "type": "header", "content": "Made to order + footer" },
+    { "type": "textarea", "id": "mto_note", "label": "Made-to-order note" },
+    { "type": "textarea", "id": "disclosure", "label": "AI disclosure", "default": "Melina Jones Voss is an AI model. Every image of her is generated and openly disclosed." },
+    { "type": "url", "id": "back_url", "label": "Back-to-store link" }
+  ],
+  "blocks": [
+    { "type": "stat", "name": "Ethos stat", "settings": [
+      { "type": "text", "id": "number", "label": "Number", "default": "2–3 wks" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Made to order" }
+    ] },
+    { "type": "look", "name": "Look", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Look" },
+      { "type": "text", "id": "tag", "label": "Tag", "default": "Activewear" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
+      { "type": "url", "id": "link", "label": "Link (defaults to collection)" }
+    ] },
+    { "type": "campaign", "name": "Campaign image", "settings": [
+      { "type": "text", "id": "caption", "label": "Caption", "default": "Campaign" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "image_url", "label": "Image URL (fallback)" }
+    ] }
+  ],
+  "presets": [{ "name": "Collection story" }]
+}
+{% endschema %}
