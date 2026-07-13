@@ -40,6 +40,11 @@
     var gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
     if (!gsap) return;
     gsap.registerPlugin(ScrollTrigger);
+    // Mobile browsers fire a resize every time the address bar shows/hides during a scroll. That resize
+    // makes ScrollTrigger recompute + re-run invalidateOnRefresh, which snapped the scrubbed panel depths
+    // to new values — the "flash" where the 3D flythrough panels jump small↔big mid-scroll. Ignoring the
+    // address-bar resize (real orientation/width changes still refresh) keeps the scrub stable.
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     /* ---- Lenis smooth scroll, driving ScrollTrigger ---- */
     if (cfg.smooth && window.Lenis) {
