@@ -752,3 +752,38 @@ section.l3d + .shopify-section, section.l3d + .section { margin-top: -100svh; po
   .footer__disclosure { flex-direction: column; gap: 0.5rem; }
   .cstory-footer, .pf-footer { gap: 1rem 1.5rem; }
 }
+
+/* ============================================================
+   MOBILE / TABLET OVERHAUL — Pass 1: device correctness
+   The invisible floor: honour the notch, stop iOS zoom, make touch
+   behave like touch. Everything here fixes a real device behaviour.
+   ============================================================ */
+
+/* The layout opts into the notch/home-indicator via <meta viewport-fit=cover>, so it
+   MUST pad the edge-anchored chrome back inside the safe area or it gets occluded —
+   worst on the home indicator (bottom) and the landscape notch (sides). */
+@supports (padding: max(0px, env(safe-area-inset-left))) {
+  .shopify-section-group-header-group { padding-top: env(safe-area-inset-top); }
+  .header { padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right)); }
+  .container { padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right)); }
+  .hero__inner { padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right)); padding-bottom: max(clamp(3rem, 8vh, 7rem), env(safe-area-inset-bottom)); }
+  .pf-header, .pf-hero__body, .pf-footer, .cstory-hero__body, .cstory-footer { padding-left: max(clamp(1.15rem, 4vw, 3.25rem), env(safe-area-inset-left)); padding-right: max(clamp(1.15rem, 4vw, 3.25rem), env(safe-area-inset-right)); }
+  .footer { padding-bottom: max(2rem, env(safe-area-inset-bottom)); }
+  .drawer__foot { padding-bottom: max(1.4rem, env(safe-area-inset-bottom)); }
+  .drawer__items { scroll-padding-bottom: env(safe-area-inset-bottom); }
+}
+
+/* iOS zooms the whole page when a focused control is < 16px. Pin form controls to 16px. */
+input[type=email], input[type=text], input[type=password], input[type=search], textarea, select { font-size: 16px; }
+
+/* Touch has no hover: reveal-on-hover never fires, so surface the captions and drop the
+   hover-zoom that would otherwise stick after a tap. */
+@media (hover: none) {
+  .cstory-look__cap, .pf-work__cap, .card__tools { opacity: 1; transform: none; }
+  .cstory-look:hover img, .pf-work__item:hover img, .card:hover .card__img--front { transform: none; opacity: 1; }
+}
+
+/* Press feedback — pressable chrome should feel like it heard the tap (emil). */
+.header__icon, .icon-btn { transition: background 0.3s ease, color 0.3s ease, transform 0.16s var(--ease-out); }
+.header__icon:active, .icon-btn:active { transform: scale(0.92); }
+.card__media:active { transform: scale(0.99); transition: transform 0.16s var(--ease-out); }
