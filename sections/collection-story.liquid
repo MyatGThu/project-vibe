@@ -20,7 +20,7 @@
 
   <section class="cstory-hero">
     <div class="cstory-hero__media">
-      {%- if hero != blank -%}<img src="{{ hero }}" alt="{{ section.settings.heading | escape }}" fetchpriority="high">
+      {%- if hero != blank -%}<img src="{{ hero }}" alt="{{ section.settings.heading | escape }}" fetchpriority="high" decoding="async">
       {%- else -%}<img src="{{ 'ph-figure.svg' | asset_url }}" alt="">{%- endif -%}
     </div>
     <div class="cstory-hero__body">
@@ -63,7 +63,7 @@
           endif
         -%}
         <a class="cstory-look reveal" href="{{ block.settings.link | default: shop }}" {{ block.shopify_attributes }}>
-          <img src="{{ li }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          <img src="{{ li }}" alt="{{ block.settings.title | escape }}" loading="lazy" decoding="async" width="1536" height="2048">
           <span class="cstory-look__cap"><span>{{ block.settings.title }}</span><span>{{ block.settings.tag }}</span></span>
         </a>
       {%- endif -%}{%- endfor -%}
@@ -91,7 +91,7 @@
               assign ci = 'ph-figure.svg' | asset_url
             endif
           -%}
-          <div class="editorial-split__media reveal" {{ block.shopify_attributes }}><img src="{{ ci }}" alt="{{ block.settings.caption | escape }}" loading="lazy"></div>
+          <div class="editorial-split__media reveal" {{ block.shopify_attributes }}><img src="{{ ci }}" alt="{{ block.settings.caption | escape }}" loading="lazy" decoding="async" width="1536" height="2048"></div>
         {%- endif -%}{%- endfor -%}
       </div>
     </div></section>
