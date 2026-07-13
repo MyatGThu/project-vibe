@@ -282,12 +282,22 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 
 /* ---- Lookbook (horizontal pin) ---- */
 .lookbook { overflow: hidden; padding-block: clamp(2.5rem, 5vw, 4rem); }
-.lookbook__viewport { position: relative; }
+/* Fallback-first: the viewport is a native horizontal swipe strip, so every look stays reachable
+   WITHOUT JS and under reduced-motion — where the GSAP pin never runs (motion.js returns early) and
+   a plain overflow:hidden would clip looks 2+ off-screen. motion.js adds `.is-pinned` when it takes
+   over the scroll, and we hand motion back to the pin. */
+.lookbook__viewport {
+  position: relative;
+  overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; scroll-snap-type: x proximity; overscroll-behavior-x: contain;
+}
+.lookbook__viewport::-webkit-scrollbar { display: none; }
+.lookbook.is-pinned .lookbook__viewport { overflow: visible; scroll-snap-type: none; }
 .lookbook__track { display: flex; align-items: flex-start; gap: clamp(1rem, 3vw, 3rem); padding-inline: var(--gutter); width: max-content; }
 /* Height-driven, not width-driven: fix the slide to the viewport height and let width follow the
    aspect-ratio. This keeps each look fully visible AND stops the section from growing taller than the
    screen — a taller-than-viewport section left dead vertical scroll after the last look ("gap after look 4"). */
-.lookbook__slide { flex: 0 0 auto; }
+.lookbook__slide { flex: 0 0 auto; scroll-snap-align: start; }
 .lookbook__slide figure { position: relative; height: clamp(340px, 60svh, 680px); aspect-ratio: 3/4; margin: 0; overflow: hidden; border-radius: var(--radius); background: var(--surface); }
 .lookbook__slide img { width: 100%; height: 100%; object-fit: cover; }
 .lookbook__slide figcaption { display: flex; justify-content: space-between; padding-top: 0.8rem; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
@@ -692,3 +702,42 @@ section.l3d + .shopify-section, section.l3d + .section { margin-top: -100svh; po
 .footer__social a { display: inline-flex; align-items: center; justify-content: center; width: 2.3rem; height: 2.3rem; padding: 0; border: 1px solid rgba(246,243,238,0.25); border-radius: 999px; color: color-mix(in oklab, var(--bg) 80%, var(--ink)); transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease; }
 .footer__social a:hover { color: var(--ink); background: var(--bg); border-color: var(--bg); }
 .footer__social svg { width: 16px; height: 16px; display: block; }
+
+/* ============================================================
+   MOBILE OPTIMISATION PASS
+   Touch-first refinements layered on top of the responsive rules above.
+   Placed last so the background-attachment overrides win the cascade.
+   ============================================================ */
+
+/* iOS/Android render `background-attachment: fixed` poorly — jank and mis-paint.
+   The themed pages use it for a subtle desktop parallax; drop to scroll on touch
+   and handset widths, where it costs more than it gives. */
+@media (max-width: 900px), (pointer: coarse) {
+  .template-collection-swimwear,
+  .template-page-swimwear,
+  .template-collection-gym,
+  .template-page-gym-wear { background-attachment: scroll; }
+}
+
+/* Touch targets + no-hover affordances on coarse pointers. */
+@media (pointer: coarse) {
+  .header__icon { width: 2.75rem; height: 2.75rem; }   /* ~44px min tap target */
+  .icon-btn { width: 2.75rem; height: 2.75rem; }
+  /* No hover on touch: keep the quick-add / 3D tools visible so they're discoverable. */
+  .card__tools { opacity: 1; transform: none; }
+}
+
+/* Announcement bar: two uppercase items collide on narrow screens — let them
+   wrap and tighten so nothing gets clipped. */
+@media (max-width: 620px) {
+  .announcement .container { flex-wrap: wrap; gap: 0.1rem 1rem; padding-block: 0.55rem; letter-spacing: 0.08em; }
+}
+
+/* Small handsets: full-width, thumb-friendly CTAs and calmer footer stacking. */
+@media (max-width: 480px) {
+  .cstory-hero__cta { flex-direction: column; align-items: stretch; }
+  .cstory-hero__cta .btn { justify-content: center; }
+  .hero__meta { gap: 1rem 1.6rem; }
+  .footer__disclosure { flex-direction: column; gap: 0.5rem; }
+  .cstory-footer, .pf-footer { gap: 1rem 1.5rem; }
+}
