@@ -340,6 +340,17 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .drawer__overlay.is-open { opacity: 1; visibility: visible; }
 .drawer__head { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem; border-bottom: 1px solid var(--line); }
 .drawer__items { flex: 1; overflow-y: auto; padding: 1.4rem; display: flex; flex-direction: column; gap: 1.2rem; }
+/* Nested menu → expandable dropdown (native <details>, no JS needed).
+   Note: do NOT set display:flex on the <details> itself — it stops Chromium hiding the
+   collapsed content, leaking the sub-links open. Keep it block; style the summary instead. */
+.drawer__group summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.drawer__group summary::-webkit-details-marker { display: none; }
+.drawer__group summary::after { content: "+"; font-family: var(--ui-font); font-size: 0.7em; color: var(--muted); transition: color 0.25s ease; }
+.drawer__group[open] summary::after { content: "–"; }
+.drawer__group summary:hover::after { color: var(--ink); }
+.drawer__sub { display: flex; flex-direction: column; gap: 0.55rem; padding: 0.85rem 0 0.2rem 0.9rem; }
+.drawer__sub a { font-size: var(--step-0); letter-spacing: 0.02em; color: var(--muted); transition: color 0.2s ease; }
+.drawer__sub a:hover, .drawer__sub a[aria-current] { color: var(--ink); }
 .line-item { display: grid; grid-template-columns: 68px 1fr auto; gap: 1rem; }
 .line-item img { border-radius: var(--radius); aspect-ratio: 3/4; object-fit: cover; }
 .drawer__foot { padding: 1.4rem; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
