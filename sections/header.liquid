@@ -58,6 +58,19 @@
     {%- comment -%} Home is always pinned first, then the configured menu. A menu link with children
       renders as an expandable dropdown; a duplicate "Home" in the menu is skipped so it never doubles. {%- endcomment -%}
     <a href="{{ routes.root_url }}" class="h-sm" style="font-family:var(--display-font)"{% if request.page_type == 'index' %} aria-current="page"{% endif %}>Home</a>
+    {%- comment -%} Gym + Swimwear are inline tabs on desktop; those tabs hide ≤900px, so mirror them
+      here for mobile (hidden ≥901px via .drawer__featured). Same fallback as the inline nav, so the
+      two collections are always reachable on a phone even before the store's main menu is configured. {%- endcomment -%}
+    <div class="drawer__featured">
+      {%- if featured.links.size > 0 -%}
+        {%- for link in featured.links -%}
+          <a href="{{ link.url }}" class="h-sm" style="font-family:var(--display-font)"{% if link.active or link.child_active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ pages['gym-wear'].url | default: '/pages/gym-wear' }}" class="h-sm" style="font-family:var(--display-font)"{% if request.path contains 'gym' %} aria-current="page"{% endif %}>Gym</a>
+        <a href="{{ pages.swimwear.url | default: '/pages/swimwear' }}" class="h-sm" style="font-family:var(--display-font)"{% if request.path contains 'swim' %} aria-current="page"{% endif %}>Swimwear</a>
+      {%- endif -%}
+    </div>
     {%- for link in main_menu.links -%}
       {%- if link.url == routes.root_url -%}
         {%- comment -%} already pinned above {%- endcomment -%}
