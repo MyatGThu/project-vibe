@@ -276,14 +276,17 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 @keyframes shimmer { to { background-position: -200% 0; } }
 
 /* ---- Lookbook (horizontal pin) ---- */
-.lookbook { overflow: hidden; }
+.lookbook { overflow: hidden; padding-block: clamp(2.5rem, 5vw, 4rem); }
 .lookbook__viewport { position: relative; }
-.lookbook__track { display: flex; gap: clamp(1rem, 3vw, 3rem); padding-inline: var(--gutter); width: max-content; }
-.lookbook__slide { flex: 0 0 clamp(280px, 42vw, 620px); }
-.lookbook__slide figure { position: relative; aspect-ratio: 3/4; overflow: hidden; border-radius: var(--radius); background: var(--surface); }
+.lookbook__track { display: flex; align-items: flex-start; gap: clamp(1rem, 3vw, 3rem); padding-inline: var(--gutter); width: max-content; }
+/* Height-driven, not width-driven: fix the slide to the viewport height and let width follow the
+   aspect-ratio. This keeps each look fully visible AND stops the section from growing taller than the
+   screen — a taller-than-viewport section left dead vertical scroll after the last look ("gap after look 4"). */
+.lookbook__slide { flex: 0 0 auto; }
+.lookbook__slide figure { position: relative; height: clamp(340px, 60svh, 680px); aspect-ratio: 3/4; margin: 0; overflow: hidden; border-radius: var(--radius); background: var(--surface); }
 .lookbook__slide img { width: 100%; height: 100%; object-fit: cover; }
 .lookbook__slide figcaption { display: flex; justify-content: space-between; padding-top: 0.8rem; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
-.lookbook__slide--wide { flex-basis: clamp(340px, 58vw, 820px); }
+.lookbook__slide--wide figure { aspect-ratio: 1/1; }
 
 /* ---- Manifesto / editorial text reveal ---- */
 .manifesto { text-align: center; }
