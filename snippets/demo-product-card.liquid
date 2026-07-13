@@ -1,0 +1,29 @@
+{%- comment -%}
+  One demo product card, used before real store products exist. Mirrors
+  product-card.liquid's markup so hover + quick-view behave identically.
+  Render with a loop so forloop is available for the reveal stagger:
+    {% render 'demo-product-card' for section.blocks as block %}
+  Param: block — a "product" block (title, category, price, image_url, hover_image_url, sizes).
+{%- endcomment -%}
+{%- liquid
+  assign handle = block.settings.title | handle
+  if block.settings.image_url != blank
+    assign card_img = block.settings.image_url
+  else
+    assign card_img = 'ph-figure.svg' | asset_url
+  endif
+  assign hover_img = block.settings.hover_image_url | default: card_img
+-%}
+<article class="card card--hide-face reveal" data-product data-handle="{{ handle }}" data-product-url="#"
+  data-title="{{ block.settings.title | escape }}" data-reveal-delay="{{ forloop.index0 | times: 0.05 }}" {{ block.shopify_attributes }}>
+  <div class="card__media" data-quick-view-trigger tabindex="0" role="button" aria-haspopup="dialog" aria-label="{{ 'products.product.quick_view' | t }}: {{ block.settings.title | escape }}">
+    <img class="card__img card__img--front" src="{{ card_img }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+    <img class="card__img card__img--model" src="{{ hover_img }}" alt="{{ block.settings.title | escape }} — close-up detail" loading="lazy">
+    {%- if settings.made_to_order -%}<div class="card__badges"><span class="badge badge--mto">Made to order</span></div>{%- endif -%}
+    <div class="card__tools"><button type="button" class="icon-btn" data-quick-add aria-label="{{ 'products.product.choose_options' | t }}">+</button></div>
+  </div>
+  <div class="card__body">
+    <div><h3 class="card__title">{{ block.settings.title }}</h3><p class="card__cat">{{ block.settings.category }}</p></div>
+    <p class="card__price">{{ block.settings.price }}</p>
+  </div>
+</article>

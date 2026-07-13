@@ -1,4 +1,71 @@
 {
-  "sections": { "main": { "type": "main-collection", "settings": {} } },
-  "order": ["main"]
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {},
+      "blocks": {
+        "p1": {
+          "type": "product",
+          "settings": {
+            "title": "The Riviera One-Piece",
+            "category": "Swimwear",
+            "price": "$140.00",
+            "price_cents": 14000,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "title": "The Solstice Bikini",
+            "category": "Swimwear",
+            "price": "$110.00",
+            "price_cents": 11000,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_053013_db5c8341-bc1a-4e7c-a02b-9de1f72841af.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "title": "The Lido Wrap",
+            "category": "Cover-up",
+            "price": "$95.00",
+            "price_cents": 9500,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052713_42615169-5534-4167-9205-de125e46b879.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        },
+        "p4": {
+          "type": "product",
+          "settings": {
+            "title": "The Cove Maillot",
+            "category": "Swimwear",
+            "price": "$130.00",
+            "price_cents": 13000,
+            "sizes": "XS, S, M, L",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052706_bccade4b-d479-4243-b560-cf747846c8b2.png",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052718_7436e4fd-65a8-4f0e-af5c-32729bf53dbe.png",
+            "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
 }
