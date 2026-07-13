@@ -7,7 +7,7 @@
       </header>
 
       {%- if article.image != blank -%}
-        {{ article.image | image_tag: class: 'reveal', loading: 'eager', widths: '600,900,1200,1600', sizes: '(max-width: 760px) 100vw, 760px', style: 'width:100%;height:auto;border-radius:var(--radius);margin-bottom:2.4rem', alt: article.title }}
+        {{ article.image | image_url: width: 1600 | image_tag: class: 'reveal', loading: 'eager', widths: '600,900,1200,1600', sizes: '(max-width: 760px) 100vw, 760px', style: 'width:100%;height:auto;border-radius:var(--radius);margin-bottom:2.4rem', alt: article.title }}
       {%- endif -%}
 
       <div class="rte reveal">{{ article.content }}</div>

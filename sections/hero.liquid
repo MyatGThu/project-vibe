@@ -5,7 +5,7 @@
 <section class="hero" data-hero>
   <div class="hero__media">
     {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: heading }}
+      {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '800,1200,1800,2400', sizes: '100vw', fetchpriority: 'high', alt: heading }}
     {%- elsif section.settings.image_url != blank -%}
       <img src="{{ section.settings.image_url }}" alt="{{ heading | escape }}" fetchpriority="high">
     {%- else -%}

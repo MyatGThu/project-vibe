@@ -17,7 +17,7 @@
         {%- if product.media.size > 0 -%}
           {%- for media in product.media -%}
             {%- if media.media_type == 'image' -%}
-              {{ media.preview_image | image_tag: widths: '600,900,1400', sizes: '(max-width: 900px) 82vw, 45vw', loading: 'lazy', alt: media.alt | default: product.title }}
+              {{ media.preview_image | image_url: width: 1600 | image_tag: widths: '600,900,1400', sizes: '(max-width: 900px) 82vw, 45vw', loading: 'lazy', alt: media.alt | default: product.title }}
             {%- else -%}
               {{ media | media_tag: image_size: '1400x' }}
             {%- endif -%}
