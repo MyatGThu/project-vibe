@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "story": {
+      "type": "collection-story",
+      "settings": {
+        "eyebrow": "The Gym Edit",
+        "heading": "Made to move with you.",
+        "subtext": "Second-skin activewear with real hold — sculpted seams, matte power fabric, cut to order in red and black. Worn by Melina, made for you.",
+        "hero_image_url": "",
+        "collection_url": "shopify://collections/gym-collection",
+        "collection_cta": "Shop the collection",
+        "looks_heading": "The gym edit",
+        "statement": "Strength isn't loud. It holds. Every piece is cut to order in your size — made for the body you train in, not a sample rack.",
+        "mto_note": "Made to order in 2–3 weeks. Nothing sits in a warehouse; your set is cut when you order it, in red and black.",
+        "disclosure": "Melina Jones Voss is an AI model. Every image of her is generated and openly disclosed.",
+        "back_url": "shopify://collections/all"
+      },
+      "blocks": {
+        "st1": { "type": "stat", "settings": { "number": "2–3 wks", "label": "Made to order" } },
+        "st2": { "type": "stat", "settings": { "number": "0", "label": "Waste" } },
+        "st3": { "type": "stat", "settings": { "number": "100%", "label": "Your size" } },
+        "st4": { "type": "stat", "settings": { "number": "1", "label": "Melina" } },
+        "l1": { "type": "look", "settings": { "title": "The Forge Legging", "tag": "Activewear", "image_url": "" } },
+        "l2": { "type": "look", "settings": { "title": "The Power Sports Bra", "tag": "Activewear", "image_url": "" } },
+        "l3": { "type": "look", "settings": { "title": "The Strength Tank", "tag": "Activewear", "image_url": "" } },
+        "l4": { "type": "look", "settings": { "title": "The Iron Training Short", "tag": "Activewear", "image_url": "" } },
+        "l5": { "type": "look", "settings": { "title": "The Pulse Crop", "tag": "Activewear", "image_url": "" } },
+        "l6": { "type": "look", "settings": { "title": "The Anchor Jogger", "tag": "Activewear", "image_url": "" } },
+        "c1": { "type": "campaign", "settings": { "caption": "Power — Ember", "image_url": "" } },
+        "c2": { "type": "campaign", "settings": { "caption": "Power — Obsidian", "image_url": "" } }
+      },
+      "block_order": ["st1", "st2", "st3", "st4", "l1", "l2", "l3", "l4", "l5", "l6", "c1", "c2"]
+    }
+  },
+  "order": ["story"]
+}
