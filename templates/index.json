@@ -3,11 +3,11 @@
     "landing3d": {
       "type": "landing-3d",
       "settings": {
-        "eyebrow": "Autumn — made to be loved",
+        "eyebrow": "Te Amo — the house",
         "heading": "Couture, rendered.",
-        "subtext": "A house that dresses one woman, Melina, and then dresses you. Scroll in.",
+        "subtext": "One muse, Melina — and three worlds: the gym, the water, the evening. Scroll in.",
         "cta_text": "Step inside",
-        "cta_link": "shopify://collections/collection-01-the-autumn-capsule",
+        "cta_link": "shopify://collections/all",
         "scroll_label": "Come closer",
         "bg_image_url": ""
       },
@@ -15,41 +15,41 @@
         "l1": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png",
-            "caption": "The Monolith Coat",
-            "tag": "Outerwear"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png",
+            "caption": "The Forge Legging",
+            "tag": "Gym"
           }
         },
         "l2": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png",
-            "caption": "The Liquid Slip",
-            "tag": "Dresses"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png",
+            "caption": "The Riviera One-Piece",
+            "tag": "Swim"
           }
         },
         "l3": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png",
-            "caption": "The Null Suit",
-            "tag": "Tailoring"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png",
+            "caption": "The Monolith Coat",
+            "tag": "Dress"
           }
         },
         "l4": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe.png",
-            "caption": "The Vapor Knit",
-            "tag": "Knitwear"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png",
+            "caption": "The Power Bra",
+            "tag": "Gym"
           }
         },
         "l5": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png",
-            "caption": "The Obsidian Trouser",
-            "tag": "Tailoring"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png",
+            "caption": "The Solstice Bikini",
+            "tag": "Swim"
           }
         },
         "l6": {
@@ -57,42 +57,33 @@
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png",
             "caption": "The Halo Gown",
-            "tag": "Eveningwear"
+            "tag": "Dress"
           }
         },
         "l7": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e.png",
-            "caption": "The Sanguine Trench",
-            "tag": "Outerwear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png",
+            "caption": "Power — Ember",
+            "tag": "Gym",
             "upcoming": true
           }
         },
         "l8": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143014_8c82bf0d-7def-4fbf-b586-0a1b21257858.png",
-            "caption": "The Cirrus Knit",
-            "tag": "Knitwear",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5.png",
+            "caption": "Sun — Azure",
+            "tag": "Swim",
             "upcoming": true
           }
         },
         "l9": {
           "type": "look",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_0ff957dc-28ac-41a6-abd6-8e61d35f5ac2.png",
-            "caption": "The Ashfall Gown",
-            "tag": "Eveningwear",
-            "upcoming": true
-          }
-        },
-        "l10": {
-          "type": "look",
-          "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da.png",
             "caption": "The Meridian Cape",
-            "tag": "Outerwear",
+            "tag": "Dress",
             "upcoming": true
           }
         }
@@ -106,156 +97,183 @@
         "l6",
         "l7",
         "l8",
-        "l9",
-        "l10"
+        "l9"
       ]
     },
-    "capsule": {
-      "type": "featured-collection",
+    "cat_gym": {
+      "type": "category-showcase",
       "settings": {
-        "eyebrow": "The collection",
-        "heading": "Autumn, held close",
-        "collection": "collection-01-the-autumn-capsule",
-        "products_to_show": 8,
-        "link_text": "View all",
-        "link": "shopify://collections/collection-01-the-autumn-capsule"
+        "theme": "gym",
+        "eyebrow": "The Gym Edit",
+        "heading": "Made to move.",
+        "subtext": "Sculpted seams and matte power fabric, cut in red and black. Worn by Melina, made for you.",
+        "cta_text": "Enter the gym",
+        "cta_link": "shopify://pages/gym-wear"
       },
       "blocks": {
-        "p1": {
-          "type": "product",
+        "pl1": {
+          "type": "plate",
           "settings": {
-            "title": "The Monolith Coat",
-            "category": "Outerwear",
-            "price": "$1,290.00",
-            "price_cents": 129000,
-            "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png",
-            "description": "<p>Dry charcoal wool, double-breasted, cut to stand on its own. It holds you at the waist and falls straight.</p>",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e.png"
+            "caption": "The Forge Legging",
+            "depth": 0.5,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png"
           }
         },
-        "p2": {
-          "type": "product",
+        "pl2": {
+          "type": "plate",
           "settings": {
-            "title": "The Liquid Slip",
-            "category": "Dresses",
-            "price": "$690.00",
-            "price_cents": 69000,
-            "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png",
-            "description": "<p>Oyster satin, cut on the bias, poured over a soft cowl. It moves when you do and weighs almost nothing.</p>",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143014_8c82bf0d-7def-4fbf-b586-0a1b21257858.png"
+            "caption": "The Power Bra",
+            "depth": 0.32,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png"
           }
         },
-        "p3": {
-          "type": "product",
+        "pl3": {
+          "type": "plate",
           "settings": {
-            "title": "The Null Suit",
-            "category": "Tailoring",
-            "price": "$1,450.00",
-            "price_cents": 145000,
-            "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png",
-            "description": "<p>A single-button blazer and straight trouser in ink wool, worn over a silk shell. Sharp, and quiet with it.</p>",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_0ff957dc-28ac-41a6-abd6-8e61d35f5ac2.png"
-          }
-        },
-        "p4": {
-          "type": "product",
-          "settings": {
-            "title": "The Vapor Knit",
-            "category": "Knitwear",
-            "price": "$520.00",
-            "price_cents": 52000,
-            "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe.png",
-            "description": "<p>A sheer fine-gauge column dress in smoke grey over a soft slip lining. Barely there, and made to layer.</p>",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da.png"
-          }
-        },
-        "p5": {
-          "type": "product",
-          "settings": {
-            "title": "The Obsidian Trouser",
-            "category": "Tailoring",
-            "price": "$580.00",
-            "price_cents": 58000,
-            "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png",
-            "description": "<p>A high-waisted wide-leg trouser in ink wool, with a champagne silk shell and a slim leather belt. It moves like a skirt.</p>"
-          }
-        },
-        "p6": {
-          "type": "product",
-          "settings": {
-            "title": "The Halo Gown",
-            "category": "Eveningwear",
-            "price": "$2,400.00",
-            "price_cents": 240000,
-            "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png",
-            "description": "<p>A one-shoulder gown in bone crepe, with a train that trails behind you. Made to your measure.</p>"
+            "caption": "The Strength Tank",
+            "depth": 0.2,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png"
           }
         }
       },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4",
-        "p5",
-        "p6"
-      ]
+      "block_order": ["pl1", "pl2", "pl3"]
+    },
+    "cat_swim": {
+      "type": "category-showcase",
+      "settings": {
+        "theme": "swim",
+        "eyebrow": "The Swim Edit",
+        "heading": "Made for open water.",
+        "subtext": "Sunfast azure and sunflower yellow, shaped to stay put when you dive. Worn by Melina, made for you.",
+        "cta_text": "Enter the water",
+        "cta_link": "shopify://pages/swimwear"
+      },
+      "blocks": {
+        "pl1": {
+          "type": "plate",
+          "settings": {
+            "caption": "The Riviera One-Piece",
+            "depth": 0.5,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png"
+          }
+        },
+        "pl2": {
+          "type": "plate",
+          "settings": {
+            "caption": "The Solstice Bikini",
+            "depth": 0.32,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png"
+          }
+        },
+        "pl3": {
+          "type": "plate",
+          "settings": {
+            "caption": "The Lido Wrap",
+            "depth": 0.2,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195.png"
+          }
+        }
+      },
+      "block_order": ["pl1", "pl2", "pl3"]
+    },
+    "cat_dress": {
+      "type": "category-showcase",
+      "settings": {
+        "theme": "dress",
+        "eyebrow": "The Autumn Capsule",
+        "heading": "Dressed for evening.",
+        "subtext": "Charcoal wool, oyster satin and bone crepe — the house line, cut close and worn easy. Worn by Melina, made for you.",
+        "cta_text": "Enter the house",
+        "cta_link": "shopify://pages/dress-and-jackets"
+      },
+      "blocks": {
+        "pl1": {
+          "type": "plate",
+          "settings": {
+            "caption": "The Monolith Coat",
+            "depth": 0.5,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png"
+          }
+        },
+        "pl2": {
+          "type": "plate",
+          "settings": {
+            "caption": "The Halo Gown",
+            "depth": 0.32,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png"
+          }
+        },
+        "pl3": {
+          "type": "plate",
+          "settings": {
+            "caption": "The Null Suit",
+            "depth": 0.2,
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png"
+          }
+        }
+      },
+      "block_order": ["pl1", "pl2", "pl3"]
     },
     "lookbook": {
       "type": "lookbook",
       "settings": {
-        "eyebrow": "This autumn",
+        "eyebrow": "The campaign",
         "heading": "Worn by Melina",
-        "subtext": "A season on Melina, frame by frame. Every image is generated, and we say so, every time."
+        "subtext": "Across the house — the gym, the water, the evening. Every image is generated, and we say so, every time."
       },
       "blocks": {
         "s1": {
           "type": "slide",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101625_a62edf8d-0309-4acf-a7e8-ccac64417485.png",
-            "caption": "Look 01 — Ivory",
-            "tag": "Coat",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png",
+            "caption": "Gym — Ember",
+            "tag": "Activewear",
             "wide": true
           }
         },
         "s2": {
           "type": "slide",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png",
-            "caption": "Look 02 — Halo",
-            "tag": "Gown"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5.png",
+            "caption": "Swim — Azure",
+            "tag": "Swimwear"
           }
         },
         "s3": {
           "type": "slide",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png",
-            "caption": "Look 03 — Oyster",
-            "tag": "Slip"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da.png",
+            "caption": "House — Meridian",
+            "tag": "Outerwear"
           }
         },
         "s4": {
           "type": "slide",
           "settings": {
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png",
-            "caption": "Look 04 — Ink",
-            "tag": "Suit",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c.png",
+            "caption": "Gym — Obsidian",
+            "tag": "Activewear"
+          }
+        },
+        "s5": {
+          "type": "slide",
+          "settings": {
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_053013_db5c8341-bc1a-4e7c-a02b-9de1f72841af.png",
+            "caption": "Swim — Citrus",
+            "tag": "Swimwear",
             "wide": true
+          }
+        },
+        "s6": {
+          "type": "slide",
+          "settings": {
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e.png",
+            "caption": "House — Ink",
+            "tag": "Eveningwear"
           }
         }
       },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4"
-      ]
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"]
     },
     "manifesto": {
       "type": "manifesto",
@@ -273,7 +291,9 @@
   },
   "order": [
     "landing3d",
-    "capsule",
+    "cat_gym",
+    "cat_swim",
+    "cat_dress",
     "lookbook",
     "manifesto",
     "model_call"

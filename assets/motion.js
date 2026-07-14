@@ -158,6 +158,29 @@
       }
     }
 
+    /* ---- Category showcase: 3D parallax panels (Gym / Swim / Dress) ----
+       Non-jacking depth parallax — each layer drifts at its own scrubbed rate as the panel
+       crosses the viewport, and the perspective stage eases on rotateX for a subtle camera
+       move. Desktop only: the mobile CSS stacks these into a calm native swipe strip. */
+    if (!noScrollFX) {
+      gsap.utils.toArray('[data-cshow]').forEach(function (sec) {
+        sec.querySelectorAll('[data-cshow-par]').forEach(function (el) {
+          var d = parseFloat(el.dataset.cshowPar) || 0.2;
+          gsap.fromTo(el, { yPercent: 9 * d }, {
+            yPercent: -13 * d, ease: 'none',
+            scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+          });
+        });
+        var stage = sec.querySelector('[data-cshow-stage]');
+        if (stage) {
+          gsap.fromTo(stage, { rotateX: 6 }, {
+            rotateX: -4.5, ease: 'none',
+            scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+          });
+        }
+      });
+    }
+
     /* ---- Lookbook horizontal pin ---- */
     var lookbook = document.querySelector('[data-lookbook]');
     if (lookbook && !noScrollFX) {
