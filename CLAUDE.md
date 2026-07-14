@@ -75,8 +75,10 @@ why the collection/homepage `templates/*.json` carry full demo product data inli
 **Header category switcher.** `snippets/collection-switcher.liquid` is the single source of
 truth for the Gym/Swimwear/Dress tabs, rendered in **both** the desktop nav and the mobile
 drawer (`sections/header.liquid`). It renders the store's "Featured tabs" menu if one is
-assigned, else a hardcoded three-surface fallback (Gym + Swimwear pages, Dress → the Autumn
-Capsule collection) with URL-token active highlighting. Edit the snippet once, not both call sites.
+assigned, else a hardcoded fallback to the three category landing pages (Gym / Swimwear / Dress),
+each of which funnels to its collection via "Shop the collection". Edit the snippet once, not both
+call sites. Each landing page is a `collection-story` template (`templates/page.{handle}.json`) that
+self-themes via a `template-page-{handle}` palette block in `base.css`.
 
 **Ready-to-ship mechanism.** A single setting, `settings.ready_to_ship` (schema group in
 `config/settings_schema.json`), gates the "In stock" badge and the "ships in {ship_lead}" note
