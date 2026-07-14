@@ -19,7 +19,7 @@
   <div class="card__media" data-quick-view-trigger tabindex="0" role="button" aria-haspopup="dialog" aria-label="{{ 'products.product.quick_view' | t }}: {{ block.settings.title | escape }}">
     <img class="card__img card__img--front" src="{{ card_img }}" alt="{{ block.settings.title | escape }}" loading="lazy">
     <img class="card__img card__img--model" src="{{ hover_img }}" alt="{{ block.settings.title | escape }} — close-up detail" loading="lazy">
-    {%- if settings.made_to_order -%}<div class="card__badges"><span class="badge badge--mto">Made to order</span></div>{%- endif -%}
+    {%- if settings.ready_to_ship -%}<div class="card__badges"><span class="badge badge--mto">In stock</span></div>{%- endif -%}
     <div class="card__tools"><button type="button" class="icon-btn" data-quick-add aria-label="{{ 'products.product.choose_options' | t }}">+</button></div>
   </div>
   <div class="card__body">

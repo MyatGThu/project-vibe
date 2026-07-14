@@ -5,13 +5,13 @@
       "settings": {
         "eyebrow": "The Gym Edit",
         "heading": "Made to move with you.",
-        "subtext": "Second-skin activewear with real hold — sculpted seams, matte power fabric, cut to order in red and black. Worn by Melina, made for you.",
+        "subtext": "Second-skin activewear with real hold — sculpted seams, matte power fabric, in red and black. Worn by Melina, made for you.",
         "hero_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045854_509c967c-fc6a-49c3-957d-eb9473b1a7be.png",
         "collection_url": "shopify://collections/gym-collection",
         "collection_cta": "Shop the collection",
         "looks_heading": "The gym edit",
-        "statement": "Strength isn't loud. It holds. Every piece is cut to order in your size — made for the body you train in, not a sample rack.",
-        "mto_note": "Made to order in 2–3 weeks. Nothing sits in a warehouse; your set is cut when you order it, in red and black.",
+        "statement": "Strength isn't loud. It holds. Sculpted seams and matte power fabric, cut clean in red and black — made for the body you train in.",
+        "mto_note": "The full edit in red and black — sculpted to hold, worn first by Melina.",
         "disclosure": "Melina Jones Voss is an AI model. Every image of her is generated and openly disclosed.",
         "back_url": "shopify://collections/all"
       },
@@ -19,29 +19,29 @@
         "st1": {
           "type": "stat",
           "settings": {
-            "number": "2–3 wks",
-            "label": "Made to order"
+            "number": "XS–L",
+            "label": "Sizes"
           }
         },
         "st2": {
           "type": "stat",
           "settings": {
-            "number": "0",
-            "label": "Waste"
+            "number": "2",
+            "label": "Colourways"
           }
         },
         "st3": {
           "type": "stat",
           "settings": {
-            "number": "100%",
-            "label": "Your size"
+            "number": "1",
+            "label": "Melina"
           }
         },
         "st4": {
           "type": "stat",
           "settings": {
-            "number": "1",
-            "label": "Melina"
+            "number": "AI",
+            "label": "Openly disclosed"
           }
         },
         "l1": {

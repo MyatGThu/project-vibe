@@ -8,7 +8,7 @@
         "pill": "Openly AI-generated",
         "role": "Face of the house",
         "portrait_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png",
-        "contact_email": "casting@melina.example"
+        "contact_email": ""
       },
       "blocks": {
         "s1": { "type": "stat", "settings": { "number": "100%", "label": "Generated" } },

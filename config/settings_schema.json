@@ -11,7 +11,7 @@
     "name": "Brand",
     "settings": [
       { "type": "text", "id": "brand_name", "label": "Brand name", "default": "Te Amo" },
-      { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Clothing made to order, and made to be loved." },
+      { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Clothing made to be loved." },
       { "type": "image_picker", "id": "logo", "label": "Logo (optional, overrides text)" },
       { "type": "range", "id": "logo_width", "min": 60, "max": 240, "step": 10, "unit": "px", "label": "Logo width", "default": 120 },
       { "type": "image_picker", "id": "favicon", "label": "Favicon" }
@@ -55,10 +55,10 @@
     ]
   },
   {
-    "name": "Made to order",
+    "name": "Ready to ship",
     "settings": [
-      { "type": "checkbox", "id": "made_to_order", "label": "Made-to-order house", "info": "Show the made-to-order badge, lead time, and “how it works” on every product. Opt a stocked item out by adding the product tag: in-stock", "default": true },
-      { "type": "text", "id": "made_to_order_lead", "label": "Lead time", "default": "3–4 weeks" }
+      { "type": "checkbox", "id": "ready_to_ship", "label": "Ready-to-ship signal", "info": "Turn ON only once you hold real stock. Shows an In stock badge and a ships-in note on every available product. Keep OFF until you have inventory.", "default": false },
+      { "type": "text", "id": "ship_lead", "label": "Ship time", "default": "3–5 days" }
     ]
   },
   {

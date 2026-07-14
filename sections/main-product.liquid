@@ -1,13 +1,10 @@
 {%- liquid
   assign current = product.selected_or_first_available_variant
-  assign mto = false
-  if settings.made_to_order and product.available
-    assign mto = true
-    if product.tags contains 'in-stock'
-      assign mto = false
-    endif
+  assign ready = false
+  if settings.ready_to_ship and product.available
+    assign ready = true
   endif
-  assign lead = settings.made_to_order_lead | default: '3–4 weeks'
+  assign lead = settings.ship_lead | default: '3–5 days'
 -%}
 <section class="section">
   <div class="container">
@@ -36,7 +33,7 @@
           {%- else -%}{{ current.price | money }}{%- endif -%}
         </p>
 
-        {%- if mto -%}<p class="mto-note"><span class="mto-note__dot" aria-hidden="true"></span>Made to order · ships in {{ lead }}</p>{%- endif -%}
+        {%- if ready -%}<p class="mto-note"><span class="mto-note__dot" aria-hidden="true"></span>In stock · ships in {{ lead }}</p>{%- endif -%}
 
         {%- if product.description != blank -%}<div class="pdp__rte">{{ product.description }}</div>{%- endif -%}
 
@@ -65,11 +62,11 @@
           </button>
         {% endform %}
 
-        {%- if mto -%}
-          <ol class="mto-steps" aria-label="How made-to-order works">
-            <li><span class="mto-steps__n">1</span><div><h4>You order</h4><p>Reserve your piece and size — payment confirms your slot.</p></div></li>
-            <li><span class="mto-steps__n">2</span><div><h4>We make it</h4><p>Cut and sewn to order in the atelier, just for you.</p></div></li>
-            <li><span class="mto-steps__n">3</span><div><h4>It ships</h4><p>On its way to you in {{ lead }}, tracked to your door.</p></div></li>
+        {%- if ready -%}
+          <ol class="mto-steps" aria-label="How shipping works">
+            <li><span class="mto-steps__n">1</span><div><h4>You order</h4><p>Add your size to the bag and check out.</p></div></li>
+            <li><span class="mto-steps__n">2</span><div><h4>We pack it</h4><p>Picked and wrapped by hand from the studio.</p></div></li>
+            <li><span class="mto-steps__n">3</span><div><h4>It ships</h4><p>On its way in {{ lead }}, tracked to your door.</p></div></li>
           </ol>
         {%- endif -%}
       </div>

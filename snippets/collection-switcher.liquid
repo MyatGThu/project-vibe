@@ -1,0 +1,41 @@
+{%- comment -%}
+  Persistent category switcher for the header: Gym / Swimwear / Dress, always
+  reachable so you can jump between the three edits from anywhere on the site.
+
+  Renders the store's "Featured tabs" menu when one is assigned (edit it in
+  Shopify → Navigation to change labels, order, or links); otherwise it falls
+  back to the three core pages so the switcher is complete out of the box.
+
+  The current category is highlighted by matching a short token against the URL,
+  so it lights up on both the landing page and its collection grid
+  (e.g. /pages/gym-wear AND /collections/gym-collection).
+  ponytail: token substring match — fine at this catalogue size; swap for an
+  explicit handle check if an unrelated URL ever contains gym/swim/dress.
+
+  Params:
+    featured (linklist, optional) — the assigned "Featured tabs" menu
+    variant  (string)            — 'drawer' for the mobile menu; anything else = desktop tabs
+{%- endcomment -%}
+{%- liquid
+  assign is_drawer = false
+  if variant == 'drawer'
+    assign is_drawer = true
+  endif
+-%}
+{%- capture link_attrs -%}{% if is_drawer %} class="h-sm" style="font-family:var(--display-font)"{% endif %}{%- endcapture -%}
+{%- if featured.links.size > 0 -%}
+  {%- for link in featured.links -%}
+    <a href="{{ link.url }}"{{ link_attrs }}{% if link.active or link.child_active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+  {%- endfor -%}
+{%- else -%}
+  {%- assign tab_titles = 'Gym,Swimwear,Dress' | split: ',' -%}
+  {%- assign tab_handles = 'gym-wear,swimwear,dress-and-jackets' | split: ',' -%}
+  {%- assign tab_tokens = 'gym,swim,dress' | split: ',' -%}
+  {%- for title in tab_titles -%}
+    {%- assign handle = tab_handles[forloop.index0] -%}
+    {%- assign token = tab_tokens[forloop.index0] -%}
+    {%- assign fallback_url = '/pages/' | append: handle -%}
+    {%- assign tab_url = pages[handle].url | default: fallback_url -%}
+    <a href="{{ tab_url }}"{{ link_attrs }}{% if request.path contains token %} aria-current="page"{% endif %}>{{ title }}</a>
+  {%- endfor -%}
+{%- endif -%}

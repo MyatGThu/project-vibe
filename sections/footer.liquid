@@ -26,29 +26,32 @@
         <h4>Connect</h4>
         <a href="/pages/melina" class="link-underline">Melina</a>
         {%- comment -%} Social icons render as placeholders (→ '#') until URLs are set in theme settings. {%- endcomment -%}
+        {%- comment -%} Each icon renders only when a real URL/address is set, so there are no dead '#' links. {%- endcomment -%}
         <div class="footer__social">
-          <a href="{{ settings.social_instagram | default: '#' }}" aria-label="Instagram">
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a href="{{ settings.social_tiktok | default: '#' }}" aria-label="TikTok">
+          </a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" aria-label="TikTok">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 3c.3 2 1.6 3.6 3.6 4v2.3c-1.3 0-2.6-.4-3.6-1.1V15a5 5 0 1 1-5-5c.3 0 .6 0 .9.1v2.4A2.6 2.6 0 1 0 11.6 15V3H14z"/></svg>
-          </a>
-          <a href="{{ settings.social_facebook | default: '#' }}" aria-label="Facebook / Meta">
+          </a>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" aria-label="Facebook / Meta">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.3l.4-2.8h-2.7V9.4c0-.8.3-1.4 1.5-1.4h1.3V5.5c-.6-.1-1.4-.2-2.3-.2-2.3 0-3.8 1.4-3.8 3.9v2H8v2.8h2.4V21h3.1z"/></svg>
-          </a>
-          <a href="{{ settings.social_twitter | default: '#' }}" aria-label="X (Twitter)">
+          </a>{%- endif -%}
+          {%- if settings.social_twitter != blank -%}<a href="{{ settings.social_twitter }}" aria-label="X (Twitter)">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.6L21.8 21h-6l-4.2-5.6L6.6 21H3.6l7-8L2.6 3h6.1l3.8 5.1L17.5 3zm-1.1 16h1.7L7.7 4.7H5.9L16.4 19z"/></svg>
-          </a>
-          <a href="{% if settings.social_email != blank %}mailto:{{ settings.social_email }}{% else %}#{% endif %}" aria-label="Gmail / email">
+          </a>{%- endif -%}
+          {%- if settings.social_email != blank -%}<a href="mailto:{{ settings.social_email }}" aria-label="Email">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg>
-          </a>
+          </a>{%- endif -%}
         </div>
       </div>
 
       {%- if section.settings.show_disclosure -%}
+        {%- assign copyright_year = 'now' | date: '%Y' -%}
+        {%- assign copyright_name = settings.brand_name | default: shop.name -%}
         <div class="footer__disclosure">
           <span>{{ section.settings.disclosure_text }}</span>
-          <span>{{ 'footer.copyright' | t: year: 'now' | date: '%Y', name: settings.brand_name | default: shop.name }}</span>
+          <span>{{ 'footer.copyright' | t: year: copyright_year, name: copyright_name }}</span>
         </div>
       {%- endif -%}
     </div>

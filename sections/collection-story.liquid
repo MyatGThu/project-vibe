@@ -3,7 +3,7 @@
   A bespoke, portfolio-calibre destination for a single collection. Self-themes off the page's
   palette variables (--bg/--ink/--accent/--surface/--line), which the assigned template suffix sets
   via body class (template-page-gym-wear / template-page-swimwear → collection palettes in base.css).
-  Hero → ethos → lookbook → statement → campaign → made-to-order → back. Links through to the real
+  Hero → ethos → lookbook → statement → campaign → shop → back. Links through to the real
   collection for shopping. Progressive: clean and readable with no JS.
 {%- endcomment -%}
 {%- liquid
@@ -98,7 +98,7 @@
   {%- endif -%}
 
   <section class="section cstory-mto"><div class="container">
-    <p class="eyebrow reveal">Made to order</p>
+    <p class="eyebrow reveal">The collection</p>
     {%- if section.settings.mto_note != blank -%}<p class="lede reveal">{{ section.settings.mto_note }}</p>{%- endif -%}
     <a class="btn reveal" href="{{ shop }}" style="--btn-bg:var(--accent);--btn-fg:#fff" data-magnetic="0.3">{{ section.settings.collection_cta | default: 'Shop the collection' }}</a>
   </div></section>
@@ -114,7 +114,7 @@
   "name": "Collection story",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The collection" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Made to order." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The collection." },
     { "type": "textarea", "id": "subtext", "label": "Subtext" },
     { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
     { "type": "text", "id": "hero_image_url", "label": "Hero image URL (fallback)" },
@@ -124,15 +124,15 @@
     { "type": "text", "id": "looks_heading", "label": "Looks heading", "default": "This season" },
     { "type": "header", "content": "Statement" },
     { "type": "textarea", "id": "statement", "label": "Statement" },
-    { "type": "header", "content": "Made to order + footer" },
-    { "type": "textarea", "id": "mto_note", "label": "Made-to-order note" },
+    { "type": "header", "content": "Closing note + footer" },
+    { "type": "textarea", "id": "mto_note", "label": "Closing note" },
     { "type": "textarea", "id": "disclosure", "label": "AI disclosure", "default": "Melina Jones Voss is an AI model. Every image of her is generated and openly disclosed." },
     { "type": "url", "id": "back_url", "label": "Back-to-store link" }
   ],
   "blocks": [
     { "type": "stat", "name": "Ethos stat", "settings": [
-      { "type": "text", "id": "number", "label": "Number", "default": "2–3 wks" },
-      { "type": "text", "id": "label", "label": "Label", "default": "Made to order" }
+      { "type": "text", "id": "number", "label": "Number", "default": "XS–L" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Sizes" }
     ] },
     { "type": "look", "name": "Look", "settings": [
       { "type": "text", "id": "title", "label": "Title", "default": "Look" },

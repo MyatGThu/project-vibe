@@ -1,8 +1,9 @@
 {%- comment -%}
-  Two menus: `featured_menu` powers the always-visible inline tabs beside the burger
-  (meant for just Gym + Swimwear), and `menu` is the full navigation that lives in the
-  drawer. If no featured menu is assigned, the tabs fall back to Gym + Swimwear so the
-  header is never over-stuffed and never empty.
+  Two menus: `featured_menu` powers the always-visible category switcher beside the
+  burger (Gym / Swimwear / Dress), and `menu` is the full navigation that lives in the
+  drawer. If no featured menu is assigned, the switcher falls back to those three
+  category pages — see snippets/collection-switcher.liquid, the single source of truth
+  rendered in both the desktop tabs and the mobile drawer.
 {%- endcomment -%}
 {%- liquid
   assign featured = linklists[section.settings.featured_menu]
@@ -14,15 +15,7 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
     </button>
     <nav class="header__nav" aria-label="{{ 'accessibility.featured_menu' | t | default: 'Featured' }}">
-      {%- if featured.links.size > 0 -%}
-        {%- for link in featured.links -%}
-          <a href="{{ link.url }}"{% if link.active or link.child_active %} aria-current="page"{% endif %}>{{ link.title }}</a>
-        {%- endfor -%}
-      {%- else -%}
-        {%- comment -%} No featured menu assigned yet — surface the two collections by default. {%- endcomment -%}
-        <a href="{{ pages['gym-wear'].url | default: '/pages/gym-wear' }}"{% if request.path contains 'gym' %} aria-current="page"{% endif %}>Gym</a>
-        <a href="{{ pages.swimwear.url | default: '/pages/swimwear' }}"{% if request.path contains 'swim' %} aria-current="page"{% endif %}>Swimwear</a>
-      {%- endif -%}
+      {% render 'collection-switcher', featured: featured %}
     </nav>
   </div>
 
@@ -59,18 +52,11 @@
     {%- comment -%} Home is always pinned first, then the configured menu. A menu link with children
       renders as an expandable dropdown; a duplicate "Home" in the menu is skipped so it never doubles. {%- endcomment -%}
     <a href="{{ routes.root_url }}" class="h-sm" style="font-family:var(--display-font)"{% if request.page_type == 'index' %} aria-current="page"{% endif %}>Home</a>
-    {%- comment -%} Gym + Swimwear are inline tabs on desktop; those tabs hide ≤900px, so mirror them
-      here for mobile (hidden ≥901px via .drawer__featured). Same fallback as the inline nav, so the
-      two collections are always reachable on a phone even before the store's main menu is configured. {%- endcomment -%}
+    {%- comment -%} The category switcher is inline tabs on desktop; those tabs hide ≤900px, so mirror it
+      here for mobile (hidden ≥901px via .drawer__featured). Same snippet as the inline nav, so the
+      three categories are always reachable on a phone even before the store's main menu is configured. {%- endcomment -%}
     <div class="drawer__featured">
-      {%- if featured.links.size > 0 -%}
-        {%- for link in featured.links -%}
-          <a href="{{ link.url }}" class="h-sm" style="font-family:var(--display-font)"{% if link.active or link.child_active %} aria-current="page"{% endif %}>{{ link.title }}</a>
-        {%- endfor -%}
-      {%- else -%}
-        <a href="{{ pages['gym-wear'].url | default: '/pages/gym-wear' }}" class="h-sm" style="font-family:var(--display-font)"{% if request.path contains 'gym' %} aria-current="page"{% endif %}>Gym</a>
-        <a href="{{ pages.swimwear.url | default: '/pages/swimwear' }}" class="h-sm" style="font-family:var(--display-font)"{% if request.path contains 'swim' %} aria-current="page"{% endif %}>Swimwear</a>
-      {%- endif -%}
+      {% render 'collection-switcher', featured: featured, variant: 'drawer' %}
     </div>
     {%- for link in main_menu.links -%}
       {%- if link.url == routes.root_url -%}
@@ -141,7 +127,7 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "link_list", "id": "featured_menu", "label": "Featured tabs (beside the menu button)", "info": "Always-visible tabs next to the burger — meant for just Gym + Swimwear. Leave blank to show those two by default. Everything in the main menu below stays in the drawer." },
+    { "type": "link_list", "id": "featured_menu", "label": "Featured tabs (beside the menu button)", "info": "Always-visible category switcher next to the burger. Leave blank to show Gym / Swimwear / Dress by default, or assign a menu to control the labels, order, and links (e.g. point them at the collections instead of the pages). Everything in the main menu below stays in the drawer." },
     { "type": "link_list", "id": "menu", "label": "Main menu (in the drawer)", "default": "main-menu" }
   ]
 }
