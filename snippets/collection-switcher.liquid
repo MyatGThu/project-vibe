@@ -28,11 +28,11 @@
     <a href="{{ link.url }}"{{ link_attrs }}{% if link.active or link.child_active %} aria-current="page"{% endif %}>{{ link.title }}</a>
   {%- endfor -%}
 {%- else -%}
-  {%- comment -%} No featured menu assigned — the three core category surfaces:
-    Gym + Swimwear pages, and Dress → the Autumn Capsule collection. {%- endcomment -%}
+  {%- comment -%} No featured menu assigned — the three category landing pages
+    (each funnels to its collection via "Shop the collection"). {%- endcomment -%}
   {%- assign tab_titles = 'Gym,Swimwear,Dress' | split: ',' -%}
-  {%- assign tab_urls = '/pages/gym-wear,/pages/swimwear,/collections/collection-01-the-autumn-capsule' | split: ',' -%}
-  {%- assign tab_tokens = 'gym,swim,autumn-capsule' | split: ',' -%}
+  {%- assign tab_urls = '/pages/gym-wear,/pages/swimwear,/pages/dress-and-jackets' | split: ',' -%}
+  {%- assign tab_tokens = 'gym,swim,dress' | split: ',' -%}
   {%- for title in tab_titles -%}
     {%- assign tab_url = tab_urls[forloop.index0] -%}
     {%- assign token = tab_tokens[forloop.index0] -%}

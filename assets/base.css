@@ -604,7 +604,30 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-page-gym-wear ::selection { background: #E11D2A; color: #fff; }
 .template-page-gym-wear .cstory-hero__title { text-transform: uppercase; letter-spacing: 0.012em; }
 
-/* ---- Collection story page (Gym / Swim) — self-themes off the inherited palette above ---- */
+/* ---- Dress / Autumn Capsule — ink charcoal + champagne gold (the house line: tailoring, eveningwear) ----
+   Applied to the /pages/dress-and-jackets story page (template-page-dress-and-jackets). */
+.template-page-dress-and-jackets {
+  --bg: #171310;
+  --surface: #211A15;
+  --ink: #F2EBE2;          /* warm bone */
+  --muted: #A99A88;        /* taupe */
+  --accent: #C8A96A;       /* champagne gold */
+  --accent-2: #6E5A3E;     /* bronze */
+  --line: #34291F;
+  --chrome: linear-gradient(115deg, #C8A96A, #6E5A3E 45%, #171310 80%);
+  --radius: 8px;
+  background:
+    radial-gradient(120% 80% at 50% -12%, rgba(200,169,106,0.22), rgba(200,169,106,0) 58%),
+    linear-gradient(180deg, #171310 0%, #1F1712 100%);
+  background-attachment: fixed;
+}
+.template-page-dress-and-jackets .announcement { background: #0E0B09; color: #F2EBE2; }
+.template-page-dress-and-jackets .footer { background: #0E0B09; color: #F2EBE2; }
+.template-page-dress-and-jackets .footer a { color: color-mix(in oklab, #F2EBE2 78%, #0E0B09); }
+.template-page-dress-and-jackets .footer a:hover { color: #fff; }
+.template-page-dress-and-jackets ::selection { background: #C8A96A; color: #171310; }
+
+/* ---- Collection story page (Gym / Swim / Dress) — self-themes off the inherited palette above ---- */
 .cstory { background: var(--bg); color: var(--ink); }
 .cstory .eyebrow, .cstory-eyebrow { color: var(--accent); }
 .cstory-hero { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 82svh; }
