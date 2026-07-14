@@ -753,6 +753,85 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .shopify-section:has(> .l3d.is-3d) + .shopify-section,
 section.l3d.is-3d + .shopify-section, section.l3d.is-3d + .section { margin-top: -100svh; position: relative; z-index: 1; }
 
+/* ============================================================
+   CATEGORY SHOWCASE (.cshow) — three self-themed worlds on the homepage
+   (Gym / Swimwear / Dress). A full-bleed panel that opens each world and links
+   to its landing page. NO prices. The palette is scoped to the panel so all
+   three coexist on one page, each in its own colours (mirrors the collection
+   palettes above). 3D parallax is a desktop enhancement (motion.js, [data-cshow]);
+   the static composition is the honest fallback (no-JS / reduced-motion / mobile).
+   ============================================================ */
+.cshow { position: relative; z-index: 1; isolation: isolate; overflow: hidden; background: var(--bg); color: var(--ink); }
+.cshow__frame {
+  position: relative; min-height: 96svh;
+  padding: clamp(2.5rem, 7vw, 6rem) var(--gutter);
+  display: flex;
+  perspective: 1300px; perspective-origin: 50% 38%;
+}
+.cshow__glow { position: absolute; inset: -12%; z-index: 0; pointer-events: none; }
+/* the parallax stage: preserve-3d so its rotateX tilt (motion.js) reads as a camera move */
+.cshow__gallery { position: absolute; inset: 0; z-index: 1; transform-style: preserve-3d; will-change: transform; pointer-events: none; }
+.cshow__plate {
+  position: absolute; margin: 0; overflow: hidden;
+  border-radius: var(--radius); background: var(--surface);
+  box-shadow: 0 40px 90px -34px rgba(0,0,0,0.55); will-change: transform;
+}
+.cshow__plate img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 3 / 4; }
+.cshow__plate figcaption { position: absolute; inset: auto 0 0 0; padding: 0.65rem 0.8rem; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: #fff; background: linear-gradient(0deg, rgba(0,0,0,0.62), transparent); }
+.cshow__body { position: relative; z-index: 3; max-width: min(33rem, 92vw); display: flex; flex-direction: column; gap: 1.15rem; }
+/* legibility bed: keeps copy on a wash of --bg wherever a plate drifts near (contrast ≥ AA) */
+.cshow__body::before { content: ""; position: absolute; z-index: -1; inset: -14% -18% -16% -20%; background: radial-gradient(120% 100% at 22% 58%, var(--bg) 26%, color-mix(in oklab, var(--bg) 62%, transparent) 60%, transparent 82%); pointer-events: none; }
+.cshow__eyebrow { color: var(--accent); }
+.cshow__title { font-size: var(--step-4); line-height: 0.96; }
+.cshow__title .reveal-word { display: inline-block; }
+.cshow__sub { color: var(--muted); max-width: 40ch; font-size: var(--step-1); }
+.cshow__cta { align-self: flex-start; --btn-bg: var(--accent); --btn-fg: #fff; margin-top: 0.4rem; }
+
+/* GYM — power: copy lower-left, plates in a tight upper-right cluster, red glow, hard edges */
+.cshow--gym { --bg:#0C0908; --surface:#17100F; --ink:#F5ECEC; --muted:#C08A8A; --accent:#E11D2A; --accent-2:#7A0C12; --line:#3A1E1E; --radius:6px; }
+.cshow--gym .cshow__glow { background: radial-gradient(72% 58% at 76% 24%, rgba(225,29,42,0.34), transparent 60%), linear-gradient(180deg, #0C0908, #160C0C); }
+.cshow--gym .cshow__frame { align-items: flex-end; justify-content: flex-start; }
+.cshow--gym .cshow__title { text-transform: uppercase; letter-spacing: 0.008em; }
+.cshow--gym .cshow__plate--1 { width: clamp(190px, 30vw, 430px); right: 4%; top: 7%; }
+.cshow--gym .cshow__plate--2 { width: clamp(150px, 22vw, 310px); right: 25%; top: 33%; }
+.cshow--gym .cshow__plate--3 { width: clamp(120px, 16vw, 230px); right: 2%; bottom: 6%; }
+
+/* SWIM — sun: copy upper-left with air, plates drifting low-right (one bleeds off-edge), yellow glow */
+.cshow--swim { --bg:#E9F7FF; --surface:#FFFFFF; --ink:#063A5E; --muted:#3E7CA6; --accent:#00A6E0; --accent-2:#FFD23F; --line:#BFE6FA; --radius:14px; }
+.cshow--swim .cshow__glow { background: radial-gradient(66% 58% at 80% 82%, rgba(255,210,63,0.5), transparent 58%), linear-gradient(180deg, #DBF2FF 0%, #EEFAFF 45%, #FFFDF3 100%); }
+.cshow--swim .cshow__frame { align-items: flex-start; justify-content: flex-start; }
+.cshow--swim .cshow__cta { --btn-bg:#FFD23F; --btn-fg:#063A5E; }   /* sunlit CTA, deep-ocean text (≈9:1) */
+.cshow--swim .cshow__sub { color: #124F74; }   /* --muted is too light on the bright bg; deepen to pass AA (≈8:1) */
+.cshow--swim .cshow__plate figcaption { color: #063A5E; background: linear-gradient(0deg, rgba(255,255,255,0.82), transparent); }
+.cshow--swim .cshow__plate--1 { width: clamp(180px, 28vw, 400px); right: 6%; bottom: 6%; }
+.cshow--swim .cshow__plate--2 { width: clamp(150px, 21vw, 300px); right: 27%; top: 30%; }
+.cshow--swim .cshow__plate--3 { width: clamp(120px, 16vw, 230px); right: -3%; top: 8%; }
+
+/* DRESS — the house: centered copy, plates flanking left + right, gold hairline, calm and formal */
+.cshow--dress { --bg:#171310; --surface:#211A15; --ink:#F2EBE2; --muted:#A99A88; --accent:#C8A96A; --accent-2:#6E5A3E; --line:#34291F; --radius:8px; }
+.cshow--dress .cshow__glow { background: radial-gradient(64% 56% at 50% 16%, rgba(200,169,106,0.24), transparent 58%), linear-gradient(180deg, #171310, #1F1712); }
+.cshow--dress .cshow__frame { align-items: center; justify-content: center; }
+.cshow--dress .cshow__body { align-items: center; text-align: center; margin-inline: auto; max-width: min(40rem, 92vw); }
+.cshow--dress .cshow__body::before { inset: -14% 4%; background: radial-gradient(80% 88% at 50% 50%, var(--bg) 22%, color-mix(in oklab, var(--bg) 46%, transparent) 58%, transparent 78%); }
+.cshow--dress .cshow__sub { margin-inline: auto; }
+.cshow--dress .cshow__cta { align-self: center; --btn-bg:#C8A96A; --btn-fg:#171310; }
+.cshow--dress .cshow__plate--1 { width: clamp(150px, 21vw, 320px); left: 4%; top: 12%; }
+.cshow--dress .cshow__plate--2 { width: clamp(130px, 17vw, 260px); right: 5%; top: 18%; }
+.cshow--dress .cshow__plate--3 { width: clamp(120px, 15vw, 220px); right: 14%; bottom: 9%; }
+
+/* Handset / tablet: drop the perspective collage for a calm stacked panel — copy, then a
+   native swipe strip of the looks. Matches the theme's deliberate "no scroll-FX on touch" stance. */
+@media (max-width: 900px) {
+  .cshow__frame { display: flex; flex-direction: column; justify-content: center; min-height: 0; padding-block: clamp(3rem, 12vw, 5rem); perspective: none; }
+  .cshow__glow { inset: 0; }
+  .cshow__body, .cshow--dress .cshow__body { order: 1; position: relative; max-width: none; text-align: left; align-items: flex-start; margin: 0; }
+  .cshow--dress .cshow__cta { align-self: flex-start; }
+  .cshow__body::before { display: none; }
+  .cshow .cshow__gallery { order: 2; position: static; transform: none !important; min-width: 0; max-width: 100%; display: flex; gap: 1rem; margin-top: 1.9rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
+  .cshow .cshow__gallery::-webkit-scrollbar { display: none; }
+  .cshow .cshow__gallery .cshow__plate { position: relative; inset: auto; width: min(64vw, 300px); flex: 0 0 auto; scroll-snap-align: start; }
+}
+
 /* ---- Footer social icons (placeholders until URLs are set) ---- */
 .footer__social { display: flex; gap: 0.55rem; margin-top: 0.9rem; flex-wrap: wrap; }
 .footer__social a { display: inline-flex; align-items: center; justify-content: center; width: 2.3rem; height: 2.3rem; padding: 0; border: 1px solid rgba(246,243,238,0.25); border-radius: 999px; color: color-mix(in oklab, var(--bg) 80%, var(--ink)); transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease; }
