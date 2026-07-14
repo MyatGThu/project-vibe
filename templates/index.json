@@ -113,7 +113,7 @@
     "capsule": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Made to order",
+        "eyebrow": "The collection",
         "heading": "Autumn, held close",
         "products_to_show": 8,
         "link_text": "View all",
@@ -129,7 +129,7 @@
             "price_cents": 129000,
             "sizes": "XS, S, M, L",
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png",
-            "description": "<p>Dry charcoal wool, double-breasted, cut to stand on its own. It holds you at the waist and falls straight. Made to order in 3–4 weeks.</p>",
+            "description": "<p>Dry charcoal wool, double-breasted, cut to stand on its own. It holds you at the waist and falls straight.</p>",
             "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e.png"
           }
         },

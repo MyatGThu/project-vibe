@@ -4,14 +4,14 @@
       "type": "collection-story",
       "settings": {
         "eyebrow": "The Swim Edit",
-        "heading": "Sun-ready, made to order.",
+        "heading": "Sun-ready, made for open water.",
         "subtext": "Cut for open water and long afternoons — sunfast azure and sunflower yellow, shapes that stay put when you dive. Worn by Melina, made for you.",
         "hero_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_051042_a4067240-028f-4679-8f95-093b437c6139.png",
         "collection_url": "shopify://collections/swimwear-collection",
         "collection_cta": "Shop the collection",
         "looks_heading": "The swim edit",
-        "statement": "Made for the water and the long walk back. Cut to order in your size, so it stays put the way you actually swim.",
-        "mto_note": "Made to order in 2–3 weeks. Cut when you order — sunfast colour, no overstock, no waste.",
+        "statement": "Made for the water and the long walk back — shapes that stay put the way you actually swim.",
+        "mto_note": "Sunfast azure and sunflower yellow, shaped to stay put — the full edit, worn first by Melina.",
         "disclosure": "Melina Jones Voss is an AI model. Every image of her is generated and openly disclosed.",
         "back_url": "shopify://collections/all"
       },
@@ -19,29 +19,29 @@
         "st1": {
           "type": "stat",
           "settings": {
-            "number": "2–3 wks",
-            "label": "Made to order"
+            "number": "XS–L",
+            "label": "Sizes"
           }
         },
         "st2": {
           "type": "stat",
           "settings": {
-            "number": "0",
-            "label": "Waste"
+            "number": "2",
+            "label": "Colourways"
           }
         },
         "st3": {
           "type": "stat",
           "settings": {
-            "number": "100%",
-            "label": "Your size"
+            "number": "1",
+            "label": "Melina"
           }
         },
         "st4": {
           "type": "stat",
           "settings": {
-            "number": "1",
-            "label": "Melina"
+            "number": "AI",
+            "label": "Openly disclosed"
           }
         },
         "l1": {

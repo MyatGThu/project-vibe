@@ -1,6 +1,6 @@
 {%- comment -%}
   Size guide — native <details> disclosure (no JS). General womenswear body
-  measurements; made-to-order means we can also cut to a customer's own numbers.
+  measurements — a fit reference for the standard sizes we ship from stock.
   Starting chart — confirm final grading against your factory's block/sample.
 {%- endcomment -%}
 <details class="size-guide">
@@ -20,8 +20,5 @@
       </table>
     </div>
     <p class="size-guide__note">Measurements are body, not garment. Between sizes? Size up for outerwear and knits.</p>
-    {%- if settings.made_to_order -%}
-      <p class="size-guide__note size-guide__note--mto"><strong>Custom fit:</strong> because each piece is made to order, we can cut to your own measurements — add them in the order notes at checkout, or contact us before ordering.</p>
-    {%- endif -%}
   </div>
 </details>

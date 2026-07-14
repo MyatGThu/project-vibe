@@ -76,7 +76,7 @@
     <p class="eyebrow reveal">Booking &amp; collaboration</p>
     <h2 class="h-lg reveal" style="color:var(--bg);max-width:16ch;margin:.5rem auto 0">{{ section.settings.contact_heading }}</h2>
     <p class="lede reveal" style="color:rgba(246,243,238,.75);max-width:50ch;margin:1.5rem auto 2rem">{{ section.settings.contact_text }}</p>
-    <a href="mailto:{{ section.settings.contact_email }}" class="btn reveal" style="--btn-bg:var(--bg);--btn-fg:var(--ink)" data-magnetic="0.3">{{ section.settings.contact_cta }}</a>
+    {%- if section.settings.contact_email != blank -%}<a href="mailto:{{ section.settings.contact_email }}" class="btn reveal" style="--btn-bg:var(--bg);--btn-fg:var(--ink)" data-magnetic="0.3">{{ section.settings.contact_cta }}</a>{%- endif -%}
   </div></section>
 
   <footer class="pf-footer">
@@ -97,12 +97,12 @@
     { "type": "image_picker", "id": "portrait", "label": "Portrait" },
     { "type": "text", "id": "portrait_url", "label": "Portrait URL (fallback)", "default": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png" },
     { "type": "header", "content": "About" },
-    { "type": "richtext", "id": "bio", "label": "Bio", "default": "<p>Melina Jones Voss is the permanent face of a made-to-order house. She lets the atelier design freely and photograph nothing.</p>" },
+    { "type": "richtext", "id": "bio", "label": "Bio", "default": "<p>Melina Jones Voss is the permanent face of the house. She lets the atelier design freely and photograph nothing.</p>" },
     { "type": "textarea", "id": "disclosure", "label": "AI disclosure", "default": "Melina is an AI model. She is not a real person. Every image here is generated with her likeness, and disclosed as such — on this page, in the store, and in every campaign." },
     { "type": "header", "content": "Contact" },
     { "type": "text", "id": "contact_heading", "label": "Contact heading", "default": "Bring Melina to your next campaign." },
     { "type": "richtext", "id": "contact_text", "label": "Contact text", "default": "<p>She’s open to lookbooks, try-on, and editorial, right alongside the real models and makers we work with. Tell us what you’re making.</p>" },
-    { "type": "text", "id": "contact_email", "label": "Contact email", "default": "casting@melina.example" },
+    { "type": "text", "id": "contact_email", "label": "Contact email", "info": "Add a real address to show the casting/contact button. Left blank, the button is hidden — no broken mailto.", "default": "" },
     { "type": "text", "id": "contact_cta", "label": "Contact button", "default": "Let’s talk" },
     { "type": "textarea", "id": "footer_disclosure", "label": "Footer note", "default": "Melina Jones Voss is an AI model. All imagery is generated and openly disclosed." }
   ],
