@@ -12,9 +12,12 @@
   The palette is scoped to the panel via `.cshow--{theme}` (mirroring the collection
   palettes in base.css), so all three can live on one page, each in its own colours.
 {%- endcomment -%}
+{%- comment -%} Parallax depth per plate is derived from its position (front plate drifts most),
+  so the schema needs no decimal `range` setting — Shopify's GitHub sync rejects those. {%- endcomment -%}
 {%- liquid
   assign theme = section.settings.theme | default: 'dress'
   assign words = section.settings.heading | split: ' '
+  assign plate_depths = '0.5,0.32,0.2,0.14' | split: ','
 -%}
 <section class="cshow cshow--{{ theme }}" data-cshow>
   <div class="cshow__frame">
@@ -33,7 +36,8 @@
             else
               assign src = 'ph-figure.svg' | asset_url
             endif
-            assign depth = block.settings.depth | default: 0.3
+            assign didx = pi | minus: 1
+            assign depth = plate_depths[didx] | default: 0.24
           -%}
           <figure class="cshow__plate cshow__plate--{{ pi }}" data-cshow-par="{{ depth }}" {{ block.shopify_attributes }}>
             <img src="{{ src }}" alt="{{ block.settings.caption | escape }}" loading="lazy" decoding="async" width="900" height="1200">
@@ -77,8 +81,7 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_url", "label": "Image URL (fallback)", "info": "Used until you upload an image." },
-        { "type": "text", "id": "caption", "label": "Caption" },
-        { "type": "range", "id": "depth", "label": "Parallax depth", "min": 0.1, "max": 0.6, "step": 0.05, "default": 0.3, "info": "Higher = drifts more (reads as closer / foreground)." }
+        { "type": "text", "id": "caption", "label": "Caption" }
       ]
     }
   ],

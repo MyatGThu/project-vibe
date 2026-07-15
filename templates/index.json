@@ -115,7 +115,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Forge Legging",
-            "depth": 0.5,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png"
           }
         },
@@ -123,7 +122,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Power Bra",
-            "depth": 0.32,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png"
           }
         },
@@ -131,7 +129,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Strength Tank",
-            "depth": 0.2,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png"
           }
         }
@@ -153,7 +150,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Riviera One-Piece",
-            "depth": 0.5,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png"
           }
         },
@@ -161,7 +157,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Solstice Bikini",
-            "depth": 0.32,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png"
           }
         },
@@ -169,7 +164,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Lido Wrap",
-            "depth": 0.2,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195.png"
           }
         }
@@ -191,7 +185,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Monolith Coat",
-            "depth": 0.5,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png"
           }
         },
@@ -199,7 +192,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Halo Gown",
-            "depth": 0.32,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png"
           }
         },
@@ -207,7 +199,6 @@
           "type": "plate",
           "settings": {
             "caption": "The Null Suit",
-            "depth": 0.2,
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png"
           }
         }
