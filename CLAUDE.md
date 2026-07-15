@@ -65,6 +65,16 @@ CSS variables — there is no per-component CSS file.
 - Vendored libs (`gsap.min.js`, `lenis.min.js`, `scrolltrigger.min.js`, `model-viewer.min.js`)
   are committed, not npm-installed.
 
+**The homepage (`templates/index.json`) is a scroll story, not a product grid.** In order:
+(1) `sections/landing-3d.liquid` — a 3D-parallax collage hero of cross-world look tiles;
+(2) three `sections/category-showcase.liquid` panels, one each for Gym / Swim / Dress, each
+self-themed by a `.cshow--{theme}` block in `base.css` that redefines `--bg/--ink/--accent/...`
+so all three worlds coexist on one page (NO prices — each panel links to its landing page);
+(3) `sections/lookbook.liquid` ("Worn by Melina"), then `manifesto` + `model-call`. The
+category-showcase parallax is **desktop-only** (motion.js, `[data-cshow]`, gated by `noScrollFX`);
+on mobile the plate gallery collapses to a horizontal-scroll strip. Parallax depth per plate is
+derived from its position in Liquid — deliberately **not** a schema setting (see sync gotcha below).
+
 **Demo-fallback pattern (important when editing collection/homepage sections).** Sections
 render real Shopify products when they exist, and fall back to hardcoded demo blocks when the
 catalog is empty — see `sections/main-collection.liquid` and `sections/featured-collection.liquid`
@@ -89,13 +99,42 @@ across product cards and the PDP (`product-card.liquid`, `demo-product-card.liqu
 `theme.liquid` swaps in `sections/portfolio-header.liquid` instead of the normal header group,
 giving those pages their own chrome.
 
-## Repo-specific Liquid pitfall
+## Images & the image CDN (read before touching image URLs)
+
+The Melina imagery is **not hosted by the store** — every look is hotlinked by absolute URL from
+Higgsfield's CloudFront (`https://d8j0ntlcm91z4.cloudfront.net/user_.../hf_<date>_<time>_<uuid>.<ext>`),
+set in section/template settings (`image_url`, `hover_image_url`, `hero_image_url`, `portrait_url`).
+Two facts govern how you touch these:
+
+- **Two variants per generation:** a heavy full-res `.png` (Higgsfield's `rawUrl`) and a light
+  `_min.webp` (`minUrl`). Many full-res PNGs stacked on one page blow the mobile (iOS Safari) image
+  decode/memory budget, so some silently fail to paint and show a broken-image (?) placeholder.
+  **Use `_min.webp` for cards/grids/plates; keep each page's single full-bleed hero
+  (`hero_image_url` / `portrait_url`) as the `.png`** — one image isn't the ceiling driver, and
+  full-bleed is exactly where a downscaled webp would look soft.
+- **The CDN is third-party and not owned**, so objects can purge (a broken image usually means a
+  purged/mistyped object, not a CDN outage), and **this sandbox cannot reach that host** (the agent
+  proxy returns 403 — curl/WebFetch to it are useless here). To check whether an image exists or
+  find its `_min.webp`, use the **Higgsfield MCP** (`show_generations`, type `image`) — the source
+  of truth. The durable fix (planned, not yet done) is to rehost every referenced image onto
+  Shopify's own CDN (Content → Files) and repoint the URLs.
+
+List exactly what the theme references with:
+`grep -rhoE "hf_[0-9_]+[a-f0-9-]+(_min\.webp|\.png)" templates sections | sort -u`
+
+## Repo-specific pitfalls
 
 **Filter-precedence bug — this has bitten twice.** In `{{ obj | image_tag: alt: x | append: y }}`
 or `{{ 'key' | t: n: v | date: '%Y' }}`, a trailing `| filter` binds to the **output of the
 whole preceding chain**, not to the last named argument. It caused a stray "worn by Melina"
 text node leaking out of product cards and the footer's `date`-gets-3-arguments crash.
 **Fix: precompute the value into a variable with `assign`, then pass it as a single argument.**
+
+**Shopify's GitHub sync silently rejects some section schema.** A `range` setting with a **decimal
+`step`** (e.g. `"step": 0.05`) fails to sync, which drops the whole section file and 404s any
+template that renders it — this bricked the homepage once. Keep `range` steps integer, or derive
+the value another way (category-showcase derives its parallax depth from plate position rather than
+a decimal `range`).
 
 ## Pre-launch business context (affects copy edits)
 
@@ -107,5 +146,6 @@ inventory → *then* flip products to in-stock. Until then:
   they were deliberately removed). "No overstock" style relative phrasing is the safe register.
 - **Keep the AI-model disclosure** prominent — it is the brand's deliberate, defensible stance,
   not boilerplate to soften.
-- `techpack/` holds garment specs and technical flats (e.g. the Obsidian Trouser) — these are
-  business/production documents, not theme code, and are not deployed by Shopify.
+- `techpack/` holds garment specs, HTML tech packs, and annotated **SVG** technical flats (the
+  Obsidian Trouser and Monolith Coat) — the flats are hand-authored vector line drawings, **not**
+  AI renders. These are business/production documents, not theme code, and are not deployed by Shopify.
