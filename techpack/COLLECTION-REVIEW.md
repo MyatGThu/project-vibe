@@ -45,8 +45,12 @@ chat. For the record, each hero, its stable Shopify CDN image, and the exact sho
 ### Gym → **The Contour Set** ($240)
 ![The Contour Set](https://cdn.shopify.com/s/files/1/0726/0468/0275/files/hf_20260713_151351_737f08ab-3002-4854-a30c-a6e0cc54c546.png?v=1783955826)
 > "high-waisted sculpting legging and longline sports bra in matte graphite, seamless compression
-> knit, second-skin fit." (Forge-Legging prompt adds: *contour seaming that follows the leg line, wide
-> smooth waistband*; Power-Bra prompt adds: *longline racerback, high supportive neckline, clean flat seams*.)
+> knit, second-skin fit."
+>
+> ⚠️ **v01 also borrowed detail from two *other* homepage looks** — the Forge-Legging prompt (*contour
+> seaming that follows the leg line*) and the Power-Bra prompt (*longline racerback, clean flat seams*).
+> Those are different garments; their seams don't appear on the Contour Set's own render, which is
+> seamless. **v02 drops them and draws to the Contour Set's own prompt** (seamless / second-skin).
 
 ### Swim → **The Ink Maillot** ($220)
 ![The Ink Maillot](https://cdn.shopify.com/s/files/1/0726/0468/0275/files/hf_20260713_151356_b12f66c1-f7a1-4b04-ac6c-6f69885075e9.png?v=1783955835)
@@ -74,7 +78,7 @@ overlaps. A line-key, key-measures / POM block, and fabric/colour block sit alon
 | File | Style | Collection | Views | Callouts |
 |---|---|---|---|---|
 | `TR-001_ObsidianTrouser_flat_v02.svg` | TR-001 | Dress / Autumn | Front + Back | A–K |
-| `AW-001_ContourSet_flat_v01.svg` | AW-001 | Gym | Bra F/B + Legging F/B | A–L |
+| `AW-001_ContourSet_flat_v02.svg` | AW-001 | Gym | Bra F/B + Legging F/B | A–I |
 | `SW-001_InkMaillot_flat_v01.svg` | SW-001 | Swim | Front + Back | A–J |
 
 Each flat carries the chosen **showcase reference image** (top of the right column, loaded from the
@@ -85,16 +89,26 @@ the Contour bra neckline was raised and the flatlock/coverstitch legend disambig
 its coverstitch topstitch drawn and its back labelled a deep V to match the art.
 
 `TR-001_ObsidianTrouser_flat_v01.svg` (the earlier straight-leg draft) is kept for version history —
-v02 supersedes it.
+v02 supersedes it. `AW-001_ContourSet_flat_v01.svg` (the cut-and-sew draft, drawn partly from the
+Forge-Legging and Power-Bra prompts) is likewise kept for history — **v02 supersedes it**, redrawn
+seamless to the Contour Set's own render.
+
+**Format (all three flats).** Each now carries a **production header block** (season · style # · base
+size · designer · vendor · colourway · in-house / proto-due dates · reference · fabric tag · garment
+title) and a **filled size-S target spec table** (POMs in cm), matching a standard proto sheet.
+The measurements are **size-S targets to confirm and grade on the first proto**, not a graded spec.
 
 ### Seams & cuts addressed on each flat
 - **Obsidian Trouser** — waistband join, fly (left-over-right J-stitch), slant pockets, **side seam
   pressed open**, **inseam pressed open**, **centre-back seam** (double-stitched, 1.5 cm let-out SA),
   blind hem, pressed crease, no back pockets. Tailoring seams — *not* serged closed.
-- **Contour Set** — bonded high waistband, **contour/sculpt panel seams** (flatlock) following the
-  leg line, **diamond gusset** (bartacked), **inseam flatlock**, **CB booty-lift seam**, ankle
-  coverstitch; bra neckline/armhole elastic binds, racerback straps, longline elastic underband,
-  bust support seam + power-mesh lining. Knit seams — coverstitch/flatlock, *not* lockstitch.
+- **Contour Set (v02, seamless)** — knit-in high waistband, **seamless body — no side or sculpt
+  seams** (compression + shaping knit-in), **knit-in gusset** (no bartacks), clean ankle hem
+  (laser-cut / narrow coverstitch); bra scoop neckline + set-in straps, bonded-elastic binds, clean
+  back (racer/scoop TBC), longline knit-in underband, **molded / bonded bust support** (no sewn bust
+  seam). Seamless knit —
+  circular-knit / bonded, *not* cut-and-sew flatlock. *(v01 kept the cut-and-sew flatlock build for
+  a factory that samples that route.)*
 - **Ink Maillot** — square-plunge neckline (elastic-applied), continuous straps, bust princess
   support seam, **fully lined** (power mesh), high-cut leg openings (elastic), **gusset** (lined,
   bartacked), **open-back deep V** (elastic), **centre-back seam**, **side seam 3-thread overlock**.
@@ -128,7 +142,7 @@ v02 supersedes it.
 - **A flat is not a pattern.** All three say DRAFT / not-to-scale / not-graded. A patternmaker must
   validate proportions and grade (sheet 08).
 - **Named fabric or a physical swatch** — a gsm range is a category, not a fabric (sheet 02/08).
-- **POM values** for AW-001 and SW-001, measured on the first proto **relaxed AND stretched**
-  (recovery is the fit for knit/swim).
+- **Proto-measure** AW-001 and SW-001 on the first proto **relaxed AND stretched** (recovery is the
+  fit for knit/swim). They now carry size-S **target** specs — confirm and grade from those.
 - **The brand name** — you cannot print a woven label for a house whose store title is "My Store"
   (sheet 08). This blocks trims across every collection.
