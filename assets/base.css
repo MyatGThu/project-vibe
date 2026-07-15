@@ -955,6 +955,32 @@ html::-webkit-scrollbar { width: 0; height: 0; }
 .js .vortex.is-3d .vortex__tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (prefers-reduced-motion: reduce) { .vortex.is-3d { height: auto; } .vortex.is-3d .vortex__viewport { position: static; height: auto; } }
 
+/* ---- meech213-style scroll gallery: parallax columns · velocity warp · clip reveal ----
+   A full-bleed wall of the house's imagery. Columns drift at their own parallax speeds;
+   fast scrolling skews / scales / blurs the photos (a "liquid" smear that settles when you
+   stop, driven by Lenis scroll velocity in motion.js); each photo clip-reveals as it enters.
+   Desktop-first; mobile / no-JS / reduced-motion keep a plain single-column wall. */
+.gallery { position: relative; background: #0b0908; padding-block: clamp(3rem, 8vw, 7rem); overflow: hidden; --g-skew: 0deg; --g-scale: 1; --g-blur: 0px; }
+.gallery__inner { max-width: min(1800px, 96vw); margin-inline: auto; padding-inline: var(--gutter); }
+.gallery__head { color: var(--bg); margin-bottom: clamp(2rem, 5vw, 4rem); max-width: 34ch; }
+.gallery__head .eyebrow { color: rgba(246, 243, 238, 0.72); }
+.gallery__head h2 { font-size: var(--step-4); color: var(--bg); line-height: 0.98; }
+.gallery__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.8rem, 1.6vw, 1.6rem); align-items: start; }
+.gallery__col { display: flex; flex-direction: column; gap: clamp(0.8rem, 1.6vw, 1.6rem); will-change: transform; }
+.gallery__col:nth-child(2) { margin-top: clamp(3rem, 10vw, 9rem); }
+.gallery__fig { position: relative; overflow: hidden; border-radius: var(--radius); background: #17100f; }
+.gallery__fig img { width: 100%; display: block; aspect-ratio: 3 / 4; object-fit: cover; transform: skewY(var(--g-skew)) scale(var(--g-scale)); filter: blur(var(--g-blur)); will-change: transform, filter; }
+.js .gallery__fig { clip-path: inset(0 0 101% 0); }
+.js .gallery__fig.is-in { clip-path: inset(0 0 0 0); transition: clip-path 1.1s var(--ease); }
+@media (max-width: 760px) {
+  .gallery__grid { grid-template-columns: 1fr; }
+  .gallery__col, .gallery__col:nth-child(2) { margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery__fig { clip-path: none !important; }
+  .gallery__fig img { transform: none !important; filter: none !important; }
+}
+
 /* Touch has no hover: reveal-on-hover never fires, so surface the captions and drop the
    hover-zoom that would otherwise stick after a tap. */
 @media (hover: none) {
