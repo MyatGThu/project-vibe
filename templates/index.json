@@ -16,6 +16,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png",
+            "alt": "Melina wearing the Forge Legging — a Te Amo gym legging",
             "caption": "The Forge Legging",
             "tag": "Gym"
           }
@@ -24,6 +25,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png",
+            "alt": "Melina wearing the Riviera One-Piece — a Te Amo one-piece swimsuit",
             "caption": "The Riviera One-Piece",
             "tag": "Swim"
           }
@@ -32,6 +34,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png",
+            "alt": "Melina wearing the Monolith Coat — a charcoal wool double-breasted overcoat",
             "caption": "The Monolith Coat",
             "tag": "Dress"
           }
@@ -40,6 +43,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png",
+            "alt": "Melina wearing the Power Bra — a Te Amo training bra",
             "caption": "The Power Bra",
             "tag": "Gym"
           }
@@ -48,6 +52,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png",
+            "alt": "Melina wearing the Solstice Bikini — a Te Amo bikini",
             "caption": "The Solstice Bikini",
             "tag": "Swim"
           }
@@ -56,6 +61,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png",
+            "alt": "Melina wearing the Halo Gown — a bone crepe one-shoulder couture gown",
             "caption": "The Halo Gown",
             "tag": "Dress"
           }
@@ -64,6 +70,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png",
+            "alt": "Melina in the Power gym look, Ember colourway — Te Amo next drop",
             "caption": "Power — Ember",
             "tag": "Gym",
             "upcoming": true
@@ -73,6 +80,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5.png",
+            "alt": "Melina in the Sun swim look, Azure colourway — Te Amo next drop",
             "caption": "Sun — Azure",
             "tag": "Swim",
             "upcoming": true
@@ -82,6 +90,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da.png",
+            "alt": "Melina wearing the Meridian Cape — an outerwear look from Te Amo's next drop",
             "caption": "The Meridian Cape",
             "tag": "Dress",
             "upcoming": true
@@ -116,6 +125,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png",
+            "alt": "Melina wearing the Forge Legging — a Te Amo gym legging",
             "caption": "The Forge Legging"
           }
         },
@@ -123,6 +133,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png",
+            "alt": "Melina wearing the Power Bra — a Te Amo training bra",
             "caption": "The Power Bra"
           }
         },
@@ -130,6 +141,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png",
+            "alt": "Melina wearing the Strength Tank — a Te Amo training tank",
             "caption": "The Strength Tank"
           }
         }
@@ -155,6 +167,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png",
+            "alt": "Melina wearing the Riviera One-Piece — a Te Amo one-piece swimsuit",
             "caption": "The Riviera One-Piece"
           }
         },
@@ -162,6 +175,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png",
+            "alt": "Melina wearing the Solstice Bikini — a Te Amo bikini",
             "caption": "The Solstice Bikini"
           }
         },
@@ -169,6 +183,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195.png",
+            "alt": "Melina wearing the Lido Wrap — a Te Amo swim cover-up",
             "caption": "The Lido Wrap"
           }
         }
@@ -194,6 +209,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png",
+            "alt": "Melina wearing the Monolith Coat — a charcoal wool double-breasted overcoat",
             "caption": "The Monolith Coat"
           }
         },
@@ -201,6 +217,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png",
+            "alt": "Melina wearing the Halo Gown — a bone crepe one-shoulder couture gown",
             "caption": "The Halo Gown"
           }
         },
@@ -208,6 +225,7 @@
           "type": "plate",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png",
+            "alt": "Melina wearing the Null Suit — an ink wool blazer and trouser over a silk shell",
             "caption": "The Null Suit"
           }
         }
@@ -233,6 +251,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png",
+            "alt": "Melina in the Gym campaign, Ember look — Te Amo activewear",
             "caption": "Gym — Ember",
             "tag": "Activewear",
             "wide": true
@@ -242,6 +261,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5.png",
+            "alt": "Melina in the Swim campaign, Azure look — Te Amo swimwear",
             "caption": "Swim — Azure",
             "tag": "Swimwear"
           }
@@ -250,6 +270,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da.png",
+            "alt": "Melina in the House campaign, the Meridian Cape — Te Amo outerwear",
             "caption": "House — Meridian",
             "tag": "Outerwear"
           }
@@ -258,6 +279,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c.png",
+            "alt": "Melina in the Gym campaign, Obsidian look — Te Amo activewear",
             "caption": "Gym — Obsidian",
             "tag": "Activewear"
           }
@@ -266,6 +288,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_053013_db5c8341-bc1a-4e7c-a02b-9de1f72841af.png",
+            "alt": "Melina in the Swim campaign, Citrus look — Te Amo swimwear",
             "caption": "Swim — Citrus",
             "tag": "Swimwear",
             "wide": true
@@ -275,6 +298,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e.png",
+            "alt": "Melina in the House campaign, Ink look — Te Amo eveningwear",
             "caption": "House — Ink",
             "tag": "Eveningwear"
           }

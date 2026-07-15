@@ -23,7 +23,7 @@
         -%}
         <div class="lookbook__slide{% if block.settings.wide %} lookbook__slide--wide{% endif %}" {{ block.shopify_attributes }}>
           <figure>
-            <img src="{{ src }}" alt="{{ block.settings.caption | escape }}" loading="lazy">
+            <img src="{{ src }}" alt="{{ block.settings.alt | default: block.settings.caption | escape }}" loading="lazy">
           </figure>
           <figcaption><span>{{ block.settings.caption }}</span><span>{{ block.settings.tag }}</span></figcaption>
         </div>
@@ -44,6 +44,7 @@
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
         { "type": "text", "id": "caption", "label": "Caption", "default": "Look 01" },
+        { "type": "text", "id": "alt", "label": "Alt text (accessibility)", "info": "Describes the image for screen readers and SEO. Falls back to the caption if left blank." },
         { "type": "text", "id": "tag", "label": "Tag", "default": "Autumn" },
         { "type": "checkbox", "id": "wide", "label": "Wide slide", "default": false }
       ] }
