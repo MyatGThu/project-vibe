@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 1120" font-family="Helvetica Neue, Arial, sans-serif">
+<style>
+ .edge{fill:#fff;stroke:#161616;stroke-width:2.1;stroke-linejoin:round;stroke-linecap:round;}
+ .seam{fill:none;stroke:#161616;stroke-width:1.3;}
+ .stitch{fill:none;stroke:#161616;stroke-width:1;stroke-dasharray:5 3;}
+ .bind{fill:none;stroke:#6f6f6f;stroke-width:1;stroke-dasharray:2 2.4;}
+ .band{fill:#efece7;stroke:#161616;stroke-width:1.3;}
+ .bar{fill:#161616;}
+ .lead{stroke:#b23a3a;stroke-width:0.9;fill:none;}
+ .mrk{fill:#161616;stroke:#fcfbf9;stroke-width:1.3;}
+ .mlet{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle;}
+ .cap{fill:#555;font-size:11.5px;letter-spacing:.16em;}
+ .h1{fill:#111;font-size:22px;font-weight:600;}
+ .sub{fill:#666;font-size:12px;}
+ .note{fill:#444;font-size:10.5px;} .warn{fill:#b23a3a;font-size:11px;font-weight:600;}
+ .sec{fill:#111;font-size:12px;font-weight:700;letter-spacing:.06em;}
+ .klet{fill:#b23a3a;font-size:11px;font-weight:700;}
+ .ktit{fill:#111;font-size:11px;font-weight:600;}
+ .ktxt{fill:#555;font-size:10px;}
+ .mkey{fill:#111;font-size:10.5px;font-weight:600;}
+ .lval{fill:#333;font-size:10.5px;}
+</style>
+<rect x="0" y="0" width="1560" height="1120" fill="#fcfbf9"/>
+
+<!-- ============ HEADER ============ -->
+<text x="60" y="48" class="h1">THE CONTOUR SET — TECHNICAL FLAT</text>
+<text x="60" y="70" class="sub">Style AW-001 · Gym / Collection 02 · Longline sports bra + high-waist sculpting legging · Base size S · Colourway Graphite · Flat v02 (seamless)</text>
+<line x1="60" y1="86" x2="1500" y2="86" stroke="#161616" stroke-width="1"/>
+<text x="60" y="106" class="warn">DRAFT — drawn to the Contour Set's OWN render (openly disclosed): seamless compression knit, second-skin. Support &amp; sculpt shaping are KNIT-IN / bonded, not sewn flatlock panels. Needs a seamless-knit specialist, a workbook (BOM / POM / construction) and a patternmaker's grade before sampling.</text>
+
+<!-- ===================== BRA (top) ===================== -->
+<g>
+ <!-- FRONT: smooth molded cup, high round neckline, longline band -->
+ <path class="edge" d="M 196 322 L 230 318 C 240 330 250 336 250 338 C 250 336 260 330 270 318 L 304 322 C 324 340 338 366 338 398 L 338 520 L 162 520 L 162 398 C 162 366 176 340 196 322 Z"/>
+ <rect class="band" x="162" y="520" width="176" height="46" rx="2"/>
+ <path class="bind" d="M 168 522 L 332 522"/>
+ <path class="bind" d="M 230 324 C 242 340 258 340 270 324"/>
+ <path class="bind" d="M 198 328 C 182 350 170 372 168 398"/>
+ <path class="bind" d="M 302 328 C 320 350 332 372 332 398"/>
+ <!-- molded/bonded underbust support — NOT a sewn seam -->
+ <path class="bind" d="M 186 452 C 224 482 276 482 314 452"/>
+ <text x="250" y="600" text-anchor="middle" class="cap">BRA · FRONT</text>
+
+ <!-- BACK: clean racer, no internal seams -->
+ <path class="edge" d="M 431 322 C 411 340 397 366 397 398 L 397 520 L 573 520 L 573 398 C 573 366 559 340 539 322 L 523 318 C 516 344 502 366 485 378 C 468 366 454 344 447 318 L 431 322 Z"/>
+ <rect class="band" x="397" y="520" width="176" height="46" rx="2"/>
+ <path class="bind" d="M 403 522 L 567 522"/>
+ <path class="bind" d="M 433 328 C 415 350 403 372 403 398"/>
+ <path class="bind" d="M 537 328 C 555 350 567 372 567 398"/>
+ <path class="bind" d="M 447 320 C 456 346 470 366 485 378 C 500 366 514 346 523 320"/>
+ <text x="485" y="600" text-anchor="middle" class="cap">BRA · BACK</text>
+</g>
+
+<!-- ===================== LEGGING (bottom) ===================== -->
+<g>
+ <!-- FRONT: smooth second-skin, no sculpt seams -->
+ <path class="edge" d="M 176 648 L 324 648 C 336 664 340 722 338 772 L 320 1004 L 308 1052 L 268 1052 C 262 906 256 822 250 794 C 244 822 238 906 232 1052 L 192 1052 L 180 1004 L 162 772 C 160 722 164 664 176 648 Z"/>
+ <rect class="band" x="162" y="648" width="176" height="40" rx="2"/>
+ <path class="bind" d="M 166 686 L 334 686"/>
+ <!-- knit-in gusset — no bartacks -->
+ <path class="bind" d="M 250 776 L 236 802 L 250 830 L 264 802 Z"/>
+ <path class="stitch" d="M 194 1034 L 234 1034"/>
+ <path class="stitch" d="M 266 1034 L 306 1034"/>
+ <text x="250" y="1088" text-anchor="middle" class="cap">LEGGING · FRONT</text>
+
+ <!-- BACK: smooth, sculpt shaping knit-in (invisible) -->
+ <path class="edge" d="M 411 648 L 559 648 C 571 664 575 722 573 772 L 555 1004 L 543 1052 L 503 1052 C 497 906 491 822 485 794 C 479 822 473 906 467 1052 L 427 1052 L 415 1004 L 397 772 C 395 722 399 664 411 648 Z"/>
+ <rect class="band" x="397" y="648" width="176" height="40" rx="2"/>
+ <path class="bind" d="M 401 686 L 569 686"/>
+ <path class="stitch" d="M 429 1034 L 469 1034"/>
+ <path class="stitch" d="M 501 1034 L 541 1034"/>
+ <text x="485" y="1088" text-anchor="middle" class="cap">LEGGING · BACK</text>
+</g>
+
+<!-- ============ CALLOUT MARKERS ============ -->
+<!-- Bra -->
+<g><line class="lead" x1="250" y1="290" x2="250" y2="322"/><circle class="mrk" cx="250" cy="280" r="9.5"/><text class="mlet" x="250" y="283.8">B</text></g>
+<g><line class="lead" x1="110" y1="400" x2="162" y2="400"/><circle class="mrk" cx="100" cy="400" r="9.5"/><text class="mlet" x="100" y="403.8">F</text></g>
+<g><line class="lead" x1="357" y1="468" x2="315" y2="468"/><circle class="mrk" cx="367" cy="468" r="9.5"/><text class="mlet" x="367" y="471.8">E</text></g>
+<g><line class="lead" x1="625" y1="360" x2="500" y2="360"/><circle class="mrk" cx="635" cy="360" r="9.5"/><text class="mlet" x="635" y="363.8">C</text></g>
+<g><line class="lead" x1="625" y1="543" x2="573" y2="543"/><circle class="mrk" cx="635" cy="543" r="9.5"/><text class="mlet" x="635" y="546.8">D</text></g>
+<!-- Legging -->
+<g><line class="lead" x1="110" y1="666" x2="162" y2="666"/><circle class="mrk" cx="100" cy="666" r="9.5"/><text class="mlet" x="100" y="669.8">A</text></g>
+<g><line class="lead" x1="110" y1="820" x2="162" y2="820"/><circle class="mrk" cx="100" cy="820" r="9.5"/><text class="mlet" x="100" y="823.8">G</text></g>
+<g><line class="lead" x1="357" y1="802" x2="266" y2="802"/><circle class="mrk" cx="367" cy="802" r="9.5"/><text class="mlet" x="367" y="805.8">H</text></g>
+<g><line class="lead" x1="110" y1="1032" x2="196" y2="1032"/><circle class="mrk" cx="100" cy="1032" r="9.5"/><text class="mlet" x="100" y="1035.8">I</text></g>
+
+<!-- ============ CALLOUT KEY (column 1) ============ -->
+<text x="720" y="200" class="sec">CALLOUT KEY</text>
+<line x1="720" y1="210" x2="990" y2="210" stroke="#ddd" stroke-width="1"/>
+<g>
+ <text x="720" y="235" class="klet">A</text><text x="742" y="235" class="ktit">High waistband — knit-in</text>
+ <text x="742" y="250" class="ktxt">Smooth high-rise, no drawcord; knit-in power band, bonded top edge</text>
+
+ <text x="720" y="279" class="klet">B</text><text x="742" y="279" class="ktit">Neckline — bonded / elastic bind</text>
+ <text x="742" y="294" class="ktxt">High supportive round neckline; bonded or coverstitched bind</text>
+
+ <text x="720" y="323" class="klet">C</text><text x="742" y="323" class="ktit">Back — smooth (racer)</text>
+ <text x="742" y="338" class="ktxt">Clean knit back, no panel seams; confirm racer vs scoop to render</text>
+
+ <text x="720" y="367" class="klet">D</text><text x="742" y="367" class="ktit">Longline underband — knit-in</text>
+ <text x="742" y="382" class="ktxt">Wide knit-in power band anchors the bra</text>
+
+ <text x="720" y="411" class="klet">E</text><text x="742" y="411" class="ktit">Bust support — molded / bonded</text>
+ <text x="742" y="426" class="ktxt">Molded or bonded underbust support (no sewn bust seam); optional pad pocket</text>
+
+ <text x="720" y="455" class="klet">F</text><text x="742" y="455" class="ktit">Armhole — elastic bind</text>
+ <text x="742" y="470" class="ktxt">Clean-finish bonded / coverstitch binding</text>
+
+ <text x="720" y="499" class="klet">G</text><text x="742" y="499" class="ktit">Seamless body — no side seams</text>
+ <text x="742" y="514" class="ktxt">Circular / engineered knit; compression + sculpt shaping knit-in, not sewn</text>
+
+ <text x="720" y="543" class="klet">H</text><text x="742" y="543" class="ktit">Gusset — knit-in</text>
+ <text x="742" y="558" class="ktxt">Knit-in or bonded diamond gusset for range; no bartacks on a seamless route</text>
+
+ <text x="720" y="587" class="klet">I</text><text x="742" y="587" class="ktit">Ankle hem — clean</text>
+ <text x="742" y="602" class="ktxt">Laser-cut raw edge or narrow coverstitch; opaque, recovers flat</text>
+</g>
+
+<!-- ============ LINE KEY + POM + SPEC (column 2) ============ -->
+<text x="1080" y="200" class="sec">LINE KEY</text>
+<line x1="1080" y1="210" x2="1300" y2="210" stroke="#ddd" stroke-width="1"/>
+<line x1="1080" y1="230" x2="1116" y2="230" class="edge"/><text x="1126" y="234" class="lval">garment edge</text>
+<line x1="1080" y1="250" x2="1116" y2="250" class="bind"/><text x="1126" y="254" class="lval">bonded / elastic edge</text>
+<rect class="band" x="1080" y="262" width="36" height="12"/><text x="1126" y="272" class="lval">knit-in power band</text>
+<line x1="1080" y1="288" x2="1116" y2="288" class="stitch"/><text x="1126" y="292" class="lval">coverstitch hem</text>
+<text x="1080" y="314" class="ktxt">Seamless route — no sewn side or sculpt seams (shaping is knit-in).</text>
+
+<text x="1080" y="358" class="sec">KEY POM — build on sample</text>
+<line x1="1080" y1="368" x2="1300" y2="368" stroke="#ddd" stroke-width="1"/>
+<g>
+ <text x="1080" y="388" class="mkey">Underbust (relaxed / stretched)</text>
+ <text x="1080" y="406" class="mkey">Bust · cup depth · bra length</text>
+ <text x="1080" y="424" class="mkey">Waistband (relaxed / stretched)</text>
+ <text x="1080" y="442" class="mkey">High hip · hip</text>
+ <text x="1080" y="460" class="mkey">Front rise · back rise</text>
+ <text x="1080" y="478" class="mkey">Thigh · knee</text>
+ <text x="1080" y="496" class="mkey">Leg opening (ankle)</text>
+ <text x="1080" y="514" class="mkey">Inseam · outseam</text>
+ <text x="1080" y="532" class="mkey">Waistband height</text>
+ <text x="1080" y="556" class="ktxt">Values TBD — measure first proto relaxed</text>
+ <text x="1080" y="571" class="ktxt">AND stretched; recovery is the fit.</text>
+</g>
+
+<text x="1080" y="613" class="sec">FABRIC / SPEC</text>
+<line x1="1080" y1="623" x2="1300" y2="623" stroke="#ddd" stroke-width="1"/>
+<text x="1080" y="643" class="note">Seamless circular-knit or bonded 4-way stretch</text>
+<text x="1080" y="659" class="note">nylon / elastane · 200–280 gsm · matte Graphite</text>
+<text x="1080" y="675" class="note">Second-skin compression; support &amp; sculpt KNIT-IN</text>
+<text x="1080" y="691" class="note">Spec stretch % AND recovery %</text>
+<text x="1080" y="707" class="note">Opacity test — bend / squat</text>
+
+<!-- ============ SHOWCASE REFERENCE ============ -->
+<text x="720" y="800" class="sec">SHOWCASE REFERENCE</text>
+<text x="720" y="815" class="ktxt">AI render (openly disclosed) — the seamless look this flat is drawn to</text>
+<rect x="720" y="826" width="150" height="192" fill="#f1efea" stroke="#161616" stroke-width="1.2"/>
+<text x="795" y="926" text-anchor="middle" class="ktxt" fill="#b0a99e">image loads online</text>
+<image x="721" y="827" width="148" height="190" preserveAspectRatio="xMidYMid slice" href="https://cdn.shopify.com/s/files/1/0726/0468/0275/files/hf_20260713_151351_737f08ab-3002-4854-a30c-a6e0cc54c546.png?v=1783955826"/>
+<rect x="720" y="826" width="150" height="192" fill="none" stroke="#161616" stroke-width="1.2"/>
+<text x="884" y="846" class="ktit">The Contour Set</text>
+<text x="884" y="862" class="ktxt">$240 · Gym / Collection 02</text>
+<text x="884" y="877" class="ktxt">Legging + longline bra</text>
+<text x="884" y="898" class="ktxt" fill="#b23a3a">Prompt: "seamless compression</text>
+<text x="884" y="911" class="ktxt" fill="#b23a3a">knit, second-skin fit"</text>
+
+<!-- ============ FOOTER ============ -->
+<line x1="60" y1="1044" x2="1500" y2="1044" stroke="#ddd" stroke-width="1"/>
+<text x="60" y="1066" class="warn">CATEGORY NOTE — A seamless compression knit is a circular-knit / bonded supply chain (engineered-zone knitting, bonding, laser-cut edges), distinct from cut-and-sew activewear. Sampled cut-and-sew instead, it would carry visible flatlock sculpt seams (see v01) — a different look to the render. Decide the route before pattern.</text>
+<text x="60" y="1084" class="note">The set is one SKU (bra + legging). Shaping is knit-in — values on this sheet are intent, not a graded spec.</text>
+</svg>
