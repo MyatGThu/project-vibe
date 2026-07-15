@@ -1,0 +1,68 @@
+<!doctype html>
+<!--
+  GitHub Pages static build of the collection ("Shop") page.
+  Structure mirrors sections/collection-story.liquid via preview/page-collection.html;
+  images are the REAL Melina looks from templates/collection.json (hero from page.portfolio.json portrait_url).
+  Reuses the REAL assets/base.css. Self-themed by the house default palette.
+-->
+<html lang="en" class="js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Te Amo — the collection</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap">
+  <link rel="stylesheet" href="assets/base.css">
+</head>
+<body>
+  <div class="announcement"><div class="container"><span>Every look worn first by Melina — our AI muse, openly disclosed.</span><a class="link-underline" href="#">Meet Melina — AI model</a></div></div>
+  <header class="header" data-header>
+    <div class="header__left"><button class="header__icon" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg></button></div>
+    <div class="header__brand"><a href="#"><span class="wordmark">Te Amo</span></a></div>
+    <div class="header__actions"><button class="header__icon" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" stroke-linecap="round"/></svg></button></div>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="footer"><div class="container"><div class="footer__grid">
+    <div class="footer__brand"><span class="wordmark">Te Amo</span><p class="muted" style="margin-top:1rem;max-width:30ch">Clothing made to be loved.</p></div>
+    <div class="footer__col"><h4>Atelier</h4><a href="#" class="link-underline">Gym</a><a href="#" class="link-underline">Swimwear</a></div>
+    <div class="footer__disclosure"><span>Melina Jones Voss is an AI model. Every image of her is generated, disclosed, and made with love.</span><span>© 2026 Te Amo</span></div>
+  </div></div></footer>
+
+  <script>
+    var HERO = 'https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png';
+    var ED0 = 'https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e_min.webp';
+    var ED1 = 'https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143014_8c82bf0d-7def-4fbf-b586-0a1b21257858_min.webp';
+    var d = {
+      cls: 'template-page',
+      eyebrow: 'The collection', heading: 'The full house.',
+      sub: 'Every piece in the house, worn first by Melina — outerwear, tailoring, knitwear and eveningwear, cut clean and made to be loved.',
+      statement: "One house, many rooms. Coats that stand on their own, slips that weigh almost nothing, tailoring that stays quiet — each made to your measure, none of it overstocked.",
+      mto: 'The full edit — coat, slip, suit, knit, trouser and gown. Worn first by Melina, made to your measure.',
+      stats: [['6','Pieces'],['5','Categories'],['1','Melina'],['AI','Openly disclosed']],
+      looks: [['The Monolith Coat','Outerwear','https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c_min.webp'],['The Liquid Slip','Dresses','https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e_min.webp'],['The Null Suit','Tailoring','https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e_min.webp'],['The Vapor Knit','Knitwear','https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe_min.webp'],['The Obsidian Trouser','Tailoring','https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a_min.webp'],['The Halo Gown','Eveningwear','https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513_min.webp']]
+    };
+    document.body.className = d.cls;
+    document.getElementById('app').innerHTML =
+      '<div class="cstory">' +
+        '<section class="cstory-hero"><div class="cstory-hero__media"><img src="'+HERO+'" alt="Melina Jones Voss — AI model — in the Te Amo collection"></div>' +
+          '<div class="cstory-hero__body"><p class="eyebrow cstory-eyebrow">'+d.eyebrow+'</p>' +
+          '<h1 class="cstory-hero__title display">'+d.heading+'</h1>' +
+          '<p class="lede cstory-hero__sub">'+d.sub+'</p>' +
+          '<div class="cstory-hero__cta"><a class="btn" href="#" style="--btn-bg:var(--accent);--btn-fg:#fff">Shop the collection</a><a class="btn btn--ghost" href="#cs-looks">See the looks</a></div>' +
+        '</div></section>' +
+        '<section class="section--tight"><div class="container"><div class="cstory-ethos">' +
+          d.stats.map(function(s){return '<div class="cstory-stat"><span class="cstory-stat__num">'+s[0]+'</span><span class="cstory-stat__label">'+s[1]+'</span></div>';}).join('') +
+        '</div></div></section>' +
+        '<section class="section" id="cs-looks"><div class="container"><div class="collection-head"><div><p class="eyebrow">The looks</p><h2 class="h-md" style="margin-top:.5rem">The collection</h2></div><a href="#" class="link-underline">Shop all →</a></div>' +
+          '<div class="cstory-looks">' + d.looks.map(function(l){return '<a class="cstory-look" href="#"><img src="'+l[2]+'" alt="'+l[0]+'"><span class="cstory-look__cap"><span>'+l[0]+'</span><span>'+l[1]+'</span></span></a>';}).join('') + '</div>' +
+        '</div></section>' +
+        '<section class="section cstory-statement"><div class="container"><p>'+d.statement+'</p></div></section>' +
+        '<section class="section"><div class="container"><div class="editorial-split"><div class="editorial-split__media"><img src="'+ED0+'" alt="The Monolith Coat"></div><div class="editorial-split__media"><img src="'+ED1+'" alt="The Liquid Slip"></div></div></div></section>' +
+        '<section class="section cstory-mto"><div class="container"><p class="eyebrow">The collection</p><p class="lede">'+d.mto+'</p><a class="btn" href="#" style="--btn-bg:var(--accent);--btn-fg:#fff">Shop the collection</a></div></section>' +
+        '<footer class="cstory-footer container"><span class="muted" style="max-width:52ch">Melina Jones Voss is an AI model. Every image of her is generated and openly disclosed.</span><a href="#" class="link-underline">← Back to the store</a></footer>' +
+      '</div>';
+  </script>
+<nav aria-label="Preview pages" style="position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);z-index:200;display:flex;gap:.15rem;padding:.3rem;background:rgba(20,17,15,.85);backdrop-filter:blur(12px);border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 12px 44px -14px rgba(0,0,0,.55)"><span style="color:rgba(246,243,238,.5);padding:.55em .7em">Preview</span><a href="index.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Home</a><a href="gym.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Gym</a><a href="swim.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Swim</a><a href="collection.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Shop</a><a href="portfolio.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Melina</a></nav>
+</body>
+</html>

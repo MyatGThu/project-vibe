@@ -39,7 +39,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; scroll-padding-top: 7rem; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -259,6 +259,7 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .swatches { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .swatch { min-width: 2.9rem; height: 2.9rem; padding-inline: 0.8em; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); font-size: var(--step--1); letter-spacing: 0.06em; transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease; }
 .swatch[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+.swatch:not([aria-pressed="true"]):not([disabled]):hover { border-color: var(--ink); color: var(--ink); }
 .swatch[disabled] { opacity: 0.35; text-decoration: line-through; cursor: not-allowed; }
 
 .qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; width: max-content; }
@@ -363,9 +364,9 @@ h1, h2, h3, h4 { font-family: var(--display-font); font-weight: 340; line-height
 .footer a:hover { color: var(--bg); }
 .footer__grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: var(--gutter); }
 .footer__brand .wordmark { font-family: var(--display-font); font-size: var(--step-3); letter-spacing: 0.2em; color: var(--bg); }
-.footer__col h4 { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em; color: color-mix(in oklab, var(--bg) 70%, var(--ink)); margin-bottom: 1rem; }
+.footer__col h4 { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em; color: color-mix(in oklab, currentColor 70%, transparent); margin-bottom: 1rem; }
 .footer__col a { display: block; padding-block: 0.35rem; }
-.footer__disclosure { grid-column: 1 / -1; border-top: 1px solid rgba(246,243,238,0.15); margin-top: 2rem; padding-top: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: var(--step--1); color: color-mix(in oklab, var(--bg) 65%, var(--ink)); }
+.footer__disclosure { grid-column: 1 / -1; border-top: 1px solid rgba(246,243,238,0.15); margin-top: 2rem; padding-top: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: var(--step--1); color: color-mix(in oklab, currentColor 65%, transparent); }
 .footer__newsletter { display: flex; gap: 0.5rem; margin-top: 1.6rem; }
 .footer .footer__newsletter input { flex: 1; width: auto; min-width: 0; background: rgba(246,243,238,0.08); border: 1px solid rgba(246,243,238,0.28); border-radius: 999px; padding: 0.7em 1.1em; color: var(--bg); font: inherit; }
 .footer .footer__newsletter input::placeholder { color: rgba(246,243,238,0.7); }
@@ -378,7 +379,8 @@ input[type=email], input[type=text], input[type=password], input[type=search], t
   width: 100%; padding: 0.95em 1.1em; background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--radius); font: inherit; color: var(--ink); transition: border-color 0.3s ease;
 }
-input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: none; }
+input:focus, textarea:focus, select:focus { border-color: var(--ink); }
+input:focus:not(:focus-visible), textarea:focus:not(:focus-visible), select:focus:not(:focus-visible) { outline: none; }
 
 /* ---- Motion helpers (progressive enhancement) ---- */
 .js .reveal { opacity: 0; }
@@ -397,7 +399,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .pdp__rte p + p { margin-top: 0.8em; }
 
 /* ---- Made-to-order treatment (badge lives with .badge above) ---- */
-.mto-note { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.mto-note { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; font-size: var(--step--1); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .mto-note__dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent); animation: mto-pulse 2.6s var(--ease) infinite; }
 @keyframes mto-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 55%, transparent); } 70%,100% { box-shadow: 0 0 0 0.5rem transparent; } }
 @media (prefers-reduced-motion: reduce) { .mto-note__dot { animation: none; } }
@@ -435,7 +437,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 
 /* ---- RTE ---- */
 .rte a { text-decoration: underline; text-underline-offset: 3px; }
-.rte h2, .rte h3 { font-family: var(--display-font); margin: 1.4em 0 0.5em; }
+.rte h2, .rte h3 { font-family: var(--display-font); line-height: 1.12; margin: 1.4em 0 0.5em; }
 .rte p + p { margin-top: 1em; }
 .rte ul, .rte ol { padding-left: 1.2em; }
 
@@ -525,7 +527,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
   --bg: #E9F7FF;
   --surface: #FFFFFF;
   --ink: #063A5E;          /* deep ocean — readable headings/text */
-  --muted: #3E7CA6;        /* muted sea blue */
+  --muted: #2E6E96;        /* muted sea blue — deepened to clear WCAG AA body text on the light ground */
   --accent: #00A6E0;       /* bright azure */
   --accent-2: #FFD23F;     /* sunny yellow */
   --line: #BFE6FA;
@@ -553,6 +555,10 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: n
 .template-collection-swimwear .btn:hover { color: #063A5E; }
 .template-collection-swimwear ::selection,
 .template-page-swimwear ::selection { background: #00A6E0; color: #fff; }
+/* Swim accent (#00A6E0) is ~2.8:1 on its bright surfaces — below the 3:1 focus-indicator floor.
+   Scope a high-contrast ring to swim only; every other palette keeps the accent ring. */
+.template-collection-swimwear :focus-visible,
+.template-page-swimwear :focus-visible { outline-color: var(--ink); }
 
 /* ---- Gym / activewear — shades of red + black (solidity, power, love, strength) ----
    Shared by the collection page (template-collection-gym) and the dedicated
@@ -864,7 +870,8 @@ section.l3d.is-3d + .shopify-section, section.l3d.is-3d + .section { margin-top:
   .template-collection-swimwear,
   .template-page-swimwear,
   .template-collection-gym,
-  .template-page-gym-wear { background-attachment: scroll; }
+  .template-page-gym-wear,
+  .template-page-dress-and-jackets { background-attachment: scroll; }
 }
 
 /* Touch targets + no-hover affordances on coarse pointers. */
