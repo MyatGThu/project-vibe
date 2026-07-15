@@ -99,8 +99,9 @@ seamless to the Contour Set's own render.
   blind hem, pressed crease, no back pockets. Tailoring seams — *not* serged closed.
 - **Contour Set (v02, seamless)** — knit-in high waistband, **seamless body — no side or sculpt
   seams** (compression + shaping knit-in), **knit-in gusset** (no bartacks), clean ankle hem
-  (laser-cut / narrow coverstitch); bra neckline/armhole bonded-elastic binds, smooth racer back,
-  longline knit-in underband, **molded / bonded bust support** (no sewn bust seam). Seamless knit —
+  (laser-cut / narrow coverstitch); bra scoop neckline + set-in straps, bonded-elastic binds, clean
+  back (racer/scoop TBC), longline knit-in underband, **molded / bonded bust support** (no sewn bust
+  seam). Seamless knit —
   circular-knit / bonded, *not* cut-and-sew flatlock. *(v01 kept the cut-and-sew flatlock build for
   a factory that samples that route.)*
 - **Ink Maillot** — square-plunge neckline (elastic-applied), continuous straps, bust princess
