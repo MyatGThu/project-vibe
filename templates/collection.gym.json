@@ -12,8 +12,8 @@
             "price": "$120.00",
             "price_cents": 12000,
             "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e.png",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4_min.webp",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e_min.webp",
             "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
           }
         },
@@ -25,8 +25,8 @@
             "price": "$78.00",
             "price_cents": 7800,
             "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c.png",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33_min.webp",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c_min.webp",
             "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
           }
         },
@@ -38,8 +38,8 @@
             "price": "$64.00",
             "price_cents": 6400,
             "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042209_f760ff66-5785-45b3-b94d-721c9742b6bd.png",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc_min.webp",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042209_f760ff66-5785-45b3-b94d-721c9742b6bd_min.webp",
             "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
           }
         },
@@ -51,8 +51,8 @@
             "price": "$72.00",
             "price_cents": 7200,
             "sizes": "XS, S, M, L",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050448_a749d860-170e-410f-a27f-f9a8de813d3c.png",
-            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042510_0990a3e2-c389-455a-9b52-ffb0466560d7.png",
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050448_a749d860-170e-410f-a27f-f9a8de813d3c_min.webp",
+            "hover_image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_042510_0990a3e2-c389-455a-9b52-ffb0466560d7_min.webp",
             "description": "<p>Sample product for testing the hover close-up. Hover to reveal the second image.</p>"
           }
         }
