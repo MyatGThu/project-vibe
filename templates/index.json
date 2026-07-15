@@ -1,16 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "landing3d": {
       "type": "landing-3d",
-      "settings": {
-        "eyebrow": "Te Amo — the house",
-        "heading": "Couture, rendered.",
-        "subtext": "One muse, Melina — and three worlds: the gym, the water, the evening. Scroll in.",
-        "cta_text": "Step inside",
-        "cta_link": "shopify://collections/all",
-        "scroll_label": "Come closer",
-        "bg_image_url": ""
-      },
       "blocks": {
         "l1": {
           "type": "look",
@@ -98,10 +98,47 @@
         "l7",
         "l8",
         "l9"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Te Amo — the house",
+        "heading": "Couture, rendered.",
+        "subtext": "One muse, Melina — and three worlds: the gym, the water, the evening. Scroll in.",
+        "cta_text": "Step inside",
+        "cta_link": "shopify://collections/all",
+        "scroll_label": "Come closer",
+        "bg_image_url": ""
+      }
     },
     "cat_gym": {
       "type": "category-showcase",
+      "blocks": {
+        "pl1": {
+          "type": "plate",
+          "settings": {
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png",
+            "caption": "The Forge Legging"
+          }
+        },
+        "pl2": {
+          "type": "plate",
+          "settings": {
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png",
+            "caption": "The Power Bra"
+          }
+        },
+        "pl3": {
+          "type": "plate",
+          "settings": {
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png",
+            "caption": "The Strength Tank"
+          }
+        }
+      },
+      "block_order": [
+        "pl1",
+        "pl2",
+        "pl3"
+      ],
       "settings": {
         "theme": "gym",
         "eyebrow": "The Gym Edit",
@@ -109,34 +146,38 @@
         "subtext": "Sculpted seams and matte power fabric, cut in red and black. Worn by Melina, made for you.",
         "cta_text": "Enter the gym",
         "cta_link": "shopify://pages/gym-wear"
-      },
+      }
+    },
+    "cat_swim": {
+      "type": "category-showcase",
       "blocks": {
         "pl1": {
           "type": "plate",
           "settings": {
-            "caption": "The Forge Legging",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4.png"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png",
+            "caption": "The Riviera One-Piece"
           }
         },
         "pl2": {
           "type": "plate",
           "settings": {
-            "caption": "The Power Bra",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33.png"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png",
+            "caption": "The Solstice Bikini"
           }
         },
         "pl3": {
           "type": "plate",
           "settings": {
-            "caption": "The Strength Tank",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc.png"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195.png",
+            "caption": "The Lido Wrap"
           }
         }
       },
-      "block_order": ["pl1", "pl2", "pl3"]
-    },
-    "cat_swim": {
-      "type": "category-showcase",
+      "block_order": [
+        "pl1",
+        "pl2",
+        "pl3"
+      ],
       "settings": {
         "theme": "swim",
         "eyebrow": "The Swim Edit",
@@ -144,74 +185,49 @@
         "subtext": "Sunfast azure and sunflower yellow, shaped to stay put when you dive. Worn by Melina, made for you.",
         "cta_text": "Enter the water",
         "cta_link": "shopify://pages/swimwear"
-      },
+      }
+    },
+    "cat_dress": {
+      "type": "category-showcase",
       "blocks": {
         "pl1": {
           "type": "plate",
           "settings": {
-            "caption": "The Riviera One-Piece",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59.png"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png",
+            "caption": "The Monolith Coat"
           }
         },
         "pl2": {
           "type": "plate",
           "settings": {
-            "caption": "The Solstice Bikini",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d.png"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png",
+            "caption": "The Halo Gown"
           }
         },
         "pl3": {
           "type": "plate",
           "settings": {
-            "caption": "The Lido Wrap",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195.png"
+            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png",
+            "caption": "The Null Suit"
           }
         }
       },
-      "block_order": ["pl1", "pl2", "pl3"]
-    },
-    "cat_dress": {
-      "type": "category-showcase",
+      "block_order": [
+        "pl1",
+        "pl2",
+        "pl3"
+      ],
       "settings": {
         "theme": "dress",
         "eyebrow": "The Autumn Capsule",
         "heading": "Dressed for evening.",
         "subtext": "Charcoal wool, oyster satin and bone crepe — the house line, cut close and worn easy. Worn by Melina, made for you.",
         "cta_text": "Enter the house",
-        "cta_link": "shopify://pages/dress-and-jackets"
-      },
-      "blocks": {
-        "pl1": {
-          "type": "plate",
-          "settings": {
-            "caption": "The Monolith Coat",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png"
-          }
-        },
-        "pl2": {
-          "type": "plate",
-          "settings": {
-            "caption": "The Halo Gown",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png"
-          }
-        },
-        "pl3": {
-          "type": "plate",
-          "settings": {
-            "caption": "The Null Suit",
-            "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e.png"
-          }
-        }
-      },
-      "block_order": ["pl1", "pl2", "pl3"]
+        "cta_link": "shopify://pages/dress"
+      }
     },
     "lookbook": {
       "type": "lookbook",
-      "settings": {
-        "eyebrow": "The campaign",
-        "heading": "Worn by Melina",
-        "subtext": "Across the house — the gym, the water, the evening. Every image is generated, and we say so, every time."
-      },
       "blocks": {
         "s1": {
           "type": "slide",
@@ -264,7 +280,19 @@
           }
         }
       },
-      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ],
+      "settings": {
+        "eyebrow": "The campaign",
+        "heading": "Worn by Melina",
+        "subtext": "Across the house — the gym, the water, the evening. Every image is generated, and we say so, every time."
+      }
     },
     "manifesto": {
       "type": "manifesto",
