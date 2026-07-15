@@ -225,6 +225,33 @@
       }
     }
 
+    /* ---- meech213-style scroll gallery: parallax columns + scroll-velocity warp + clip reveal.
+           Columns drift at their own rate; Lenis velocity skews/scales/blurs the photos into a
+           "liquid" smear that settles when the scroll stops; each figure clip-reveals on enter. ---- */
+    var gallery = document.querySelector('[data-gallery]');
+    if (gallery) {
+      // Clip reveal (also on touch — a gentle enhance; reduced-motion CSS keeps images visible).
+      gsap.utils.toArray('[data-gallery] .gallery__fig').forEach(function (fig) {
+        ScrollTrigger.create({ trigger: fig, start: 'top 90%', once: true, onEnter: function () { fig.classList.add('is-in'); } });
+      });
+      if (!noScrollFX) {
+        // Parallax: each column drifts at its own speed as the gallery crosses the viewport.
+        gsap.utils.toArray('[data-gallery] [data-gallery-col]').forEach(function (col, i) {
+          var to = [80, -60, 46][i % 3];
+          gsap.fromTo(col, { y: 0 }, { y: to, ease: 'none', scrollTrigger: { trigger: gallery, start: 'top bottom', end: 'bottom top', scrub: 0.7 } });
+        });
+        // Scroll-velocity warp: skew/scale/blur driven by Lenis velocity, easing back to rest on stop.
+        if (window.__lenis && window.__lenis.on) {
+          window.__lenis.on('scroll', function (e) {
+            var v = e.velocity || 0;
+            gallery.style.setProperty('--g-skew', Math.max(-5, Math.min(5, v * 0.22)).toFixed(2) + 'deg');
+            gallery.style.setProperty('--g-scale', (1 + Math.min(0.05, Math.abs(v) * 0.0016)).toFixed(3));
+            gallery.style.setProperty('--g-blur', Math.min(3.5, Math.abs(v) * 0.1).toFixed(2) + 'px');
+          });
+        }
+      }
+    }
+
     /* ---- Three-worlds shader dissolve (overdrive signature moment) ----
        A fixed WebGL backdrop behind the Gym/Swim/Dress showcase panels. As the viewport
        crosses the three worlds their palettes melt into one another on the GPU with a slow
