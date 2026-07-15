@@ -1,161 +1,192 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1020" font-family="Helvetica Neue, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 1000" font-family="Helvetica Neue, Arial, sans-serif">
 <style>
- .edge{fill:#fff;stroke:#161616;stroke-width:2.1;stroke-linejoin:round;}
+ .edge{fill:#fff;stroke:#161616;stroke-width:2.1;stroke-linejoin:round;stroke-linecap:round;}
  .seam{fill:none;stroke:#161616;stroke-width:1.3;}
+ .seam2{fill:none;stroke:#161616;stroke-width:1;}
  .stitch{fill:none;stroke:#161616;stroke-width:1;stroke-dasharray:5 3;}
  .crease{fill:none;stroke:#9a9a9a;stroke-width:1;stroke-dasharray:9 3 2 3;}
  .hem{fill:none;stroke:#a6a6a6;stroke-width:1;stroke-dasharray:3 3;}
+ .bar{fill:#161616;}
  .lead{stroke:#b23a3a;stroke-width:0.9;fill:none;}
- .dot{fill:#b23a3a;} .bar{fill:#161616;}
- .t{fill:#1f1f1f;font-size:11px;} .tb{fill:#111;font-size:11px;font-weight:600;}
+ .mrk{fill:#161616;stroke:#fcfbf9;stroke-width:1.3;}
+ .mlet{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle;}
  .cap{fill:#555;font-size:12px;letter-spacing:.18em;}
- .h1{fill:#111;font-size:22px;font-weight:600;} .sub{fill:#666;font-size:12px;}
+ .h1{fill:#111;font-size:22px;font-weight:600;}
+ .sub{fill:#666;font-size:12px;}
  .note{fill:#444;font-size:10.5px;} .warn{fill:#b23a3a;font-size:11px;font-weight:600;}
+ .sec{fill:#111;font-size:12px;font-weight:700;letter-spacing:.06em;}
+ .klet{fill:#b23a3a;font-size:11px;font-weight:700;}
+ .ktit{fill:#111;font-size:11px;font-weight:600;}
+ .ktxt{fill:#555;font-size:10px;}
  .mkey{fill:#111;font-size:10.5px;font-weight:600;} .mval{fill:#333;font-size:10.5px;}
+ .mrev{fill:#b23a3a;font-size:10.5px;font-weight:600;}
+ .lval{fill:#333;font-size:10.5px;}
 </style>
-<rect x="0" y="0" width="1400" height="1020" fill="#fcfbf9"/>
+<rect x="0" y="0" width="1480" height="1000" fill="#fcfbf9"/>
+
+<!-- ============ HEADER ============ -->
 <text x="60" y="48" class="h1">THE OBSIDIAN TROUSER — TECHNICAL FLAT</text>
 <text x="60" y="70" class="sub">Style TR-001 · Autumn Capsule 01 · Womenswear high-waist WIDE-LEG · Base size S · Colourway Obsidian · Flat v02</text>
-<line x1="60" y1="86" x2="1340" y2="86" stroke="#161616" stroke-width="1"/>
-<text x="60" y="106" class="warn">DRAFT — not to scale, not graded. Proportion + detail intent for quote/proto only. A patternmaker must validate &amp; grade before pattern cutting (workbook sheet 08).</text>
+<line x1="60" y1="86" x2="1420" y2="86" stroke="#161616" stroke-width="1"/>
+<text x="60" y="106" class="warn">DRAFT — not to scale, not graded. Communicates design intent + construction from sheets 01/03/04. A patternmaker must validate &amp; grade before pattern cutting (sheet 08).</text>
 
 <!-- ============ FRONT ============ -->
 <g>
-<path class="edge" d="M 262 150 L 418 150 C 432 175, 441 220, 440 272 L 436 740 L 350 740 L 340 362 L 330 740 L 244 740 L 240 272 C 239 220, 248 175, 262 150 Z"/>
-<!-- waistband seam -->
-<path class="seam" d="M 244 184 L 436 184"/>
-<!-- belt loops (5) straddling waistband -->
-<rect class="edge" x="265" y="147" width="7" height="41"/>
-<rect class="edge" x="305" y="147" width="7" height="41"/>
-<rect class="edge" x="336" y="147" width="7" height="41"/>
-<rect class="edge" x="372" y="147" width="7" height="41"/>
-<rect class="edge" x="412" y="147" width="7" height="41"/>
-<!-- fly: left-over-right J-stitch -->
-<path class="stitch" d="M 349 188 L 349 320 C 349 340, 336 344, 327 340"/>
-<rect class="bar" x="323" y="337" width="7" height="3"/>
-<!-- slant front pockets -->
-<path class="seam" d="M 268 196 L 306 258"/>
-<path class="seam" d="M 412 196 L 374 258"/>
-<rect class="bar" x="265" y="194.5" width="6" height="3"/>
-<rect class="bar" x="303" y="256" width="6" height="3"/>
-<rect class="bar" x="409" y="194.5" width="6" height="3"/>
-<rect class="bar" x="371" y="256" width="6" height="3"/>
-<!-- pressed leg creases -->
-<path class="crease" d="M 288 292 L 288 730"/>
-<path class="crease" d="M 392 292 L 392 730"/>
-<!-- hem folds -->
-<path class="hem" d="M 244 716 L 330 716"/>
-<path class="hem" d="M 350 716 L 436 716"/>
-<text x="340" y="774" text-anchor="middle" class="cap">FRONT</text>
+ <path class="edge" d="M 250 196 L 452 196 C 468 210 478 252 478 306 L 502 852 L 368 852 C 364 620 358 470 351 375 C 344 470 338 620 334 852 L 198 852 L 220 306 C 220 252 232 210 250 196 Z"/>
+ <path class="seam" d="M 250 230 L 452 230"/>
+ <!-- fly: J-stitch, left-over-right -->
+ <path class="stitch" d="M 358 232 L 358 352 C 358 368 346 372 337 368"/>
+ <rect class="bar" x="333" y="365" width="7" height="3"/>
+ <path class="seam2" d="M 351 352 L 351 375"/>
+ <!-- slant pockets + bartacks -->
+ <path class="seam" d="M 252 252 L 298 330"/>
+ <path class="seam" d="M 450 252 L 404 330"/>
+ <rect class="bar" x="249" y="250" width="6" height="3"/>
+ <rect class="bar" x="295" y="328" width="6" height="3"/>
+ <rect class="bar" x="447" y="250" width="6" height="3"/>
+ <rect class="bar" x="401" y="328" width="6" height="3"/>
+ <!-- pressed creases (one per leg) -->
+ <path class="crease" d="M 274 312 L 266 844"/>
+ <path class="crease" d="M 426 312 L 434 844"/>
+ <!-- hem folds -->
+ <path class="hem" d="M 198 826 L 334 826"/>
+ <path class="hem" d="M 368 826 L 502 826"/>
+ <text x="350" y="888" text-anchor="middle" class="cap">FRONT</text>
 </g>
 
 <!-- ============ BACK ============ -->
 <g>
-<path class="edge" d="M 622 150 L 778 150 C 792 175, 801 220, 800 272 L 796 740 L 710 740 L 700 362 L 690 740 L 604 740 L 600 272 C 599 220, 608 175, 622 150 Z"/>
-<path class="seam" d="M 604 184 L 796 184"/>
-<!-- centre-back seam (let-out) -->
-<path class="seam" d="M 700 152 L 700 362"/>
-<path class="stitch" d="M 706 186 L 706 356"/>
-<!-- back darts (2 each side of CB) -->
-<path class="seam" d="M 662 186 L 666 214 L 670 186"/>
-<path class="seam" d="M 738 186 L 734 214 L 730 186"/>
-<!-- centre-back belt loop -->
-<rect class="edge" x="696" y="147" width="7" height="41"/>
-<rect class="edge" x="640" y="147" width="7" height="41"/>
-<rect class="edge" x="753" y="147" width="7" height="41"/>
-<!-- pressed creases -->
-<path class="crease" d="M 648 292 L 648 730"/>
-<path class="crease" d="M 752 292 L 752 730"/>
-<!-- hem folds -->
-<path class="hem" d="M 604 716 L 690 716"/>
-<path class="hem" d="M 710 716 L 796 716"/>
-<text x="700" y="774" text-anchor="middle" class="cap">BACK</text>
+ <path class="edge" d="M 580 196 L 782 196 C 798 210 808 252 808 306 L 832 852 L 698 852 C 694 620 688 470 681 375 C 674 470 668 620 664 852 L 528 852 L 550 306 C 550 252 562 210 580 196 Z"/>
+ <path class="seam" d="M 580 230 L 782 230"/>
+ <!-- centre-back seam: double-stitched through curve -->
+ <path class="seam" d="M 681 198 L 681 375"/>
+ <path class="stitch" d="M 687 232 L 687 368"/>
+ <!-- back waist darts (2 per side) -->
+ <path class="seam2" d="M 611 232 L 617 300 L 623 232"/>
+ <path class="seam2" d="M 641 232 L 646 296 L 651 232"/>
+ <path class="seam2" d="M 711 232 L 716 296 L 721 232"/>
+ <path class="seam2" d="M 739 232 L 745 300 L 751 232"/>
+ <!-- waistband curtain / brand label at CB (inside) -->
+ <rect x="669" y="210" width="24" height="12" fill="none" stroke="#9a9a9a" stroke-width="1"/>
+ <!-- creases -->
+ <path class="crease" d="M 604 312 L 596 844"/>
+ <path class="crease" d="M 755 312 L 765 844"/>
+ <path class="hem" d="M 528 826 L 664 826"/>
+ <path class="hem" d="M 698 826 L 832 826"/>
+ <text x="681" y="888" text-anchor="middle" class="cap">BACK</text>
 </g>
 
-<!-- ============ FRONT CALLOUTS (left column) ============ -->
-<path class="lead" d="M 336 167 L 222 158"/><circle class="dot" cx="336" cy="167" r="2.2"/>
-<text x="215" y="150" text-anchor="end" class="tb">Waistband — 4 cm, curtained</text>
-<text x="215" y="163" text-anchor="end" class="t">concealed hook &amp; bar + button;</text>
-<text x="215" y="176" text-anchor="end" class="t">5 belt loops for the belt (POM 11)</text>
+<!-- ============ CALLOUT MARKERS ============ -->
+<!-- FRONT left markers -->
+<g><line class="lead" x1="196" y1="212" x2="250" y2="212"/><circle class="mrk" cx="186" cy="212" r="9.5"/><text class="mlet" x="186" y="215.8">A</text></g>
+<g><line class="lead" x1="196" y1="300" x2="276" y2="300"/><circle class="mrk" cx="186" cy="300" r="9.5"/><text class="mlet" x="186" y="303.8">C</text></g>
+<g><line class="lead" x1="196" y1="470" x2="272" y2="470"/><circle class="mrk" cx="186" cy="470" r="9.5"/><text class="mlet" x="186" y="473.8">D</text></g>
+<g><line class="lead" x1="196" y1="690" x2="206" y2="690"/><circle class="mrk" cx="186" cy="690" r="9.5"/><text class="mlet" x="186" y="693.8">E</text></g>
+<g><line class="lead" x1="196" y1="826" x2="266" y2="826"/><circle class="mrk" cx="186" cy="826" r="9.5"/><text class="mlet" x="186" y="829.8">G</text></g>
+<!-- FRONT right-of-view markers -->
+<g><line class="lead" x1="522" y1="300" x2="360" y2="300"/><circle class="mrk" cx="532" cy="300" r="9.5"/><text class="mlet" x="532" y="303.8">B</text></g>
+<g><line class="lead" x1="522" y1="620" x2="360" y2="620"/><circle class="mrk" cx="532" cy="620" r="9.5"/><text class="mlet" x="532" y="623.8">F</text></g>
+<!-- BACK right markers -->
+<g><line class="lead" x1="846" y1="216" x2="693" y2="216"/><circle class="mrk" cx="856" cy="216" r="9.5"/><text class="mlet" x="856" y="219.8">H</text></g>
+<g><line class="lead" x1="846" y1="270" x2="716" y2="270"/><circle class="mrk" cx="856" cy="270" r="9.5"/><text class="mlet" x="856" y="273.8">K</text></g>
+<g><line class="lead" x1="846" y1="360" x2="687" y2="360"/><circle class="mrk" cx="856" cy="360" r="9.5"/><text class="mlet" x="856" y="363.8">I</text></g>
+<g><line class="lead" x1="846" y1="470" x2="762" y2="470"/><circle class="mrk" cx="856" cy="470" r="9.5"/><text class="mlet" x="856" y="473.8">J</text></g>
 
-<path class="lead" d="M 288 240 L 222 244"/><circle class="dot" cx="288" cy="240" r="2.2"/>
-<text x="215" y="240" text-anchor="end" class="tb">Slant front pocket</text>
-<text x="215" y="253" text-anchor="end" class="t">understitched bag; bartacked (Con 5)</text>
+<!-- ============ CALLOUT KEY (column 1) ============ -->
+<text x="912" y="150" class="sec">CALLOUT KEY</text>
+<line x1="912" y1="160" x2="1180" y2="160" stroke="#ddd" stroke-width="1"/>
+<g>
+ <text x="912" y="184" class="klet">A</text><text x="934" y="184" class="ktit">Waistband — 4 cm (POM 11)</text>
+ <text x="934" y="198" class="ktxt">Concealed hook &amp; bar + interior button (Con 7)</text>
 
-<path class="lead" d="M 349 300 L 222 320"/><circle class="dot" cx="349" cy="300" r="2.2"/>
-<text x="215" y="316" text-anchor="end" class="tb">Fly — left-over-right</text>
-<text x="215" y="329" text-anchor="end" class="t">J-topstitch 6 mm, bartack at base;</text>
-<text x="215" y="342" text-anchor="end" class="t">fly length 16 cm (POM 12)</text>
+ <text x="912" y="225" class="klet">B</text><text x="934" y="225" class="ktit">Fly — left-over-right</text>
+ <text x="934" y="239" class="ktxt">J-stitch 6 mm, bartack base · fly 15 cm (POM 12)</text>
 
-<path class="lead" d="M 288 470 L 222 452"/><circle class="dot" cx="288" cy="470" r="2.2"/>
-<text x="215" y="448" text-anchor="end" class="tb">Pressed front crease</text>
-<text x="215" y="461" text-anchor="end" class="t">centred, hard-pressed; no shine (Con 11)</text>
+ <text x="912" y="266" class="klet">C</text><text x="934" y="266" class="ktit">Slant front pocket</text>
+ <text x="934" y="280" class="ktxt">Cotton bag, understitched, bartack ends (Con 5)</text>
 
-<path class="lead" d="M 262 700 L 222 604"/><circle class="dot" cx="262" cy="700" r="2.2"/>
-<text x="215" y="600" text-anchor="end" class="tb">Wide-leg column</text>
-<text x="215" y="613" text-anchor="end" class="t">hangs straight, full from hip;</text>
-<text x="215" y="626" text-anchor="end" class="t">leg opening 27 cm ½ (POM 8)</text>
+ <text x="912" y="307" class="klet">D</text><text x="934" y="307" class="ktit">Pressed front crease</text>
+ <text x="934" y="321" class="ktxt">Set sharp; use press cloth — wool shines (Con 11)</text>
 
-<path class="lead" d="M 300 716 L 222 690"/><circle class="dot" cx="300" cy="716" r="2.2"/>
-<text x="215" y="686" text-anchor="end" class="tb">Blind hem, 5 cm allowance</text>
-<text x="215" y="699" text-anchor="end" class="t">invisible on face; even break (Con 9)</text>
+ <text x="912" y="348" class="klet">E</text><text x="934" y="348" class="ktit">Side seam — pressed OPEN</text>
+ <text x="934" y="362" class="ktxt">Plain seam, edges overlocked separately (Con 2)</text>
 
-<!-- ============ BACK CALLOUTS (right column) ============ -->
-<path class="lead" d="M 715 168 L 850 150"/><circle class="dot" cx="715" cy="168" r="2.2"/>
-<text x="858" y="146" text-anchor="start" class="tb">Centre-back belt loop</text>
-<text x="858" y="159" text-anchor="start" class="t">aligns to CB seam; matched height to fronts</text>
+ <text x="912" y="389" class="klet">F</text><text x="934" y="389" class="ktit">Inseam — pressed open</text>
+ <text x="934" y="403" class="ktxt">Plain seam, edges overlocked · 1.0 cm SA (Con 3)</text>
 
-<path class="lead" d="M 700 250 L 850 236"/><circle class="dot" cx="700" cy="250" r="2.2"/>
-<text x="858" y="224" text-anchor="start" class="tb">Centre-back seam</text>
-<text x="858" y="237" text-anchor="start" class="t">double-stitched through curve;</text>
-<text x="858" y="250" text-anchor="start" class="t">leave 1.5 cm SA for let-out — do NOT trim (Con 4)</text>
+ <text x="912" y="430" class="klet">G</text><text x="934" y="430" class="ktit">Blind hem — 4 cm allowance</text>
+ <text x="934" y="444" class="ktxt">Must not show on face; hand finish (Con 9)</text>
 
-<path class="lead" d="M 736 205 L 850 320"/><circle class="dot" cx="736" cy="205" r="2.2"/>
-<text x="858" y="316" text-anchor="start" class="tb">Two back waist darts / side</text>
-<text x="858" y="329" text-anchor="start" class="t">shape seat to waist; pressed toward CB</text>
+ <text x="912" y="471" class="klet">H</text><text x="934" y="471" class="ktit">Waistband curtain + labels (CB)</text>
+ <text x="934" y="485" class="ktxt">Woven brand + size label, inside WB (BOM 9/10)</text>
 
-<path class="lead" d="M 770 360 L 850 404"/><circle class="dot" cx="770" cy="360" r="2.2"/>
-<text x="858" y="400" text-anchor="start" class="tb">No back pockets</text>
-<text x="858" y="413" text-anchor="start" class="t">clean seat — deliberate (design intent)</text>
+ <text x="912" y="512" class="klet">I</text><text x="934" y="512" class="ktit">Centre-back seam</text>
+ <text x="934" y="526" class="ktxt">Double-stitched; 1.5 cm SA, do NOT trim (Con 4)</text>
 
-<path class="lead" d="M 796 520 L 850 488"/><circle class="dot" cx="796" cy="520" r="2.2"/>
-<text x="858" y="484" text-anchor="start" class="tb">Side seam pressed OPEN</text>
-<text x="858" y="497" text-anchor="start" class="t">edges overlocked separately (Con 2)</text>
+ <text x="912" y="553" class="klet">J</text><text x="934" y="553" class="ktit">No back pockets</text>
+ <text x="934" y="567" class="ktxt">Clean back by design intent (sheet 01)</text>
 
-<!-- ============ LEGEND ============ -->
-<text x="1140" y="150" class="mkey">LEGEND</text>
-<line x1="1140" y1="168" x2="1174" y2="168" class="edge"/><text x="1184" y="172" class="mval">cut edge / seam</text>
-<line x1="1140" y1="188" x2="1174" y2="188" class="stitch"/><text x="1184" y="192" class="mval">topstitch line</text>
-<line x1="1140" y1="208" x2="1174" y2="208" class="crease"/><text x="1184" y="212" class="mval">pressed crease / fold</text>
-<line x1="1140" y1="228" x2="1174" y2="228" class="hem"/><text x="1184" y="232" class="mval">hem fold</text>
-<rect class="bar" x="1140" y="244" width="10" height="4"/><text x="1184" y="252" class="mval">bartack</text>
+ <text x="912" y="594" class="klet">K</text><text x="934" y="594" class="ktit">Back waist darts — 2 per side</text>
+ <text x="934" y="608" class="ktxt">Take the waist→hip drop; front clean, no pleats</text>
+</g>
 
-<!-- ============ KEY MEASURES ============ -->
-<text x="1140" y="292" class="mkey">KEY MEASURES — size S (cm, ½ unless noted)</text>
-<text x="1140" y="314" class="mkey">1 · Waist relaxed</text><text x="1368" y="314" text-anchor="end" class="mval">34.0</text>
-<text x="1140" y="332" class="mkey">2 · High hip</text><text x="1368" y="332" text-anchor="end" class="mval">42.0</text>
-<text x="1140" y="350" class="mkey">3 · Hip</text><text x="1368" y="350" text-anchor="end" class="mval">50.0</text>
-<text x="1140" y="368" class="mkey">4 · Front rise</text><text x="1368" y="368" text-anchor="end" class="mval">27.5</text>
-<text x="1140" y="386" class="mkey">5 · Back rise</text><text x="1368" y="386" text-anchor="end" class="mval">37.0</text>
-<text x="1140" y="404" class="mkey">6 · Thigh</text><text x="1368" y="404" text-anchor="end" class="mval">32.0</text>
-<text x="1140" y="422" class="mkey">7 · Knee</text><text x="1368" y="422" text-anchor="end" class="mval">28.0</text>
-<text x="1140" y="440" class="mkey">8 · Leg opening</text><text x="1368" y="440" text-anchor="end" class="mval">27.0</text>
-<text x="1140" y="458" class="mkey">9 · Inseam (full)</text><text x="1368" y="458" text-anchor="end" class="mval">76.0</text>
-<text x="1140" y="476" class="mkey">10 · Outseam (full)</text><text x="1368" y="476" text-anchor="end" class="mval">106.0</text>
-<text x="1140" y="494" class="mkey">11 · Waistband ht</text><text x="1368" y="494" text-anchor="end" class="mval">4.0</text>
-<text x="1140" y="512" class="mkey">12 · Fly length</text><text x="1368" y="512" text-anchor="end" class="mval">16.0</text>
+<!-- ============ LINE KEY + MEASURES + FABRIC (column 2) ============ -->
+<text x="1240" y="150" class="sec">LINE KEY</text>
+<line x1="1240" y1="160" x2="1440" y2="160" stroke="#ddd" stroke-width="1"/>
+<line x1="1240" y1="180" x2="1276" y2="180" class="edge"/><text x="1286" y="184" class="lval">cut edge / seam</text>
+<line x1="1240" y1="200" x2="1276" y2="200" class="stitch"/><text x="1286" y="204" class="lval">topstitch line</text>
+<line x1="1240" y1="220" x2="1276" y2="220" class="crease"/><text x="1286" y="224" class="lval">pressed crease / fold</text>
+<line x1="1240" y1="240" x2="1276" y2="240" class="hem"/><text x="1286" y="244" class="lval">hem fold</text>
+<rect class="bar" x="1240" y="256" width="10" height="4"/><text x="1286" y="264" class="lval">bartack</text>
 
-<!-- ============ FABRIC / COLOUR ============ -->
-<text x="1140" y="552" class="mkey">FABRIC / COLOUR / TRIM</text>
-<text x="1140" y="572" class="note">Shell: wool-blend suiting, matte, mech. stretch</text>
-<text x="1140" y="588" class="note">62 / 34 / 4 Wool / Poly / Elastane · 250–270 gsm</text>
-<text x="1140" y="604" class="note">Obsidian — Pantone 19-4007 TCX, no sheen</text>
-<text x="1140" y="620" class="note">Pocketing: Bone cupro (contrast, deliberate)</text>
-<text x="1140" y="636" class="note">Belt: slim leather, gunmetal buckle, 2.5 cm</text>
-<text x="1140" y="652" class="note">Thread: tonal core-spun Tex 40</text>
+<text x="1240" y="300" class="sec">KEY MEASURES</text>
+<text x="1240" y="316" class="ktxt">size S · cm · ½ unless noted</text>
+<line x1="1240" y1="326" x2="1440" y2="326" stroke="#ddd" stroke-width="1"/>
+<g>
+ <text x="1240" y="346" class="mkey">Waist relaxed</text><text x="1440" y="346" text-anchor="end" class="mval">34.0</text>
+ <text x="1240" y="364" class="mkey">High hip</text><text x="1440" y="364" text-anchor="end" class="mval">42.0</text>
+ <text x="1240" y="382" class="mkey">Hip</text><text x="1440" y="382" text-anchor="end" class="mval">48.8</text>
+ <text x="1240" y="400" class="mkey">Front rise</text><text x="1440" y="400" text-anchor="end" class="mval">27.1</text>
+ <text x="1240" y="418" class="mkey">Back rise</text><text x="1440" y="418" text-anchor="end" class="mval">36.6</text>
+ <text x="1240" y="436" class="mkey">Thigh</text><text x="1440" y="436" text-anchor="end" class="mval">29.8</text>
+ <text x="1240" y="454" class="mkey">Knee ▲</text><text x="1440" y="454" text-anchor="end" class="mrev">26.5</text>
+ <text x="1240" y="472" class="mkey">Leg opening ▲</text><text x="1440" y="472" text-anchor="end" class="mrev">28.0</text>
+ <text x="1240" y="490" class="mkey">Inseam (full)</text><text x="1440" y="490" text-anchor="end" class="mval">78.0</text>
+ <text x="1240" y="508" class="mkey">Outseam (full)</text><text x="1440" y="508" text-anchor="end" class="mval">105.1</text>
+ <text x="1240" y="526" class="mkey">Waistband height</text><text x="1440" y="526" text-anchor="end" class="mval">4.0</text>
+ <text x="1240" y="544" class="mkey">Fly length</text><text x="1440" y="544" text-anchor="end" class="mval">15.0</text>
+</g>
+<text x="1240" y="564" class="mrev">▲ wide-leg target (supersedes v01 taper)</text>
 
-<line x1="60" y1="900" x2="1340" y2="900" stroke="#ddd" stroke-width="1"/>
-<text x="60" y="928" class="note">Belt loops CONFIRMED (v02): the leather belt is part of the look, so the waistband carries 5 loops — supersedes the "no loops" query on flat v01.</text>
-<text x="60" y="947" class="note">Wide-leg silhouette per storefront ("moves like a skirt"): straight full leg from the hip, not tapered. Leg opening widened to 27 cm ½ vs. 19.8 on v01.</text>
-<text x="60" y="966" class="note">Grade rules, seam allowances &amp; true proportions live in the workbook (sheet 03 POM, 04 CONSTRUCTION). This drawing is the visual key to them, not a substitute.</text>
+<text x="1240" y="602" class="sec">FABRIC / COLOUR</text>
+<line x1="1240" y1="612" x2="1440" y2="612" stroke="#ddd" stroke-width="1"/>
+<text x="1240" y="632" class="note">Wool-blend suiting, matte, mech. stretch</text>
+<text x="1240" y="648" class="note">62/34/4 Wool/Poly/Elastane · 250–270 gsm</text>
+<text x="1240" y="664" class="note">Obsidian — Pantone 19-4007 TCX, no sheen</text>
+<text x="1240" y="680" class="note">Pocketing: Bone (contrast, deliberate)</text>
+
+<text x="1240" y="720" class="sec">NOTES</text>
+<line x1="1240" y1="730" x2="1440" y2="730" stroke="#ddd" stroke-width="1"/>
+<text x="1240" y="750" class="note">Back darts (2 per side) take the</text>
+<text x="1240" y="766" class="note">waist→hip drop; front clean (no pleats).</text>
+<text x="1240" y="786" class="note">Belt: showcase styles a leather belt, but</text>
+<text x="1240" y="802" class="note">waistband is concealed hook &amp; bar, no</text>
+<text x="1240" y="818" class="note">loops by intent — confirm loops vs none.</text>
+<text x="1240" y="838" class="note">Grade &amp; true proportions live in the</text>
+<text x="1240" y="854" class="note">workbook (03 POM, 04 CONSTRUCTION).</text>
+
+<!-- ============ SHOWCASE REFERENCE ============ -->
+<text x="912" y="640" class="sec">SHOWCASE REFERENCE</text>
+<text x="912" y="655" class="ktxt">AI render (openly disclosed) — the look this flat is drawn to</text>
+<rect x="912" y="666" width="146" height="186" fill="#f1efea" stroke="#161616" stroke-width="1.2"/>
+<text x="985" y="762" text-anchor="middle" class="ktxt" fill="#b0a99e">image loads online</text>
+<image x="913" y="667" width="144" height="184" preserveAspectRatio="xMidYMid slice" href="https://cdn.shopify.com/s/files/1/0726/0468/0275/files/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png?v=1783954169"/>
+<rect x="912" y="666" width="146" height="186" fill="none" stroke="#161616" stroke-width="1.2"/>
+<text x="1070" y="686" class="ktit">The Obsidian Trouser</text>
+<text x="1070" y="702" class="ktxt">$580 · Autumn Capsule</text>
+<text x="1070" y="717" class="ktxt">High-waist · wide-leg</text>
+
+<!-- ============ FOOTER ============ -->
+<line x1="60" y1="914" x2="1420" y2="914" stroke="#ddd" stroke-width="1"/>
+<text x="60" y="936" class="warn">SILHOUETTE NOTE — Drawn WIDE-LEG to match the showcase. The v01 workbook POM (knee 22.6 / leg opening 19.8, ½) is a TAPERED leg; the ▲ values above are the wide-leg target. Confirm on the toile before grading.</text>
 </svg>

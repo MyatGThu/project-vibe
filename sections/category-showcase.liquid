@@ -40,7 +40,7 @@
             assign depth = plate_depths[didx] | default: 0.24
           -%}
           <figure class="cshow__plate cshow__plate--{{ pi }}" data-cshow-par="{{ depth }}" {{ block.shopify_attributes }}>
-            <img src="{{ src }}" alt="{{ block.settings.caption | escape }}" loading="lazy" decoding="async" width="900" height="1200">
+            <img src="{{ src }}" alt="{{ block.settings.alt | default: block.settings.caption | escape }}" loading="lazy" decoding="async" width="900" height="1200">
             {%- if block.settings.caption != blank -%}<figcaption>{{ block.settings.caption }}</figcaption>{%- endif -%}
           </figure>
         {%- endif -%}
@@ -81,6 +81,7 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_url", "label": "Image URL (fallback)", "info": "Used until you upload an image." },
+        { "type": "text", "id": "alt", "label": "Alt text (accessibility)", "info": "Describes the image for screen readers and SEO. Falls back to the caption if left blank." },
         { "type": "text", "id": "caption", "label": "Caption" }
       ]
     }

@@ -26,10 +26,11 @@
     <div class="l3d__scene" data-l3d-scene aria-hidden="true">
       {%- for block in section.blocks -%}
         <figure class="l3d__panel" style="--i: {{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          {%- assign look_alt = block.settings.alt | default: block.settings.caption -%}
           {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 1600 | image_tag: widths: '300,480,720', sizes: '24vw', loading: 'lazy', alt: block.settings.caption }}
+            {{ block.settings.image | image_url: width: 1600 | image_tag: widths: '300,480,720', sizes: '24vw', loading: 'lazy', alt: look_alt }}
           {%- elsif block.settings.image_url != blank -%}
-            <img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="lazy">
+            <img src="{{ block.settings.image_url }}" alt="{{ look_alt | escape }}" loading="lazy">
           {%- else -%}
             <img src="{{ 'ph-figure.svg' | asset_url }}" alt="" loading="lazy">
           {%- endif -%}
@@ -77,6 +78,7 @@
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
         { "type": "text", "id": "caption", "label": "Caption" },
+        { "type": "text", "id": "alt", "label": "Alt text (accessibility)", "info": "Describes the image for screen readers and SEO. Falls back to the caption if left blank." },
         { "type": "text", "id": "tag", "label": "Tag" },
         { "type": "checkbox", "id": "upcoming", "label": "Upcoming (tagged, not yet in the store)", "default": false }
       ]
