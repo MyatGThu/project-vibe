@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 1000" font-family="Helvetica Neue, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 1120" font-family="Helvetica Neue, Arial, sans-serif">
 <style>
  .edge{fill:#fff;stroke:#161616;stroke-width:2.1;stroke-linejoin:round;stroke-linecap:round;}
  .seam{fill:none;stroke:#161616;stroke-width:1.3;}
@@ -9,6 +9,11 @@
  .lead{stroke:#b23a3a;stroke-width:0.9;fill:none;}
  .mrk{fill:#161616;stroke:#fcfbf9;stroke-width:1.3;}
  .mlet{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle;}
+ .hlabel{fill:#9a9a9a;font-size:9px;font-weight:700;letter-spacing:.07em;}
+ .hval{fill:#222;font-size:11px;}
+ .cat{fill:#111;font-size:15px;font-weight:700;letter-spacing:.12em;}
+ .brand{fill:#111;font-size:26px;font-weight:700;letter-spacing:.02em;}
+ .gtitle{fill:#111;font-size:15px;font-weight:600;}
  .cap{fill:#555;font-size:12px;letter-spacing:.18em;}
  .h1{fill:#111;font-size:22px;font-weight:600;}
  .sub{fill:#666;font-size:12px;}
@@ -20,13 +25,31 @@
  .mkey{fill:#111;font-size:10.5px;font-weight:600;}
  .lval{fill:#333;font-size:10.5px;}
 </style>
-<rect x="0" y="0" width="1480" height="1000" fill="#fcfbf9"/>
+<rect x="0" y="0" width="1480" height="1120" fill="#fcfbf9"/>
 
-<!-- ============ HEADER ============ -->
-<text x="60" y="48" class="h1">THE INK MAILLOT — TECHNICAL FLAT</text>
-<text x="60" y="70" class="sub">Style SW-001 · Swim / Collection 02 · High-leg one-piece · square plunge neck · open back · Base size S · Colourway Ink · Flat v01</text>
-<line x1="60" y1="86" x2="1420" y2="86" stroke="#161616" stroke-width="1"/>
-<text x="60" y="106" class="warn">DRAFT — not to scale, not graded. Built from the showcase render + swim category requirements (sheet 09). Needs its own workbook (BOM / POM / construction) and a patternmaker's grade before sampling.</text>
+<!-- ============ PRODUCTION HEADER ============ -->
+<text x="60" y="50" class="brand">TE AMO</text>
+<text x="1420" y="36" text-anchor="end" class="cat">SWIMWEAR</text>
+<text x="1420" y="54" text-anchor="end" class="sub">Technical flat · lined knit</text>
+<line x1="60" y1="66" x2="1420" y2="66" stroke="#161616" stroke-width="1"/>
+<text x="60" y="92" class="hlabel">SEASON</text><text x="150" y="92" class="hval">Autumn · Collection 02</text>
+<text x="60" y="110" class="hlabel">STYLE #</text><text x="150" y="110" class="hval">SW-001</text>
+<text x="60" y="128" class="hlabel">BASE SIZE</text><text x="150" y="128" class="hval">S</text>
+<text x="540" y="92" class="hlabel">DESIGNER</text><text x="635" y="92" class="hval">Te Amo Studio</text>
+<text x="540" y="110" class="hlabel">VENDOR</text><text x="635" y="110" class="hval">TBD (pre-sampling)</text>
+<text x="540" y="128" class="hlabel">COLOURWAY</text><text x="635" y="128" class="hval">Ink</text>
+<text x="1000" y="92" class="hlabel">IN-HOUSE</text><text x="1105" y="92" class="hval">2026-07-15</text>
+<text x="1000" y="110" class="hlabel">PROTO DUE</text><text x="1105" y="110" class="hval">TBD</text>
+<text x="1000" y="128" class="hlabel">REFERENCE</text><text x="1105" y="128" class="hval">disclosed AI render</text>
+<line x1="60" y1="142" x2="1420" y2="142" stroke="#ddd" stroke-width="1"/>
+<rect x="60" y="152" width="66" height="18" fill="#fff" stroke="#b23a3a" stroke-width="1"/>
+<text x="93" y="165" text-anchor="middle" fill="#b23a3a" font-size="10" font-weight="700">FABRIC 1</text>
+<text x="138" y="166" fill="#444" font-size="10.5">Chlorine-resistant nylon / elastane (PBT) · 180–210 gsm + power-mesh lining · matte Ink</text>
+<text x="60" y="194" class="gtitle">THE INK MAILLOT — high-leg one-piece · square plunge neck · open back</text>
+<line x1="60" y1="206" x2="1420" y2="206" stroke="#161616" stroke-width="1"/>
+<text x="60" y="226" class="warn">DRAFT — drawn to the showcase render + swim requirements. Elastic tension, wet opacity &amp; chlorine resistance are the build. Specs are size-S TARGETS — confirm on the first proto.</text>
+
+<g transform="translate(0,120)">
 
 <!-- ===================== FRONT ===================== -->
 <g>
@@ -135,20 +158,20 @@
 <line x1="1240" y1="240" x2="1276" y2="240" class="lin"/><text x="1286" y="244" class="lval">lining (power mesh)</text>
 <rect class="bar" x="1240" y="256" width="10" height="4"/><text x="1286" y="264" class="lval">bartack</text>
 
-<text x="1240" y="304" class="sec">KEY POM — build on sample</text>
+<text x="1240" y="304" class="sec">SPECS — SIZE S · cm · TARGET</text>
 <line x1="1240" y1="314" x2="1440" y2="314" stroke="#ddd" stroke-width="1"/>
 <g>
- <text x="1240" y="334" class="mkey">Bust · underbust</text>
- <text x="1240" y="352" class="mkey">Front neck drop (HPS)</text>
- <text x="1240" y="370" class="mkey">Back scoop drop (HPS)</text>
- <text x="1240" y="388" class="mkey">Strap length · shoulder</text>
- <text x="1240" y="406" class="mkey">Waist · high hip</text>
- <text x="1240" y="424" class="mkey">Leg-opening height (rise)</text>
- <text x="1240" y="442" class="mkey">Front / back rise</text>
- <text x="1240" y="460" class="mkey">Girth (HPS–gusset–HPS)</text>
- <text x="1240" y="478" class="mkey">Gusset width</text>
- <text x="1240" y="500" class="ktxt">Values TBD — measure relaxed AND</text>
- <text x="1240" y="515" class="ktxt">stretched; swim fit lives in stretch.</text>
+ <text x="1240" y="334" class="mkey">Bust · underbust</text><text x="1440" y="334" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">82 · 68</text>
+ <text x="1240" y="352" class="mkey">Front neck drop (HPS)</text><text x="1440" y="352" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">22</text>
+ <text x="1240" y="370" class="mkey">Back scoop drop (HPS)</text><text x="1440" y="370" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">32</text>
+ <text x="1240" y="388" class="mkey">Strap length · shoulder</text><text x="1440" y="388" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">30</text>
+ <text x="1240" y="406" class="mkey">Waist · high hip</text><text x="1440" y="406" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">64 · 78</text>
+ <text x="1240" y="424" class="mkey">Leg-opening height (rise)</text><text x="1440" y="424" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">24</text>
+ <text x="1240" y="442" class="mkey">Front / back rise</text><text x="1440" y="442" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">26 / 34</text>
+ <text x="1240" y="460" class="mkey">Girth (HPS–gusset–HPS)</text><text x="1440" y="460" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">138</text>
+ <text x="1240" y="478" class="mkey">Gusset width</text><text x="1440" y="478" text-anchor="end" fill="#111" font-size="10.5" font-weight="700">8</text>
+ <text x="1240" y="500" class="ktxt">Full girths, cm. Target for size S —</text>
+ <text x="1240" y="515" class="ktxt">measure proto relaxed AND stretched.</text>
 </g>
 
 <text x="1240" y="556" class="sec">FABRIC / SPEC</text>
@@ -175,4 +198,5 @@
 <line x1="60" y1="914" x2="1420" y2="914" stroke="#ddd" stroke-width="1"/>
 <text x="60" y="936" class="warn">CATEGORY NOTE — Swim is a specialist supply chain (sheet 09): very few factories do it well. Elastic tension, wet opacity and chlorine resistance are the whole job — a render cannot specify them.</text>
 <text x="60" y="954" class="note">No metal hardware on this style (integral straps) — so no corrosion risk here, but verify on any future clasp/ring variant. Values on this sheet are intent, not a graded spec.</text>
+</g>
 </svg>

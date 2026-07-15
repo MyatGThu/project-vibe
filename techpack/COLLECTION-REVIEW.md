@@ -93,6 +93,11 @@ v02 supersedes it. `AW-001_ContourSet_flat_v01.svg` (the cut-and-sew draft, draw
 Forge-Legging and Power-Bra prompts) is likewise kept for history — **v02 supersedes it**, redrawn
 seamless to the Contour Set's own render.
 
+**Format (all three flats).** Each now carries a **production header block** (season · style # · base
+size · designer · vendor · colourway · in-house / proto-due dates · reference · fabric tag · garment
+title) and a **filled size-S target spec table** (POMs in cm), matching a standard proto sheet.
+The measurements are **size-S targets to confirm and grade on the first proto**, not a graded spec.
+
 ### Seams & cuts addressed on each flat
 - **Obsidian Trouser** — waistband join, fly (left-over-right J-stitch), slant pockets, **side seam
   pressed open**, **inseam pressed open**, **centre-back seam** (double-stitched, 1.5 cm let-out SA),
@@ -137,7 +142,7 @@ seamless to the Contour Set's own render.
 - **A flat is not a pattern.** All three say DRAFT / not-to-scale / not-graded. A patternmaker must
   validate proportions and grade (sheet 08).
 - **Named fabric or a physical swatch** — a gsm range is a category, not a fabric (sheet 02/08).
-- **POM values** for AW-001 and SW-001, measured on the first proto **relaxed AND stretched**
-  (recovery is the fit for knit/swim).
+- **Proto-measure** AW-001 and SW-001 on the first proto **relaxed AND stretched** (recovery is the
+  fit for knit/swim). They now carry size-S **target** specs — confirm and grade from those.
 - **The brand name** — you cannot print a woven label for a house whose store title is "My Store"
   (sheet 08). This blocks trims across every collection.
