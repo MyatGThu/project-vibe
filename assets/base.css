@@ -761,6 +761,19 @@ section.l3d.is-3d + .shopify-section, section.l3d.is-3d + .section { margin-top:
    palettes above). 3D parallax is a desktop enhancement (motion.js, [data-cshow]);
    the static composition is the honest fallback (no-JS / reduced-motion / mobile).
    ============================================================ */
+/* ---- Three-worlds shader backdrop (overdrive; JS-injected by motion.js, desktop-only) ----
+   A fixed WebGL canvas melts the Gym / Swim / Dress palettes into one another behind the
+   panels. When motion.js activates it (.worlds-active on <body>) the panels go transparent
+   so the shader reads through, and <main> is lifted above the backdrop so every other section
+   still covers it. Without JS / reduced-motion / mobile / no-WebGL the panels keep their own
+   opaque themed backgrounds — nothing changes. */
+.worlds-stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.55s ease; }
+.worlds-stage.is-visible { opacity: 1; }
+.worlds-active main { position: relative; z-index: 1; }
+.worlds-active .cshow { background: transparent; }
+.worlds-active .cshow__glow { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .worlds-stage { display: none; } }
+
 .cshow { position: relative; z-index: 1; isolation: isolate; overflow: hidden; background: var(--bg); color: var(--ink); }
 .cshow__frame {
   position: relative; min-height: 96svh;

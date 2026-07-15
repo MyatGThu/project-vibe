@@ -181,6 +181,110 @@
       });
     }
 
+    /* ---- Three-worlds shader dissolve (overdrive signature moment) ----
+       A fixed WebGL backdrop behind the Gym/Swim/Dress showcase panels. As the viewport
+       crosses the three worlds their palettes melt into one another on the GPU with a slow
+       flow-noise, so the scroll reads as ONE continuous journey rather than three panels.
+       Shares the desktop-only noScrollFX gate; reduced-motion already returned above. Any
+       WebGL failure or <2 panels leaves the per-panel CSS backgrounds untouched (fallback). */
+    (function worldsDissolve() {
+      if (noScrollFX) return;
+      var worlds = gsap.utils.toArray('[data-cshow]');
+      if (worlds.length < 2) return;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'worlds-stage';
+      canvas.setAttribute('aria-hidden', 'true');
+      var gl = null;
+      try {
+        gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' }) ||
+             canvas.getContext('experimental-webgl');
+      } catch (e) {}
+      if (!gl) return;                                   // no WebGL → keep the themed CSS panels
+
+      var VERT = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+      var FRAG = [
+        'precision mediump float;',
+        'uniform vec2 uRes;uniform float uTime;uniform float uProg;',
+        'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        'float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);',
+        'return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),u.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),u.x),u.y);}',
+        'float fbm(vec2 p){return 0.62*noise(p)+0.38*noise(p*2.03+11.0);}',
+        'vec3 gymC(vec2 uv){vec3 g=mix(vec3(0.086,0.047,0.047),vec3(0.047,0.035,0.031),uv.y);',
+        'g+=vec3(0.882,0.114,0.165)*smoothstep(0.95,0.0,distance(uv,vec2(0.76,0.16)))*0.32;return g;}',
+        'vec3 swimC(vec2 uv){vec3 s=mix(vec3(0.859,0.949,1.0),vec3(1.0,0.992,0.953),smoothstep(0.0,1.0,uv.y));',
+        's=mix(s,vec3(1.0,0.824,0.247),smoothstep(0.9,0.0,distance(uv,vec2(0.85,0.12)))*0.5);return s;}',
+        'vec3 dressC(vec2 uv){vec3 d=mix(vec3(0.090,0.075,0.063),vec3(0.122,0.090,0.071),uv.y);',
+        'd+=vec3(0.784,0.663,0.416)*smoothstep(0.95,0.0,distance(uv,vec2(0.5,0.10)))*0.24;return d;}',
+        'void main(){vec2 uv=gl_FragCoord.xy/uRes;uv.y=1.0-uv.y;',
+        'float n=fbm(uv*2.6+vec2(uTime*0.03,uTime*0.018));',
+        'float p=clamp(uProg+(n-0.5)*0.16,0.0,1.0);',
+        'vec3 col;',
+        'if(p<0.5){col=mix(gymC(uv),swimC(uv),smoothstep(0.10,0.5,p));}',
+        'else{col=mix(swimC(uv),dressC(uv),smoothstep(0.5,0.90,p));}',
+        'col+=(n-0.5)*0.014;',
+        'gl_FragColor=vec4(col,1.0);}'
+      ].join('');
+
+      function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+      var prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;   // shader trouble → CSS panels stay
+
+      gl.useProgram(prog);
+      var quad = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      var uRes = gl.getUniformLocation(prog, 'uRes');
+      var uTime = gl.getUniformLocation(prog, 'uTime');
+      var uProg = gl.getUniformLocation(prog, 'uProg');
+
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      function resize() {
+        var w = Math.max(1, Math.floor(window.innerWidth * dpr)), h = Math.max(1, Math.floor(window.innerHeight * dpr));
+        if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+      }
+      window.addEventListener('resize', resize, { passive: true });
+
+      document.body.appendChild(canvas);
+      document.body.classList.add('worlds-active');     // CSS turns the .cshow backgrounds transparent
+
+      var first = worlds[0], last = worlds[worlds.length - 1];
+      var visible = false, raf = 0, t0 = null;
+      function inView() {
+        return worlds.some(function (w) { var r = w.getBoundingClientRect(); return r.bottom > -window.innerHeight * 0.1 && r.top < window.innerHeight * 1.1; });
+      }
+      function progress() {
+        var a = first.getBoundingClientRect().top + window.scrollY;
+        var b = last.getBoundingClientRect().bottom + window.scrollY;
+        var mid = window.scrollY + window.innerHeight * 0.5;
+        return Math.max(0, Math.min(1, (mid - a) / Math.max(1, b - a)));
+      }
+      function frame(ts) {
+        if (!visible) return;
+        resize();
+        if (t0 === null) t0 = ts || 0;
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, ((ts || 0) - t0) / 1000);
+        gl.uniform1f(uProg, progress());
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        raf = requestAnimationFrame(frame);
+      }
+      function sync() {
+        var now = inView();
+        if (now && !visible) { visible = true; canvas.classList.add('is-visible'); raf = requestAnimationFrame(frame); }
+        else if (!now && visible) { visible = false; canvas.classList.remove('is-visible'); cancelAnimationFrame(raf); }
+      }
+      // A ScrollTrigger keyed to the whole worlds range starts/stops the render loop (pause off-screen).
+      ScrollTrigger.create({ trigger: first, start: 'top bottom', endTrigger: last, end: 'bottom top', onToggle: sync, onUpdate: sync });
+      sync();
+    })();
+
     /* ---- Lookbook horizontal pin ---- */
     var lookbook = document.querySelector('[data-lookbook]');
     if (lookbook && !noScrollFX) {
