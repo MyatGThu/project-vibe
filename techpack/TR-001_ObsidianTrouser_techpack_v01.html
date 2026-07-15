@@ -1,0 +1,284 @@
+<title>The Obsidian Trouser — Tech Pack · Te Amo</title>
+<style>
+  :root {
+    --paper: #ECE7DE; --panel: #E3DCD0; --panel-2: #E8E2D8;
+    --ink: #221D18; --muted: #6C635A; --line: #CDC4B5; --line-2: #DBD3C5;
+    --accent: #8C3A2E; --on-accent: #F6F1E8;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --obsidian: #26262A; --bone: #E9E3D6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16130F; --panel: #1F1A14; --panel-2: #221C15;
+      --ink: #ECE6DB; --muted: #9C9183; --line: #362E25; --line-2: #2C251E;
+      --accent: #CE7051; --on-accent: #17130E;
+    }
+  }
+  :root[data-theme="light"] { --paper:#ECE7DE; --panel:#E3DCD0; --panel-2:#E8E2D8; --ink:#221D18; --muted:#6C635A; --line:#CDC4B5; --line-2:#DBD3C5; --accent:#8C3A2E; }
+  :root[data-theme="dark"] { --paper:#16130F; --panel:#1F1A14; --panel-2:#221C15; --ink:#ECE6DB; --muted:#9C9183; --line:#362E25; --line-2:#2C251E; --accent:#CE7051; }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .sheet { max-width: 880px; margin: 0 auto; padding: clamp(1.4rem, 4vw, 3.2rem) clamp(1.1rem, 4vw, 3rem) 4rem; }
+
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; text-wrap: balance; margin: 0; }
+  .wordmark { font-family: var(--serif); font-size: 15px; letter-spacing: 0.42em; text-transform: uppercase; }
+
+  .mast { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding-bottom: 1.1rem; border-bottom: 1.5px solid var(--ink); }
+  .stamp { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 3px; padding: 0.32em 0.6em; white-space: nowrap; }
+  .title-row { margin: 1.4rem 0 0.2rem; }
+  .title-row h1 { font-size: clamp(2.1rem, 6vw, 3.4rem); }
+  .subtitle { color: var(--muted); margin-top: 0.5rem; max-width: 60ch; }
+
+  .meta { margin-top: 1.6rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .meta div { background: var(--panel); padding: 0.7rem 0.85rem; }
+  .meta dt { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.25rem; }
+  .meta dd { margin: 0; font-family: var(--mono); font-size: 13px; }
+
+  section { margin-top: 2.6rem; }
+  .sec-head { display: flex; align-items: baseline; gap: 0.8rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); margin-bottom: 1.1rem; }
+  .sec-head .mark { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; }
+  .sec-head h2 { font-size: 1.15rem; letter-spacing: 0.02em; }
+  .lede { color: var(--muted); margin: -0.3rem 0 1.1rem; max-width: 68ch; }
+
+  .flats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .flat { background: var(--panel-2); padding: 1rem 0.6rem 0.7rem; text-align: center; }
+  .flat svg { width: 100%; max-width: 200px; height: auto; }
+  .flat figcaption { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
+  .flat .stroke { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+  .flat .fillp { fill: var(--panel); stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; }
+  .flat .thin { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.6; }
+  .flat .dash { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.6; stroke-dasharray: 4 2.5; }
+  .flat .btn { fill: var(--ink); }
+  .flat .cLetter { fill: var(--accent); font-family: var(--mono); font-size: 10px; font-weight: 700; }
+  .flat .cRing { fill: var(--paper); stroke: var(--accent); stroke-width: 1.2; }
+
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  caption { text-align: left; caption-side: bottom; color: var(--muted); font-size: 12px; padding: 0.6rem 0.2rem 0; font-family: var(--mono); }
+  th, td { padding: 0.55rem 0.8rem; text-align: left; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+  thead th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: var(--panel); font-weight: 600; white-space: nowrap; }
+  tbody tr:last-child td, tbody tr:last-child th { border-bottom: none; }
+  .pom td, .pom th { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .pom .name { font-family: var(--sans); }
+  .pom .code { color: var(--accent); font-weight: 700; }
+  .pom col.base, .pom .base { background: color-mix(in oklab, var(--accent) 9%, transparent); }
+  .pom thead .base { background: color-mix(in oklab, var(--accent) 16%, var(--panel)); color: var(--ink); }
+  .matrix th[scope="row"] { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  .swatches { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .sw { display: flex; align-items: center; gap: 0.7rem; }
+  .sw .chip { width: 46px; height: 46px; border-radius: 6px; border: 1px solid var(--line); flex: none; }
+  .sw dt { font-family: var(--mono); font-size: 12px; }
+  .sw dd { margin: 0; color: var(--muted); font-family: var(--mono); font-size: 11px; }
+
+  ul.spec { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  ul.spec li { display: grid; grid-template-columns: 1.1rem 1fr; gap: 0.6rem; }
+  ul.spec li::before { content: "—"; color: var(--accent); font-family: var(--mono); }
+  ul.spec b { font-weight: 600; }
+
+  .callout { border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 4px; background: var(--panel); padding: 1rem 1.15rem; }
+  .callout .lede { margin: 0 0 0.7rem; color: var(--ink); }
+
+  .ref { font-family: var(--mono); font-size: 12px; color: var(--muted); word-break: break-all; }
+  .foot { margin-top: 3rem; padding-top: 1rem; border-top: 1.5px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem 1.4rem; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
+  .foot b { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 620px) { .flats { grid-template-columns: 1fr; } .title-row h1 { font-size: 2rem; } }
+  @media print {
+    :root { --paper:#fff; --panel:#f6f3ee; --panel-2:#faf8f3; --ink:#000; --muted:#555; --line:#bbb; --line-2:#ddd; --accent:#7a2a1f; }
+    body { font-size: 11.5px; }
+    section, .flats, .scroll, table, .callout, .flat { break-inside: avoid; }
+    .sheet { max-width: none; padding: 0; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="mast">
+    <div>
+      <span class="wordmark">Te&nbsp;Amo</span>
+      <p class="eyebrow" style="margin-top:.5rem">Technical Specification · Cut &amp; Sew</p>
+    </div>
+    <span class="stamp">Dev · Sample&nbsp;Round&nbsp;1</span>
+  </header>
+
+  <div class="title-row">
+    <p class="eyebrow">Bottoms — High-waist wide-leg trouser</p>
+    <h1>The Obsidian Trouser</h1>
+  </div>
+  <p class="subtitle">A high-waisted, wide-leg trouser in dry matte suiting — pressed front crease, clean seat, slim leather belt on loops. It hangs straight from the hip and "moves like a skirt". This sheet is to quote and sample; grading and construction confirm against your block at first proto.</p>
+
+  <dl class="meta">
+    <div><dt>Style no.</dt><dd>TR-001</dd></div>
+    <div><dt>Season</dt><dd>Autumn — Coll. 01</dd></div>
+    <div><dt>Category</dt><dd>Trouser / Bottoms</dd></div>
+    <div><dt>Fit</dt><dd>High-waist, wide-leg</dd></div>
+    <div><dt>Size range</dt><dd>XS · S · M · L</dd></div>
+    <div><dt>Base size</dt><dd>S</dd></div>
+    <div><dt>Model</dt><dd>Sample → house inventory</dd></div>
+    <div><dt>Target retail</dt><dd>USD 580</dd></div>
+    <div><dt>Version</dt><dd>v1 · 2026·07·15</dd></div>
+  </dl>
+
+  <!-- FLATS -->
+  <section>
+    <div class="sec-head"><span class="mark">01</span><h2>Technical flat</h2></div>
+    <p class="lede">Schematic only — proportion and detail placement, not a pattern. Lettered callouts <b>A–F</b> map to the points of measure below. Full annotated construction flat (all seams + measures): <b>TR-001_ObsidianTrouser_flat_v02.svg</b>.</p>
+    <div class="flats">
+      <figure class="flat">
+        <svg viewBox="0 0 200 430" role="img" aria-label="Front technical flat of a high-waist wide-leg trouser">
+          <path class="fillp" d="M52,44 L148,44 C156,86 160,104 158,130 L156,410 L108,410 L100,150 L92,410 L44,410 L42,130 C40,104 44,86 52,44 Z"/>
+          <line class="thin" x1="44" y1="70" x2="156" y2="70"/>
+          <!-- belt loops -->
+          <rect class="stroke" x="60" y="41" width="4" height="30"/>
+          <rect class="stroke" x="98" y="41" width="4" height="30"/>
+          <rect class="stroke" x="136" y="41" width="4" height="30"/>
+          <!-- fly -->
+          <path class="dash" d="M104,72 L104,140 C104,150 98,152 92,150"/>
+          <!-- slant pockets -->
+          <line class="thin" x1="58" y1="80" x2="80" y2="112"/>
+          <line class="thin" x1="142" y1="80" x2="120" y2="112"/>
+          <!-- creases -->
+          <line class="dash" x1="72" y1="150" x2="72" y2="404"/>
+          <line class="dash" x1="128" y1="150" x2="128" y2="404"/>
+          <!-- callout rings -->
+          <g class="cRing"><circle cx="100" cy="34" r="8"/></g><text class="cLetter" x="100" y="37.6" text-anchor="middle">A</text>
+          <g class="cRing"><circle cx="36" cy="128" r="8"/></g><text class="cLetter" x="36" y="131.6" text-anchor="middle">B</text>
+          <g class="cRing"><circle cx="112" cy="150" r="8"/></g><text class="cLetter" x="112" y="153.6" text-anchor="middle">C</text>
+          <g class="cRing"><circle cx="60" cy="300" r="8"/></g><text class="cLetter" x="60" y="303.6" text-anchor="middle">D</text>
+          <g class="cRing"><circle cx="68" cy="410" r="8"/></g><text class="cLetter" x="68" y="413.6" text-anchor="middle">E</text>
+          <g class="cRing"><circle cx="164" cy="56" r="8"/></g><text class="cLetter" x="164" y="59.6" text-anchor="middle">F</text>
+        </svg>
+        <figcaption>Front · fly + slant pockets</figcaption>
+      </figure>
+      <figure class="flat">
+        <svg viewBox="0 0 200 430" role="img" aria-label="Back technical flat of the trouser">
+          <path class="fillp" d="M52,44 L148,44 C156,86 160,104 158,130 L156,410 L108,410 L100,150 L92,410 L44,410 L42,130 C40,104 44,86 52,44 Z"/>
+          <line class="thin" x1="44" y1="70" x2="156" y2="70"/>
+          <!-- centre-back seam -->
+          <line class="thin" x1="100" y1="46" x2="100" y2="150"/>
+          <!-- back darts -->
+          <path class="thin" d="M78,72 L80,92 L82,72"/>
+          <path class="thin" d="M122,72 L120,92 L118,72"/>
+          <!-- CB belt loop -->
+          <rect class="stroke" x="98" y="41" width="4" height="30"/>
+          <!-- creases -->
+          <line class="dash" x1="72" y1="150" x2="72" y2="404"/>
+          <line class="dash" x1="128" y1="150" x2="128" y2="404"/>
+          <g class="cRing"><circle cx="100" cy="34" r="8"/></g><text class="cLetter" x="100" y="37.6" text-anchor="middle">G</text>
+          <g class="cRing"><circle cx="80" cy="92" r="8"/></g><text class="cLetter" x="80" y="95.6" text-anchor="middle">H</text>
+        </svg>
+        <figcaption>Back · CB seam + darts</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- POM -->
+  <section>
+    <div class="sec-head"><span class="mark">02</span><h2>Points of measure</h2></div>
+    <p class="lede">Finished garment, measured flat and relaxed. All values <b>cm</b>; girths are half-measurements. Base size <b>S</b> highlighted. Confirm the graded nest before bulk.</p>
+    <div class="scroll">
+      <table class="pom">
+        <colgroup><col/><col/><col/><col class="base"/><col/><col/><col/></colgroup>
+        <thead>
+          <tr><th>Point of measure</th><th>Code</th><th>XS</th><th class="base">S</th><th>M</th><th>L</th><th>Tol.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">½ Waist, relaxed at band</td><td class="code">A</td><td>32</td><td class="base">34</td><td>36</td><td>38</td><td>±1.0</td></tr>
+          <tr><td class="name">½ High hip, 8&nbsp;cm below band</td><td class="code">—</td><td>40</td><td class="base">42</td><td>44</td><td>46</td><td>±1.0</td></tr>
+          <tr><td class="name">½ Hip, at seat</td><td class="code">B</td><td>48</td><td class="base">50</td><td>52</td><td>54</td><td>±1.0</td></tr>
+          <tr><td class="name">Front rise, incl. band</td><td class="code">C</td><td>26.5</td><td class="base">27.5</td><td>28.5</td><td>29.5</td><td>±0.5</td></tr>
+          <tr><td class="name">Back rise, incl. band</td><td class="code">—</td><td>36.0</td><td class="base">37.0</td><td>38.0</td><td>39.0</td><td>±0.5</td></tr>
+          <tr><td class="name">½ Thigh, 2.5&nbsp;cm below crotch</td><td class="code">—</td><td>30</td><td class="base">32</td><td>34</td><td>36</td><td>±0.5</td></tr>
+          <tr><td class="name">½ Knee, at mid-leg</td><td class="code">—</td><td>27</td><td class="base">28</td><td>29</td><td>30</td><td>±0.5</td></tr>
+          <tr><td class="name">½ Leg opening, at hem</td><td class="code">E</td><td>26</td><td class="base">27</td><td>28</td><td>29</td><td>±0.5</td></tr>
+          <tr><td class="name">Inseam, crotch–hem</td><td class="code">D</td><td>76</td><td class="base">76</td><td>76</td><td>76</td><td>±1.0</td></tr>
+          <tr><td class="name">Outseam, band–hem</td><td class="code">—</td><td>104</td><td class="base">106</td><td>108</td><td>110</td><td>±1.0</td></tr>
+          <tr><td class="name">Waistband height</td><td class="code">F</td><td>4.0</td><td class="base">4.0</td><td>4.0</td><td>4.0</td><td>±0.2</td></tr>
+          <tr><td class="name">Fly length</td><td class="code">—</td><td>15</td><td class="base">16</td><td>17</td><td>18</td><td>±0.3</td></tr>
+        </tbody>
+        <caption>Grade: 2&nbsp;cm on girths, 1&nbsp;cm on rises per size step; inseam held constant (fit break at knee). Codes G/H (CB seam, dart) locate on the back flat. Inch conversions on request.</caption>
+      </table>
+    </div>
+  </section>
+
+  <!-- MATERIALS -->
+  <section>
+    <div class="sec-head"><span class="mark">03</span><h2>Materials &amp; trims</h2></div>
+    <p class="lede">Dry, matte hand — the wool must read as ink with <b>no sheen</b>. The Bone pocketing contrast is deliberate; keep it.</p>
+    <div class="scroll">
+      <table class="matrix">
+        <thead><tr><th>Component</th><th>Spec</th><th>Colour</th><th>Placement</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Shell face</th><td>Wool-blend suiting 62/34/4 wool/poly/elastane, matte, mech. stretch, 250–270&nbsp;gsm</td><td>Obsidian</td><td>Fronts, backs, waistband, loops</td></tr>
+          <tr><th scope="row">Waistband</th><td>Fused band + curtain lining; Petersham optional for stability</td><td>Tonal</td><td>Waist, interior</td></tr>
+          <tr><th scope="row">Pocketing</th><td>100% cupro or cupro/cotton, soft handle</td><td>Bone (contrast)</td><td>Front pocket bags</td></tr>
+          <tr><th scope="row">Fly</th><td>YKK metal zip, tonal tape; hook &amp; bar + interior button at band</td><td>Tonal / gunmetal</td><td>Centre front</td></tr>
+          <tr><th scope="row">Belt</th><td>Slim leather, 2.5&nbsp;cm, matte gunmetal buckle</td><td>Black</td><td>On belt loops</td></tr>
+          <tr><th scope="row">Belt loops</th><td>Self-fabric, 5 × (2 front, 2 side, 1 CB)</td><td>Obsidian</td><td>Waistband</td></tr>
+          <tr><th scope="row">Thread</th><td>Tonal core-spun, Tex 40</td><td>Obsidian</td><td>All seams / topstitch</td></tr>
+          <tr><th scope="row">Labels</th><td>Woven brand + care/content + size tab</td><td>—</td><td>CB inside band / side seam</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:1.4rem">
+      <p class="eyebrow" style="margin-bottom:.7rem">Colourway</p>
+      <dl class="swatches">
+        <div class="sw"><span class="chip" style="background:var(--obsidian)"></span><div><dt>Obsidian — primary</dt><dd>Dry matte · ≈ Pantone 19-4007 TCX · dye-lot approval req.</dd></div></div>
+        <div class="sw"><span class="chip" style="background:var(--bone)"></span><div><dt>Bone — pocketing</dt><dd>Contrast bag, deliberate · not a shell colour</dd></div></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONSTRUCTION -->
+  <section>
+    <div class="sec-head"><span class="mark">04</span><h2>Construction &amp; finishing</h2></div>
+    <ul class="spec">
+      <li><span><b>Waistband.</b> Curtained inside, 4&nbsp;cm finished; 5 self-fabric belt loops. Close with concealed hook &amp; bar + interior button. Loops must carry the leather belt without gaping.</span></li>
+      <li><span><b>Fly.</b> Left-over-right, YKK metal zip; <b>J-topstitch 6&nbsp;mm</b> with a bartack at the base. Fly length 16&nbsp;cm (base S).</span></li>
+      <li><span><b>Front pockets.</b> Slant, understitched bag, <b>bartack both ends</b>. Pocketing in Bone contrast.</span></li>
+      <li><span><b>Centre-back seam.</b> Double-stitched through the curve; <b>leave 1.5&nbsp;cm SA for let-out — do NOT trim.</b></span></li>
+      <li><span><b>Back shaping.</b> Two darts per side, pressed toward centre back. Clean seat — <b>no back pockets</b> (design intent).</span></li>
+      <li><span><b>Crease.</b> Pressed centred through the leg with a press cloth — the wool must not shine.</span></li>
+      <li><span><b>Side seams.</b> Pressed <b>open</b>, edges overlocked separately.</span></li>
+      <li><span><b>Hem.</b> Blind-stitched, 5&nbsp;cm allowance, invisible on the face; even break. Wide leg hangs straight from the hip.</span></li>
+    </ul>
+  </section>
+
+  <!-- LABELLING -->
+  <section>
+    <div class="sec-head"><span class="mark">05</span><h2>Labelling &amp; packing</h2></div>
+    <ul class="spec">
+      <li><span><b>Brand label</b> woven, centre-back inside the waistband. <b>Care/content</b> + fibre + CoO on the side-seam label; <b>size tab</b> beneath.</span></li>
+      <li><span><b>Content/care</b> per destination market; symbols per ISO&nbsp;3758. Country of origin per your facility.</span></li>
+      <li><span><b>Pack:</b> hung on a clipped hanger, or folded to a set board; polybag food-grade if used.</span></li>
+    </ul>
+  </section>
+
+  <!-- ASK -->
+  <section>
+    <div class="sec-head"><span class="mark">06</span><h2>To quote — what we need from you</h2></div>
+    <div class="callout">
+      <p class="lede">First development sheet. Please make <b>one fit proto, size S, Obsidian</b>, and quote against a small house-inventory run.</p>
+      <ul class="spec">
+        <li><span><b>Sample</b> cost + lead time for the size-S proto.</span></li>
+        <li><span><b>Unit cost</b> at MOQ 10 / 30 / 50, plus a small-batch cost so we can house a first run.</span></li>
+        <li><span><b>Fabric:</b> can you source the matte stretch suiting + Bone pocketing, or should we supply? Send suiting options.</span></li>
+        <li><span><b>Grading:</b> confirm the graded nest and the POM tolerances above; flag anything that risks the wide-leg drape.</span></li>
+        <li><span><b>Value engineering:</b> call out any change that protects the look while improving cost or lead time.</span></li>
+      </ul>
+    </div>
+    <p style="margin-top:1.1rem" class="ref"><b style="color:var(--ink)">Design reference (attach to email):</b><br>hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png — front render on house model. Silhouette + drape reference only.</p>
+  </section>
+
+  <footer class="foot">
+    <span><b>Te Amo</b> · The Obsidian Trouser · TR-001 · v1</span>
+    <span>Contact&nbsp;<b>—</b> · Factory&nbsp;<b>—</b> · Date&nbsp;<b>2026·07·15</b></span>
+  </footer>
+
+</div>
