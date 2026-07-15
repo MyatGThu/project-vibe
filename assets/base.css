@@ -388,6 +388,38 @@ input:focus:not(:focus-visible), textarea:focus:not(:focus-visible), select:focu
 .skip-link { position: absolute; left: -999px; top: 0; z-index: 100; background: var(--ink); color: var(--bg); padding: 0.8rem 1.2rem; }
 .skip-link:focus { left: 0; }
 
+/* ---- Editorial photo grammar (meech213-style): masked reveal + in-frame parallax + cursor ----
+   A frame (.photo-reveal) wipes open via clip-path while its inner (.photo-reveal__inner) settles
+   from a slight zoom as it scrolls in; on desktop the inner drifts within the clipped frame, and a
+   floating label rides over clickable photos. Fully progressive: the initial clipped/zoomed state
+   is scoped to .js, and if the motion libs never load motion.js releases it (see init()), so no-JS
+   and lib-failure both show the photo, static. Reduced-motion is reset in the block below. NB these
+   frames are never 3D-transformed, so clip-path here is safe (unlike the l3d/vortex stages). */
+.photo-reveal { position: relative; overflow: hidden; }
+.photo-reveal__inner { display: block; transform-origin: center; }
+/* Cover-fit frames have a definite height, so the inner must too (its <img> is height:100% object-fit
+   cover). The portfolio grid is a masonry column — the inner stays auto-height there and just wraps
+   its natural-height <img>, so it must NOT get height:100% (that would collapse the cell). */
+.lookbook__slide .photo-reveal__inner,
+.editorial-split__media .photo-reveal__inner { height: 100%; }
+.js .photo-reveal { clip-path: inset(0 0 100% 0); }
+.js .photo-reveal__inner { transform: scale(1.14); will-change: transform; }
+.photo-reveal img { transition: transform 1.2s var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  .photo-reveal:hover img { transform: scale(1.05); }
+}
+/* Floating "View" cursor — created + shown only by motion.js on a fine, hovering pointer. */
+.photo-cursor {
+  position: fixed; top: 0; left: 0; z-index: 200; width: 84px; height: 84px;
+  border-radius: 999px; background: var(--accent); color: #fff;
+  display: grid; place-items: center; pointer-events: none;
+  font-family: var(--ui-font); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  opacity: 0; scale: 0.3; transition: opacity 0.3s var(--ease), scale 0.35s var(--ease);
+  will-change: transform;
+}
+.photo-cursor.is-active { opacity: 1; scale: 1; }
+.has-photo-cursor [data-photo-cursor] { cursor: none; }
+
 /* ---- Product page ---- */
 .pdp { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
 .pdp__media { display: grid; gap: 0.7rem; position: sticky; top: 92px; }
@@ -469,6 +501,9 @@ input:focus:not(:focus-visible), textarea:focus:not(:focus-visible), select:focu
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1 !important; transform: none !important; }
+  .js .photo-reveal { clip-path: none !important; }
+  .js .photo-reveal__inner { transform: none !important; }
+  .photo-cursor { display: none !important; }
 }
 
 /* ============================================================
@@ -503,8 +538,8 @@ input:focus:not(:focus-visible), textarea:focus:not(:focus-visible), select:focu
 .pf-comp .stat__label { color: rgba(246, 243, 238, 0.72); }
 .pf-work { columns: 3; column-gap: var(--gutter); }
 .pf-work__item { break-inside: avoid; margin-bottom: var(--gutter); position: relative; display: block; overflow: hidden; border-radius: var(--radius); background: #201c19; }
-.pf-work__item img { width: 100%; display: block; transition: transform 1.2s var(--ease); }
-.pf-work__item:hover img { transform: scale(1.045); }
+.pf-work__item img { width: 100%; display: block; }
+/* hover scale lives on the shared .photo-reveal:hover img rule (gated to a fine, hovering pointer) */
 .pf-work__cap { position: absolute; inset: auto 0 0 0; padding: 1rem 1.1rem; display: flex; justify-content: space-between; gap: 1rem; background: linear-gradient(0deg, rgba(20,17,15,0.75), transparent); color: var(--bg); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0; transform: translateY(0.5rem); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
 .pf-work__item:hover .pf-work__cap { opacity: 1; transform: none; }
 .pf-footer { border-top: 1px solid rgba(246,243,238,0.15); padding: clamp(2.5rem, 6vw, 5rem) clamp(1.15rem, 4vw, 3.25rem); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; align-items: center; }
