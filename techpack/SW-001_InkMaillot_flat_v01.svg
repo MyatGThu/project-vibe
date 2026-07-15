@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 1000" font-family="Helvetica Neue, Arial, sans-serif">
+<style>
+ .edge{fill:#fff;stroke:#161616;stroke-width:2.1;stroke-linejoin:round;stroke-linecap:round;}
+ .seam{fill:none;stroke:#161616;stroke-width:1.3;}
+ .stitch{fill:none;stroke:#161616;stroke-width:1;stroke-dasharray:5 3;}
+ .bind{fill:none;stroke:#6f6f6f;stroke-width:1.1;stroke-dasharray:2 2.4;}
+ .lin{fill:none;stroke:#b8b3aa;stroke-width:1;stroke-dasharray:1.5 3;}
+ .bar{fill:#161616;}
+ .lead{stroke:#b23a3a;stroke-width:0.9;fill:none;}
+ .mrk{fill:#161616;stroke:#fcfbf9;stroke-width:1.3;}
+ .mlet{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle;}
+ .cap{fill:#555;font-size:12px;letter-spacing:.18em;}
+ .h1{fill:#111;font-size:22px;font-weight:600;}
+ .sub{fill:#666;font-size:12px;}
+ .note{fill:#444;font-size:10.5px;} .warn{fill:#b23a3a;font-size:11px;font-weight:600;}
+ .sec{fill:#111;font-size:12px;font-weight:700;letter-spacing:.06em;}
+ .klet{fill:#b23a3a;font-size:11px;font-weight:700;}
+ .ktit{fill:#111;font-size:11px;font-weight:600;}
+ .ktxt{fill:#555;font-size:10px;}
+ .mkey{fill:#111;font-size:10.5px;font-weight:600;}
+ .lval{fill:#333;font-size:10.5px;}
+</style>
+<rect x="0" y="0" width="1480" height="1000" fill="#fcfbf9"/>
+
+<!-- ============ HEADER ============ -->
+<text x="60" y="48" class="h1">THE INK MAILLOT — TECHNICAL FLAT</text>
+<text x="60" y="70" class="sub">Style SW-001 · Swim / Collection 02 · High-leg one-piece · square plunge neck · open back · Base size S · Colourway Ink · Flat v01</text>
+<line x1="60" y1="86" x2="1420" y2="86" stroke="#161616" stroke-width="1"/>
+<text x="60" y="106" class="warn">DRAFT — not to scale, not graded. Built from the showcase render + swim category requirements (sheet 09). Needs its own workbook (BOM / POM / construction) and a patternmaker's grade before sampling.</text>
+
+<!-- ===================== FRONT ===================== -->
+<g>
+ <path class="edge" d="M 258 195 L 298 195 L 298 355 L 382 355 L 382 195 L 422 195 C 440 245 446 330 440 404 C 436 456 428 486 416 512 C 400 588 374 660 356 702 C 351 709 331 709 326 702 C 308 660 282 588 266 512 C 254 486 246 456 242 404 C 236 330 242 245 258 195 Z"/>
+ <!-- neckline elastic (square plunge) -->
+ <path class="bind" d="M 300 202 L 300 349 L 380 349 L 380 202"/>
+ <!-- strap elastic edges -->
+ <path class="bind" d="M 262 200 C 250 252 247 332 252 402"/>
+ <path class="bind" d="M 418 200 C 430 252 433 332 428 402"/>
+ <!-- neckline coverstitch topstitch -->
+ <path class="stitch" d="M 306 210 L 306 345 L 374 345 L 374 210"/>
+ <!-- bust / princess support seams + coverstitch -->
+ <path class="seam" d="M 303 361 C 293 444 289 508 298 566"/>
+ <path class="seam" d="M 377 361 C 387 444 391 508 382 566"/>
+ <path class="stitch" d="M 310 366 C 300 444 296 506 304 560"/>
+ <path class="stitch" d="M 370 366 C 380 444 384 506 376 560"/>
+ <!-- high-cut leg elastic -->
+ <path class="bind" d="M 410 518 C 394 590 372 656 352 698"/>
+ <path class="bind" d="M 270 518 C 286 590 308 656 328 698"/>
+ <!-- gusset (lined) + bartack -->
+ <path class="seam" d="M 320 672 C 330 684 350 684 360 672"/>
+ <rect class="bar" x="337" y="696" width="6" height="3"/>
+ <!-- lining hint (fully lined front) -->
+ <path class="lin" d="M 300 404 L 380 404"/>
+ <path class="lin" d="M 296 446 L 384 446"/>
+ <path class="lin" d="M 300 500 L 380 500"/>
+ <text x="340" y="746" text-anchor="middle" class="cap">FRONT</text>
+</g>
+
+<!-- ===================== BACK (open) ===================== -->
+<g>
+ <path class="edge" d="M 588 195 L 622 195 C 630 300 648 388 662 414 C 667 420 673 420 678 414 C 692 388 710 300 718 195 L 752 195 C 770 250 772 348 764 424 C 760 470 750 490 738 514 C 720 590 694 660 686 702 C 681 709 659 709 654 702 C 646 660 620 590 602 514 C 590 490 580 470 576 424 C 568 348 570 250 588 195 Z"/>
+ <!-- open-back scoop elastic (rounded) -->
+ <path class="bind" d="M 596 202 C 632 302 652 390 662 410 C 667 416 673 416 678 410 C 688 390 708 302 744 202"/>
+ <!-- CB seam + coverstitch -->
+ <path class="seam" d="M 670 416 L 670 700"/>
+ <path class="stitch" d="M 677 430 L 677 690"/>
+ <!-- high-cut leg elastic (back) -->
+ <path class="bind" d="M 732 520 C 712 590 692 656 682 698"/>
+ <path class="bind" d="M 608 520 C 628 590 648 656 658 698"/>
+ <!-- gusset + bartack -->
+ <path class="seam" d="M 650 672 C 660 684 680 684 690 672"/>
+ <rect class="bar" x="667" y="696" width="6" height="3"/>
+ <!-- lining hint (seat lined) -->
+ <path class="lin" d="M 636 556 L 704 556"/>
+ <path class="lin" d="M 632 598 L 708 598"/>
+ <text x="670" y="746" text-anchor="middle" class="cap">BACK</text>
+</g>
+
+<!-- ============ CALLOUT MARKERS ============ -->
+<!-- FRONT left -->
+<g><line class="lead" x1="196" y1="300" x2="298" y2="300"/><circle class="mrk" cx="186" cy="300" r="9.5"/><text class="mlet" x="186" y="303.8">A</text></g>
+<g><line class="lead" x1="196" y1="470" x2="290" y2="470"/><circle class="mrk" cx="186" cy="470" r="9.5"/><text class="mlet" x="186" y="473.8">C</text></g>
+<g><line class="lead" x1="196" y1="600" x2="300" y2="574"/><circle class="mrk" cx="186" cy="600" r="9.5"/><text class="mlet" x="186" y="603.8">E</text></g>
+<!-- FRONT right -->
+<g><line class="lead" x1="510" y1="238" x2="408" y2="230"/><circle class="mrk" cx="520" cy="238" r="9.5"/><text class="mlet" x="520" y="241.8">B</text></g>
+<g><line class="lead" x1="510" y1="430" x2="360" y2="420"/><circle class="mrk" cx="520" cy="430" r="9.5"/><text class="mlet" x="520" y="433.8">D</text></g>
+<g><line class="lead" x1="510" y1="670" x2="352" y2="668"/><circle class="mrk" cx="520" cy="670" r="9.5"/><text class="mlet" x="520" y="673.8">F</text></g>
+<!-- BACK right -->
+<g><line class="lead" x1="846" y1="300" x2="712" y2="300"/><circle class="mrk" cx="856" cy="300" r="9.5"/><text class="mlet" x="856" y="303.8">G</text></g>
+<g><line class="lead" x1="846" y1="470" x2="760" y2="470"/><circle class="mrk" cx="856" cy="470" r="9.5"/><text class="mlet" x="856" y="473.8">I</text></g>
+<g><line class="lead" x1="846" y1="580" x2="670" y2="580"/><circle class="mrk" cx="856" cy="580" r="9.5"/><text class="mlet" x="856" y="583.8">H</text></g>
+<g><line class="lead" x1="846" y1="660" x2="700" y2="640"/><circle class="mrk" cx="856" cy="660" r="9.5"/><text class="mlet" x="856" y="663.8">J</text></g>
+
+<!-- ============ CALLOUT KEY (column 1) ============ -->
+<text x="912" y="150" class="sec">CALLOUT KEY</text>
+<line x1="912" y1="160" x2="1180" y2="160" stroke="#ddd" stroke-width="1"/>
+<g>
+ <text x="912" y="185" class="klet">A</text><text x="934" y="185" class="ktit">Square plunge neckline</text>
+ <text x="934" y="200" class="ktxt">Elastic-applied edge, coverstitched; clean square cut</text>
+
+ <text x="912" y="229" class="klet">B</text><text x="934" y="229" class="ktit">Strap — continuous</text>
+ <text x="934" y="244" class="ktxt">Elastic edge; set strap length ON body (swim stretches wet)</text>
+
+ <text x="912" y="273" class="klet">C</text><text x="934" y="273" class="ktit">Bust princess support seam</text>
+ <text x="934" y="288" class="ktxt">Shapes the cup; overlock + coverstitch topstitch</text>
+
+ <text x="912" y="317" class="klet">D</text><text x="934" y="317" class="ktit">Fully lined — power mesh</text>
+ <text x="934" y="332" class="ktxt">Front, back &amp; gusset lined; OPACITY-WHEN-WET test</text>
+
+ <text x="912" y="361" class="klet">E</text><text x="934" y="361" class="ktit">High-cut leg opening</text>
+ <text x="934" y="376" class="ktxt">Elastic-applied edge; tension per seam, spec &amp; log it</text>
+
+ <text x="912" y="405" class="klet">F</text><text x="934" y="405" class="ktit">Gusset — lined, bartacked</text>
+ <text x="934" y="420" class="ktxt">Hygiene gusset; bartack ends. Confirm single vs double</text>
+
+ <text x="912" y="449" class="klet">G</text><text x="934" y="449" class="ktit">Open back — deep V</text>
+ <text x="934" y="464" class="ktxt">Elastic-applied edge; sets how low the back sits</text>
+
+ <text x="912" y="493" class="klet">H</text><text x="934" y="493" class="ktit">Centre-back seam</text>
+ <text x="934" y="508" class="ktxt">Shapes seat; 3-thread overlock, coverstitch topstitch</text>
+
+ <text x="912" y="537" class="klet">I</text><text x="934" y="537" class="ktit">Side seam — 3-thread overlock</text>
+ <text x="934" y="552" class="ktxt">Stretch seam; no chafe hardware. Front-to-back register</text>
+
+ <text x="912" y="581" class="klet">J</text><text x="934" y="581" class="ktit">Back leg opening — elastic</text>
+ <text x="934" y="596" class="ktxt">Elastic-applied edge; balance with front leg tension</text>
+</g>
+
+<!-- ============ LINE KEY + POM + SPEC (column 2) ============ -->
+<text x="1240" y="150" class="sec">LINE KEY</text>
+<line x1="1240" y1="160" x2="1440" y2="160" stroke="#ddd" stroke-width="1"/>
+<line x1="1240" y1="180" x2="1276" y2="180" class="edge"/><text x="1286" y="184" class="lval">cut edge / seam</text>
+<line x1="1240" y1="200" x2="1276" y2="200" class="stitch"/><text x="1286" y="204" class="lval">coverstitch topstitch</text>
+<line x1="1240" y1="220" x2="1276" y2="220" class="bind"/><text x="1286" y="224" class="lval">elastic-applied edge</text>
+<line x1="1240" y1="240" x2="1276" y2="240" class="lin"/><text x="1286" y="244" class="lval">lining (power mesh)</text>
+<rect class="bar" x="1240" y="256" width="10" height="4"/><text x="1286" y="264" class="lval">bartack</text>
+
+<text x="1240" y="304" class="sec">KEY POM — build on sample</text>
+<line x1="1240" y1="314" x2="1440" y2="314" stroke="#ddd" stroke-width="1"/>
+<g>
+ <text x="1240" y="334" class="mkey">Bust · underbust</text>
+ <text x="1240" y="352" class="mkey">Front neck drop (HPS)</text>
+ <text x="1240" y="370" class="mkey">Back scoop drop (HPS)</text>
+ <text x="1240" y="388" class="mkey">Strap length · shoulder</text>
+ <text x="1240" y="406" class="mkey">Waist · high hip</text>
+ <text x="1240" y="424" class="mkey">Leg-opening height (rise)</text>
+ <text x="1240" y="442" class="mkey">Front / back rise</text>
+ <text x="1240" y="460" class="mkey">Girth (HPS–gusset–HPS)</text>
+ <text x="1240" y="478" class="mkey">Gusset width</text>
+ <text x="1240" y="500" class="ktxt">Values TBD — measure relaxed AND</text>
+ <text x="1240" y="515" class="ktxt">stretched; swim fit lives in stretch.</text>
+</g>
+
+<text x="1240" y="556" class="sec">FABRIC / SPEC</text>
+<line x1="1240" y1="566" x2="1440" y2="566" stroke="#ddd" stroke-width="1"/>
+<text x="1240" y="586" class="note">Chlorine-resistant nylon/elastane (PBT)</text>
+<text x="1240" y="602" class="note">180–210 gsm + power-mesh lining</text>
+<text x="1240" y="618" class="note">Ink — matte, no sheen</text>
+<text x="1240" y="634" class="note">Elastic tension per seam (spec + log)</text>
+<text x="1240" y="650" class="note">OPACITY-WHEN-WET test — mandatory</text>
+<text x="1240" y="666" class="note">Chlorine-resistance certification</text>
+
+<!-- ============ SHOWCASE REFERENCE ============ -->
+<text x="912" y="648" class="sec">SHOWCASE REFERENCE</text>
+<text x="912" y="663" class="ktxt">AI render (openly disclosed) — the look this flat is drawn to</text>
+<rect x="912" y="674" width="140" height="178" fill="#f1efea" stroke="#161616" stroke-width="1.2"/>
+<text x="982" y="765" text-anchor="middle" class="ktxt" fill="#b0a99e">image loads online</text>
+<image x="913" y="675" width="138" height="176" preserveAspectRatio="xMidYMid slice" href="https://cdn.shopify.com/s/files/1/0726/0468/0275/files/hf_20260713_151356_b12f66c1-f7a1-4b04-ac6c-6f69885075e9.png?v=1783955835"/>
+<rect x="912" y="674" width="140" height="178" fill="none" stroke="#161616" stroke-width="1.2"/>
+<text x="1064" y="694" class="ktit">The Ink Maillot · $220</text>
+<text x="1064" y="710" class="ktxt">High-leg one-piece</text>
+<text x="1064" y="725" class="ktxt">Square plunge · open back</text>
+
+<!-- ============ FOOTER ============ -->
+<line x1="60" y1="914" x2="1420" y2="914" stroke="#ddd" stroke-width="1"/>
+<text x="60" y="936" class="warn">CATEGORY NOTE — Swim is a specialist supply chain (sheet 09): very few factories do it well. Elastic tension, wet opacity and chlorine resistance are the whole job — a render cannot specify them.</text>
+<text x="60" y="954" class="note">No metal hardware on this style (integral straps) — so no corrosion risk here, but verify on any future clasp/ring variant. Values on this sheet are intent, not a graded spec.</text>
+</svg>
