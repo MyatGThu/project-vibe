@@ -6,6 +6,11 @@ whole theme is built for award-style motion with in-place product discovery. Sel
 every kind of clothing — eveningwear, everyday, **swimwear**, and **gym / activewear**;
 every campaign image is AI-generated and openly disclosed.
 
+> **🔗 Live design preview → <https://myatgthu.github.io/project-vibe/>**
+> A static mirror of the storefront (real Melina imagery, driven by `assets/base.css`),
+> auto-deployed from `site/` to GitHub Pages on every push to `main`
+> (`.github/workflows/pages.yml`). Design preview only — the live store renders the Liquid theme.
+
 ## What's inside
 
 | Feature | How |
@@ -55,7 +60,8 @@ they are merged** (`git push` to a feature branch is not a deploy).
    folders live at the repo **root**, which Shopify's integration requires.
 3. **Customize** to preview. Edits made in Shopify's editor commit back automatically.
 4. Local dev (optional): `shopify theme dev` (Shopify CLI) against a dev store — no
-   repo link needed. Standalone previews: open `preview/*.html` in a browser.
+   repo link needed. Standalone previews: open `preview/*.html` in a browser, or view the
+   hosted mirror at <https://myatgthu.github.io/project-vibe/>.
 
 ## Sell with Tapstitch
 
