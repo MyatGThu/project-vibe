@@ -403,22 +403,23 @@ input:focus:not(:focus-visible), textarea:focus:not(:focus-visible), select:focu
 .lookbook__slide .photo-reveal__inner,
 .editorial-split__media .photo-reveal__inner { height: 100%; }
 .js .photo-reveal { clip-path: inset(0 0 100% 0); }
-.js .photo-reveal__inner { transform: scale(1.14); will-change: transform; }
+.js .photo-reveal__inner { transform: scale(1.14); }
 .photo-reveal img { transition: transform 1.2s var(--ease); }
 @media (hover: hover) and (pointer: fine) {
   .photo-reveal:hover img { transform: scale(1.05); }
 }
-/* Floating "View" cursor — created + shown only by motion.js on a fine, hovering pointer. */
+/* Floating "View" cursor — created by motion.js on a fine, hovering pointer. GSAP owns the whole
+   transform (translate + scale + opacity via autoAlpha) so the disc scales about the pointer rather
+   than swooping from the corner. cursor:none is gated to .pc-active so the native cursor is never
+   hidden without the disc visible (e.g. when the pointer is already resting on a photo at load). */
 .photo-cursor {
   position: fixed; top: 0; left: 0; z-index: 200; width: 84px; height: 84px;
   border-radius: 999px; background: var(--accent); color: #fff;
   display: grid; place-items: center; pointer-events: none;
   font-family: var(--ui-font); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
-  opacity: 0; scale: 0.3; transition: opacity 0.3s var(--ease), scale 0.35s var(--ease);
-  will-change: transform;
+  opacity: 0; will-change: transform;
 }
-.photo-cursor.is-active { opacity: 1; scale: 1; }
-.has-photo-cursor [data-photo-cursor] { cursor: none; }
+.has-photo-cursor.pc-active [data-photo-cursor] { cursor: none; }
 
 /* ---- Product page ---- */
 .pdp { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
