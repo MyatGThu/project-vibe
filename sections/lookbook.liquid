@@ -22,8 +22,8 @@
           endif
         -%}
         <div class="lookbook__slide{% if block.settings.wide %} lookbook__slide--wide{% endif %}" {{ block.shopify_attributes }}>
-          <figure>
-            <img src="{{ src }}" alt="{{ block.settings.alt | default: block.settings.caption | escape }}" loading="lazy">
+          <figure class="photo-reveal">
+            <span class="photo-reveal__inner"><img src="{{ src }}" alt="{{ block.settings.alt | default: block.settings.caption | escape }}" loading="lazy"></span>
           </figure>
           <figcaption><span>{{ block.settings.caption }}</span><span>{{ block.settings.tag }}</span></figcaption>
         </div>
