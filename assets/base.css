@@ -920,6 +920,41 @@ section.l3d.is-3d + .shopify-section, section.l3d.is-3d + .section { margin-top:
 /* iOS zooms the whole page when a focused control is < 16px. Pin form controls to 16px. */
 input[type=email], input[type=text], input[type=password], input[type=search], textarea, select { font-size: 16px; }
 
+/* ============================================================
+   OVERDRIVE II — hidden scrollbar · auto-hiding menu · photo vortex
+   ============================================================ */
+
+/* Scrollbar hidden site-wide. Wheel / trackpad / keyboard / touch scrolling all still work. */
+html { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar { width: 0; height: 0; }
+
+/* Auto-hiding menu: the header retracts while scrolling and returns the moment the scroll
+   stops (motion.js toggles .is-hidden; it also returns on scroll-up, near the top, and on
+   keyboard focus). Reduced-motion keeps the menu put so it's never lost. */
+.header { transition: transform 0.5s var(--ease), border-color 0.4s ease, padding 0.4s var(--ease), background 0.4s ease; }
+.header.is-hidden { transform: translateY(-118%); }
+@media (prefers-reduced-motion: reduce) { .header.is-hidden { transform: none; } }
+
+/* ---- Photo vortex ----
+   Fallback-first: a calm horizontal gallery strip (no-JS / reduced-motion / touch).
+   motion.js adds .is-3d on desktop and rebuilds it into a rotating helix you spiral down
+   through on scroll — one look always front-and-centre, the rest orbiting it. */
+.vortex { position: relative; background: #0b0908; color: var(--bg); }
+.vortex__viewport { position: relative; }
+.vortex__stage { display: flex; gap: 1rem; overflow-x: auto; padding: clamp(2rem, 6vw, 4rem) var(--gutter); scrollbar-width: none; }
+.vortex__stage::-webkit-scrollbar { display: none; }
+.vortex__stage > img { flex: 0 0 auto; width: min(60vw, 300px); aspect-ratio: 3/4; object-fit: cover; border-radius: var(--radius); }
+.vortex__caption { position: absolute; left: 0; right: 0; bottom: clamp(1.5rem, 5vh, 3.5rem); z-index: 3; text-align: center; pointer-events: none; padding-inline: var(--gutter); }
+.vortex__caption .eyebrow { color: rgba(246, 243, 238, 0.72); }
+.vortex__caption h2 { font-size: var(--step-4); color: var(--bg); line-height: 0.98; }
+
+.js .vortex.is-3d { height: 340svh; }
+.js .vortex.is-3d .vortex__viewport { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; place-items: center; perspective: 1150px; background: radial-gradient(120% 90% at 50% 38%, #2a221c 0%, #0b0908 68%); }
+.js .vortex.is-3d .vortex__stage { position: relative; width: 0; height: 0; padding: 0; overflow: visible; transform-style: preserve-3d; will-change: transform; }
+.js .vortex.is-3d .vortex__tile { position: absolute; top: 0; left: 0; width: clamp(160px, 15vw, 250px); aspect-ratio: 3/4; overflow: hidden; border-radius: var(--radius); box-shadow: 0 34px 70px -26px rgba(0,0,0,0.75); backface-visibility: hidden; }
+.js .vortex.is-3d .vortex__tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (prefers-reduced-motion: reduce) { .vortex.is-3d { height: auto; } .vortex.is-3d .vortex__viewport { position: static; height: auto; } }
+
 /* Touch has no hover: reveal-on-hover never fires, so surface the captions and drop the
    hover-zoom that would otherwise stick after a tap. */
 @media (hover: none) {

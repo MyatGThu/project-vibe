@@ -29,6 +29,20 @@
       var onScroll = function () { header.classList.toggle('is-scrolled', window.scrollY > 20); };
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Auto-hiding menu: retract while scrolling, return the instant the scroll stops
+      // (also on scroll-up, near the top, and on keyboard focus so it's never trapped away).
+      var lastY = window.scrollY, hideTimer;
+      var onHideScroll = function () {
+        var y = window.scrollY;
+        if (y > 90 && y > lastY + 4) header.classList.add('is-hidden');
+        else if (y < lastY - 4 || y <= 90) header.classList.remove('is-hidden');
+        lastY = y;
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(function () { header.classList.remove('is-hidden'); }, 240);
+      };
+      window.addEventListener('scroll', onHideScroll, { passive: true });
+      header.addEventListener('focusin', function () { header.classList.remove('is-hidden'); });
     }
 
     if (reduce) return;   // honour the user; leave everything static & visible.
@@ -179,6 +193,36 @@
           });
         }
       });
+    }
+
+    /* ---- Photo vortex: a rotating helix of the house's imagery you spiral down through
+           on scroll (overdrive II). A tall section held by native position:sticky (no scroll
+           hijack); scroll scrubs the stage's rotation + descent so one look is always front-
+           and-centre, facing the camera, while the rest spiral around it. Desktop only:
+           mobile / no-JS / reduced-motion keep the calm horizontal gallery strip. ---- */
+    var vortex = document.querySelector('[data-vortex]');
+    if (vortex && !noScrollFX) {
+      var vstage = vortex.querySelector('[data-vortex-stage]');
+      var vimgs = vstage ? Array.prototype.slice.call(vstage.querySelectorAll('img')) : [];
+      if (vstage && vimgs.length >= 6) {
+        vortex.classList.add('is-3d');
+        var VN = vimgs.length, VANG = 42, VVS = 96, VR = 380;   // angle step, vertical step, radius
+        vimgs.forEach(function (img, i) {
+          var tile = document.createElement('div');
+          tile.className = 'vortex__tile';
+          vstage.insertBefore(tile, img);
+          tile.appendChild(img);
+          tile.style.transform = 'translate(-50%,-50%) rotateY(' + (i * VANG) + 'deg) translateZ(' + VR + 'px) translateY(' + (i * VVS) + 'px)';
+        });
+        var vTotalAng = VN * VANG, vTotalY = (VN - 1) * VVS;
+        ScrollTrigger.create({
+          trigger: vortex, start: 'top top', end: 'bottom bottom', scrub: 0.6,
+          onUpdate: function (self) {
+            var p = self.progress;
+            vstage.style.transform = 'rotateY(' + (-p * vTotalAng) + 'deg) translateY(' + (-p * vTotalY) + 'px)';
+          }
+        });
+      }
     }
 
     /* ---- Three-worlds shader dissolve (overdrive signature moment) ----
