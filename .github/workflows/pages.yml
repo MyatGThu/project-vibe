@@ -7,7 +7,7 @@ name: Deploy preview to GitHub Pages
 on:
   push:
     branches:
-      - claude/shopify-tapstitch-theme-06pi5z
+      - main
     paths:
       - site/**
       - assets/**
