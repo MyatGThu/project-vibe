@@ -1,0 +1,307 @@
+<title>The Monolith Coat — Tech Pack · Te Amo</title>
+<style>
+  :root {
+    --paper: #ECE7DE; --panel: #E3DCD0; --panel-2: #E8E2D8;
+    --ink: #221D18; --muted: #6C635A; --line: #CDC4B5; --line-2: #DBD3C5;
+    --accent: #8C3A2E; --on-accent: #F6F1E8;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --wool: #3B3A3C; --bone: #E9E3D6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16130F; --panel: #1F1A14; --panel-2: #221C15;
+      --ink: #ECE6DB; --muted: #9C9183; --line: #362E25; --line-2: #2C251E;
+      --accent: #CE7051; --on-accent: #17130E;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #ECE7DE; --panel: #E3DCD0; --panel-2: #E8E2D8;
+    --ink: #221D18; --muted: #6C635A; --line: #CDC4B5; --line-2: #DBD3C5;
+    --accent: #8C3A2E; --on-accent: #F6F1E8;
+  }
+  :root[data-theme="dark"] {
+    --paper: #16130F; --panel: #1F1A14; --panel-2: #221C15;
+    --ink: #ECE6DB; --muted: #9C9183; --line: #362E25; --line-2: #2C251E;
+    --accent: #CE7051; --on-accent: #17130E;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .sheet { max-width: 880px; margin: 0 auto; padding: clamp(1.4rem, 4vw, 3.2rem) clamp(1.1rem, 4vw, 3rem) 4rem; }
+
+  /* ---- type ---- */
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; text-wrap: balance; margin: 0; }
+  .wordmark { font-family: var(--serif); font-size: 15px; letter-spacing: 0.42em; text-transform: uppercase; }
+  a { color: inherit; }
+
+  /* ---- masthead ---- */
+  .mast { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding-bottom: 1.1rem; border-bottom: 1.5px solid var(--ink); }
+  .stamp { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 3px; padding: 0.32em 0.6em; white-space: nowrap; }
+  .title-row { margin: 1.4rem 0 0.2rem; }
+  .title-row h1 { font-size: clamp(2.1rem, 6vw, 3.4rem); }
+  .subtitle { color: var(--muted); margin-top: 0.5rem; max-width: 60ch; }
+
+  /* ---- meta grid ---- */
+  .meta { margin-top: 1.6rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .meta div { background: var(--panel); padding: 0.7rem 0.85rem; }
+  .meta dt { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.25rem; }
+  .meta dd { margin: 0; font-family: var(--mono); font-size: 13px; }
+
+  /* ---- sections ---- */
+  section { margin-top: 2.6rem; }
+  .sec-head { display: flex; align-items: baseline; gap: 0.8rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); margin-bottom: 1.1rem; }
+  .sec-head .mark { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; }
+  .sec-head h2 { font-size: 1.15rem; letter-spacing: 0.02em; }
+  .lede { color: var(--muted); margin: -0.3rem 0 1.1rem; max-width: 68ch; }
+
+  /* ---- flats ---- */
+  .flats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .flat { background: var(--panel-2); padding: 1rem 0.6rem 0.7rem; text-align: center; }
+  .flat svg { width: 100%; max-width: 220px; height: auto; }
+  .flat figcaption { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
+  .flat .stroke { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+  .flat .fillp { fill: var(--panel); stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; }
+  .flat .thin { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.65; }
+  .flat .btn { fill: var(--ink); }
+  .flat .cLetter { fill: var(--accent); font-family: var(--mono); font-size: 10px; font-weight: 700; }
+  .flat .cRing { fill: var(--paper); stroke: var(--accent); stroke-width: 1.2; }
+
+  /* ---- tables ---- */
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  caption { text-align: left; caption-side: bottom; color: var(--muted); font-size: 12px; padding: 0.6rem 0.2rem 0; font-family: var(--mono); }
+  th, td { padding: 0.55rem 0.8rem; text-align: left; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+  thead th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: var(--panel); font-weight: 600; white-space: nowrap; }
+  tbody tr:last-child td, tbody tr:last-child th { border-bottom: none; }
+  .pom td, .pom th { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .pom .name { font-family: var(--sans); }
+  .pom .code { color: var(--accent); font-weight: 700; }
+  .pom col.base, .pom .base { background: color-mix(in oklab, var(--accent) 9%, transparent); }
+  .pom thead .base { background: color-mix(in oklab, var(--accent) 16%, var(--panel)); color: var(--ink); }
+  .matrix th[scope="row"] { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  /* ---- swatches ---- */
+  .swatches { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .sw { display: flex; align-items: center; gap: 0.7rem; }
+  .sw .chip { width: 46px; height: 46px; border-radius: 6px; border: 1px solid var(--line); flex: none; }
+  .sw dt { font-family: var(--mono); font-size: 12px; }
+  .sw dd { margin: 0; color: var(--muted); font-family: var(--mono); font-size: 11px; }
+
+  /* ---- bullet spec lists ---- */
+  ul.spec { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  ul.spec li { display: grid; grid-template-columns: 1.1rem 1fr; gap: 0.6rem; }
+  ul.spec li::before { content: "—"; color: var(--accent); font-family: var(--mono); }
+  ul.spec b { font-weight: 600; }
+
+  .callout { border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 4px; background: var(--panel); padding: 1rem 1.15rem; }
+  .callout .lede { margin: 0 0 0.7rem; color: var(--ink); }
+
+  .ref { font-family: var(--mono); font-size: 12px; color: var(--muted); word-break: break-all; }
+  .foot { margin-top: 3rem; padding-top: 1rem; border-top: 1.5px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem 1.4rem; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
+  .foot b { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 620px) { .flats { grid-template-columns: 1fr; } .title-row h1 { font-size: 2rem; } }
+
+  @media print {
+    :root { --paper:#fff; --panel:#f6f3ee; --panel-2:#faf8f3; --ink:#000; --muted:#555; --line:#bbb; --line-2:#ddd; --accent:#7a2a1f; --on-accent:#fff; }
+    body { font-size: 11.5px; }
+    section, .flats, .scroll, table, .callout, .flat { break-inside: avoid; }
+    .sheet { max-width: none; padding: 0; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="mast">
+    <div>
+      <span class="wordmark">Te&nbsp;Amo</span>
+      <p class="eyebrow" style="margin-top:.5rem">Technical Specification · Cut &amp; Sew</p>
+    </div>
+    <span class="stamp">Dev · Sample&nbsp;Round&nbsp;1</span>
+  </header>
+
+  <div class="title-row">
+    <p class="eyebrow">Outerwear — Overcoat</p>
+    <h1>The Monolith Coat</h1>
+  </div>
+  <p class="subtitle">A sculptural double-breasted overcoat in dry charcoal wool — cinched waist, architectural peak lapels, floor-skimming line. This sheet is to quote and sample; grading and construction to be confirmed against your block at first proto.</p>
+
+  <dl class="meta">
+    <div><dt>Style no.</dt><dd>MC-001</dd></div>
+    <div><dt>Season</dt><dd>Autumn — Coll. 01</dd></div>
+    <div><dt>Category</dt><dd>Overcoat / Outerwear</dd></div>
+    <div><dt>Fit</dt><dd>Oversized, dropped shoulder</dd></div>
+    <div><dt>Size range</dt><dd>XS · S · M · L</dd></div>
+    <div><dt>Base size</dt><dd>M</dd></div>
+    <div><dt>Model</dt><dd>Made to order</dd></div>
+    <div><dt>Target retail</dt><dd>USD 1,290</dd></div>
+    <div><dt>Version</dt><dd>v1 · 2026·07·12</dd></div>
+  </dl>
+
+  <!-- FLATS -->
+  <section>
+    <div class="sec-head"><span class="mark">01</span><h2>Technical flat</h2></div>
+    <p class="lede">Schematic only — proportion and detail placement, not a pattern. Lettered callouts <b>A–H</b> map to the points of measure below. Full annotated construction flat (all seams + measures): <b>MC-001_MonolithCoat_flat_v01.svg</b>.</p>
+    <div class="flats">
+      <figure class="flat">
+        <svg viewBox="0 0 260 430" role="img" aria-label="Front technical flat of a double-breasted overcoat">
+          <!-- body -->
+          <path class="fillp" d="M74,74 L186,74 C190,150 195,185 194,220 C193,300 202,352 206,414 L54,414 C58,352 67,300 66,220 C65,185 70,150 74,74 Z"/>
+          <!-- sleeves -->
+          <path class="fillp" d="M74,76 C54,86 42,150 40,246 C39,286 40,306 44,320 L68,314 C70,250 74,168 82,104 Z"/>
+          <path class="fillp" d="M186,76 C206,86 218,150 220,246 C221,286 220,306 216,320 L192,314 C190,250 186,168 178,104 Z"/>
+          <!-- collar + peak lapels -->
+          <path class="fillp" d="M130,70 L104,60 L92,92 L104,100 L96,150 L130,116 Z"/>
+          <path class="fillp" d="M130,70 L156,60 L168,92 L156,100 L164,150 L130,116 Z"/>
+          <!-- wrap edge (double-breasted overlap) -->
+          <path class="thin" d="M130,116 C132,180 132,300 130,410"/>
+          <!-- buttons: 6x2 -->
+          <circle class="btn" cx="108" cy="150" r="3.2"/><circle class="btn" cx="152" cy="150" r="3.2"/>
+          <circle class="btn" cx="108" cy="196" r="3.2"/><circle class="btn" cx="152" cy="196" r="3.2"/>
+          <circle class="btn" cx="108" cy="242" r="3.2"/><circle class="btn" cx="152" cy="242" r="3.2"/>
+          <!-- belt -->
+          <rect class="stroke" x="66" y="228" width="128" height="20" rx="2"/>
+          <rect class="thin" x="120" y="230" width="20" height="16" rx="1.5"/>
+          <!-- welt pockets -->
+          <line class="thin" x1="78" y1="286" x2="108" y2="292"/>
+          <line class="thin" x1="152" y1="292" x2="182" y2="286"/>
+          <!-- hem callout letters -->
+          <g class="cRing"><circle cx="46" cy="140" r="8"/></g><text class="cLetter" x="46" y="143.6" text-anchor="middle">A</text>
+          <g class="cRing"><circle cx="52" cy="238" r="8"/></g><text class="cLetter" x="52" y="241.6" text-anchor="middle">B</text>
+          <g class="cRing"><circle cx="50" cy="406" r="8"/></g><text class="cLetter" x="50" y="409.6" text-anchor="middle">C</text>
+          <g class="cRing"><circle cx="130" cy="58" r="8"/></g><text class="cLetter" x="130" y="61.6" text-anchor="middle">D</text>
+          <g class="cRing"><circle cx="214" cy="360" r="8"/></g><text class="cLetter" x="214" y="363.6" text-anchor="middle">E</text>
+          <g class="cRing"><circle cx="42" cy="316" r="8"/></g><text class="cLetter" x="42" y="319.6" text-anchor="middle">F</text>
+        </svg>
+        <figcaption>Front · 6×2 double-breasted</figcaption>
+      </figure>
+      <figure class="flat">
+        <svg viewBox="0 0 260 430" role="img" aria-label="Back technical flat of the overcoat">
+          <path class="fillp" d="M74,74 L186,74 C190,150 195,185 194,220 C193,300 202,352 206,414 L54,414 C58,352 67,300 66,220 C65,185 70,150 74,74 Z"/>
+          <path class="fillp" d="M74,76 C54,86 42,150 40,246 C39,286 40,306 44,320 L68,314 C70,250 74,168 82,104 Z"/>
+          <path class="fillp" d="M186,76 C206,86 218,150 220,246 C221,286 220,306 216,320 L192,314 C190,250 186,168 178,104 Z"/>
+          <!-- back collar -->
+          <path class="stroke" d="M104,74 C118,88 142,88 156,74"/>
+          <!-- centre back seam -->
+          <line class="thin" x1="130" y1="90" x2="130" y2="360"/>
+          <!-- half belt -->
+          <rect class="stroke" x="92" y="228" width="76" height="18" rx="2"/>
+          <circle class="btn" cx="104" cy="237" r="2.6"/><circle class="btn" cx="156" cy="237" r="2.6"/>
+          <!-- centre back vent -->
+          <line class="stroke" x1="130" y1="360" x2="130" y2="414"/>
+          <line class="thin" x1="122" y1="360" x2="122" y2="414"/>
+          <g class="cRing"><circle cx="130" cy="352" r="8"/></g><text class="cLetter" x="130" y="355.6" text-anchor="middle">G</text>
+          <g class="cRing"><circle cx="42" cy="316" r="8"/></g><text class="cLetter" x="42" y="319.6" text-anchor="middle">H</text>
+        </svg>
+        <figcaption>Back · centre vent 30cm</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- POM -->
+  <section>
+    <div class="sec-head"><span class="mark">02</span><h2>Points of measure</h2></div>
+    <p class="lede">Finished garment, measured flat and relaxed. All values <b>cm</b>; girths are half-measurements (pit-to-pit / one side). Base size <b>M</b> highlighted. Confirm graded nest before bulk.</p>
+    <div class="scroll">
+      <table class="pom">
+        <colgroup><col/><col/><col/><col/><col class="base"/><col/><col/></colgroup>
+        <thead>
+          <tr><th>Point of measure</th><th>Code</th><th>XS</th><th>S</th><th class="base">M</th><th>L</th><th>Tol.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">½ Chest, 2.5&nbsp;cm below armhole</td><td class="code">A</td><td>54</td><td>56</td><td class="base">58</td><td>60</td><td>±1.5</td></tr>
+          <tr><td class="name">½ Waist, at belt</td><td class="code">B</td><td>48</td><td>50</td><td class="base">52</td><td>54</td><td>±1.5</td></tr>
+          <tr><td class="name">½ Sweep, at hem</td><td class="code">C</td><td>62</td><td>64</td><td class="base">66</td><td>68</td><td>±1.5</td></tr>
+          <tr><td class="name">Shoulder, seam–seam (dropped)</td><td class="code">D</td><td>46</td><td>47</td><td class="base">48</td><td>49</td><td>±1.0</td></tr>
+          <tr><td class="name">Back length, HPS–hem</td><td class="code">E</td><td>109</td><td>110.5</td><td class="base">112</td><td>113.5</td><td>±1.0</td></tr>
+          <tr><td class="name">Sleeve length, shoulder–cuff</td><td class="code">F</td><td>60</td><td>61</td><td class="base">62</td><td>63</td><td>±1.0</td></tr>
+          <tr><td class="name">Centre-back vent length</td><td class="code">G</td><td>28</td><td>29</td><td class="base">30</td><td>31</td><td>±1.0</td></tr>
+          <tr><td class="name">Armhole, straight</td><td class="code">H</td><td>25.5</td><td>26</td><td class="base">27</td><td>28</td><td>±0.5</td></tr>
+          <tr><td class="name">½ Cuff opening</td><td class="code">—</td><td>15</td><td>15.5</td><td class="base">16</td><td>16.5</td><td>±0.5</td></tr>
+          <tr><td class="name">Lapel width, at peak</td><td class="code">—</td><td>11</td><td>11</td><td class="base">11</td><td>11</td><td>±0.3</td></tr>
+        </tbody>
+        <caption>Grade: 2&nbsp;cm on girths, 1.5&nbsp;cm on lengths, per size step. Inch conversions on request.</caption>
+      </table>
+    </div>
+  </section>
+
+  <!-- MATERIALS -->
+  <section>
+    <div class="sec-head"><span class="mark">03</span><h2>Materials &amp; trims</h2></div>
+    <p class="lede">Dry, matte hand throughout — no sheen. If you can source the coating wool, send your books; otherwise advise and we supply.</p>
+    <div class="scroll">
+      <table class="matrix">
+        <thead><tr><th>Component</th><th>Spec</th><th>Colour</th><th>Placement</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Shell face</th><td>100% virgin wool, dry melton / coating, 480–520&nbsp;gsm, low nap</td><td>Charcoal</td><td>Body, sleeves, collar, belt</td></tr>
+          <tr><th scope="row">Chest piece</th><td>Hair canvas + light domette; fusible front elsewhere</td><td>—</td><td>Front / lapel roll</td></tr>
+          <tr><th scope="row">Body lining</th><td>100% cupro (Bemberg) twill</td><td>Tonal charcoal</td><td>Full body</td></tr>
+          <tr><th scope="row">Sleeve lining</th><td>Cupro/viscose satin-twill, slip finish</td><td>Tonal</td><td>Sleeves</td></tr>
+          <tr><th scope="row">Buttons — front</th><td>6 × corozo or horn, 30L (19&nbsp;mm), matte</td><td>Tonal charcoal</td><td>Double-breasted stance + jigger</td></tr>
+          <tr><th scope="row">Buttons — sleeve</th><td>8 × 24L (15&nbsp;mm), matte</td><td>Tonal</td><td>4 per cuff</td></tr>
+          <tr><th scope="row">Belt</th><td>Self-fabric, 5&nbsp;cm; self-covered or matte gunmetal buckle</td><td>Charcoal</td><td>Waist, on loops</td></tr>
+          <tr><th scope="row">Thread</th><td>Tonal core-spun, Tex 40</td><td>Charcoal</td><td>All seams / topstitch</td></tr>
+          <tr><th scope="row">Labels</th><td>Woven brand + care/content + size tab</td><td>—</td><td>CB neck / side seam</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:1.4rem">
+      <p class="eyebrow" style="margin-bottom:.7rem">Colourway</p>
+      <dl class="swatches">
+        <div class="sw"><span class="chip" style="background:var(--wool)"></span><div><dt>Charcoal — primary</dt><dd>Dry matte · ≈ Pantone 19-0201 TCX · dye-lot approval req.</dd></div></div>
+        <div class="sw"><span class="chip" style="background:var(--bone)"></span><div><dt>Bone — future</dt><dd>Hold for Coll. 02 · not this sample</dd></div></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONSTRUCTION -->
+  <section>
+    <div class="sec-head"><span class="mark">04</span><h2>Construction &amp; finishing</h2></div>
+    <ul class="spec">
+      <li><span><b>Front structure.</b> Canvassed front with hair-canvas chest piece for a clean architectural lapel roll; fusible support elsewhere. Roll line pressed and set.</span></li>
+      <li><span><b>Closure.</b> Double-breasted 6×2 stance, front overlap 16&nbsp;cm, internal jigger button. Buttonholes: keyhole, confirm hand vs machine at sample.</span></li>
+      <li><span><b>Lapel &amp; collar.</b> Peak lapel ≈11&nbsp;cm at peak; undercollar melton, felled. Hard press, <b>no shine</b> — dry charcoal must stay matte.</span></li>
+      <li><span><b>Waist.</b> Cinched via attached self-belt on belt loops (front); back half-belt with 2 buttons. Confirm loop vs. keeper placement at proto.</span></li>
+      <li><span><b>Sleeves.</b> Set-in, roll-head with sleeve-head roll + light shoulder pad; 4 cuff buttons each (working vs. non-working — advise cost delta).</span></li>
+      <li><span><b>Pockets.</b> Two besom/welt at side seam + one interior welt with button.</span></li>
+      <li><span><b>Vent &amp; hems.</b> Centre-back vent 30&nbsp;cm, clean-finished. Hem 4&nbsp;cm, blind-stitched; lining dropped with a pleat.</span></li>
+      <li><span><b>Seams &amp; edges.</b> Seams bound/overlocked; front edge clean or 6&nbsp;mm edge-stitch — send both on the proto so we can choose.</span></li>
+    </ul>
+  </section>
+
+  <!-- LABELLING -->
+  <section>
+    <div class="sec-head"><span class="mark">05</span><h2>Labelling &amp; packing</h2></div>
+    <ul class="spec">
+      <li><span><b>Brand label</b> woven, centre-back neck. <b>Care/content</b> + fibre + RN/CoO on side-seam label; <b>size tab</b> beneath.</span></li>
+      <li><span><b>Content/care</b> bilingual per destination market; symbols per ISO 3758. Country of origin per your facility.</span></li>
+      <li><span><b>Pack:</b> on a wooden/loop hanger in a breathable garment bag; optional fold-pack per instruction; polybag food-grade if used.</span></li>
+    </ul>
+  </section>
+
+  <!-- ASK -->
+  <section>
+    <div class="sec-head"><span class="mark">06</span><h2>To quote — what we need from you</h2></div>
+    <div class="callout">
+      <p class="lede">This is a first development sheet. Please make <b>one fit proto, size M, charcoal</b>, and quote against a made-to-order model.</p>
+      <ul class="spec">
+        <li><span><b>Sample</b> cost + lead time for the size-M proto.</span></li>
+        <li><span><b>Unit cost</b> at MOQ 10 / 30 / 50, and a <b>per-order (made-to-order)</b> unit cost + turnaround — this is our primary model.</span></li>
+        <li><span><b>Fabric:</b> can you source the coating wool + linings, or should we supply? Send your coating books / handloom options.</span></li>
+        <li><span><b>Grading:</b> confirm the graded nest and the POM tolerances above; flag anything that risks the sculptural line.</span></li>
+        <li><span><b>Value engineering:</b> call out any construction change that protects the look while improving cost or lead time.</span></li>
+      </ul>
+    </div>
+    <p style="margin-top:1.1rem" class="ref"><b style="color:var(--ink)">Design reference (attach to email):</b><br>hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png — front render on house model. Silhouette + drape reference; ignore print/graphics.</p>
+  </section>
+
+  <footer class="foot">
+    <span><b>Te Amo</b> · The Monolith Coat · MC-001 · v1</span>
+    <span>Contact&nbsp;<b>—</b> · Factory&nbsp;<b>—</b> · Date&nbsp;<b>2026·07·12</b></span>
+  </footer>
+
+</div>

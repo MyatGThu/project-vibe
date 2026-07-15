@@ -1,0 +1,67 @@
+name: Deploy preview to GitHub Pages
+
+# Publishes the static storefront preview in site/ (real Melina imagery, driven by
+# assets/base.css) to GitHub Pages, so the design can be viewed without a Shopify store.
+# This is a DEV PREVIEW only — the live store still renders the Liquid theme from `main`.
+
+on:
+  push:
+    branches:
+      - claude/shopify-tapstitch-theme-06pi5z
+    paths:
+      - site/**
+      - assets/**
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; newer pushes supersede in-flight ones.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble static site
+        run: |
+          set -eux
+          mkdir -p _site/assets
+          if ls site/*.html >/dev/null 2>&1; then
+            # The hand-authored preview pages (real image URLs, reference assets/…)
+            cp site/*.html _site/
+            # The real theme stylesheet + vendored libs + placeholder svgs
+            cp assets/base.css assets/motion.js assets/store.js _site/assets/
+            cp assets/gsap.min.js assets/lenis.min.js assets/scrolltrigger.min.js assets/model-viewer.min.js _site/assets/
+            cp assets/ph-figure.svg assets/ph-wide.svg _site/assets/
+          else
+            # site/ not assembled yet — deploy a placeholder so the URL exists and Pages is enabled
+            printf '%s' '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Te Amo — preview</title><body style="font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;background:#EDE9E3;color:#14110F;letter-spacing:.02em"><p>The Te Amo preview is being assembled — check back shortly.</p>' > _site/index.html
+          fi
+          test -f _site/index.html
+          ls -R _site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

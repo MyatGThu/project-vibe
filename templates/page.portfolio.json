@@ -15,14 +15,14 @@
         "s2": { "type": "stat", "settings": { "number": "0", "label": "Retouching hrs" } },
         "s3": { "type": "stat", "settings": { "number": "∞", "label": "Looks" } },
         "s4": { "type": "stat", "settings": { "number": "1", "label": "Melina" } },
-        "w1": { "type": "work", "settings": { "title": "The Monolith Coat", "tag": "Outerwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c.png" } },
-        "w2": { "type": "work", "settings": { "title": "The Halo Gown", "tag": "Eveningwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513.png" } },
-        "w3": { "type": "work", "settings": { "title": "The Liquid Slip", "tag": "Dress", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e.png" } },
-        "w4": { "type": "work", "settings": { "title": "The Null Suit", "tag": "Tailoring", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_143226_eb56ba6a-0f63-4b9d-bc88-dbe6ba5e02d4.png" } },
-        "w5": { "type": "work", "settings": { "title": "The Obsidian Trouser", "tag": "Tailoring", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a.png" } },
-        "w6": { "type": "work", "settings": { "title": "The Vapor Knit", "tag": "Knitwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe.png" } },
-        "c1": { "type": "campaign", "settings": { "caption": "Autumn — Ivory", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101609_eafe04a9-e9bf-4b93-96a5-6612507a3113.png" } },
-        "c2": { "type": "campaign", "settings": { "caption": "Autumn — Atrium", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101625_a62edf8d-0309-4acf-a7e8-ccac64417485.png" } }
+        "w1": { "type": "work", "settings": { "title": "The Monolith Coat", "tag": "Outerwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c_min.webp" } },
+        "w2": { "type": "work", "settings": { "title": "The Halo Gown", "tag": "Eveningwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513_min.webp" } },
+        "w3": { "type": "work", "settings": { "title": "The Liquid Slip", "tag": "Dress", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e_min.webp" } },
+        "w4": { "type": "work", "settings": { "title": "The Null Suit", "tag": "Tailoring", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_143226_eb56ba6a-0f63-4b9d-bc88-dbe6ba5e02d4_min.webp" } },
+        "w5": { "type": "work", "settings": { "title": "The Obsidian Trouser", "tag": "Tailoring", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a_min.webp" } },
+        "w6": { "type": "work", "settings": { "title": "The Vapor Knit", "tag": "Knitwear", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe_min.webp" } },
+        "c1": { "type": "campaign", "settings": { "caption": "Autumn — Ivory", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101609_eafe04a9-e9bf-4b93-96a5-6612507a3113_min.webp" } },
+        "c2": { "type": "campaign", "settings": { "caption": "Autumn — Atrium", "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_101625_a62edf8d-0309-4acf-a7e8-ccac64417485_min.webp" } }
       },
       "block_order": ["s1", "s2", "s3", "s4", "w1", "w2", "w3", "w4", "w5", "w6", "c1", "c2"]
     }
