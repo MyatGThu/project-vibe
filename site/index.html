@@ -22,6 +22,11 @@
     <section class="reel" data-reel aria-label="Every look, worn by Melina"></section>
   </main>
 
+  <div class="scroll-cue" data-scroll-cue aria-hidden="true">
+    <span class="scroll-cue__label">Scroll</span>
+    <span class="scroll-cue__track"><span class="scroll-cue__dot"></span></span>
+  </div>
+
   <nav class="botmenu" aria-label="Primary">
     <a class="botmenu__name" href="index.html" aria-current="page">Te Amo</a>
     <a href="gym.html">Gym</a>
@@ -60,6 +65,14 @@
         '<img src="' + src + '" alt="Melina in a Te Amo look"' + (i < 2 ? '' : ' loading="lazy"') + '></figure>');
     });
     reel.appendChild(vp);
+
+    // Scroll indicator fades out the moment the visitor scrolls (they've got it).
+    (function () {
+      var cue = document.querySelector('[data-scroll-cue]');
+      if (!cue) return;
+      var hide = function () { if (window.scrollY > 40) { cue.classList.add('is-hidden'); window.removeEventListener('scroll', hide); } };
+      window.addEventListener('scroll', hide, { passive: true });
+    })();
   </script>
   <script src="assets/lenis.min.js"></script>
   <script src="assets/gsap.min.js"></script>
