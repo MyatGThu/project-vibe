@@ -1236,3 +1236,13 @@ html:not(.js) .reel, .reel:not(.js *) { }
   .wprod__media { aspect-ratio: auto; height: 64svh; }
   .wprod__body { padding-top: .8rem; }
 }
+
+/* Landing scroll indicator — signals the reel is a scrollable gallery; fades on first scroll. */
+.scroll-cue { position: fixed; left: 50%; z-index: 35; transform: translateX(-50%); bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 4.4rem); display: flex; flex-direction: column; align-items: center; gap: .5rem; color: rgba(246,243,238,.74); text-shadow: 0 1px 14px rgba(0,0,0,.6); pointer-events: none; transition: opacity .55s var(--ease), transform .55s var(--ease); }
+.scroll-cue.is-hidden { opacity: 0; transform: translateX(-50%) translateY(10px); }
+.scroll-cue__label { font-family: var(--ui-font); font-size: var(--step--1); text-transform: uppercase; letter-spacing: .3em; }
+.scroll-cue__track { position: relative; width: 1px; height: 40px; background: linear-gradient(rgba(246,243,238,.12), rgba(246,243,238,.48)); overflow: hidden; }
+.scroll-cue__dot { position: absolute; left: -1px; top: 0; width: 3px; height: 9px; border-radius: 2px; background: rgba(246,243,238,.92); animation: scroll-cue-dot 1.9s var(--ease) infinite; }
+@keyframes scroll-cue-dot { 0% { transform: translateY(-11px); opacity: 0; } 22% { opacity: 1; } 68% { opacity: 1; } 100% { transform: translateY(40px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .scroll-cue__dot { animation: none; top: 38%; } .scroll-cue.is-hidden { transform: translateX(-50%); } }
+@media (max-width: 420px) { .scroll-cue { bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 6.6rem); } }
