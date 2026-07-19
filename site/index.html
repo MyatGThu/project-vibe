@@ -50,11 +50,16 @@
     ];
     var base = "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/";
     var reel = document.querySelector('[data-reel]');
+    // Sticky viewport wrapper: the .reel section is tall (the scroll track); this holds the frames
+    // pinned to one screen so each frame is 100svh, NOT the full track height.
+    var vp = document.createElement('div'); vp.className = 'reel__viewport';
     REEL.forEach(function (id, i) {
-      reel.insertAdjacentHTML('beforeend',
-        '<figure class="reel__frame"><img src="' + base + id + '_min.webp" alt="Melina in a Te Amo look"' +
-        (i < 2 ? '' : ' loading="lazy"') + '></figure>');
+      var src = base + id + '_min.webp';
+      vp.insertAdjacentHTML('beforeend',
+        '<figure class="reel__frame"><span class="reel__bg" style="background-image:url(' + src + ')"></span>' +
+        '<img src="' + src + '" alt="Melina in a Te Amo look"' + (i < 2 ? '' : ' loading="lazy"') + '></figure>');
     });
+    reel.appendChild(vp);
   </script>
   <script src="assets/lenis.min.js"></script>
   <script src="assets/gsap.min.js"></script>
