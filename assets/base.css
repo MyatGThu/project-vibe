@@ -1116,9 +1116,13 @@ html::-webkit-scrollbar { width: 0; height: 0; }
 
 .reel { position: relative; height: var(--reel-h, 900svh); }
 .reel__viewport { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #0b0a09; }
-.reel__frame { position: absolute; inset: 0; margin: 0; will-change: transform, opacity; backface-visibility: hidden; }
-.reel__frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.reel__frame::after { content: ""; position: absolute; inset: 0; background: radial-gradient(125% 100% at 50% 42%, transparent 52%, rgba(0,0,0,.42)); pointer-events: none; }
+.reel__frame { position: absolute; inset: 0; margin: 0; overflow: hidden; will-change: transform, opacity; backface-visibility: hidden; }
+/* Show the WHOLE portrait look (contain), never a cover-crop — a cover-crop turns a portrait
+   photo into an extreme close-up on any wide/landscape screen. A blurred, darkened copy of the
+   same image fills the frame behind it so there are no dead letterbox bars. */
+.reel__bg { position: absolute; inset: -8%; background-size: cover; background-position: center 30%; filter: blur(38px) brightness(0.5) saturate(1.1); transform: scale(1.06); pointer-events: none; }
+.reel__frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+.reel__frame::after { content: ""; position: absolute; inset: 0; z-index: 2; background: radial-gradient(130% 100% at 50% 42%, transparent 58%, rgba(0,0,0,.5)); pointer-events: none; }
 /* No-JS / reduced-motion: collapse to a single static full-bleed frame (never a blank stack). */
 html:not(.js) .reel, .reel:not(.js *) { }
 .no-js .reel__frame:not(:first-child) { display: none; }
@@ -1195,7 +1199,7 @@ html:not(.js) .reel, .reel:not(.js *) { }
    ============================================================ */
 /* Portrait looks in a tall phone viewport crop to a center strip — bias the crop to the
    upper body/face so the outfit reads, and calm the zoom so less context is lost. */
-.reel__frame img { object-position: center 28%; }
+/* (reel image is object-fit: contain now — full look shown, centered) */
 
 @media (max-width: 900px) {
   /* Hero: a touch shorter, title balanced, and DROP the scroll cue (it collided with the menu). */
