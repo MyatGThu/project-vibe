@@ -2,7 +2,9 @@
   assign words = section.settings.text | split: ' '
 -%}
 <section class="section manifesto">
-  <div class="container">
+  {%- comment -%} StringTune parallax: the whole statement block drifts (its own transform channel;
+     the inner .reveal / .reveal-words run GSAP on child elements, so they never fight). {%- endcomment -%}
+  <div class="container" string="parallax" string-factor="0.08">
     {%- if section.settings.eyebrow != blank -%}<p class="eyebrow reveal" style="margin-bottom:2rem">{{ section.settings.eyebrow }}</p>{%- endif -%}
     <p class="manifesto__text reveal-words">{% for w in words %}<span class="reveal-word">{{ w }}</span> {% endfor %}</p>
     {%- if section.settings.cta_text != blank -%}

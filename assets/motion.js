@@ -47,6 +47,18 @@
 
     if (reduce) return;   // honour the user; leave everything static & visible.
 
+    // StringTune — homepage-only declarative parallax (loaded via theme.liquid only when
+    // template == index). It reads scroll (coexists with Lenis) and transforms its OWN
+    // [string="parallax"] elements — a separate channel from every GSAP target, so they never
+    // fight. Only runs past the reduced-motion return above; a load miss is a silent no-op.
+    if (window.StringTune && window.StringTune.StringTune) {
+      try {
+        var st = window.StringTune.StringTune.getInstance();
+        st.use(window.StringTune.StringParallax);
+        st.start(60);
+      } catch (e) {}
+    }
+
     waitFor(function () { return window.gsap && window.ScrollTrigger; }, init);
   });
 
