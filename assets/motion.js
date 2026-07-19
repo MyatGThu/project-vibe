@@ -150,25 +150,26 @@
       ScrollTrigger.create({ trigger: frame, start: 'top 88%', once: true, onEnter: function () { revealFrame(frame); } });
     });
 
-    if (!noScrollFX) {
-      // In-frame vertical parallax: the inner drifts within the clipped frame (headroom comes from
-      // the 1.06 resting scale above, so ±2% never exposes a frame edge).
-      gsap.utils.toArray('[data-photo-parallax]').forEach(function (frame) {
-        var inner = frame.querySelector('.photo-reveal__inner') || frame;
-        gsap.fromTo(inner, { yPercent: -2 }, {
-          yPercent: 2, ease: 'none',
-          scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
-        });
+    // In-frame vertical photo parallax — non-jacking depth, transform-only, safe on ALL pointers
+    // (mobile included): the inner drifts within the clipped frame (headroom comes from the 1.06
+    // resting scale above, so ±2% never exposes an edge). The reveal owns the inner's scale, this
+    // owns yPercent — separate channels, never fight. Reduced-motion returned before init(), so this
+    // never runs then. (Only the scroll-JACKING effects stay behind noScrollFX below.)
+    gsap.utils.toArray('[data-photo-parallax]').forEach(function (frame) {
+      var inner = frame.querySelector('.photo-reveal__inner') || frame;
+      gsap.fromTo(inner, { yPercent: -2 }, {
+        yPercent: 2, ease: 'none',
+        scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
       });
-      // Portfolio portrait: a gentle held-scale drift as the hero scrolls away (scale stays >1 so
-      // the translate keeps the frame covered).
-      var pfPortrait = document.querySelector('.pf-hero__media img');
-      if (pfPortrait) {
-        gsap.fromTo(pfPortrait, { scale: 1.1, yPercent: -3 }, {
-          yPercent: 3, ease: 'none',
-          scrollTrigger: { trigger: '.pf-hero', start: 'top top', end: 'bottom top', scrub: true }
-        });
-      }
+    });
+    // Portfolio portrait: a gentle held-scale drift as the hero scrolls away (scale stays >1 so the
+    // translate keeps the frame covered). Also non-jacking → runs on touch.
+    var pfPortrait = document.querySelector('.pf-hero__media img');
+    if (pfPortrait) {
+      gsap.fromTo(pfPortrait, { scale: 1.1, yPercent: -3 }, {
+        yPercent: 3, ease: 'none',
+        scrollTrigger: { trigger: '.pf-hero', start: 'top top', end: 'bottom top', scrub: true }
+      });
     }
 
     /* Floating label cursor over clickable photos — fine, hovering pointer only (touch never fires
