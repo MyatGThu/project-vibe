@@ -47,6 +47,18 @@
 
     if (reduce) return;   // honour the user; leave everything static & visible.
 
+    // StringTune — homepage-only declarative parallax (loaded via theme.liquid only when
+    // template == index). It reads scroll (coexists with Lenis) and transforms its OWN
+    // [string="parallax"] elements — a separate channel from every GSAP target, so they never
+    // fight. Only runs past the reduced-motion return above; a load miss is a silent no-op.
+    if (window.StringTune && window.StringTune.StringTune) {
+      try {
+        var st = window.StringTune.StringTune.getInstance();
+        st.use(window.StringTune.StringParallax);
+        st.start(60);
+      } catch (e) {}
+    }
+
     waitFor(function () { return window.gsap && window.ScrollTrigger; }, init);
   });
 
@@ -84,6 +96,11 @@
     // Touch / handset: skip the scroll-jacking 3D flythrough AND the horizontal pin. On mobile they fall
     // back to a static hero and a native swipe strip — a calm, non-hijacked scroll (per user request).
     var noScrollFX = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 900px)').matches;
+    // Touch / small screens now RUN the smooth motion (parallax, shader dissolve, gallery warp),
+    // just tuned down for the GPU — lowPower scales amplitudes and caps the shader resolution.
+    // Only the scroll-JACKING pin (lookbook) stays a native swipe on touch (noScrollFX), because
+    // hijacking a thumb-scroll feels broken. Reduced-motion is still a hard off (returned above).
+    var lowPower = noScrollFX;
 
     /* ---- Lenis smooth scroll, driving ScrollTrigger ---- */
     if (cfg.smooth && window.Lenis) {
@@ -145,25 +162,26 @@
       ScrollTrigger.create({ trigger: frame, start: 'top 88%', once: true, onEnter: function () { revealFrame(frame); } });
     });
 
-    if (!noScrollFX) {
-      // In-frame vertical parallax: the inner drifts within the clipped frame (headroom comes from
-      // the 1.06 resting scale above, so ±2% never exposes a frame edge).
-      gsap.utils.toArray('[data-photo-parallax]').forEach(function (frame) {
-        var inner = frame.querySelector('.photo-reveal__inner') || frame;
-        gsap.fromTo(inner, { yPercent: -2 }, {
-          yPercent: 2, ease: 'none',
-          scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
-        });
+    // In-frame vertical photo parallax — non-jacking depth, transform-only, safe on ALL pointers
+    // (mobile included): the inner drifts within the clipped frame (headroom comes from the 1.06
+    // resting scale above, so ±2% never exposes an edge). The reveal owns the inner's scale, this
+    // owns yPercent — separate channels, never fight. Reduced-motion returned before init(), so this
+    // never runs then. (Only the scroll-JACKING effects stay behind noScrollFX below.)
+    gsap.utils.toArray('[data-photo-parallax]').forEach(function (frame) {
+      var inner = frame.querySelector('.photo-reveal__inner') || frame;
+      gsap.fromTo(inner, { yPercent: -2 }, {
+        yPercent: 2, ease: 'none',
+        scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
       });
-      // Portfolio portrait: a gentle held-scale drift as the hero scrolls away (scale stays >1 so
-      // the translate keeps the frame covered).
-      var pfPortrait = document.querySelector('.pf-hero__media img');
-      if (pfPortrait) {
-        gsap.fromTo(pfPortrait, { scale: 1.1, yPercent: -3 }, {
-          yPercent: 3, ease: 'none',
-          scrollTrigger: { trigger: '.pf-hero', start: 'top top', end: 'bottom top', scrub: true }
-        });
-      }
+    });
+    // Portfolio portrait: a gentle held-scale drift as the hero scrolls away (scale stays >1 so the
+    // translate keeps the frame covered). Also non-jacking → runs on touch.
+    var pfPortrait = document.querySelector('.pf-hero__media img');
+    if (pfPortrait) {
+      gsap.fromTo(pfPortrait, { scale: 1.1, yPercent: -3 }, {
+        yPercent: 3, ease: 'none',
+        scrollTrigger: { trigger: '.pf-hero', start: 'top top', end: 'bottom top', scrub: true }
+      });
     }
 
     /* Floating label cursor over clickable photos — fine, hovering pointer only (touch never fires
@@ -326,22 +344,35 @@
       gsap.utils.toArray('[data-gallery] .gallery__fig').forEach(function (fig) {
         ScrollTrigger.create({ trigger: fig, start: 'top 90%', once: true, onEnter: function () { fig.classList.add('is-in'); } });
       });
-      if (!noScrollFX) {
-        // Parallax: each column drifts at its own speed as the gallery crosses the viewport.
+      // Column parallax needs the multi-column desktop layout; mobile is a single wall (the warp
+      // below still runs there — it's the signature effect).
+      if (!lowPower) {
         gsap.utils.toArray('[data-gallery] [data-gallery-col]').forEach(function (col, i) {
           var to = [80, -60, 46][i % 3];
           gsap.fromTo(col, { y: 0 }, { y: to, ease: 'none', scrollTrigger: { trigger: gallery, start: 'top bottom', end: 'bottom top', scrub: 0.7 } });
         });
-        // Scroll-velocity warp: skew/scale/blur driven by Lenis velocity, easing back to rest on stop.
-        if (window.__lenis && window.__lenis.on) {
-          window.__lenis.on('scroll', function (e) {
-            var v = e.velocity || 0;
-            gallery.style.setProperty('--g-skew', Math.max(-5, Math.min(5, v * 0.22)).toFixed(2) + 'deg');
-            gallery.style.setProperty('--g-scale', (1 + Math.min(0.05, Math.abs(v) * 0.0016)).toFixed(3));
-            gallery.style.setProperty('--g-blur', Math.min(3.5, Math.abs(v) * 0.1).toFixed(2) + 'px');
-          });
-        }
       }
+      // Scroll-velocity warp — a manual, smoothed scrollY delta (robust on touch, where Lenis
+      // leaves native momentum in place and its own velocity can read 0). Skews/scales/blurs the
+      // photos into a "liquid" smear that decays back to rest; the loop idles when off-screen.
+      (function () {
+        var kSkew = lowPower ? 0.06 : 0.09, kScale = lowPower ? 0.0006 : 0.001, kBlur = lowPower ? 0.035 : 0.055;
+        var lastSY = window.scrollY, vel = 0, running = false, raf;
+        function inView() { var r = gallery.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; }
+        function step() {
+          var sy = window.scrollY;
+          vel = vel * 0.82 + (sy - lastSY) * 0.18;
+          lastSY = sy;
+          gallery.style.setProperty('--g-skew', Math.max(-5, Math.min(5, vel * kSkew)).toFixed(2) + 'deg');
+          gallery.style.setProperty('--g-scale', (1 + Math.min(0.05, Math.abs(vel) * kScale)).toFixed(3));
+          gallery.style.setProperty('--g-blur', Math.min(3.5, Math.abs(vel) * kBlur).toFixed(2) + 'px');
+          if (Math.abs(vel) < 0.05 && !inView()) { running = false; return; }
+          raf = requestAnimationFrame(step);
+        }
+        function kick() { if (!running) { running = true; lastSY = window.scrollY; raf = requestAnimationFrame(step); } }
+        window.addEventListener('scroll', kick, { passive: true });
+        kick();
+      })();
     }
 
     /* ---- Three-worlds shader dissolve (overdrive signature moment) ----
@@ -351,8 +382,7 @@
        Shares the desktop-only noScrollFX gate; reduced-motion already returned above. Any
        WebGL failure or <2 panels leaves the per-panel CSS backgrounds untouched (fallback). */
     (function worldsDissolve() {
-      if (noScrollFX) return;
-      var worlds = gsap.utils.toArray('[data-cshow]');
+      var worlds = gsap.utils.toArray('[data-cshow]');   // runs on mobile too; DPR capped below
       if (worlds.length < 2) return;
 
       var canvas = document.createElement('canvas');
@@ -407,7 +437,7 @@
       var uTime = gl.getUniformLocation(prog, 'uTime');
       var uProg = gl.getUniformLocation(prog, 'uProg');
 
-      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      var dpr = Math.min(window.devicePixelRatio || 1, lowPower ? 1 : 1.5);
       function resize() {
         var w = Math.max(1, Math.floor(window.innerWidth * dpr)), h = Math.max(1, Math.floor(window.innerHeight * dpr));
         if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
