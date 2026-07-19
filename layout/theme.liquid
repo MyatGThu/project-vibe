@@ -83,6 +83,10 @@
     {{ 'lenis.min.js' | asset_url | script_tag }}
     {{ 'gsap.min.js' | asset_url | script_tag }}
     {{ 'scrolltrigger.min.js' | asset_url | script_tag }}
+    {%- comment -%} anime.js — discrete UI micro-motion (bag, menu, badges); every page (17KB). {%- endcomment -%}
+    {{ 'anime.min.js' | asset_url | script_tag }}
+    {%- comment -%} StringTune — declarative parallax/cursor for the homepage scroll-story only (500KB, page-scoped like model-viewer). {%- endcomment -%}
+    {%- if template == 'index' -%}{{ 'stringtune.min.js' | asset_url | script_tag }}{%- endif -%}
     {{ 'motion.js' | asset_url | script_tag }}
     {{ 'store.js' | asset_url | script_tag }}
 

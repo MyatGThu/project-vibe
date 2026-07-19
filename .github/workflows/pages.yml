@@ -44,6 +44,7 @@ jobs:
             # The real theme stylesheet + vendored libs + placeholder svgs
             cp assets/base.css assets/motion.js assets/store.js _site/assets/
             cp assets/gsap.min.js assets/lenis.min.js assets/scrolltrigger.min.js assets/model-viewer.min.js _site/assets/
+            cp assets/anime.min.js assets/stringtune.min.js _site/assets/
             cp assets/ph-figure.svg assets/ph-wide.svg _site/assets/
           else
             # site/ not assembled yet — deploy a placeholder so the URL exists and Pages is enabled
