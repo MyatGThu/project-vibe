@@ -972,9 +972,10 @@ html::-webkit-scrollbar { width: 0; height: 0; }
 .gallery__fig img { width: 100%; display: block; aspect-ratio: 3 / 4; object-fit: cover; transform: skewY(var(--g-skew)) scale(var(--g-scale)); filter: blur(var(--g-blur)); will-change: transform, filter; }
 .js .gallery__fig { clip-path: inset(0 0 101% 0); }
 .js .gallery__fig.is-in { clip-path: inset(0 0 0 0); transition: clip-path 1.1s var(--ease); }
-@media (max-width: 760px) {
-  .gallery__grid { grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  .gallery__grid { grid-template-columns: 1fr; gap: clamp(0.8rem, 3vw, 1.4rem); }
   .gallery__col, .gallery__col:nth-child(2) { margin-top: 0; }
+  .gallery__fig img { aspect-ratio: 4 / 5; }   /* a touch shorter so the single-column wall scans faster on phones */
 }
 @media (prefers-reduced-motion: reduce) {
   .gallery__fig { clip-path: none !important; }
