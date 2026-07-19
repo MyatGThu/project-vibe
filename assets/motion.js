@@ -545,7 +545,9 @@
       if (RN > 1) {
         // Scroll length: ~0.5 viewport of travel per transition + one screen of headroom.
         reel.style.setProperty('--reel-h', ((RN - 1) * 52 + 100).toFixed(0) + 'svh');
-        gsap.set(frames, { opacity: 0, scale: 1.25, willChange: 'transform,opacity' });
+        // Incoming frames rest at scale 1.08 (slightly zoomed) — always ≥1 so a frame ALWAYS covers the
+        // viewport; dipping below 1 was exposing black gaps around a shrinking frame mid-transition.
+        gsap.set(frames, { opacity: 0, scale: 1.08, willChange: 'transform,opacity', transformOrigin: '50% 40%' });
         gsap.set(frames[0], { opacity: 1, scale: 1 });
         // Timeline total = RN-1 (one unit per transition); scrub maps page scroll onto it.
         // Windowing: only frames near the active index stay painted, so a tall stack of full-bleed
@@ -558,9 +560,18 @@
           trigger: reel, start: 'top top', end: 'bottom bottom', scrub: 0.5,
           onUpdate: function (self) { winFrames(Math.round(self.progress * (RN - 1))); }
         } });
-        for (var k = 1; k < RN; k++) {
-          rtl.to(frames[k - 1], { opacity: 0, scale: 1.6, ease: 'none', duration: 1 }, k - 1);          // zoom past + dissolve
-          rtl.fromTo(frames[k], { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, ease: 'none', duration: 1 }, k - 1); // rise from behind
+        // Each frame owns slot [i, i+1]: HOLDS at full size (scale 1, opacity 1) for the first ~60% so
+        // the whole look is legible, then quickly zooms past (→1.28) and dissolves while the next rises
+        // in — the "diving through" feel without shredding a look into zoomed fabric on a tall phone.
+        for (var i = 0; i < RN; i++) {
+          if (i > 0) {                                        // rise in (overlaps the previous frame's exit)
+            rtl.fromTo(frames[i], { opacity: 0 }, { opacity: 1, ease: 'power1.out', duration: 0.28 }, i - 0.28);
+            rtl.fromTo(frames[i], { scale: 1.08 }, { scale: 1, ease: 'power2.out', duration: 0.5 }, i - 0.28);
+          }
+          if (i < RN - 1) {                                   // hold, then zoom-dissolve past on exit
+            rtl.to(frames[i], { scale: 1.28, ease: 'power2.in', duration: 0.42 }, i + 0.62);
+            rtl.to(frames[i], { opacity: 0, ease: 'power1.in', duration: 0.28 }, i + 0.72);
+          }
         }
         winFrames(0);
       }

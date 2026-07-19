@@ -1189,3 +1189,46 @@ html:not(.js) .reel, .reel:not(.js *) { }
    rest hidden until GSAP takes over — prevents a stacked flash before init(). */
 .js .reel__frame { opacity: 0; }
 .js .reel__frame:first-child { opacity: 1; }
+
+/* ============================================================
+   REDESIGN — mobile corrections (phone-first fixes over the redesign block)
+   ============================================================ */
+/* Portrait looks in a tall phone viewport crop to a center strip — bias the crop to the
+   upper body/face so the outfit reads, and calm the zoom so less context is lost. */
+.reel__frame img { object-position: center 28%; }
+
+@media (max-width: 900px) {
+  /* Hero: a touch shorter, title balanced, and DROP the scroll cue (it collided with the menu). */
+  .world-hero { min-height: 86svh; padding: 12vh var(--gutter) 6vh; }
+  .world-hero__title { font-size: clamp(3rem, 20vw, 6.5rem); }
+  .world-hero__sub { font-size: var(--step-0); }
+  .world-hero__cue { display: none; }
+
+  /* Rail: kill the dead vertical space, size cards to the screen, clear the fixed menu. */
+  .wrail__track { min-height: auto; padding-block: 4vh 16vh; align-items: center; gap: clamp(1rem, 4vw, 2rem); }
+  .wrail__intro { width: min(80vw, 24ch); padding-right: 0; }
+  .wrail__intro h2 { font-size: var(--step-2); }
+  .wprod { width: min(84vw, 340px); }
+  .wrail__end { width: min(70vw, 22ch); }
+}
+
+/* Nothing should hide behind the fixed bottom menu (~4.2rem tall + inset). */
+@media (max-width: 900px) {
+  .about-section:last-child { padding-bottom: 7rem; }
+  .about-hero { min-height: 84svh; }
+}
+/* Bottom menu: never let it exceed the screen; let it wrap gracefully on the narrowest phones. */
+@media (max-width: 420px) {
+  .botmenu { flex-wrap: wrap; justify-content: center; row-gap: .1rem; max-width: calc(100vw - 1rem); }
+  .botmenu a { padding: .55em .62em; }
+}
+
+/* Mobile world rail v2: the hero already introduces the world, so the strip is pure product —
+   full-height snap cards, one prominent at a time, no dead vertical space. */
+@media (max-width: 900px) {
+  .wrail__intro, .wrail__end { display: none; }
+  .wrail__track { height: 88svh; min-height: 0; padding: 0 8vw 4svh; align-items: center; gap: 8vw; }
+  .wprod { width: 84vw; scroll-snap-align: center; }
+  .wprod__media { aspect-ratio: auto; height: 64svh; }
+  .wprod__body { padding-top: .8rem; }
+}
