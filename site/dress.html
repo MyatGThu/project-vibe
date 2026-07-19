@@ -1,29 +1,29 @@
 <!doctype html>
-<!-- DEV PREVIEW ONLY. Swim world: hero on top, then a horizontal product rail whose
-     background flows through the blue+sun palette as the looks pass. -->
+<!-- DEV PREVIEW ONLY. Dress world: hero on top, then a horizontal product rail whose
+     background flows through the house palette as the looks pass. -->
 <html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Te Amo — Swimwear</title>
+  <title>Te Amo — Dress</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&family=Pinyon+Script&display=swap">
   <link rel="stylesheet" href="assets/base.css">
   <script>document.documentElement.className = 'js';</script>
 </head>
-<body class="template-collection template-collection-swimwear world">
+<body class="template-page template-page-dress-and-jackets world">
   <a class="skip-link" href="#MainContent">Skip to content</a>
   <main id="MainContent">
     <section class="world-hero">
       <p class="eyebrow world-hero__eyebrow">Six pieces · Worn by Melina</p>
-      <h1 class="world-hero__title">Swimwear</h1>
-      <p class="world-hero__sub">Sun, open water and ease — sunfast azure and sunflower yellow, shaped to stay put when you dive.</p>
+      <h1 class="world-hero__title">Dress</h1>
+      <p class="world-hero__sub">The house line — clean, quiet luxury in charcoal wool, oyster satin and bone crepe. Cut close, worn easy.</p>
       <p class="world-hero__cue">Scroll to move through the edit →</p>
     </section>
 
-    <section class="wrail" data-world-rail aria-label="Swimwear products">
+    <section class="wrail" data-world-rail aria-label="Dress products">
       <div class="wrail__viewport">
         <div class="wrail__track" id="track">
-          <div class="wrail__intro"><h2 class="serif-italic">The Swim Edit</h2><p>Worn by Melina, made for you. No overstock — each piece cut to order.</p></div>
+          <div class="wrail__intro"><h2 class="serif-italic">The House Edit</h2><p>Worn by Melina, made for you. No overstock — each piece cut to order.</p></div>
         </div>
       </div>
     </section>
@@ -32,20 +32,20 @@
   <nav class="botmenu" aria-label="Primary">
     <a class="botmenu__name" href="index.html">Te Amo</a>
     <a href="gym.html">Gym</a>
-    <a href="dress.html">Dress</a>
-    <a href="swim.html" aria-current="page">Swimwear</a>
+    <a href="dress.html" aria-current="page">Dress</a>
+    <a href="swim.html">Swimwear</a>
     <a href="portfolio.html">Melina</a>
   </nav>
 
   <script>
     var BASE = "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/";
     var PROD = [
-      ["The Riviera One-Piece","Swimwear",8500,"hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59"],
-      ["The Solstice Bikini","Swimwear",7800,"hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d"],
-      ["The Lido Wrap","Swimwear",6900,"hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195"],
-      ["The Marina Short","Swimwear",6500,"hf_20260713_052706_bccade4b-d479-4243-b560-cf747846c8b2"],
-      ["The Noon Rashguard","Swimwear",7200,"hf_20260713_052713_42615169-5534-4167-9205-de125e46b879"],
-      ["The Cove Maillot","Swimwear",8800,"hf_20260713_052718_7436e4fd-65a8-4f0e-af5c-32729bf53dbe"]
+      ["The Monolith Coat","Outerwear",129000,"hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c"],
+      ["The Halo Gown","Eveningwear",240000,"hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e"],
+      ["The Liquid Slip","Dresses",69000,"hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e"],
+      ["The Null Suit","Tailoring",145000,"hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a"],
+      ["The Vapor Knit","Knitwear",52000,"hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513"],
+      ["The Meridian Cape","Outerwear",98000,"hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e"]
     ];
     var track = document.getElementById('track');
     PROD.forEach(function (p) {
@@ -53,7 +53,7 @@
         '<article class="wprod"><div class="wprod__media"><img src="' + BASE + p[3] + '_min.webp" alt="' + p[0] + ' — worn by Melina" loading="lazy"></div>' +
         '<div class="wprod__body"><span class="wprod__title">' + p[0] + '</span><span class="wprod__price">$' + (p[2] / 100).toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</span></div></article>');
     });
-    track.insertAdjacentHTML('beforeend', '<div class="wrail__end"><p class="eyebrow">Made to order</p><p class="muted" style="margin-top:.6rem;color:#124F74">Techpack → sample → made for you.</p></div>');
+    track.insertAdjacentHTML('beforeend', '<div class="wrail__end"><p class="eyebrow">Made to order</p><p class="muted" style="margin-top:.6rem">Techpack → sample → made for you.</p></div>');
   </script>
   <script src="assets/lenis.min.js"></script>
   <script src="assets/gsap.min.js"></script>
