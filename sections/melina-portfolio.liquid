@@ -54,8 +54,8 @@
     <div class="pf-work">
       {%- for block in section.blocks -%}{%- if block.type == 'work' -%}
         {%- assign wl = block.settings.link | default: store -%}
-        <a class="pf-work__item reveal" href="{{ wl }}" {{ block.shopify_attributes }}>
-          <img src="{{ block.settings.image_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+        <a class="pf-work__item photo-reveal" href="{{ wl }}" data-photo-cursor="View" data-photo-parallax {{ block.shopify_attributes }}>
+          <span class="photo-reveal__inner"><img src="{{ block.settings.image_url }}" alt="{{ block.settings.title | escape }}" loading="lazy"></span>
           <span class="pf-work__cap"><span>{{ block.settings.title }}</span><span>{{ block.settings.tag }}</span></span>
         </a>
       {%- endif -%}{%- endfor -%}
@@ -67,7 +67,7 @@
     <h2 class="h-md reveal" style="color:var(--bg);margin:.5rem 0 2.5rem">Seen this season</h2>
     <div class="editorial-split">
       {%- for block in section.blocks -%}{%- if block.type == 'campaign' -%}
-        <div class="editorial-split__media reveal" {{ block.shopify_attributes }}><img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="lazy"></div>
+        <div class="editorial-split__media photo-reveal" data-photo-parallax {{ block.shopify_attributes }}><span class="photo-reveal__inner"><img src="{{ block.settings.image_url }}" alt="{{ block.settings.caption | escape }}" loading="lazy"></span></div>
       {%- endif -%}{%- endfor -%}
     </div>
   </div></section>

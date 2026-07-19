@@ -20,6 +20,11 @@ shopify theme dev                 # optional local preview against a dev store (
 shopify theme check               # same as theme-check-node, via the CLI
 ```
 
+Note: recent `@shopify/theme-check-node` ships **no CLI bin** (it is a library) — `npx @shopify/theme-check-node`
+can fail with "could not determine executable to run". Prefer `shopify theme check`, or drive the library's
+API directly: `node -e "require('@shopify/theme-check-node').themeCheckRun(process.cwd()).then(r=>console.log(r.offenses.length))"`.
+(One pre-existing offense is expected: a missing `accessibility.featured_menu` translation key in `header.liquid`.)
+
 `.theme-check.yml` intentionally disables `ParserBlockingScript` (the scroll/3D libs in
 `assets/` are loaded deliberately) and `ImgWidthAndHeight` (every image sits in a CSS
 `aspect-ratio` container). Keep those disabled unless the rendering strategy changes.
@@ -56,8 +61,13 @@ scripts read. All styling flows through **one stylesheet, `assets/base.css`**, d
 CSS variables — there is no per-component CSS file.
 
 **JavaScript is progressive enhancement, two files:**
-- `assets/motion.js` — Lenis smooth scroll + GSAP ScrollTrigger reveals. No motion until the
-  vendored libs load; `prefers-reduced-motion` is fully honored.
+- `assets/motion.js` — Lenis smooth scroll + GSAP ScrollTrigger. Orchestrates every scroll effect:
+  the `.reveal` fade-ups, the homepage 3D flythrough + category parallax, the lookbook pin, the
+  **editorial photo grammar** (see below), magnetic buttons, and the WebGL worlds-dissolve. No motion
+  until the vendored libs load; `prefers-reduced-motion` is fully honored (it returns *before* `init()`,
+  so visibility is restored purely by CSS). It also carries two **dormant modules** — a scroll-velocity
+  photo wall (`.gallery` / `[data-gallery]`) and a photo vortex (`[data-vortex]`) — whose CSS+JS ship
+  but which **no section currently renders**; wire a section that emits the hook to activate them.
 - `assets/store.js` — the quick-view `<dialog>`, variant/quantity selection, add-to-bag, cart
   drawer, and lazy `<model-viewer>` (loaded only when a product has a 3D model). It works
   against **either** live Shopify JSON (`/products/{handle}.js`) **or**
@@ -74,6 +84,17 @@ so all three worlds coexist on one page (NO prices — each panel links to its l
 category-showcase parallax is **desktop-only** (motion.js, `[data-cshow]`, gated by `noScrollFX`);
 on mobile the plate gallery collapses to a horizontal-scroll strip. Parallax depth per plate is
 derived from its position in Liquid — deliberately **not** a schema setting (see sync gotcha below).
+
+**Editorial photo grammar (`.photo-reveal`).** The "meech213-style" photo treatment on the Melina
+portfolio (`sections/melina-portfolio.liquid` — work grid + campaigns) and the lookbook: each frame
+`clip-path`-wipes open while its `.photo-reveal__inner` settles from a slight zoom, then on desktop the
+inner drifts within the clipped frame, and a floating "View" cursor rides over clickable photos
+(`[data-photo-cursor]`). It is **hook-based so effects never fight on one transform**: the reveal owns the
+inner's `scale`, parallax owns its `yPercent`/`xPercent` (`[data-photo-parallax]`), and hover-scale lives
+on the child `<img>` — three separate targets. The clipped/zoomed initial state is scoped to `.js` (no
+flash); if the libs fail, `init()` calls `releasePhotoFrames()` (guarded on `!gsap || !ScrollTrigger`) so a
+photo is never stuck hidden. The lookbook reveals at the **section level** (its slides sit inside the
+horizontally-pinned track, so a per-slide vertical trigger would fire them all at once).
 
 **Demo-fallback pattern (important when editing collection/homepage sections).** Sections
 render real Shopify products when they exist, and fall back to hardcoded demo blocks when the
@@ -118,6 +139,9 @@ Two facts govern how you touch these:
   find its `_min.webp`, use the **Higgsfield MCP** (`show_generations`, type `image`) — the source
   of truth. The durable fix (planned, not yet done) is to rehost every referenced image onto
   Shopify's own CDN (Content → Files) and repoint the URLs.
+- **`images/` holds ~70 campaign renders committed to the repo** (named by outfit), staged toward that
+  rehost — but **not yet referenced by any section/template** (the theme still hotlinks CloudFront).
+  They are inert until a setting/URL points at them.
 
 List exactly what the theme references with:
 `grep -rhoE "hf_[0-9_]+[a-f0-9-]+(_min\.webp|\.png)" templates sections | sort -u`
@@ -135,6 +159,14 @@ text node leaking out of product cards and the footer's `date`-gets-3-arguments 
 template that renders it — this bricked the homepage once. Keep `range` steps integer, or derive
 the value another way (category-showcase derives its parallax depth from plate position rather than
 a decimal `range`).
+
+**GSAP transform-channel conflicts (when layering motion).** Two GSAP tweens on the *same* element only
+compose if they touch *different* transform channels — a one-shot `scale` reveal and a scrubbed `yPercent`
+parallax coexist, but two tweens both writing `y` overwrite. Put each effect on its own channel or its own
+nested element (this is why `.photo-reveal` splits reveal/parallax/hover across three targets). GSAP owns an
+element's whole `transform`, so a CSS `:hover { transform }` on that same element is dead once GSAP runs —
+hover a child instead. The vendored GSAP is 3.15 (`quickTo`, CSSPlugin `clip-path`, and ScrollTrigger
+`containerAnimation` are all available).
 
 ## Pre-launch business context (affects copy edits)
 

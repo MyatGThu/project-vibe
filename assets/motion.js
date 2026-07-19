@@ -50,9 +50,30 @@
     waitFor(function () { return window.gsap && window.ScrollTrigger; }, init);
   });
 
+  function releasePhotoFrames() {
+    // Libs never arrived (or bailed): release any pre-clipped/zoomed photo frames so a photo is
+    // never stuck hidden. Mirrors the .js CSS initial state set in base.css.
+    document.querySelectorAll('.photo-reveal').forEach(function (f) {
+      f.style.clipPath = 'none';
+      var n = f.querySelector('.photo-reveal__inner');
+      if (n) n.style.transform = 'none';
+    });
+  }
+
+  // Masked wipe + inner settle for one photo frame. Fired from a ScrollTrigger onEnter so the same
+  // reveal works off a vertical page-scroll trigger OR the lookbook's horizontal containerAnimation.
+  function revealFrame(frame) {
+    var gsap = window.gsap;
+    var inner = frame.querySelector('.photo-reveal__inner');
+    gsap.to(frame, { clipPath: 'inset(0 0 0% 0)', duration: 1.15, ease: 'power3.out' });
+    if (inner) gsap.to(inner, { scale: 1.06, duration: 1.35, ease: 'power3.out' });
+  }
+
   function init() {
     var gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
-    if (!gsap) return;
+    // The photo reveal depends on BOTH libs; a partial load (gsap ok, ScrollTrigger 404s) must still
+    // release the frames or every photo stays clipped to zero. Guard on the full precondition.
+    if (!gsap || !ScrollTrigger) { releasePhotoFrames(); return; }
     gsap.registerPlugin(ScrollTrigger);
     // Mobile browsers fire a resize every time the address bar shows/hides during a scroll. That resize
     // makes ScrollTrigger recompute + re-run invalidateOnRefresh, which snapped the scrubbed panel depths
@@ -112,6 +133,77 @@
     if (heroWords.length) {
       gsap.set('.hero__title', { opacity: 1 });
       gsap.from(heroWords, { yPercent: 120, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.15 });
+    }
+
+    /* ---- Editorial photo grammar: masked reveal + in-frame parallax + custom cursor ----
+       Every .photo-reveal frame wipes open (clip-path) while its inner settles from a slight zoom
+       as it scrolls in — a one-shot that runs on ALL viewports (mobile included). On desktop the
+       inner also drifts within the clipped frame ([data-photo-parallax]), and a floating "View"
+       label rides over clickable photos ([data-photo-cursor]). Reduced-motion returned before init
+       ran, so none of this executes then — CSS keeps the photos static. The reveal drives the
+       INNER's scale and the parallax drives its yPercent (independent transform channels), so the
+       two never fight; hover-scale lives on the child <img>, a third element GSAP never touches. */
+    gsap.utils.toArray('.photo-reveal').forEach(function (frame) {
+      // Lookbook slides live inside the horizontally-pinned track — a vertical trigger would fire
+      // them all at once (off-screen). They are revealed from the track's own motion below.
+      if (frame.closest('[data-lookbook]')) return;
+      ScrollTrigger.create({ trigger: frame, start: 'top 88%', once: true, onEnter: function () { revealFrame(frame); } });
+    });
+
+    if (!noScrollFX) {
+      // In-frame vertical parallax: the inner drifts within the clipped frame (headroom comes from
+      // the 1.06 resting scale above, so ±2% never exposes a frame edge).
+      gsap.utils.toArray('[data-photo-parallax]').forEach(function (frame) {
+        var inner = frame.querySelector('.photo-reveal__inner') || frame;
+        gsap.fromTo(inner, { yPercent: -2 }, {
+          yPercent: 2, ease: 'none',
+          scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+        });
+      });
+      // Portfolio portrait: a gentle held-scale drift as the hero scrolls away (scale stays >1 so
+      // the translate keeps the frame covered).
+      var pfPortrait = document.querySelector('.pf-hero__media img');
+      if (pfPortrait) {
+        gsap.fromTo(pfPortrait, { scale: 1.1, yPercent: -3 }, {
+          yPercent: 3, ease: 'none',
+          scrollTrigger: { trigger: '.pf-hero', start: 'top top', end: 'bottom top', scrub: true }
+        });
+      }
+    }
+
+    /* Floating label cursor over clickable photos — fine, hovering pointer only (touch never fires
+       hover, so nothing to reset there). */
+    if (window.matchMedia('(hover: hover)').matches && window.matchMedia('(pointer: fine)').matches) {
+      var pcTargets = gsap.utils.toArray('[data-photo-cursor]');
+      if (pcTargets.length) {
+        var pcur = document.createElement('div');
+        pcur.className = 'photo-cursor';
+        pcur.setAttribute('aria-hidden', 'true');
+        var pcLabel = document.createElement('span');
+        pcur.appendChild(pcLabel);
+        document.body.appendChild(pcur);
+        document.body.classList.add('has-photo-cursor');
+        // GSAP owns the whole transform (translate + scale) so the disc scales ABOUT the pointer,
+        // never swooping in from the corner; autoAlpha fades it in/out.
+        gsap.set(pcur, { xPercent: -50, yPercent: -50, scale: 0.3, autoAlpha: 0 });
+        var pcx = gsap.quickTo(pcur, 'x', { duration: 0.4, ease: 'power3' });
+        var pcy = gsap.quickTo(pcur, 'y', { duration: 0.4, ease: 'power3' });
+        window.addEventListener('mousemove', function (e) { pcx(e.clientX); pcy(e.clientY); }, { passive: true });
+        var pcShow = function (label) {
+          pcLabel.textContent = label || 'View';
+          document.body.classList.add('pc-active');            // gates cursor:none to while the disc shows
+          gsap.to(pcur, { scale: 1, autoAlpha: 1, duration: 0.3, ease: 'power3' });
+        };
+        var pcHide = function () {
+          document.body.classList.remove('pc-active');
+          gsap.to(pcur, { scale: 0.3, autoAlpha: 0, duration: 0.3, ease: 'power3' });
+        };
+        pcTargets.forEach(function (t) {
+          t.addEventListener('mouseenter', function () { pcShow(t.getAttribute('data-photo-cursor')); });
+          t.addEventListener('mouseleave', pcHide);
+        });
+        document.addEventListener('mouseleave', pcHide);
+      }
     }
 
     /* ---- 3D scroll landing: a tall section whose viewport is held by native CSS position:sticky
@@ -373,21 +465,43 @@
       sync();
     })();
 
-    /* ---- Lookbook horizontal pin ---- */
+    /* ---- Lookbook: section-level masked reveal + horizontal pin + in-frame parallax ---- */
     var lookbook = document.querySelector('[data-lookbook]');
-    if (lookbook && !noScrollFX) {
-      var track = lookbook.querySelector('.lookbook__track');
-      var scrollLen = function () { return track.scrollWidth - window.innerWidth; };
-      if (scrollLen() > 0) {
-        // Hand scrolling to the pin: kills the native swipe fallback (see .lookbook.is-pinned CSS).
-        lookbook.classList.add('is-pinned');
-        gsap.to(track, {
-          x: function () { return -scrollLen(); }, ease: 'none',
-          scrollTrigger: {
-            trigger: lookbook, start: 'top top', end: function () { return '+=' + scrollLen(); },
-            scrub: 0.6, pin: true, invalidateOnRefresh: true, anticipatePin: 1
-          }
-        });
+    if (lookbook) {
+      // Section-level reveal: the strip wipes in together as it enters. Its slides share a vertical
+      // position and most sit off-screen in the horizontal track, so a per-slide vertical trigger
+      // would just fire them all at once anyway — one section trigger is honest and cheaper. Runs on
+      // all viewports (the slides were skipped by the global reveal loop above).
+      var lbFigs = gsap.utils.toArray('[data-lookbook] .lookbook__slide .photo-reveal');
+      if (lbFigs.length) {
+        ScrollTrigger.create({ trigger: lookbook, start: 'top 80%', once: true, onEnter: function () { lbFigs.forEach(revealFrame); } });
+      }
+      if (!noScrollFX) {
+        var track = lookbook.querySelector('.lookbook__track');
+        var scrollLen = function () { return track ? track.scrollWidth - window.innerWidth : 0; };
+        if (scrollLen() > 0) {
+          // Hand scrolling to the pin: kills the native swipe fallback (see .lookbook.is-pinned CSS).
+          lookbook.classList.add('is-pinned');
+          var lbTween = gsap.to(track, {
+            x: function () { return -scrollLen(); }, ease: 'none',
+            scrollTrigger: {
+              trigger: lookbook, start: 'top top', end: function () { return '+=' + scrollLen(); },
+              scrub: 0.6, pin: true, invalidateOnRefresh: true, anticipatePin: 1
+            }
+          });
+          // In-frame HORIZONTAL parallax: each look drifts within its frame as the pinned track
+          // carries it across (containerAnimation ties the trigger to the horizontal tween, not the
+          // page scroll). xPercent channel only — the clip reveal owns scale, so they don't fight.
+          lookbook.querySelectorAll('.lookbook__slide .photo-reveal__inner').forEach(function (inner) {
+            gsap.fromTo(inner, { xPercent: -2.5 }, {
+              xPercent: 2.5, ease: 'none',
+              scrollTrigger: {
+                trigger: inner.closest('.lookbook__slide'), containerAnimation: lbTween,
+                start: 'left right', end: 'right left', scrub: true
+              }
+            });
+          });
+        }
       }
     }
 
