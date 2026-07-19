@@ -533,6 +533,74 @@
       });
     }
 
+    /* ---- Landing ZOOM REEL: full-viewport images that zoom-through and dissolve on scroll.
+           Native position:sticky holds the viewport (NO GSAP pin → scroll is never trapped); a
+           scrubbed master timeline scales each frame up past the camera as the next rises into
+           place from behind — a continuous dive through Melina's images. Runs on all viewports;
+           reduced-motion returned before init(), and CSS then shows the first frame static. ---- */
+    var reel = document.querySelector('[data-reel]');
+    if (reel) {
+      var frames = gsap.utils.toArray(reel.querySelectorAll('.reel__frame'));
+      var RN = frames.length;
+      if (RN > 1) {
+        // Scroll length: ~0.5 viewport of travel per transition + one screen of headroom.
+        reel.style.setProperty('--reel-h', ((RN - 1) * 52 + 100).toFixed(0) + 'svh');
+        gsap.set(frames, { opacity: 0, scale: 1.25, willChange: 'transform,opacity' });
+        gsap.set(frames[0], { opacity: 1, scale: 1 });
+        // Timeline total = RN-1 (one unit per transition); scrub maps page scroll onto it.
+        // Windowing: only frames near the active index stay painted, so a tall stack of full-bleed
+        // images never blows the mobile decode/memory budget (±2 rendered). Registered at creation
+        // (setting vars.onUpdate after build is ignored by ScrollTrigger).
+        var winFrames = function (active) {
+          for (var j = 0; j < RN; j++) frames[j].style.visibility = Math.abs(j - active) <= 2 ? 'visible' : 'hidden';
+        };
+        var rtl = gsap.timeline({ scrollTrigger: {
+          trigger: reel, start: 'top top', end: 'bottom bottom', scrub: 0.5,
+          onUpdate: function (self) { winFrames(Math.round(self.progress * (RN - 1))); }
+        } });
+        for (var k = 1; k < RN; k++) {
+          rtl.to(frames[k - 1], { opacity: 0, scale: 1.6, ease: 'none', duration: 1 }, k - 1);          // zoom past + dissolve
+          rtl.fromTo(frames[k], { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, ease: 'none', duration: 1 }, k - 1); // rise from behind
+        }
+        winFrames(0);
+      }
+    }
+
+    /* ---- WORLD RAIL (Gym / Dress / Swim pages): a hero sits on top, then the products scroll
+           HORIZONTALLY while the background flows through that world's own palette. Desktop pins
+           and scrubs the track from the vertical scroll; touch keeps a native horizontal swipe
+           strip (no thumb-jacking). Either way the background-position of the world gradient is
+           driven by progress, so the colour "shifts" as the looks pass. ---- */
+    var wrail = document.querySelector('[data-world-rail]');
+    if (wrail) {
+      var wtrack = wrail.querySelector('.wrail__track');
+      var wworld = document.querySelector('.world') || document.body;
+      var setWP = function (p) { wworld.style.setProperty('--wp', Math.max(0, Math.min(1, p)).toFixed(4)); };
+      setWP(0);
+      if (!noScrollFX && wtrack) {
+        var wlen = function () { return Math.max(0, wtrack.scrollWidth - window.innerWidth); };
+        if (wlen() > 0) {
+          wrail.classList.add('is-pinned');
+          gsap.to(wtrack, {
+            x: function () { return -wlen(); }, ease: 'none',
+            scrollTrigger: {
+              trigger: wrail, start: 'top top', end: function () { return '+=' + wlen(); },
+              scrub: 0.6, pin: true, invalidateOnRefresh: true, anticipatePin: 1,
+              onUpdate: function (self) { setWP(self.progress); }
+            }
+          });
+        }
+      } else {
+        // Touch: native horizontal swipe; drive the palette flow from the strip's own scroll.
+        var wvp = wrail.querySelector('.wrail__viewport');
+        if (wvp) {
+          var onWSwipe = function () { var m = wvp.scrollWidth - wvp.clientWidth; setWP(m > 0 ? wvp.scrollLeft / m : 0); };
+          wvp.addEventListener('scroll', onWSwipe, { passive: true });
+          onWSwipe();
+        }
+      }
+    }
+
     ScrollTrigger.refresh();
     // Recompute pins/scroll lengths once fonts + images settle.
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });

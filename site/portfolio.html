@@ -1,67 +1,51 @@
 <!doctype html>
-<!-- DEV PREVIEW of the Melina portfolio microsite (dark). Real assets, placeholder images. -->
-<html lang="en" class="js">
+<!-- DEV PREVIEW ONLY. Melina — compact About: one hero, the AI disclosure, and contact. No looks grid, no work/looks buttons. -->
+<html lang="en" class="no-js">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Melina — portfolio preview</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Te Amo — Melina</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&family=Pinyon+Script&display=swap">
   <link rel="stylesheet" href="assets/base.css">
+  <script>document.documentElement.className = 'js';</script>
 </head>
-<body class="template-page-portfolio">
-  <header class="pf-header">
-    <a class="pf-header__brand" href="#top"><span class="wordmark">Melina</span></a>
-    <nav class="pf-nav">
-      <a href="#work" class="link-underline">Work</a><a href="#campaigns" class="link-underline">Campaigns</a>
-      <a href="#about" class="link-underline">About</a><a href="#contact" class="link-underline">Contact</a>
-      <a class="pf-nav__store" href="#">Enter the store ↗</a>
-    </nav>
-  </header>
-
-  <div class="pf" id="top">
-    <section class="pf-hero">
-      <div class="pf-hero__media"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png" alt="Melina Jones Voss"></div>
-      <div class="pf-hero__body">
-        <span class="pf-pill"><span class="disclosure__dot"></span> Openly AI-generated</span>
-        <h1 class="pf-hero__name display reveal-words"><span class="reveal-word">Melina</span> <span class="reveal-word">Jones</span> <span class="reveal-word">Voss</span></h1>
-        <p class="pf-hero__role">AI Model</p>
-        <p class="lede" style="color:rgba(246,243,238,.8);max-width:46ch">An AI model who can wear any look, in any light — no photoshoot required.</p>
-        <div style="display:flex;gap:1rem;flex-wrap:wrap"><a href="#work" class="btn" style="--btn-bg:var(--bg);--btn-fg:var(--ink)">See the work</a><a href="#" class="btn btn--ghost" style="--btn-fg:var(--bg);border-color:rgba(246,243,238,.4)">Shop the looks</a></div>
+<body class="template-page template-page-portfolio about-compact">
+  <a class="skip-link" href="#MainContent">Skip to content</a>
+  <main id="MainContent">
+    <section class="about-hero">
+      <div class="about-hero__media">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_085755_0e77ac63-10a9-466f-bde4-d8c800cd179e.png" alt="Melina Jones Voss, the house muse">
+      </div>
+      <div class="about-hero__body">
+        <span class="about-disclose">Openly AI-generated</span>
+        <h1 class="about-hero__name">Melina<br>Jones Voss</h1>
+        <p class="lede" style="max-width:34ch;color:var(--muted)">The house muse — an AI model who wears every look, in any light. Rendered, disclosed, and dressed.</p>
       </div>
     </section>
 
-    <section class="section--tight"><div class="container"><div class="pf-comp">
-      <div class="stat"><span class="stat__num">100%</span><span class="stat__label">Generated</span></div>
-      <div class="stat"><span class="stat__num">0</span><span class="stat__label">Retouching hrs</span></div>
-      <div class="stat"><span class="stat__num">∞</span><span class="stat__label">Looks</span></div>
-      <div class="stat"><span class="stat__num">1</span><span class="stat__label">AI model</span></div>
-    </div></div></section>
+    <section class="about-section">
+      <h2>Disclosure</h2>
+      <p>Melina Jones Voss is an AI model. Every image of her is generated — there is no photoshoot and no real person retouched. We say so on every image, every time. The muse is generated; the garments are real, engineered from techpacks and made to order.</p>
+    </section>
 
-    <section class="section" id="about"><div class="container editorial-split">
-      <div><p class="eyebrow" style="margin-bottom:1.4rem">About</p><div class="lede" style="color:var(--bg)">Melina was created as the permanent face of the fashion house.</div></div>
-      <div><div class="disclosure" style="background:transparent;border-color:rgba(246,243,238,.25)"><span class="disclosure__dot"></span><p style="color:rgba(246,243,238,.85)">Melina is an AI model. She is not a real person. Every image here is generated with her likeness, and disclosed as such.</p></div></div>
-    </div></section>
+    <section class="about-section about-contact">
+      <h2>Contact</h2>
+      <p>For casting, collaboration, press, or a made-to-order enquiry — we work with real people and with Melina, side by side, everyone credited.</p>
+      <a class="link-underline" href="mailto:hello@te-amo.studio">hello@te-amo.studio</a>
+    </section>
+  </main>
 
-    <section class="section" id="work"><div class="container">
-      <div class="collection-head"><div><p class="eyebrow">Selected work</p><h2 class="h-md" style="color:var(--bg);margin-top:.5rem">The looks</h2></div><a href="#" class="link-underline">Shop all →</a></div>
-      <div class="pf-work" id="work-grid"></div>
-    </div></section>
+  <nav class="botmenu" aria-label="Primary">
+    <a class="botmenu__name" href="index.html">Te Amo</a>
+    <a href="gym.html">Gym</a>
+    <a href="dress.html">Dress</a>
+    <a href="swim.html">Swimwear</a>
+    <a href="portfolio.html" aria-current="page">Melina</a>
+  </nav>
 
-    <section class="section" id="contact"><div class="container" style="text-align:center">
-      <p class="eyebrow">Booking &amp; collaboration</p>
-      <h2 class="h-lg" style="color:var(--bg);max-width:16ch;margin:.5rem auto 0">Cast Melina in your next campaign.</h2>
-      <p class="lede" style="color:rgba(246,243,238,.75);max-width:50ch;margin:1.5rem auto 2rem">Available for lookbooks, product try-on, and editorial — alongside the real models we cast.</p>
-      <a href="#" class="btn" style="--btn-bg:var(--bg);--btn-fg:var(--ink)">Book Melina</a>
-    </div></section>
-
-    <footer class="pf-footer"><span class="muted" style="max-width:52ch">Melina Jones Voss is an AI model. All imagery is generated and openly disclosed.</span><a href="#" class="link-underline">← Back to the store</a></footer>
-  </div>
-
-  <script>
-    var looks = [["The Monolith Coat", "Outerwear", "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c_min.webp"], ["The Halo Gown", "Eveningwear", "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513_min.webp"], ["The Liquid Slip", "Dress", "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e_min.webp"], ["The Null Suit", "Tailoring", "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e_min.webp"], ["The Obsidian Trouser", "Tailoring", "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a_min.webp"], ["The Vapor Knit", "Knitwear", "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe_min.webp"]];
-    document.getElementById('work-grid').innerHTML = looks.map(function(l){return '<a class="pf-work__item photo-reveal" href="#" data-photo-cursor="View" data-photo-parallax><span class="photo-reveal__inner"><img src="'+l[2]+'" alt="'+l[0]+'"></span><span class="pf-work__cap"><span>'+l[0]+'</span><span>'+l[1]+'</span></span></a>';}).join('');
-    window.Theme = { motion: { smooth: true, reveal: true } };
-  </script>
-  <script src="assets/lenis.min.js"></script><script src="assets/gsap.min.js"></script><script src="assets/scrolltrigger.min.js"></script><script src="assets/motion.js"></script>
-<nav aria-label="Preview pages" style="position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);z-index:200;display:flex;gap:.15rem;padding:.3rem;background:rgba(20,17,15,.85);backdrop-filter:blur(12px);border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 12px 44px -14px rgba(0,0,0,.55)"><span style="color:rgba(246,243,238,.5);padding:.55em .7em">Preview</span><a href="index.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Home</a><a href="gym.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Gym</a><a href="swim.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Swim</a><a href="collection.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Shop</a><a href="portfolio.html" style="color:#F6F3EE;padding:.55em .95em;border-radius:999px;text-decoration:none">Melina</a></nav>
+  <script src="assets/lenis.min.js"></script>
+  <script src="assets/gsap.min.js"></script>
+  <script src="assets/scrolltrigger.min.js"></script>
+  <script src="assets/motion.js"></script>
 </body>
 </html>
