@@ -1246,3 +1246,15 @@ html:not(.js) .reel, .reel:not(.js *) { }
 @keyframes scroll-cue-dot { 0% { transform: translateY(-11px); opacity: 0; } 22% { opacity: 1; } 68% { opacity: 1; } 100% { transform: translateY(40px); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .scroll-cue__dot { animation: none; top: 38%; } .scroll-cue.is-hidden { transform: translateX(-50%); } }
 @media (max-width: 420px) { .scroll-cue { bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 6.6rem); } }
+
+/* Portfolio cover: model subtitle under the cursive name. */
+.landing .brand-mark { display: flex; flex-direction: column; align-items: center; gap: .35rem; }
+.brand-mark__sub { font-family: var(--ui-font); font-size: var(--step--1); text-transform: uppercase; letter-spacing: .32em; color: rgba(246,243,238,.6); text-shadow: 0 1px 12px rgba(0,0,0,.55); }
+
+/* Melina's "photo resume" — profile facts on the About page. */
+.about-resume { display: grid; max-width: 44rem; margin-top: .4rem; }
+.about-resume > div { display: grid; grid-template-columns: 10rem 1fr; gap: 1rem; align-items: baseline; padding: .95rem 0; border-top: 1px solid var(--line); }
+.about-resume > div:last-child { border-bottom: 1px solid var(--line); }
+.about-resume dt { color: var(--muted); text-transform: uppercase; letter-spacing: .16em; font-size: var(--step--1); }
+.about-resume dd { margin: 0; font-family: var(--display-font); font-weight: 330; font-size: var(--step-1); }
+@media (max-width: 560px) { .about-resume > div { grid-template-columns: 1fr; gap: .15rem; padding: .8rem 0; } }
