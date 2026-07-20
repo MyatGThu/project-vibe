@@ -11,6 +11,7 @@ on:
     paths:
       - site/**
       - assets/**
+      - media/**
       - .github/workflows/pages.yml
   workflow_dispatch:
 
