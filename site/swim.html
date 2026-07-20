@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Te Amo — Swimwear</title>
+  <title>Melina — Swim</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&family=Pinyon+Script&display=swap">
   <link rel="stylesheet" href="assets/base.css">
   <script>document.documentElement.className = 'js';</script>
@@ -14,27 +14,27 @@
   <a class="skip-link" href="#MainContent">Skip to content</a>
   <main id="MainContent">
     <section class="world-hero">
-      <p class="eyebrow world-hero__eyebrow">Six pieces · Worn by Melina</p>
-      <h1 class="world-hero__title">Swimwear</h1>
-      <p class="world-hero__sub">Sun, open water and ease — sunfast azure and sunflower yellow, shaped to stay put when you dive.</p>
-      <p class="world-hero__cue">Scroll to move through the edit →</p>
+      <p class="eyebrow world-hero__eyebrow">Selected work · Te Amo</p>
+      <h1 class="world-hero__title">Swim</h1>
+      <p class="world-hero__sub">Sun, open water and ease — Melina in the blue-and-sun swim campaign.</p>
+      <p class="world-hero__cue">Scroll through the series →</p>
     </section>
 
     <section class="wrail" data-world-rail aria-label="Swimwear products">
       <div class="wrail__viewport">
         <div class="wrail__track" id="track">
-          <div class="wrail__intro"><h2 class="serif-italic">The Swim Edit</h2><p>Worn by Melina, made for you. No overstock — each piece cut to order.</p></div>
+          <div class="wrail__intro"><h2 class="serif-italic">The Swim Series</h2><p>Worn by Melina — Te Amo, 2026.</p></div>
         </div>
       </div>
     </section>
   </main>
 
   <nav class="botmenu" aria-label="Primary">
-    <a class="botmenu__name" href="index.html">Te Amo</a>
-    <a href="gym.html">Gym</a>
-    <a href="dress.html">Dress</a>
-    <a href="swim.html" aria-current="page">Swimwear</a>
-    <a href="portfolio.html">Melina</a>
+    <a class="botmenu__name" href="index.html">Melina</a>
+    <a href="gym.html">Activewear</a>
+    <a href="swim.html" aria-current="page">Swim</a>
+    <a href="dress.html">Eveningwear</a>
+    <a href="portfolio.html">About</a>
   </nav>
 
   <script>
@@ -51,9 +51,9 @@
     PROD.forEach(function (p) {
       track.insertAdjacentHTML('beforeend',
         '<article class="wprod"><div class="wprod__media"><img src="' + BASE + p[3] + '_min.webp" alt="' + p[0] + ' — worn by Melina" loading="lazy"></div>' +
-        '<div class="wprod__body"><span class="wprod__title">' + p[0] + '</span><span class="wprod__price">$' + (p[2] / 100).toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</span></div></article>');
+        '<div class="wprod__body"><span class="wprod__title">' + p[0] + '</span></div></article>');
     });
-    track.insertAdjacentHTML('beforeend', '<div class="wrail__end"><p class="eyebrow">Made to order</p><p class="muted" style="margin-top:.6rem;color:#124F74">Techpack → sample → made for you.</p></div>');
+    track.insertAdjacentHTML('beforeend', '<div class="wrail__end"><p class="eyebrow">Te Amo</p><p class="muted" style="margin-top:.6rem;color:#124F74">Swim · 2026</p></div>');
   </script>
   <script src="assets/lenis.min.js"></script>
   <script src="assets/gsap.min.js"></script>
