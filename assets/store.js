@@ -1,5 +1,5 @@
 /* ============================================================
-   Te Amo — store.js
+   Melina — store.js
    Quick-view overlay, variant + quantity, add-to-bag, cart drawer,
    lazy <model-viewer>. Works with real Shopify product JSON
    (/products/handle.js) or window.__PREVIEW_PRODUCTS__ for the static preview.
