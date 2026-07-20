@@ -1120,8 +1120,11 @@ html::-webkit-scrollbar { width: 0; height: 0; }
 /* Show the WHOLE portrait look (contain), never a cover-crop — a cover-crop turns a portrait
    photo into an extreme close-up on any wide/landscape screen. A blurred, darkened copy of the
    same image fills the frame behind it so there are no dead letterbox bars. */
-.reel__bg { position: absolute; inset: -8%; background-size: cover; background-position: center 30%; filter: blur(38px) brightness(0.5) saturate(1.1); transform: scale(1.06); pointer-events: none; }
-.reel__frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+.reel__bg { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; filter: blur(38px) brightness(0.5) saturate(1.1); transform: scale(1.12); pointer-events: none; }
+/* :not(.reel__bg) so this contain rule targets ONLY the foreground photo — the backdrop is now an
+   <img class="reel__bg"> too, and without the exclusion this higher-specificity rule would clobber
+   the backdrop's absolute/cover/z-0 and knock the real photo out of the layout. */
+.reel__frame img:not(.reel__bg) { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
 .reel__frame::after { content: ""; position: absolute; inset: 0; z-index: 2; background: radial-gradient(130% 100% at 50% 42%, transparent 58%, rgba(0,0,0,.5)); pointer-events: none; }
 /* No-JS / reduced-motion: collapse to a single static full-bleed frame (never a blank stack). */
 html:not(.js) .reel, .reel:not(.js *) { }

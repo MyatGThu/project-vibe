@@ -1,12 +1,12 @@
 <!doctype html>
-<!-- DEV PREVIEW ONLY. Swim world: hero on top, then a horizontal product rail whose
-     background flows through the blue+sun palette as the looks pass. -->
+<!-- DEV PREVIEW ONLY. Swim world: hero on top, then a horizontal rail of looks whose background
+     flows through the house palette as they pass. Static HTML on self-hosted webp (lockdown-safe). -->
 <html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Melina — Swim</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&family=Pinyon+Script&display=swap">
+  <link rel="stylesheet" href="media/fonts.css">
   <link rel="stylesheet" href="assets/base.css">
   <script>document.documentElement.className = 'js';</script>
 </head>
@@ -20,10 +20,19 @@
       <p class="world-hero__cue">Scroll through the series →</p>
     </section>
 
-    <section class="wrail" data-world-rail aria-label="Swimwear products">
+    <section class="wrail" data-world-rail aria-label="Swim looks">
       <div class="wrail__viewport">
         <div class="wrail__track" id="track">
           <div class="wrail__intro"><h2 class="serif-italic">The Swim Series</h2><p>Worn by Melina — 2026.</p></div>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/blue-one-piece-swimsuit-01.webp" alt="Blue one piece swimsuit — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Blue one piece swimsuit</span></div></article>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/blue-yellow-rash-guard-01.webp" alt="Blue yellow rash guard — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Blue yellow rash guard</span></div></article>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/black-triangle-bikini.webp" alt="Black triangle bikini — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Black triangle bikini</span></div></article>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/blue-bikini-and-yellow-coverup.webp" alt="Blue bikini & yellow coverup — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Blue bikini & yellow coverup</span></div></article>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/blue-halter-one-piece-swimsuit.webp" alt="Blue halter one piece swimsuit — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Blue halter one piece swimsuit</span></div></article>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/yellow-wrap-robe-over-bikini.webp" alt="Yellow wrap robe over bikini — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Yellow wrap robe over bikini</span></div></article>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/cream-bandeau-bikini-and-robe.webp" alt="Cream bandeau bikini & robe — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Cream bandeau bikini & robe</span></div></article>
+          <article class="wprod"><div class="wprod__media"><img src="media/looks/blue-bikini-on-beach.webp" alt="Blue bikini on beach — worn by Melina" loading="lazy"></div><div class="wprod__body"><span class="wprod__title">Blue bikini on beach</span></div></article>
+          <div class="wrail__end"><p class="eyebrow">Selected work</p><p class="muted" style="margin-top:.6rem;color:#124F74">Swim · 2026</p></div>
         </div>
       </div>
     </section>
@@ -37,24 +46,6 @@
     <a href="portfolio.html">About</a>
   </nav>
 
-  <script>
-    var BASE = "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/";
-    var PROD = [
-      ["The Riviera One-Piece","Swimwear",8500,"hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59"],
-      ["The Solstice Bikini","Swimwear",7800,"hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d"],
-      ["The Lido Wrap","Swimwear",6900,"hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195"],
-      ["The Marina Short","Swimwear",6500,"hf_20260713_052706_bccade4b-d479-4243-b560-cf747846c8b2"],
-      ["The Noon Rashguard","Swimwear",7200,"hf_20260713_052713_42615169-5534-4167-9205-de125e46b879"],
-      ["The Cove Maillot","Swimwear",8800,"hf_20260713_052718_7436e4fd-65a8-4f0e-af5c-32729bf53dbe"]
-    ];
-    var track = document.getElementById('track');
-    PROD.forEach(function (p) {
-      track.insertAdjacentHTML('beforeend',
-        '<article class="wprod"><div class="wprod__media"><img src="' + BASE + p[3] + '_min.webp" alt="' + p[0] + ' — worn by Melina" loading="lazy"></div>' +
-        '<div class="wprod__body"><span class="wprod__title">' + p[0] + '</span></div></article>');
-    });
-    track.insertAdjacentHTML('beforeend', '<div class="wrail__end"><p class="eyebrow">Selected work</p><p class="muted" style="margin-top:.6rem;color:#124F74">Swim · 2026</p></div>');
-  </script>
   <script src="assets/lenis.min.js"></script>
   <script src="assets/gsap.min.js"></script>
   <script src="assets/scrolltrigger.min.js"></script>

@@ -45,6 +45,16 @@
       header.addEventListener('focusin', function () { header.classList.remove('is-hidden'); });
     }
 
+    // Scroll indicator: fade out the instant the visitor scrolls. Lives here (not inline in the
+    // page) so it survives a strict CSP that blocks inline <script>. No-op where the cue is absent.
+    var cue = document.querySelector('[data-scroll-cue]');
+    if (cue) {
+      var hideCue = function () {
+        if (window.scrollY > 40) { cue.classList.add('is-hidden'); window.removeEventListener('scroll', hideCue); }
+      };
+      window.addEventListener('scroll', hideCue, { passive: true });
+    }
+
     if (reduce) return;   // honour the user; leave everything static & visible.
 
     // StringTune — homepage-only declarative parallax (loaded via theme.liquid only when
