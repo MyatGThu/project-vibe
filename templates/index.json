@@ -70,7 +70,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e_min.webp",
-            "alt": "Melina in the Power gym look, Ember colourway — Te Amo next drop",
+            "alt": "Melina in the Power gym look, Ember colourway — next drop",
             "caption": "Power — Ember",
             "tag": "Gym",
             "upcoming": true
@@ -80,7 +80,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5_min.webp",
-            "alt": "Melina in the Sun swim look, Azure colourway — Te Amo next drop",
+            "alt": "Melina in the Sun swim look, Azure colourway — next drop",
             "caption": "Sun — Azure",
             "tag": "Swim",
             "upcoming": true
@@ -90,7 +90,7 @@
           "type": "look",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da_min.webp",
-            "alt": "Melina wearing the Meridian Cape — an outerwear look from Te Amo's next drop",
+            "alt": "Melina wearing the Meridian Cape — an outerwear look from the next drop",
             "caption": "The Meridian Cape",
             "tag": "Dress",
             "upcoming": true
@@ -109,7 +109,7 @@
         "l9"
       ],
       "settings": {
-        "eyebrow": "Te Amo — the house",
+        "eyebrow": "The house",
         "heading": "Couture, rendered.",
         "subtext": "One muse, Melina — and three worlds: the gym, the water, the evening. Scroll in.",
         "cta_text": "Step inside",
@@ -251,7 +251,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e_min.webp",
-            "alt": "Melina in the Gym campaign, Ember look — Te Amo activewear",
+            "alt": "Melina in the Gym campaign, Ember look — activewear",
             "caption": "Gym — Ember",
             "tag": "Activewear",
             "wide": true
@@ -261,7 +261,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5_min.webp",
-            "alt": "Melina in the Swim campaign, Azure look — Te Amo swimwear",
+            "alt": "Melina in the Swim campaign, Azure look — swimwear",
             "caption": "Swim — Azure",
             "tag": "Swimwear"
           }
@@ -270,7 +270,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da_min.webp",
-            "alt": "Melina in the House campaign, the Meridian Cape — Te Amo outerwear",
+            "alt": "Melina in the House campaign, the Meridian Cape — outerwear",
             "caption": "House — Meridian",
             "tag": "Outerwear"
           }
@@ -279,7 +279,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c_min.webp",
-            "alt": "Melina in the Gym campaign, Obsidian look — Te Amo activewear",
+            "alt": "Melina in the Gym campaign, Obsidian look — activewear",
             "caption": "Gym — Obsidian",
             "tag": "Activewear"
           }
@@ -288,7 +288,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260713_053013_db5c8341-bc1a-4e7c-a02b-9de1f72841af_min.webp",
-            "alt": "Melina in the Swim campaign, Citrus look — Te Amo swimwear",
+            "alt": "Melina in the Swim campaign, Citrus look — swimwear",
             "caption": "Swim — Citrus",
             "tag": "Swimwear",
             "wide": true
@@ -298,7 +298,7 @@
           "type": "slide",
           "settings": {
             "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e_min.webp",
-            "alt": "Melina in the House campaign, Ink look — Te Amo eveningwear",
+            "alt": "Melina in the House campaign, Ink look — eveningwear",
             "caption": "House — Ink",
             "tag": "Eveningwear"
           }

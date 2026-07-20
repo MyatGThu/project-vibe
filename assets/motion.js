@@ -1,5 +1,5 @@
 /* ============================================================
-   Te Amo — motion.js
+   Melina — motion.js
    Lenis smooth scroll + GSAP ScrollTrigger orchestration.
    Progressive enhancement: no motion until libs load; reduced-motion fully honoured.
    ============================================================ */
@@ -230,7 +230,7 @@
       if (scene && panels.length) {
         l3d.classList.add('is-3d');                        // opt in to the 3D layer (static hero until now)
         // Build marker — confirms the live theme is running this sticky build (rules out a stale deploy).
-        try { console.info('[te-amo] l3d flythrough · sticky build · panels=' + panels.length); } catch (e) {}
+        try { console.info('[melina] l3d flythrough · sticky build · panels=' + panels.length); } catch (e) {}
         var vp = l3d.querySelector('[data-l3d-viewport]');
         var hud = l3d.querySelector('[data-l3d-hud]');
         var cue = l3d.querySelector('[data-l3d-cue]');
