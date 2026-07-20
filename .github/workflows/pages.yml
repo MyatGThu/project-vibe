@@ -39,13 +39,16 @@ jobs:
           set -eux
           mkdir -p _site/assets
           if ls site/*.html >/dev/null 2>&1; then
-            # The hand-authored preview pages (real image URLs, reference assets/…)
+            # The hand-authored preview pages (self-hosted media, reference assets/… + media/…)
             cp site/*.html _site/
-            # The real theme stylesheet + vendored libs + placeholder svgs
+            # Theme assets: stylesheet, vendored libs, placeholder svgs. assets/ stays FLAT
+            # (Shopify's GitHub sync requires it), so preview-only media lives in media/ instead.
             cp assets/base.css assets/motion.js assets/store.js _site/assets/
             cp assets/gsap.min.js assets/lenis.min.js assets/scrolltrigger.min.js assets/model-viewer.min.js _site/assets/
             cp assets/anime.min.js assets/stringtune.min.js _site/assets/
             cp assets/ph-figure.svg assets/ph-wide.svg _site/assets/
+            # Self-hosted web fonts + look webp (lockdown-safe: no Google Fonts, no CloudFront).
+            cp -R media _site/media
           else
             # site/ not assembled yet — deploy a placeholder so the URL exists and Pages is enabled
             printf '%s' '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Te Amo — preview</title><body style="font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;background:#EDE9E3;color:#14110F;letter-spacing:.02em"><p>The Te Amo preview is being assembled — check back shortly.</p>' > _site/index.html

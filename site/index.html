@@ -1,15 +1,16 @@
 <!doctype html>
 <!--
   DEV PREVIEW ONLY (not part of the Shopify theme).
-  Landing redesign: a cursive wordmark, a full-screen ZOOM-THROUGH reel of every Melina
-  look, and a bottom menu — nothing else. ponytail: reuses the REAL assets/base.css + motion.js.
+  Landing: cursive wordmark + full-screen ZOOM-THROUGH reel of Melina's looks + a bottom menu.
+  Galleries are STATIC HTML on self-hosted webp (no inline builder, no CDN) so a locked-down
+  browser (strict CSP / JS off / blocked CDNs) still shows the looks; motion.js enhances.
 -->
 <html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Melina Jones Voss — Portfolio</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&family=Pinyon+Script&display=swap">
+  <link rel="stylesheet" href="media/fonts.css">
   <link rel="stylesheet" href="assets/base.css">
   <script>document.documentElement.className = 'js';</script>
 </head>
@@ -22,7 +23,94 @@
   </div>
 
   <main id="MainContent">
-    <section class="reel" data-reel aria-label="Every look, worn by Melina"></section>
+    <section class="reel" data-reel aria-label="Every look, worn by Melina">
+      <div class="reel__viewport">
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/champagne-satin-slip-gown-01.webp" alt="" aria-hidden="true">
+        <img src="media/looks/champagne-satin-slip-gown-01.webp" alt="Champagne satin slip gown — worn by Melina">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/red-sports-bra-and-leggings-01.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/red-sports-bra-and-leggings-01.webp" alt="Red sports bra & leggings — worn by Melina">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/blue-one-piece-swimsuit-01.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/blue-one-piece-swimsuit-01.webp" alt="Blue one piece swimsuit — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/black-tailored-pantsuit.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/black-tailored-pantsuit.webp" alt="Black tailored pantsuit — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/black-crop-tee-over-red-sports-bra.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/black-crop-tee-over-red-sports-bra.webp" alt="Black crop tee over red sports bra — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/blue-yellow-rash-guard-01.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/blue-yellow-rash-guard-01.webp" alt="Blue yellow rash guard — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/ivory-one-shoulder-gown.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/ivory-one-shoulder-gown.webp" alt="Ivory one shoulder gown — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/red-tank-top-and-leggings.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/red-tank-top-and-leggings.webp" alt="Red tank top & leggings — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/black-triangle-bikini.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/black-triangle-bikini.webp" alt="Black triangle bikini — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/charcoal-maxi-trench-coat.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/charcoal-maxi-trench-coat.webp" alt="Charcoal maxi trench coat — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/charcoal-sports-bra-and-leggings.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/charcoal-sports-bra-and-leggings.webp" alt="Charcoal sports bra & leggings — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/blue-bikini-and-yellow-coverup.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/blue-bikini-and-yellow-coverup.webp" alt="Blue bikini & yellow coverup — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/grey-draped-cape-gown.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/grey-draped-cape-gown.webp" alt="Grey draped cape gown — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/red-sports-bra-and-bike-shorts.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/red-sports-bra-and-bike-shorts.webp" alt="Red sports bra & bike shorts — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/blue-halter-one-piece-swimsuit.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/blue-halter-one-piece-swimsuit.webp" alt="Blue halter one piece swimsuit — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/camel-cape-coat-and-trousers.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/camel-cape-coat-and-trousers.webp" alt="Camel cape coat & trousers — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/grey-zip-jacket-and-bike-shorts.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/grey-zip-jacket-and-bike-shorts.webp" alt="Grey zip jacket & bike shorts — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/yellow-wrap-robe-over-bikini.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/yellow-wrap-robe-over-bikini.webp" alt="Yellow wrap robe over bikini — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/beige-one-shoulder-slit-gown.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/beige-one-shoulder-slit-gown.webp" alt="Beige one shoulder slit gown — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/red-longsleeve-top-and-leggings.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/red-longsleeve-top-and-leggings.webp" alt="Red longsleeve top & leggings — worn by Melina" loading="lazy">
+      </figure>
+      <figure class="reel__frame">
+        <img class="reel__bg" src="media/looks/cream-bandeau-bikini-and-robe.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="media/looks/cream-bandeau-bikini-and-robe.webp" alt="Cream bandeau bikini & robe — worn by Melina" loading="lazy">
+      </figure>
+      </div>
+    </section>
   </main>
 
   <div class="scroll-cue" data-scroll-cue aria-hidden="true">
@@ -38,45 +126,6 @@
     <a href="portfolio.html">About</a>
   </nav>
 
-  <script>
-    // Every unique Melina look (light _min.webp for the decode budget). Injected as stacked
-    // full-viewport frames; motion.js scrubs the zoom-through + windows the offscreen ones.
-    var REEL = [
-      "hf_20260712_091422_c2badeb9-c882-4b3f-a31b-2cf93706987c","hf_20260713_045909_824a6f08-1e73-49d4-8e7f-063e4b5ffbb4",
-      "hf_20260713_052646_423f8fc1-a811-440b-9846-1eb2d4bcbb59","hf_20260712_091425_7152fa25-d250-4715-b1f8-8eed1236736e",
-      "hf_20260713_045915_44d318c3-5cc0-4207-a0ab-5c1275ae4a33","hf_20260713_052652_f22d27e2-6958-4e01-9534-d20e61f9f94d",
-      "hf_20260712_091428_5ff778aa-f014-4b3d-8b41-2935c5cb917e","hf_20260713_050437_6610fe1d-88f4-46d3-897e-7fb8d70663fc",
-      "hf_20260713_052700_3ac16fa9-ef1c-4337-8a00-f06f45148195","hf_20260712_091429_b3f6b442-56a0-4db4-8fc7-0308d53facfe",
-      "hf_20260713_050448_a749d860-170e-410f-a27f-f9a8de813d3c","hf_20260713_052706_bccade4b-d479-4243-b560-cf747846c8b2",
-      "hf_20260712_091438_0f50da26-d92a-45d1-aabc-ded6a06a4a7a","hf_20260713_050523_5dd9196e-b56e-44a8-b9bf-f79af5637c3e",
-      "hf_20260713_052713_42615169-5534-4167-9205-de125e46b879","hf_20260712_091440_6e97a702-fda1-4421-b926-03f6ab10b513",
-      "hf_20260713_050528_6305a4f9-5881-4daf-a3d1-109291f2024c","hf_20260713_052718_7436e4fd-65a8-4f0e-af5c-32729bf53dbe",
-      "hf_20260712_143012_cd62c5aa-5283-4f18-a30e-a3fec4ef848e","hf_20260713_042209_f760ff66-5785-45b3-b94d-721c9742b6bd",
-      "hf_20260713_052723_83820c63-cae0-46d8-a118-4dc0f17448d5","hf_20260712_143014_8c82bf0d-7def-4fbf-b586-0a1b21257858",
-      "hf_20260713_042510_0990a3e2-c389-455a-9b52-ffb0466560d7","hf_20260712_143015_54abe0fd-9c5a-4bef-982f-4c3204bd10da",
-      "hf_20260713_053013_db5c8341-bc1a-4e7c-a02b-9de1f72841af"
-    ];
-    var base = "https://d8j0ntlcm91z4.cloudfront.net/user_31workO8jZ5gU3syoAaChkbmNoX/";
-    var reel = document.querySelector('[data-reel]');
-    // Sticky viewport wrapper: the .reel section is tall (the scroll track); this holds the frames
-    // pinned to one screen so each frame is 100svh, NOT the full track height.
-    var vp = document.createElement('div'); vp.className = 'reel__viewport';
-    REEL.forEach(function (id, i) {
-      var src = base + id + '_min.webp';
-      vp.insertAdjacentHTML('beforeend',
-        '<figure class="reel__frame"><span class="reel__bg" style="background-image:url(' + src + ')"></span>' +
-        '<img src="' + src + '" alt="A look worn by Melina"' + (i < 2 ? '' : ' loading="lazy"') + '></figure>');
-    });
-    reel.appendChild(vp);
-
-    // Scroll indicator fades out the moment the visitor scrolls (they've got it).
-    (function () {
-      var cue = document.querySelector('[data-scroll-cue]');
-      if (!cue) return;
-      var hide = function () { if (window.scrollY > 40) { cue.classList.add('is-hidden'); window.removeEventListener('scroll', hide); } };
-      window.addEventListener('scroll', hide, { passive: true });
-    })();
-  </script>
   <script src="assets/lenis.min.js"></script>
   <script src="assets/gsap.min.js"></script>
   <script src="assets/scrolltrigger.min.js"></script>
