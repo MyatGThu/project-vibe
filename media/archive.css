@@ -1,0 +1,111 @@
+/* ============================================================
+   Melina — Archive (prmpt-style scroll landing), house palette.
+   Fixed stage + RAF driver (media/archive.js). All overlays use
+   mix-blend-mode:exclusion so text reads on both the dark stage
+   and the light outro overlay.
+   ============================================================ */
+:root {
+  --stage: #0b0a09;          /* near-black — same as the landing */
+  --paper: #f6f3ee;          /* house paper */
+  --accent: #8a6a4b;         /* house bronze */
+  --ui-font: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --display-font: "Fraunces", Georgia, serif;
+  --script-font: "Pinyon Script", cursive;
+  --e: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--stage); color: var(--paper); font-family: var(--ui-font); font-weight: 500; -webkit-font-smoothing: antialiased; }
+
+.skip-link { position: fixed; left: -999px; top: 0; z-index: 100; background: var(--paper); color: var(--stage); padding: .6rem 1rem; }
+.skip-link:focus { left: .5rem; top: .5rem; }
+
+#scroll-spacer { position: relative; user-select: none; background: var(--stage); min-height: 300svh; }
+@media (min-width: 1024px) { #scroll-spacer { cursor: none; } }
+
+/* ---- z0 — hero stage ---- */
+#main-canvas { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: var(--stage); }
+.hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; opacity: 0; transform: scale(1.06); transition: opacity .55s var(--e); will-change: opacity, transform; }
+.hero-img.is-active { opacity: 1; }
+@media (max-width: 1023px) { #main-canvas { top: 200px; height: calc(100svh - 200px); } }
+
+/* ---- z10 — black panel + scattered gallery ---- */
+#black-panel { position: fixed; inset: 0; z-index: 10; background: var(--stage); transform: translateY(100svh); will-change: transform; }
+.bp-inner { width: 100%; padding: min(400px, 40vh) clamp(1rem, 4vw, 3.5rem) 40vh; will-change: transform; }
+.bp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1rem, 3.5vw, 3rem); max-width: 1560px; margin: 0 auto; }
+@media (min-width: 640px)  { .bp-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .bp-grid { grid-template-columns: repeat(4, 1fr); } }
+.bp-cell { aspect-ratio: 2 / 3; }
+/* editorial vertical scatter — staggers when each card scales in */
+.bp-cell:nth-child(4n+2) { margin-top: 12vh; }
+.bp-cell:nth-child(4n+4) { margin-top: 7vh; }
+.bp-cell:nth-child(4n+3) { margin-top: 3vh; }
+.bp-card { width: 100%; height: 100%; margin: 0; overflow: hidden; border-radius: 2px; transform-origin: center bottom; }
+.js .bp-card { transform: scale(0); }        /* JS-off: cards stay visible (scale 1) */
+.bp-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---- z12 — light outro overlay ---- */
+#outro-overlay { position: fixed; inset: 0; z-index: 12; background: var(--paper); opacity: 0; pointer-events: none; }
+
+/* ---- z20 — overlaid UI ---- */
+.ui { position: fixed; z-index: 20; pointer-events: none; mix-blend-mode: exclusion; color: #fff; }
+
+#brand { top: 32px; left: 32px; font-family: var(--script-font); font-weight: 400; font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1; pointer-events: auto; }
+#caption { top: 210px; left: 32px; max-width: min(620px, calc(100vw - 64px)); font-size: 12px; line-height: 1.4; letter-spacing: -0.02em; }
+
+#nav { top: 38px; right: 32px; width: min(330px, calc(100vw - 64px)); height: 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; text-transform: uppercase; font-size: 15px; letter-spacing: 0.02em; }
+.nav-right { display: flex; align-items: center; gap: 50px; }
+.nav-burger { width: 30px; height: 30px; color: #fff; }
+
+#outro-info { right: 32px; bottom: 84px; width: 330px; display: flex; flex-direction: column; align-items: center; opacity: 0; }
+.oi-top { display: flex; flex-direction: column; align-items: flex-start; width: 100%; margin-bottom: 28px; gap: 14px; }
+.oi-circle { position: relative; display: inline-grid; place-items: center; width: 30px; height: 30px; }
+.oi-circle svg { width: 30px; height: 30px; color: #fff; }
+#circle-symbol { position: absolute; inset: 0; display: grid; place-items: center; font-size: 14px; letter-spacing: -0.04em; text-transform: uppercase; }
+.oi-label { font-family: var(--display-font); font-weight: 400; font-size: 30px; line-height: 1; text-align: left; letter-spacing: -0.02em; text-transform: uppercase; }
+.oi-big { font-family: var(--display-font); font-weight: 360; font-size: 80px; line-height: 1; letter-spacing: -0.04em; text-align: center; }
+
+#outro-buy { right: 32px; bottom: 32px; width: 330px; height: 174px; display: grid; place-items: center; background: var(--paper); border-radius: 1335px; transform-origin: right bottom; transform: scale(0); pointer-events: auto; }
+#outro-buy span { font-family: var(--display-font); font-weight: 400; font-size: 110px; line-height: 1; letter-spacing: -0.04em; color: #fff; mix-blend-mode: exclusion; }
+
+#outro-footer { left: 32px; bottom: 32px; display: flex; gap: 80px; text-transform: uppercase; font-size: 13px; letter-spacing: -0.02em; opacity: 0; }
+
+/* ---- z50 — custom cursor ---- */
+.cursor { position: fixed; left: 0; top: 0; z-index: 50; width: 48px; height: 48px; margin: -24px 0 0 -24px; pointer-events: none; mix-blend-mode: exclusion; }
+.cursor svg { width: 48px; height: 48px; }
+@media (max-width: 1023px) { .cursor { display: none; } }
+
+/* ---- entrance (staggered) ---- */
+.ui--slide { opacity: 0; transform: translateY(12px); transition: opacity .6s var(--e), transform .6s var(--e); }
+body.is-in #brand   { opacity: 1; transform: none; transition-delay: 0s; }
+body.is-in #nav     { opacity: 1; transform: none; transition-delay: .15s; }
+body.is-in #caption { opacity: 1; transform: none; transition-delay: .3s; }
+#outro-info { transition: opacity .6s var(--e) .45s; }
+body.is-in #outro-info { opacity: 1; }
+
+/* ---- responsive: mobile UI positions ---- */
+@media (max-width: 1023px) {
+  #brand { top: 16px; left: 16px; }
+  #caption { top: 128px; left: 16px; font-size: 11px; }
+  #nav { top: 18px; right: 16px; width: auto; gap: 14px; }
+  .nav-about { display: none; }
+  .nav-right { gap: 20px; }
+  .nav-burger { width: 24px; height: 24px; }
+  .nav-index { font-size: 13px; }
+  #outro-info { left: 0; right: 0; bottom: 56px; width: auto; }
+  .oi-top { width: 252px; margin: 0 auto 12px; }
+  .oi-label { font-size: 20px; }
+  .oi-big { font-size: 60px; }
+  #outro-buy { left: 16px; right: 16px; width: auto; height: 100px; }
+  #outro-buy span { font-size: 72px; }
+  #outro-footer { left: 16px; right: 16px; bottom: 24px; gap: 0; justify-content: space-between; font-size: 11px; }
+}
+
+/* ---- reduced motion: no scrub, no scatter jump; keep everything visible ---- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-img { transition: none; }
+  .ui--slide { transition: none; opacity: 1; transform: none; }
+  #outro-info { transition: none; opacity: 1; }
+}

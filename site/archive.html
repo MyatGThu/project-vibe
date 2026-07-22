@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- DEV PREVIEW ONLY. Melina — Archive: a scroll-driven fashion/archive landing (prmpt-style
+     interaction) themed in the house palette and fed by the local Melina looks. A tall invisible
+     #scroll-spacer + fixed stage; media/archive.js maps scrollY onto the panel slide, per-card
+     scale, and outro via one requestAnimationFrame loop. Static markup renders without JS. -->
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Melina — Archive</title>
+  <link rel="stylesheet" href="media/fonts.css">
+  <link rel="stylesheet" href="media/archive.css">
+  <script>document.documentElement.className = 'js';</script>
+</head>
+<body>
+  <a class="skip-link" href="#gallery">Skip to gallery</a>
+  <div id="scroll-spacer">
+
+    <!-- z0 — hero stage: two looks, cursor-X reveals one or the other (image stand-in for the
+         two-video scrub; no Melina video exists to use). -->
+    <div id="main-canvas" aria-hidden="true">
+      <img class="hero-img is-active" data-hero="a" src="media/looks/champagne-satin-slip-gown-01.webp" alt="">
+      <img class="hero-img" data-hero="b" src="media/looks/black-suit-with-satin-coat.webp" alt="">
+    </div>
+
+    <!-- z10 — black panel + scattered gallery -->
+    <section id="black-panel" aria-label="Archive gallery">
+      <div class="bp-inner" id="gallery">
+        <div class="bp-grid">
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/champagne-satin-slip-gown-02.webp" alt="Champagne satin slip gown — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/red-sports-bra-and-leggings-01.webp" alt="Red sports bra & leggings — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/blue-one-piece-swimsuit-01.webp" alt="Blue one piece swimsuit — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/black-tailored-pantsuit.webp" alt="Black tailored pantsuit — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/charcoal-maxi-trench-coat.webp" alt="Charcoal maxi trench coat — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/blue-yellow-rash-guard-01.webp" alt="Blue yellow rash guard — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/ivory-one-shoulder-gown.webp" alt="Ivory one shoulder gown — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/black-crop-tee-over-red-sports-bra.webp" alt="Black crop tee over red sports bra — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/grey-draped-cape-gown.webp" alt="Grey draped cape gown — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/cream-bandeau-bikini-and-robe.webp" alt="Cream bandeau bikini & robe — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/camel-cape-coat-and-trousers.webp" alt="Camel cape coat & trousers — worn by Melina" loading="lazy"></figure></div>
+          <div class="bp-cell"><figure class="bp-card"><img src="media/looks/black-triangle-bikini.webp" alt="Black triangle bikini — worn by Melina" loading="lazy"></figure></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- z12 — light overlay (fades in at the end) -->
+    <div id="outro-overlay" aria-hidden="true"></div>
+
+    <!-- z20 — overlaid UI (mix-blend exclusion so it reads on dark stage AND light overlay) -->
+    <a id="brand" class="ui ui--slide" href="index.html">Melina</a>
+    <p id="caption" class="ui ui--slide">Openly AI-generated. Every frame is rendered — there is no photoshoot, and it is disclosed every time.</p>
+    <nav id="nav" class="ui ui--slide" aria-label="Primary">
+      <span class="nav-about">About</span>
+      <span class="nav-right">
+        <svg class="nav-burger" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M0 14H40" stroke="currentColor" stroke-width="2.5"/><path d="M0 26H40" stroke="currentColor" stroke-width="2.5"/></svg>
+        <span class="nav-index">[ Index ]</span>
+      </span>
+    </nav>
+
+    <div id="outro-info" class="ui" data-outro-offset="166">
+      <div class="oi-top">
+        <span class="oi-circle">
+          <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18.75" stroke="currentColor" stroke-width="2.5"/></svg>
+          <span id="circle-symbol">8</span>
+        </span>
+        <span class="oi-label">Archive<br>Melina</span>
+      </div>
+      <div class="oi-big">2026</div>
+    </div>
+
+    <a id="outro-buy" class="ui" href="portfolio.html"><span>view</span></a>
+
+    <footer id="outro-footer" class="ui">
+      <span>Melina (R) 2026</span>
+      <span>Openly AI-generated</span>
+    </footer>
+
+    <!-- z50 — custom cursor (desktop only) -->
+    <div id="cursor" class="cursor" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22.75" stroke="#fff" stroke-width="2.5"/><path d="M24 13v22M13 24h22" stroke="#fff" stroke-width="2.5"/></svg>
+    </div>
+
+  </div>
+  <script src="media/archive.js"></script>
+</body>
+</html>
