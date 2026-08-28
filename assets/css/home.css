@@ -1,0 +1,128 @@
+/* ============================================================
+   KNIGHTS ATELIER — home.css
+   The stacking scroll: sticky panels (native, no scroll-jack) that
+   cover the previous; GSAP layers the "recede + overshadow" on top.
+   Progressive enhancement: panels are in normal flow, fully visible;
+   JS only enhances. No-JS / reduced-motion / touch = clean stacked page.
+   ============================================================ */
+
+/* ---- Nav (uniformly dark site → always chalk, no mix-blend gamble) ---- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: clamp(0.9rem, 2vw, 1.4rem) var(--margin);
+}
+.nav__mark { font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.82; font-size: var(--step-0); }
+.nav__mark span { display: block; font-weight: 500; font-stretch: 100%; letter-spacing: 0.42em; font-size: 0.5em; color: var(--steel-ink); }
+.nav__links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); }
+.nav__links a { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.14em; color: var(--steel-ink); transition: color 0.3s var(--ease); }
+.nav__links a:hover, .nav__links a[aria-current="page"] { color: var(--chalk); }
+.nav__cart span { color: var(--chalk); }
+@media (max-width: 720px) {
+  .nav__links a:not(.nav__cart):not([aria-current]) { display: none; }
+  .nav__links a[aria-current] { display: none; }
+}
+
+/* ---- Stacking panels ---- */
+.panel {
+  position: sticky; top: 0;
+  min-height: 100svh;
+  display: grid; align-items: center;
+  padding-block: clamp(6rem, 14vh, 10rem) clamp(3rem, 8vh, 6rem);
+  background: var(--leather);
+  overflow: hidden;
+}
+.panel--manifesto { background: var(--leather-2); }
+.panel--first { background: var(--leather); }
+.panel--waitlist { position: relative; align-content: space-between; background: var(--leather-2); }
+.panel__inner { position: relative; z-index: 1; width: 100%; }
+/* the overshadow scrim — GSAP fades this in as the next plate covers this one */
+.panel__scrim { position: absolute; inset: 0; z-index: 2; background: #000; opacity: 0; pointer-events: none; }
+
+/* ---- 01 Hero ---- */
+.panel--hero .panel__inner { text-align: center; }
+.wordmark {
+  font-stretch: 100%;            /* normal width so all 7 letters fit ONE monumental line */
+  white-space: nowrap;
+  font-size: clamp(2.4rem, 17vw, 13.5rem);
+  line-height: 0.9; letter-spacing: -0.035em;
+}
+.wordmark .ltr { display: inline-block; will-change: transform, opacity; }
+.wordmark__sub {
+  margin-top: 0.4em; font-stretch: 100%; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.62em; text-indent: 0.62em;
+  font-size: clamp(0.85rem, 2.4vw, 1.5rem); color: var(--steel-ink);
+}
+.hero__tag { margin-top: clamp(2rem, 6vh, 4rem); font-size: var(--step-1); color: var(--chalk); }
+.scroll-cue {
+  position: absolute; left: 50%; bottom: clamp(1.5rem, 5vh, 3rem); transform: translateX(-50%);
+  display: inline-flex; flex-direction: column; align-items: center; gap: 0.7rem;
+  font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.24em; color: var(--steel-ink);
+}
+.scroll-cue__line { width: 1px; height: 2.4rem; background: linear-gradient(var(--steel-ink), transparent); }
+
+/* ---- 02 Manifesto ---- */
+.panel--manifesto .display { margin-top: 0.4em; }
+.manifesto { margin-top: clamp(1.5rem, 4vh, 2.5rem); max-width: 34ch; font-size: var(--step-1); color: var(--steel-ink); }
+.panel--manifesto .manifesto { color: var(--chalk); }
+
+/* ---- 03 The First ---- */
+.first__grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+@media (min-width: 900px) { .first__grid { grid-template-columns: 1.05fr 0.95fr; } }
+.first__copy .display { margin-top: 0.4em; }
+.spec { margin: clamp(1.6rem, 4vh, 2.4rem) 0; display: grid; gap: 0; max-width: 30rem; }
+.spec > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.85rem 0; border-top: 1px solid var(--line); }
+.spec > div:last-child { border-bottom: 1px solid var(--line); }
+.spec dt { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--step--1); font-weight: 600; }
+.spec dd { font-weight: 500; }
+/* placeholder plate for the product shot (clearly intentional, drops out when photography lands) */
+.first__plate {
+  position: relative; aspect-ratio: 4 / 5; margin: 0;
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(120% 90% at 30% 20%, rgba(199,80,62,0.06), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(0,0,0,0.22) 0 2px, transparent 2px 5px),
+    var(--leather-2);
+  display: grid; place-items: center;
+}
+.first__plate-label { font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: clamp(1.4rem, 4vw, 2.6rem); color: var(--steel-ink); }
+
+/* ---- 04 Waitlist + footer ---- */
+.panel--waitlist .panel__inner { align-self: center; }
+.waitlist__note { margin-top: clamp(1.4rem, 4vh, 2.2rem); max-width: 40ch; color: var(--steel-ink); font-size: var(--step-1); }
+.waitlist { margin-top: clamp(1.8rem, 5vh, 2.6rem); display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; max-width: 40rem; }
+.waitlist input {
+  flex: 1 1 16rem; background: transparent; border: 0; border-bottom: 1px solid var(--line-strong);
+  padding: 0.9rem 0.2rem; font-size: var(--step-1); color: var(--chalk);
+  transition: border-color 0.3s var(--ease);
+}
+.waitlist input::placeholder { color: var(--steel-ink); }
+.waitlist input:focus { outline: none; border-color: var(--chalk); }
+.waitlist input[aria-invalid="true"] { border-color: var(--oxblood-bright); }
+.waitlist__hint { flex-basis: 100%; margin-top: 0.4rem; font-size: var(--step--1); color: var(--steel-ink); }
+.waitlist__done { font-size: var(--step-1); color: var(--chalk); }
+.foot {
+  position: relative; z-index: 1;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem 1.5rem;
+  padding-top: clamp(2rem, 6vh, 4rem); margin-top: auto;
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.12em; color: var(--steel-ink);
+}
+.foot__mark { font-stretch: 125%; font-weight: 800; letter-spacing: 0.14em; color: var(--chalk); }
+
+/* ---- Progressive enhancement: hide reveal targets ONLY when JS is present ---- */
+.js [data-rise] { opacity: 0; }
+.js [data-letters] { opacity: 0; }
+
+/* ---- No-stack fallback: touch / small viewport → plain flowed sections ---- */
+@media (max-width: 768px) {
+  .panel { position: static; min-height: auto; padding-block: clamp(5rem, 14vh, 8rem); }
+  .panel--hero { min-height: 90svh; }
+  .panel__scrim { display: none; }
+  .scroll-cue { display: none; }   /* absolute cue has no full-viewport panel to anchor to on mobile */
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel { position: static; min-height: auto; }
+  .panel__scrim { display: none; }
+  .js [data-rise], .js [data-letters] { opacity: 1; }
+}

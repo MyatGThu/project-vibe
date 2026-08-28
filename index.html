@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Knights Atelier — Modern armor</title>
+  <meta name="description" content="Knights Atelier. One leather jacket, built like armor — full-grain hide, made to order, numbered. A code, worn.">
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <script>document.documentElement.className = 'js';</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav" aria-label="Primary">
+    <a class="nav__mark" href="index.html">KNIGHTS<span>ATELIER</span></a>
+    <nav class="nav__links">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="products.html">Products</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a class="nav__cart" href="products.html">Cart <span data-cart-count>0</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- 01 — Hero: the wordmark is the hero -->
+    <section class="panel panel--hero">
+      <span class="panel__scrim" aria-hidden="true"></span>
+      <div class="panel__inner wrap">
+        <h1 class="wordmark" data-letters>KNIGHTS</h1>
+        <p class="wordmark__sub" data-rise>Atelier</p>
+        <p class="hero__tag" data-rise>Modern armor.</p>
+      </div>
+      <span class="scroll-cue" data-rise aria-hidden="true">Scroll<span class="scroll-cue__line"></span></span>
+    </section>
+
+    <!-- 02 — Manifesto -->
+    <section class="panel panel--manifesto">
+      <span class="panel__scrim" aria-hidden="true"></span>
+      <div class="panel__inner wrap">
+        <p class="label"><span class="index">02</span> &nbsp;/&nbsp; The code</p>
+        <h2 class="display">A code,<br>worn.</h2>
+        <p class="manifesto">Knights Atelier makes one thing, and makes it to outlast you. A leather
+          jacket built like armor — cut clean, sewn to survive, worn as a code. No season, no noise.
+          One honest material, treated with reverence.</p>
+      </div>
+    </section>
+
+    <!-- 03 — The First (product teaser; type-led placeholder until photography) -->
+    <section class="panel panel--first">
+      <span class="panel__scrim" aria-hidden="true"></span>
+      <div class="panel__inner wrap first__grid">
+        <div class="first__copy">
+          <p class="label"><span class="index">03</span> &nbsp;/&nbsp; The first</p>
+          <h2 class="display">The Leather<br>Jacket</h2>
+          <dl class="spec">
+            <div><dt>Material</dt><dd>Full-grain hide</dd></div>
+            <div><dt>Made</dt><dd>To order · numbered</dd></div>
+            <div><dt>Season</dt><dd>None</dd></div>
+          </dl>
+          <a class="btn btn--solid" href="products.html">View the jacket</a>
+        </div>
+        <figure class="first__plate" aria-label="The Knights Atelier leather jacket — photography to come">
+          <span class="first__plate-label">The First</span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 04 — Waitlist + footer -->
+    <section class="panel panel--waitlist">
+      <div class="panel__inner wrap">
+        <p class="label"><span class="index">04</span> &nbsp;/&nbsp; The first drop</p>
+        <h2 class="display">Join the<br>first drop.</h2>
+        <p class="waitlist__note">A limited, numbered first run, made to order. Join the list — we
+          write once, before it opens.</p>
+        <form class="waitlist" data-waitlist novalidate>
+          <label class="visually-hidden" for="wl-email">Email address</label>
+          <input id="wl-email" type="email" name="email" placeholder="your@email.com" autocomplete="email" required
+                 aria-describedby="wl-hint">
+          <button class="btn btn--solid" type="submit">Join</button>
+          <p class="waitlist__hint" id="wl-hint">No spam. One letter, before the drop.</p>
+        </form>
+      </div>
+      <footer class="foot wrap">
+        <span class="foot__mark">KNIGHTS ATELIER</span>
+        <span class="foot__meta">A five-person house · Est. 2026</span>
+        <span class="foot__meta">© 2026 Knights Atelier</span>
+      </footer>
+    </section>
+
+  </main>
+
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/scrolltrigger.min.js"></script>
+  <script src="assets/js/anime.min.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>
