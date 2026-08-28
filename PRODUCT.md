@@ -30,10 +30,12 @@ Myat Thu · Alex Kyaw · Yan Naing · Soe Min Thant · Saw Prince — a five-per
 
 ## Commerce & tech
 - Front-end: vanilla HTML/CSS/JS (no build step) — portable, Pages-friendly, Shopify-friendly.
-- Motion: GSAP (ScrollTrigger) + Anime.js.
-- Cart / checkout / customer accounts: **Shopify Storefront API + Buy Button SDK** — the static
-  front-end stays on Pages; Shopify runs commerce. Product/cart wiring swaps to real store creds
-  on integration.
+- Motion: GSAP (ScrollTrigger) owns the scroll signature; Anime.js owns the one-time load/reveal
+  (kept per explicit request — review flagged it as technically optional, CSS could cover most).
+- Cart / checkout / customer accounts: **Shopify Storefront API (GraphQL) → hosted checkout**
+  (NOT Buy Button SDK — its iframe can't be restyled to this design). Public Storefront token only;
+  cart id in localStorage (multi-page static site); all wiring behind one swap-point module
+  (`assets/js/shop.js`) so Pages↔Shopify is a single config change.
 - Deploy: **GitHub Pages first**, then connect Shopify.
 
 ## Success criteria
