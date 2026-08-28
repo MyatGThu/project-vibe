@@ -1,47 +1,9 @@
 /* ============================================================
-   KNIGHTS ATELIER — home.css
-   The stacking scroll: sticky panels (native, no scroll-jack) that
-   cover the previous; GSAP layers the "recede + overshadow" on top.
-   Progressive enhancement: panels are in normal flow, fully visible;
-   JS only enhances. No-JS / reduced-motion / touch = clean stacked page.
+   KNIGHTS ATELIER — home.css  (Home only; shared nav/footer live in base.css)
+   The stacking scroll: sticky panels (native, no scroll-jack) that cover the
+   previous; GSAP layers the "recede + overshadow". Progressive enhancement:
+   panels are in normal flow, fully visible; JS only enhances.
    ============================================================ */
-
-/* ---- Nav (uniformly dark site → always chalk, no mix-blend gamble) ---- */
-.nav {
-  position: fixed; inset: 0 0 auto 0; z-index: 40;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: clamp(0.9rem, 2vw, 1.4rem) var(--margin);
-}
-.nav__mark { font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.82; font-size: var(--step-0); }
-.nav__mark span { display: block; font-weight: 500; font-stretch: 100%; letter-spacing: 0.42em; font-size: 0.5em; color: var(--steel-ink); }
-.nav__links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); }
-.nav__links a { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.14em; color: var(--steel-ink); transition: color 0.3s var(--ease); }
-.nav__links a:hover, .nav__links a[aria-current="page"] { color: var(--chalk); }
-.nav__cart span { color: var(--chalk); }
-
-/* hamburger toggle — hidden on desktop, shown ≤720px */
-.nav__toggle {
-  display: none; flex-direction: column; justify-content: center; gap: 6px;
-  width: 44px; height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer;
-}
-.nav__toggle-bar { width: 26px; height: 2px; background: var(--chalk); transition: transform 0.3s var(--ease), opacity 0.3s var(--ease); }
-.nav__toggle[aria-expanded="true"] .nav__toggle-bar:first-child { transform: translateY(4px) rotate(45deg); }
-.nav__toggle[aria-expanded="true"] .nav__toggle-bar:last-child { transform: translateY(-4px) rotate(-45deg); }
-
-@media (max-width: 720px) {
-  .nav { flex-wrap: wrap; }
-  .nav__toggle { display: inline-flex; }
-  /* JS present: collapse into a slide-down list toggled by .is-open.
-     No JS: the list stays in normal flow below the bar — still reachable. */
-  .js .nav__links {
-    flex-basis: 100%; flex-direction: column; align-items: flex-start; gap: 0;
-    max-height: 0; overflow: hidden; opacity: 0;
-    transition: max-height 0.35s var(--ease), opacity 0.3s var(--ease);
-  }
-  .js .nav__links.is-open { max-height: 70vh; opacity: 1; padding-top: 0.8rem; }
-  .js .nav__links a { display: block; width: 100%; padding: 0.7rem 0; font-size: var(--step-0); }
-  .nav__links { flex-basis: 100%; flex-wrap: wrap; gap: 0.4rem 1.4rem; }  /* no-js layout */
-}
 
 /* ---- Stacking panels ---- */
 .panel {
@@ -54,9 +16,10 @@
 }
 .panel--manifesto { background: var(--leather-2); }
 .panel--first { background: var(--leather); }
-.panel--waitlist { position: relative; align-content: space-between; background: var(--leather-2); }
+.panel--waitlist { position: relative; align-content: space-between; background: var(--leather-2); padding-bottom: 0; }
 .panel__inner { position: relative; z-index: 1; width: 100%; }
 .panel__scrim { position: absolute; inset: 0; z-index: 2; background: #000; opacity: 0; pointer-events: none; }
+.panel--waitlist .foot { margin-top: auto; }
 
 /* ---- Hero ---- */
 .panel--hero .panel__inner { text-align: center; }
@@ -93,7 +56,6 @@
 .spec > div:last-child { border-bottom: 1px solid var(--line); }
 .spec dt { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--step--1); font-weight: 600; }
 .spec dd { font-weight: 500; }
-/* placeholder plate for the product shot (no stripe pattern; drops out when photography lands) */
 .first__plate {
   position: relative; aspect-ratio: 4 / 5; margin: 0;
   border: 1px solid var(--line-strong);
@@ -105,7 +67,7 @@
 }
 .first__plate-label { font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: clamp(1.4rem, 4vw, 2.6rem); color: var(--steel-ink); }
 
-/* ---- Waitlist + footer ---- */
+/* ---- Waitlist ---- */
 .panel--waitlist .panel__inner { align-self: center; }
 .waitlist__note { margin-top: clamp(1.4rem, 4vh, 2.2rem); max-width: 40ch; color: var(--steel-ink); font-size: var(--step-1); }
 .waitlist { margin-top: clamp(1.8rem, 5vh, 2.6rem); display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; max-width: 40rem; }
@@ -122,14 +84,6 @@
 .waitlist__hint { flex-basis: 100%; margin-top: 0.4rem; font-size: var(--step--1); color: var(--steel-ink); }
 .waitlist__hint[data-error] { color: var(--oxblood-bright); }
 .waitlist__done { font-size: var(--step-1); color: var(--chalk); }
-.foot {
-  position: relative; z-index: 1;
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem 1.5rem;
-  padding-top: clamp(2rem, 6vh, 4rem); margin-top: auto;
-  border-top: 1px solid var(--line);
-  font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.12em; color: var(--steel-ink);
-}
-.foot__mark { font-stretch: 125%; font-weight: 800; letter-spacing: 0.14em; color: var(--chalk); }
 
 /* ---- No-stack fallback: touch / small viewport → plain flowed sections ---- */
 @media (max-width: 768px) {

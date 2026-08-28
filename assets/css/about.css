@@ -1,0 +1,32 @@
+/* ============================================================
+   KNIGHTS ATELIER — about.css (shared nav/footer in base.css)
+   ============================================================ */
+
+.story { padding: clamp(2rem, 6vh, 4rem) 0 clamp(3rem, 9vh, 7rem); display: grid; gap: clamp(1.2rem, 3vh, 1.8rem); }
+.story p { max-width: 58ch; font-size: var(--step-1); color: var(--chalk); }
+.story p + p { color: var(--steel-ink); }
+
+/* the house — a numbered editorial list of founders */
+.house { padding: clamp(3rem, 9vh, 7rem) 0; border-top: 1px solid var(--line); }
+.house .display { margin: 0.3em 0 clamp(1.5rem, 5vh, 3rem); }
+.house__list { list-style: none; margin: 0; padding: 0; }
+.founder {
+  display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: baseline; gap: 1rem;
+  padding: clamp(0.9rem, 2.5vh, 1.5rem) 0; border-top: 1px solid var(--line);
+}
+.founder:last-child { border-bottom: 1px solid var(--line); }
+.founder__n { color: var(--steel-ink); font-size: var(--step--1); }
+.founder__name { font-stretch: 112%; font-weight: 700; letter-spacing: -0.02em; font-size: clamp(1.6rem, 5vw, 3rem); text-transform: uppercase; line-height: 1; }
+.founder__role { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.14em; font-size: var(--step--1); }
+@media (max-width: 560px) {
+  .founder { grid-template-columns: 2rem 1fr; }
+  .founder__role { grid-column: 2; }
+}
+
+/* the promise */
+.values { padding: clamp(3rem, 9vh, 7rem) 0; border-top: 1px solid var(--line); }
+.values__grid { display: grid; grid-template-columns: 1fr; gap: 0; margin: clamp(1rem, 3vh, 1.6rem) 0 clamp(2rem, 5vh, 3rem); }
+@media (min-width: 760px) { .values__grid { grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3vw, 3rem); } }
+.values__grid > div { padding: 1.4rem 0; border-top: 1px solid var(--line); }
+.values__grid dt { font-stretch: 112%; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; font-size: var(--step-1); }
+.values__grid dd { margin-top: 0.6rem; color: var(--steel-ink); max-width: 30ch; }

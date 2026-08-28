@@ -1,0 +1,32 @@
+/* ============================================================
+   KNIGHTS ATELIER — contact.css (shared nav/footer in base.css)
+   ============================================================ */
+
+.contact { display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 6vw, 5rem); padding-bottom: clamp(3rem, 9vh, 6rem); }
+@media (min-width: 860px) { .contact { grid-template-columns: 1.5fr 0.5fr; } }
+
+.cform { display: grid; gap: clamp(1.2rem, 3vh, 1.8rem); max-width: 44rem; }
+.field { display: grid; gap: 0.5rem; }
+.field label { text-transform: uppercase; letter-spacing: 0.14em; font-size: var(--step--1); font-weight: 600; color: var(--steel-ink); }
+.field input, .field textarea, .field select {
+  width: 100%; background: transparent; color: var(--chalk);
+  border: 0; border-bottom: 1px solid var(--line-strong);
+  padding: 0.75rem 0.2rem; font-size: var(--step-1);
+  transition: border-color 0.25s var(--ease);
+}
+.field textarea { resize: vertical; border: 1px solid var(--line-strong); padding: 0.85rem; }
+.field select { border: 1px solid var(--line-strong); padding: 0.75rem 0.85rem; appearance: none; cursor: pointer; }
+.field :where(input, textarea, select):focus { border-color: var(--chalk); }
+.field :where(input, textarea, select):focus:not(:focus-visible) { outline: none; }
+.field :where(input, textarea, select):focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.field [aria-invalid="true"] { border-color: var(--oxblood-bright); }
+.field__err { min-height: 1.1em; font-size: var(--step--1); color: var(--oxblood-bright); }
+.cform__note { margin-top: 0.4rem; font-size: var(--step--1); color: var(--steel-ink); }
+.cform__done { font-size: var(--step-1); color: var(--chalk); max-width: 44ch; }
+
+.cdetails { display: grid; gap: clamp(1.5rem, 4vh, 2.4rem); align-content: start; }
+.cdetail p:not(.label) { margin-top: 0.4rem; color: var(--steel-ink); }
+.cdetail__big { font-size: var(--step-1); border-bottom: 1px solid var(--line-strong); }
+.cdetail__big:hover { border-color: var(--oxblood-bright); }
+.link { color: var(--chalk); border-bottom: 1px solid var(--line-strong); }
+.link:hover { border-color: var(--oxblood-bright); }

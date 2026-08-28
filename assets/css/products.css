@@ -1,0 +1,71 @@
+/* ============================================================
+   KNIGHTS ATELIER — products.css (PDP; shared nav/footer in base.css)
+   ============================================================ */
+
+.pdp { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+@media (min-width: 900px) { .pdp { grid-template-columns: 1.05fr 0.95fr; } }
+
+/* media (placeholder plate until real photography) */
+.pdp__media {
+  position: relative; aspect-ratio: 4 / 5; margin: 0;
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(130% 100% at 30% 12%, rgba(199, 80, 62, 0.09), transparent 55%),
+    radial-gradient(130% 120% at 72% 92%, rgba(0, 0, 0, 0.45), transparent 62%),
+    var(--leather-2);
+  display: grid; place-items: center;
+}
+@media (min-width: 900px) { .pdp__media { position: sticky; top: clamp(6rem, 12vh, 8rem); } }
+.pdp__media-label { font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: clamp(1.6rem, 4vw, 3rem); color: var(--steel-ink); }
+
+/* info */
+.pdp__title { margin-top: 0.3em; }
+.pdp__price { margin-top: clamp(1rem, 3vh, 1.6rem); font-size: var(--step-2); font-weight: 600; }
+.pdp__price-note { font-size: var(--step--1); color: var(--steel-ink); letter-spacing: 0.14em; margin-left: 0.4em; }
+.pdp__lede { margin-top: clamp(1rem, 3vh, 1.4rem); max-width: 44ch; color: var(--steel-ink); font-size: var(--step-1); }
+
+/* buy */
+.buy { margin: clamp(1.8rem, 5vh, 2.6rem) 0; border: 0; }
+.sizes { border: 0; padding: 0; margin: 0 0 1.4rem; }
+.sizes legend { padding: 0; margin-bottom: 0.8rem; }
+.sizes__row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.size {
+  min-width: 3.4rem; padding: 0.7rem 0.9rem; text-align: center; cursor: pointer;
+  border: 1px solid var(--line-strong); color: var(--chalk);
+  font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.size input { position: absolute; opacity: 0; width: 0; height: 0; }
+.size:hover { border-color: var(--chalk); }
+.size:has(input:checked) { background: var(--chalk); color: var(--leather); border-color: var(--chalk); }
+.size:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 3px; }
+.sizes__guide { display: inline-block; margin-top: 0.9rem; font-size: var(--step--1); letter-spacing: 0.1em; text-transform: uppercase; color: var(--steel-ink); border-bottom: 1px solid var(--line); }
+.sizes__guide:hover { color: var(--chalk); }
+.buy__add { margin-top: 0.4rem; }
+.buy__msg { min-height: 1.4em; margin-top: 0.9rem; font-size: var(--step--1); color: var(--chalk); }
+.buy__msg[data-error] { color: var(--oxblood-bright); }
+.buy__ship { margin-top: 1.2rem; font-size: var(--step--1); color: var(--steel-ink); letter-spacing: 0.02em; }
+
+/* spec */
+.spec { display: grid; gap: 0; max-width: 34rem; margin-top: clamp(1.5rem, 4vh, 2.4rem); }
+.spec > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.85rem 0; border-top: 1px solid var(--line); }
+.spec > div:last-child { border-bottom: 1px solid var(--line); }
+.spec dt { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--step--1); font-weight: 600; }
+.spec dd { font-weight: 500; }
+
+/* long-form sections */
+.prose, .guide, .reviews { padding: clamp(3rem, 9vh, 7rem) 0; border-top: 1px solid var(--line); }
+.prose .display, .guide .display, .reviews .display { margin: 0.3em 0 clamp(1rem, 3vh, 1.6rem); }
+.prose p { max-width: 60ch; color: var(--steel-ink); font-size: var(--step-1); }
+.guide__note { max-width: 60ch; color: var(--steel-ink); margin-bottom: clamp(1.4rem, 4vh, 2.2rem); }
+.link { color: var(--chalk); border-bottom: 1px solid var(--line-strong); }
+.link:hover { border-color: var(--oxblood-bright); }
+
+/* size table */
+.guide__scroll { overflow-x: auto; }
+.guide__table { width: 100%; min-width: 34rem; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.guide__table th, .guide__table td { text-align: left; padding: 0.85rem 1rem 0.85rem 0; border-bottom: 1px solid var(--line); }
+.guide__table thead th { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--step--1); font-weight: 600; }
+.guide__table tbody th { font-weight: 700; }
+
+.reviews__empty { max-width: 50ch; color: var(--steel-ink); font-size: var(--step-1); }

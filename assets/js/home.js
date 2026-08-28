@@ -33,21 +33,6 @@
       duration: 900, delay: anime.stagger(120, { start: 350 }) });
   }
 
-  /* ---- Mobile nav toggle ---- */
-  function navToggle() {
-    var btn = doc.querySelector('.nav__toggle');
-    var links = doc.getElementById('nav-links');
-    if (!btn || !links) return;
-    var close = function () { btn.setAttribute('aria-expanded', 'false'); links.classList.remove('is-open'); };
-    btn.addEventListener('click', function () {
-      var open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!open));
-      links.classList.toggle('is-open', !open);
-    });
-    links.addEventListener('click', function (e) { if (e.target.tagName === 'A') close(); });
-    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-  }
-
   /* ---- GSAP stacking recede (desktop + motion; matchMedia auto-reverts on resize) ---- */
   function stack() {
     if (!window.gsap || !window.ScrollTrigger) return;
@@ -89,14 +74,7 @@
     });
   }
 
-  /* ---- Nav cart count from shared localStorage cart ---- */
-  function cartCount() {
-    var el = doc.querySelector('[data-cart-count]');
-    if (!el) return;
-    try { el.textContent = (JSON.parse(localStorage.getItem('ka_cart') || '{}').count) || 0; } catch (e) {}
-  }
-
-  function init() { loadReveal(); navToggle(); stack(); waitlist(); cartCount(); }
+  function init() { loadReveal(); stack(); waitlist(); }   /* nav + cart are in site.js */
   if (doc.readyState !== 'loading') init();
   else doc.addEventListener('DOMContentLoaded', init);
 })();
