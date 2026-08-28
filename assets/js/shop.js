@@ -27,7 +27,12 @@
   };
 
   var KEY = 'ka_cart';
-  function read() { try { return JSON.parse(localStorage.getItem(KEY) || '{"lines":[],"count":0}'); } catch (e) { return { lines: [], count: 0 }; } }
+  function read() {
+    var c;
+    try { c = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { c = null; }
+    // guard shape too, not just parse errors: valid-but-shapeless JSON must not crash callers
+    return (c && Array.isArray(c.lines)) ? c : { lines: [], count: 0 };
+  }
   function write(cart) {
     cart.count = cart.lines.reduce(function (n, l) { return n + l.qty; }, 0);
     try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch (e) {}

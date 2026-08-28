@@ -16,6 +16,7 @@
 
   <header class="nav">
     <a class="nav__mark" href="index.html">KNIGHTS<span>ATELIER</span></a>
+    <a class="nav__cart" href="products.html">Cart <span data-cart-count>0</span></a>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
       <span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span>
     </button>
@@ -24,7 +25,6 @@
       <a href="products.html">Products</a>
       <a href="about.html">About</a>
       <a href="contact.html" aria-current="page">Contact</a>
-      <a class="nav__cart" href="products.html">Cart <span data-cart-count>0</span></a>
     </nav>
   </header>
 
@@ -40,12 +40,12 @@
         <div class="field">
           <label for="c-name">Name</label>
           <input id="c-name" name="name" type="text" autocomplete="name" required aria-describedby="c-name-err">
-          <span class="field__err" id="c-name-err" role="status" aria-live="polite"></span>
+          <span class="field__err" id="c-name-err" role="alert"></span>
         </div>
         <div class="field">
           <label for="c-email">Email</label>
           <input id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err">
-          <span class="field__err" id="c-email-err" role="status" aria-live="polite"></span>
+          <span class="field__err" id="c-email-err" role="alert"></span>
         </div>
         <div class="field">
           <label for="c-topic">Topic</label>
@@ -59,7 +59,7 @@
         <div class="field">
           <label for="c-message">Message</label>
           <textarea id="c-message" name="message" rows="6" required aria-describedby="c-message-err"></textarea>
-          <span class="field__err" id="c-message-err" role="status" aria-live="polite"></span>
+          <span class="field__err" id="c-message-err" role="alert"></span>
         </div>
         <button class="btn btn--solid" type="submit">Send</button>
         <p class="cform__note">This form is a demo until the store is connected — for now, email us directly.</p>

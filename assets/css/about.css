@@ -8,7 +8,7 @@
 
 /* the house — a numbered editorial list of founders */
 .house { padding: clamp(3rem, 9vh, 7rem) 0; border-top: 1px solid var(--line); }
-.house .display { margin: 0.3em 0 clamp(1.5rem, 5vh, 3rem); }
+.house .display, .values .display { margin: 0.3em 0 clamp(1.5rem, 5vh, 3rem); }
 .house__list { list-style: none; margin: 0; padding: 0; }
 .founder {
   display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: baseline; gap: 1rem;
@@ -25,7 +25,7 @@
 
 /* the promise */
 .values { padding: clamp(3rem, 9vh, 7rem) 0; border-top: 1px solid var(--line); }
-.values__grid { display: grid; grid-template-columns: 1fr; gap: 0; margin: clamp(1rem, 3vh, 1.6rem) 0 clamp(2rem, 5vh, 3rem); }
+.values__grid { display: grid; grid-template-columns: 1fr; gap: 0; margin: 0 0 clamp(2rem, 5vh, 3rem); }
 @media (min-width: 760px) { .values__grid { grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3vw, 3rem); } }
 .values__grid > div { padding: 1.4rem 0; border-top: 1px solid var(--line); }
 .values__grid dt { font-stretch: 112%; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; font-size: var(--step-1); }

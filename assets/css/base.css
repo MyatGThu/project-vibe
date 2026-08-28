@@ -15,8 +15,8 @@
   --steel-ink: #A9AFB4;   /* secondary text — ~8.7:1 (AA) */
 
   /* --- Structure & accent --- */
-  --line:       rgba(233, 234, 236, 0.14);  /* hairline rules (non-text) */
-  --line-strong:rgba(233, 234, 236, 0.28);
+  --line:       rgba(233, 234, 236, 0.14);  /* hairline rules (decorative, non-text) */
+  --line-strong:rgba(233, 234, 236, 0.42);  /* interactive control edges — ≥3:1 on --leather (WCAG 1.4.11) */
   --oxblood:        #8E2A2A;  /* accent: fills, rules, hover (decorative — ~2.3:1, never small text) */
   --oxblood-bright: #C7503E;  /* accent for LARGE display words + non-text borders only (~4.3:1) */
   --error:          #D46A58;  /* error TEXT — clears AA (≥4.5:1) on --leather */
@@ -39,7 +39,6 @@
   --gutter: clamp(1rem, 2.2vw, 2rem);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -65,6 +64,7 @@ input, button, textarea, select { font: inherit; color: inherit; }
 
 /* --- Type roles (one family, width/weight as the contrast axis) --- */
 .display, h1, h2 {
+  font-size: var(--step-3);           /* real display size — headings sit above lede/price */
   font-stretch: 125%;                 /* Archivo Expanded — monumental */
   font-weight: 800;
   line-height: 0.98;
@@ -94,8 +94,6 @@ p { max-width: 72ch; }                /* body line length 65–75ch */
 
 /* --- Layout helpers --- */
 .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--margin); }
-.grid12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
-.rule { border: 0; border-top: 1px solid var(--line); }
 
 /* --- Interactive states (CSS owns micro-interactions) --- */
 .btn {
@@ -137,27 +135,33 @@ p { max-width: 72ch; }                /* body line length 65–75ch */
    ============================================================ */
 .nav {
   position: fixed; inset: 0 0 auto 0; z-index: 40;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  display: flex; align-items: center; gap: 1rem;
   padding: clamp(0.9rem, 2vw, 1.4rem) var(--margin);
+  background: var(--leather);   /* solid bar so scrolling content never collides with nav text */
 }
-.nav__mark { font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.82; font-size: var(--step-0); }
+.nav__mark { order: 0; font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.82; font-size: var(--step-0); }
 .nav__mark span { display: block; font-weight: 500; font-stretch: 100%; letter-spacing: 0.42em; font-size: 0.5em; color: var(--steel-ink); }
-.nav__links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); }
+/* primary links: pushed to the right on desktop; collapse into the toggle on mobile */
+.nav__links { order: 1; margin-left: auto; display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); }
 .nav__links a { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.14em; color: var(--steel-ink); transition: color 0.3s var(--ease); }
 .nav__links a:hover, .nav__links a[aria-current="page"] { color: var(--chalk); }
+/* cart: hoisted out of the collapsible menu so it (and the item count) is always in the bar */
+.nav__cart { order: 2; font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.14em; color: var(--steel-ink); transition: color 0.3s var(--ease); }
+.nav__cart:hover { color: var(--chalk); }
 .nav__cart span { color: var(--chalk); }
-.nav__toggle { display: none; flex-direction: column; justify-content: center; gap: 6px; width: 44px; height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer; }
+.nav__toggle { order: 3; display: none; flex-direction: column; justify-content: center; gap: 6px; width: 44px; height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer; }
 .nav__toggle-bar { width: 26px; height: 2px; background: var(--chalk); transition: transform 0.3s var(--ease), opacity 0.3s var(--ease); }
 .nav__toggle[aria-expanded="true"] .nav__toggle-bar:first-child { transform: translateY(4px) rotate(45deg); }
 .nav__toggle[aria-expanded="true"] .nav__toggle-bar:last-child { transform: translateY(-4px) rotate(-45deg); }
 @media (max-width: 720px) {
   .nav { flex-wrap: wrap; }
-  .js .nav__toggle { display: inline-flex; }   /* only offer a toggle when JS can drive it */
+  .nav__cart { order: 1; margin-left: auto; }         /* cart stays in the bar, right side */
+  .js .nav__toggle { display: inline-flex; order: 2; } /* only offer a toggle when JS can drive it */
   /* closed: also visibility:hidden so the links leave the tab order (not just clipped) */
-  .js .nav__links { flex-basis: 100%; flex-direction: column; align-items: flex-start; gap: 0; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.35s var(--ease), opacity 0.3s var(--ease), visibility 0.35s; }
+  .js .nav__links { order: 3; margin-left: 0; flex-basis: 100%; flex-direction: column; align-items: flex-start; gap: 0; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.35s var(--ease), opacity 0.3s var(--ease), visibility 0.35s; }
   .js .nav__links.is-open { max-height: 70vh; opacity: 1; visibility: visible; padding-top: 0.8rem; }
   .js .nav__links a { display: block; width: 100%; padding: 0.7rem 0; font-size: var(--step-0); }
-  .nav__links { flex-basis: 100%; flex-wrap: wrap; gap: 0.4rem 1.4rem; }   /* no-js reachable layout */
+  .nav__links { order: 3; margin-left: 0; flex-basis: 100%; flex-wrap: wrap; gap: 0.4rem 1.4rem; }   /* no-js reachable layout */
 }
 
 .foot {
@@ -186,16 +190,22 @@ p { max-width: 72ch; }                /* body line length 65–75ch */
 .link { color: var(--chalk); border-bottom: 1px solid var(--line-strong); }
 .link:hover { border-color: var(--oxblood-bright); }
 
-/* ---- Cart drawer (injected by site.js; shared across pages) ---- */
-.cart-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,0.55); opacity: 0; visibility: hidden; transition: opacity 0.3s var(--ease), visibility 0.3s; }
-.cart-overlay.is-open { opacity: 1; visibility: visible; }
+/* ---- Cart drawer — native <dialog> (injected by site.js; shared across pages) ----
+   showModal() gives focus trap, inert background, Esc-to-close, top-layer stacking,
+   and a closed dialog that is not in the tab order. The slide is progressive: browsers
+   without @starting-style just open instantly. */
 .cart-drawer {
-  position: fixed; top: 0; right: 0; z-index: 61; height: 100%; width: min(420px, 92vw);
-  background: var(--leather-2); border-left: 1px solid var(--line-strong);
-  transform: translateX(100%); transition: transform 0.4s var(--ease);
-  display: flex; flex-direction: column; padding: clamp(1.4rem, 4vw, 2.2rem);
+  position: fixed; inset: 0 0 0 auto; margin: 0;
+  height: 100%; max-height: 100%; width: min(420px, 92vw); max-width: 92vw;
+  background: var(--leather-2); color: var(--chalk);
+  border: 0; border-left: 1px solid var(--line-strong);
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+  transform: translateX(100%);
+  transition: transform 0.35s var(--ease), overlay 0.35s allow-discrete, display 0.35s allow-discrete;
 }
-.cart-drawer.is-open { transform: translateX(0); }
+.cart-drawer[open] { display: flex; flex-direction: column; transform: translateX(0); }
+@starting-style { .cart-drawer[open] { transform: translateX(100%); } }
+.cart-drawer::backdrop { background: rgba(0, 0, 0, 0.55); }
 .cart-drawer__head { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
 .cart-drawer__title { font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--step-1); }
 .cart-drawer__close { background: transparent; border: 0; color: var(--steel-ink); cursor: pointer; font-size: 1.4rem; line-height: 1; padding: 0.2rem 0.4rem; }

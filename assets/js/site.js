@@ -38,34 +38,33 @@
     return n;
   }
 
-  /* ---- Cart drawer ---- */
+  /* ---- Money format (Intl; falls back to plain dollars) ---- */
+  var MONEY = (typeof Intl !== 'undefined' && Intl.NumberFormat)
+    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
+    : null;
+  function money(n) { return MONEY ? MONEY.format(n) : '$' + n; }
+
+  /* ---- Cart drawer — native <dialog>: focus trap, inert background, Esc, top layer ---- */
   function cart() {
     var Shop = window.KAShop;
     var trigger = doc.querySelector('.nav__cart');
     if (!Shop || !trigger) return;
 
-    var overlay = doc.createElement('div'); overlay.className = 'cart-overlay';
-    var drawer = doc.createElement('aside');
-    drawer.className = 'cart-drawer';
-    drawer.setAttribute('role', 'dialog');
-    drawer.setAttribute('aria-modal', 'true');
-    drawer.setAttribute('aria-label', 'Cart');
-    drawer.setAttribute('aria-hidden', 'true');
-    drawer.innerHTML =
+    var dlg = doc.createElement('dialog');
+    dlg.className = 'cart-drawer';
+    dlg.setAttribute('aria-label', 'Cart');
+    dlg.innerHTML =
       '<div class="cart-drawer__head"><span class="cart-drawer__title">Cart</span>' +
       '<button class="cart-drawer__close" type="button" aria-label="Close cart">&#10005;</button></div>' +
       '<ul class="cart-drawer__lines" data-lines></ul>' +
-      '<div class="cart-drawer__foot"><div class="cart-drawer__total"><span>Total</span><span data-total>$0</span></div>' +
+      '<div class="cart-drawer__foot"><div class="cart-drawer__total"><span>Total</span><span data-total>' + money(0) + '</span></div>' +
       '<button class="btn btn--solid" type="button" data-checkout style="width:100%">Checkout</button>' +
       '<p class="cart-drawer__note" data-note></p></div>';
-    doc.body.appendChild(overlay); doc.body.appendChild(drawer);
+    doc.body.appendChild(dlg);
 
-    var linesEl = drawer.querySelector('[data-lines]');
-    var totalEl = drawer.querySelector('[data-total]');
-    var noteEl = drawer.querySelector('[data-note]');
-    var lastFocus = null;
-
-    function money(n) { return '$' + n; }
+    var linesEl = dlg.querySelector('[data-lines]');
+    var totalEl = dlg.querySelector('[data-total]');
+    var noteEl = dlg.querySelector('[data-note]');
 
     function render() {
       var c = Shop.getCart();
@@ -91,27 +90,22 @@
     }
 
     function open() {
-      lastFocus = doc.activeElement;
+      if (dlg.open) return;
       render(); noteEl.textContent = '';
-      overlay.classList.add('is-open'); drawer.classList.add('is-open');
-      drawer.setAttribute('aria-hidden', 'false');
-      drawer.querySelector('.cart-drawer__close').focus();
-    }
-    function close() {
-      overlay.classList.remove('is-open'); drawer.classList.remove('is-open');
-      drawer.setAttribute('aria-hidden', 'true');
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
+      doc.documentElement.style.overflow = 'hidden';   // lock background scroll while open
+      dlg.showModal();   // native: traps focus, inerts the page, focuses the Close button (first control)
     }
 
     trigger.addEventListener('click', function (e) { e.preventDefault(); open(); });   // no-JS: link falls back to products.html
-    overlay.addEventListener('click', close);
-    drawer.querySelector('.cart-drawer__close').addEventListener('click', close);
-    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && drawer.classList.contains('is-open')) close(); });
-    drawer.querySelector('[data-checkout]').addEventListener('click', function () {
+    dlg.querySelector('.cart-drawer__close').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); }); // backdrop click closes
+    dlg.addEventListener('close', function () { doc.documentElement.style.overflow = ''; }); // covers Esc/backdrop/button; native returns focus to trigger
+    dlg.querySelector('[data-checkout]').addEventListener('click', function () {
       var r = Shop.checkout();
       if (r && r.connected === false) noteEl.textContent = r.message;
     });
-    window.addEventListener('ka:cart', function () { if (drawer.classList.contains('is-open')) render(); });
+    window.addEventListener('ka:cart', function () { if (dlg.open) render(); });          // same-tab cart change
+    window.addEventListener('storage', function (e) { if (e.key === 'ka_cart' && dlg.open) render(); }); // cross-tab
   }
 
   function init() { navToggle(); cartCount(); cart(); }
