@@ -43,23 +43,14 @@
 .sizes__guide:hover { color: var(--chalk); }
 .buy__add { margin-top: 0.4rem; }
 .buy__msg { min-height: 1.4em; margin-top: 0.9rem; font-size: var(--step--1); color: var(--chalk); }
-.buy__msg[data-error] { color: var(--oxblood-bright); }
+.buy__msg[data-error] { color: var(--error); }
 .buy__ship { margin-top: 1.2rem; font-size: var(--step--1); color: var(--steel-ink); letter-spacing: 0.02em; }
-
-/* spec */
-.spec { display: grid; gap: 0; max-width: 34rem; margin-top: clamp(1.5rem, 4vh, 2.4rem); }
-.spec > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.85rem 0; border-top: 1px solid var(--line); }
-.spec > div:last-child { border-bottom: 1px solid var(--line); }
-.spec dt { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--step--1); font-weight: 600; }
-.spec dd { font-weight: 500; }
 
 /* long-form sections */
 .prose, .guide, .reviews { padding: clamp(3rem, 9vh, 7rem) 0; border-top: 1px solid var(--line); }
 .prose .display, .guide .display, .reviews .display { margin: 0.3em 0 clamp(1rem, 3vh, 1.6rem); }
 .prose p { max-width: 60ch; color: var(--steel-ink); font-size: var(--step-1); }
 .guide__note { max-width: 60ch; color: var(--steel-ink); margin-bottom: clamp(1.4rem, 4vh, 2.2rem); }
-.link { color: var(--chalk); border-bottom: 1px solid var(--line-strong); }
-.link:hover { border-color: var(--oxblood-bright); }
 
 /* size table */
 .guide__scroll { overflow-x: auto; }

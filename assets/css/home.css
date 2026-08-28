@@ -51,11 +51,6 @@
 .first__grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 900px) { .first__grid { grid-template-columns: 1.05fr 0.95fr; } }
 .first__copy .display { margin-top: 0.4em; }
-.spec { margin: clamp(1.6rem, 4vh, 2.4rem) 0; display: grid; gap: 0; max-width: 30rem; }
-.spec > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.85rem 0; border-top: 1px solid var(--line); }
-.spec > div:last-child { border-bottom: 1px solid var(--line); }
-.spec dt { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--step--1); font-weight: 600; }
-.spec dd { font-weight: 500; }
 .first__plate {
   position: relative; aspect-ratio: 4 / 5; margin: 0;
   border: 1px solid var(--line-strong);

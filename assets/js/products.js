@@ -16,9 +16,14 @@
     if (!product) return;
 
     product.variants.forEach(function (v) {
+      // build with createElement/textContent so store-controlled variant strings can't inject markup
       var label = doc.createElement('label');
       label.className = 'size';
-      label.innerHTML = '<input type="radio" name="size" value="' + v.id + '"><span>' + v.title + '</span>';
+      var input = doc.createElement('input');
+      input.type = 'radio'; input.name = 'size'; input.value = v.id;
+      var span = doc.createElement('span');
+      span.textContent = v.title;
+      label.appendChild(input); label.appendChild(span);
       row.appendChild(label);
     });
 

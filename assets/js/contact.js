@@ -34,6 +34,19 @@
       var done = form.querySelector('.cform__done');
       if (done) done.focus();
     });
+
+    // clear a field's error as soon as the user corrects it
+    ['c-name', 'c-email', 'c-message'].forEach(function (id) {
+      var el = doc.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', function () {
+        if (el.getAttribute('aria-invalid') === 'true') {
+          el.removeAttribute('aria-invalid');
+          var e = doc.getElementById(id + '-err');
+          if (e) e.textContent = '';
+        }
+      });
+    });
   }
 
   if (doc.readyState !== 'loading') init();
