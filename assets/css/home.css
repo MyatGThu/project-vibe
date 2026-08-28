@@ -18,9 +18,29 @@
 .nav__links a { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.14em; color: var(--steel-ink); transition: color 0.3s var(--ease); }
 .nav__links a:hover, .nav__links a[aria-current="page"] { color: var(--chalk); }
 .nav__cart span { color: var(--chalk); }
+
+/* hamburger toggle — hidden on desktop, shown ≤720px */
+.nav__toggle {
+  display: none; flex-direction: column; justify-content: center; gap: 6px;
+  width: 44px; height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer;
+}
+.nav__toggle-bar { width: 26px; height: 2px; background: var(--chalk); transition: transform 0.3s var(--ease), opacity 0.3s var(--ease); }
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:first-child { transform: translateY(4px) rotate(45deg); }
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:last-child { transform: translateY(-4px) rotate(-45deg); }
+
 @media (max-width: 720px) {
-  .nav__links a:not(.nav__cart):not([aria-current]) { display: none; }
-  .nav__links a[aria-current] { display: none; }
+  .nav { flex-wrap: wrap; }
+  .nav__toggle { display: inline-flex; }
+  /* JS present: collapse into a slide-down list toggled by .is-open.
+     No JS: the list stays in normal flow below the bar — still reachable. */
+  .js .nav__links {
+    flex-basis: 100%; flex-direction: column; align-items: flex-start; gap: 0;
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.35s var(--ease), opacity 0.3s var(--ease);
+  }
+  .js .nav__links.is-open { max-height: 70vh; opacity: 1; padding-top: 0.8rem; }
+  .js .nav__links a { display: block; width: 100%; padding: 0.7rem 0; font-size: var(--step-0); }
+  .nav__links { flex-basis: 100%; flex-wrap: wrap; gap: 0.4rem 1.4rem; }  /* no-js layout */
 }
 
 /* ---- Stacking panels ---- */
@@ -36,10 +56,9 @@
 .panel--first { background: var(--leather); }
 .panel--waitlist { position: relative; align-content: space-between; background: var(--leather-2); }
 .panel__inner { position: relative; z-index: 1; width: 100%; }
-/* the overshadow scrim — GSAP fades this in as the next plate covers this one */
 .panel__scrim { position: absolute; inset: 0; z-index: 2; background: #000; opacity: 0; pointer-events: none; }
 
-/* ---- 01 Hero ---- */
+/* ---- Hero ---- */
 .panel--hero .panel__inner { text-align: center; }
 .wordmark {
   font-stretch: 100%;            /* normal width so all 7 letters fit ONE monumental line */
@@ -47,7 +66,7 @@
   font-size: clamp(2.4rem, 17vw, 13.5rem);
   line-height: 0.9; letter-spacing: -0.035em;
 }
-.wordmark .ltr { display: inline-block; will-change: transform, opacity; }
+.wordmark .ltr { display: inline-block; }
 .wordmark__sub {
   margin-top: 0.4em; font-stretch: 100%; font-weight: 500;
   text-transform: uppercase; letter-spacing: 0.62em; text-indent: 0.62em;
@@ -61,12 +80,11 @@
 }
 .scroll-cue__line { width: 1px; height: 2.4rem; background: linear-gradient(var(--steel-ink), transparent); }
 
-/* ---- 02 Manifesto ---- */
+/* ---- Manifesto ---- */
 .panel--manifesto .display { margin-top: 0.4em; }
-.manifesto { margin-top: clamp(1.5rem, 4vh, 2.5rem); max-width: 34ch; font-size: var(--step-1); color: var(--steel-ink); }
-.panel--manifesto .manifesto { color: var(--chalk); }
+.manifesto { margin-top: clamp(1.5rem, 4vh, 2.5rem); max-width: 34ch; font-size: var(--step-1); color: var(--chalk); }
 
-/* ---- 03 The First ---- */
+/* ---- The First ---- */
 .first__grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 900px) { .first__grid { grid-template-columns: 1.05fr 0.95fr; } }
 .first__copy .display { margin-top: 0.4em; }
@@ -75,19 +93,19 @@
 .spec > div:last-child { border-bottom: 1px solid var(--line); }
 .spec dt { color: var(--steel-ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--step--1); font-weight: 600; }
 .spec dd { font-weight: 500; }
-/* placeholder plate for the product shot (clearly intentional, drops out when photography lands) */
+/* placeholder plate for the product shot (no stripe pattern; drops out when photography lands) */
 .first__plate {
   position: relative; aspect-ratio: 4 / 5; margin: 0;
   border: 1px solid var(--line-strong);
   background:
-    radial-gradient(120% 90% at 30% 20%, rgba(199,80,62,0.06), transparent 60%),
-    repeating-linear-gradient(135deg, rgba(0,0,0,0.22) 0 2px, transparent 2px 5px),
+    radial-gradient(130% 100% at 30% 12%, rgba(199, 80, 62, 0.09), transparent 55%),
+    radial-gradient(130% 120% at 72% 92%, rgba(0, 0, 0, 0.45), transparent 62%),
     var(--leather-2);
   display: grid; place-items: center;
 }
 .first__plate-label { font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: clamp(1.4rem, 4vw, 2.6rem); color: var(--steel-ink); }
 
-/* ---- 04 Waitlist + footer ---- */
+/* ---- Waitlist + footer ---- */
 .panel--waitlist .panel__inner { align-self: center; }
 .waitlist__note { margin-top: clamp(1.4rem, 4vh, 2.2rem); max-width: 40ch; color: var(--steel-ink); font-size: var(--step-1); }
 .waitlist { margin-top: clamp(1.8rem, 5vh, 2.6rem); display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; max-width: 40rem; }
@@ -97,9 +115,12 @@
   transition: border-color 0.3s var(--ease);
 }
 .waitlist input::placeholder { color: var(--steel-ink); }
-.waitlist input:focus { outline: none; border-color: var(--chalk); }
+.waitlist input:focus { border-color: var(--chalk); }
+.waitlist input:focus:not(:focus-visible) { outline: none; }
+.waitlist input:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .waitlist input[aria-invalid="true"] { border-color: var(--oxblood-bright); }
 .waitlist__hint { flex-basis: 100%; margin-top: 0.4rem; font-size: var(--step--1); color: var(--steel-ink); }
+.waitlist__hint[data-error] { color: var(--oxblood-bright); }
 .waitlist__done { font-size: var(--step-1); color: var(--chalk); }
 .foot {
   position: relative; z-index: 1;
@@ -110,19 +131,14 @@
 }
 .foot__mark { font-stretch: 125%; font-weight: 800; letter-spacing: 0.14em; color: var(--chalk); }
 
-/* ---- Progressive enhancement: hide reveal targets ONLY when JS is present ---- */
-.js [data-rise] { opacity: 0; }
-.js [data-letters] { opacity: 0; }
-
 /* ---- No-stack fallback: touch / small viewport → plain flowed sections ---- */
 @media (max-width: 768px) {
   .panel { position: static; min-height: auto; padding-block: clamp(5rem, 14vh, 8rem); }
   .panel--hero { min-height: 90svh; }
   .panel__scrim { display: none; }
-  .scroll-cue { display: none; }   /* absolute cue has no full-viewport panel to anchor to on mobile */
+  .scroll-cue { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .panel { position: static; min-height: auto; }
   .panel__scrim { display: none; }
-  .js [data-rise], .js [data-letters] { opacity: 1; }
 }

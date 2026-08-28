@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Knights Atelier — Modern armor</title>
   <meta name="description" content="Knights Atelier. One leather jacket, built like armor — full-grain hide, made to order, numbered. A code, worn.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230C0C0E'/%3E%3Ctext x='16' y='24' font-family='Arial,sans-serif' font-size='22' font-weight='900' fill='%23E9EAEC' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/base.css">
@@ -14,9 +15,12 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="nav" aria-label="Primary">
+  <header class="nav">
     <a class="nav__mark" href="index.html">KNIGHTS<span>ATELIER</span></a>
-    <nav class="nav__links">
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span>
+    </button>
+    <nav class="nav__links" id="nav-links" aria-label="Primary">
       <a href="index.html" aria-current="page">Home</a>
       <a href="products.html">Products</a>
       <a href="about.html">About</a>
@@ -27,7 +31,7 @@
 
   <main id="main">
 
-    <!-- 01 — Hero: the wordmark is the hero -->
+    <!-- Hero: the wordmark is the hero (the unnumbered 01) -->
     <section class="panel panel--hero">
       <span class="panel__scrim" aria-hidden="true"></span>
       <div class="panel__inner wrap">
@@ -38,11 +42,11 @@
       <span class="scroll-cue" data-rise aria-hidden="true">Scroll<span class="scroll-cue__line"></span></span>
     </section>
 
-    <!-- 02 — Manifesto -->
+    <!-- 01 — Manifesto -->
     <section class="panel panel--manifesto">
       <span class="panel__scrim" aria-hidden="true"></span>
       <div class="panel__inner wrap">
-        <p class="label"><span class="index">02</span> &nbsp;/&nbsp; The code</p>
+        <p class="label"><span class="index">01</span> &nbsp;/&nbsp; The code</p>
         <h2 class="display">A code,<br>worn.</h2>
         <p class="manifesto">Knights Atelier makes one thing, and makes it to outlast you. A leather
           jacket built like armor — cut clean, sewn to survive, worn as a code. No season, no noise.
@@ -50,12 +54,12 @@
       </div>
     </section>
 
-    <!-- 03 — The First (product teaser; type-led placeholder until photography) -->
+    <!-- 02 — The First (product teaser; type-led placeholder until photography) -->
     <section class="panel panel--first">
       <span class="panel__scrim" aria-hidden="true"></span>
       <div class="panel__inner wrap first__grid">
         <div class="first__copy">
-          <p class="label"><span class="index">03</span> &nbsp;/&nbsp; The first</p>
+          <p class="label"><span class="index">02</span> &nbsp;/&nbsp; The first</p>
           <h2 class="display">The Leather<br>Jacket</h2>
           <dl class="spec">
             <div><dt>Material</dt><dd>Full-grain hide</dd></div>
@@ -70,10 +74,10 @@
       </div>
     </section>
 
-    <!-- 04 — Waitlist + footer -->
+    <!-- 03 — Waitlist + footer -->
     <section class="panel panel--waitlist">
       <div class="panel__inner wrap">
-        <p class="label"><span class="index">04</span> &nbsp;/&nbsp; The first drop</p>
+        <p class="label"><span class="index">03</span> &nbsp;/&nbsp; The first drop</p>
         <h2 class="display">Join the<br>first drop.</h2>
         <p class="waitlist__note">A limited, numbered first run, made to order. Join the list — we
           write once, before it opens.</p>
@@ -82,7 +86,7 @@
           <input id="wl-email" type="email" name="email" placeholder="your@email.com" autocomplete="email" required
                  aria-describedby="wl-hint">
           <button class="btn btn--solid" type="submit">Join</button>
-          <p class="waitlist__hint" id="wl-hint">No spam. One letter, before the drop.</p>
+          <p class="waitlist__hint" id="wl-hint" role="status" aria-live="polite" data-hint-default="No spam. One letter, before the drop.">No spam. One letter, before the drop.</p>
         </form>
       </div>
       <footer class="foot wrap">
