@@ -1,9 +1,9 @@
-"""Build data/contracts.json from an Apify AusTender dataset export.
+"""Build data/contracts.json from AusTender contract notices.
 
-Run the Apify actor knotty_mistveil/austender-contract-notices, export its dataset as JSON
-(fields: supplierRegion, valueAmount, supplierName, supplierAbn, agencyName, procurementMethod,
-publishedDate, unspscDescription, limitedTenderReason), then:
-python3 scripts/build-contracts.py export.json "<window label>" <notices published in window>
+Input is the output of scripts/fetch-austender.py, or an Apify dataset export from the actor
+knotty_mistveil/austender-contract-notices with fields supplierRegion, valueAmount, supplierName,
+supplierAbn, agencyName, procurementMethod, publishedDate, unspscDescription, limitedTenderReason.
+python3 scripts/build-contracts.py export.json "<window label>" [<notices published in window>]
 """
 import json, sys
 from collections import Counter, defaultdict
@@ -48,9 +48,9 @@ for r in items:
     m["limited"] += r["procurementMethod"] == "limited"
 reasons = Counter((r.get("limitedTenderReason") or "Not stated").strip() for r in items if r["procurementMethod"] == "limited")
 json.dump({
-    "source": "AusTender contract notices via Apify actor knotty_mistveil/austender-contract-notices",
+    "source": "AusTender contract notices (OCDS API)",
     "window": sys.argv[2],
-    "published": int(sys.argv[3]),  # all notices in the window, from the run's SUMMARY record
+    "published": int(sys.argv[3]) if len(sys.argv) > 3 else raw["published"],  # all notices in the window
     "monthly": dict(sorted(monthly.items())),
     "limitedReasons": reasons.most_common(6),
     "national": summary(items, 10),

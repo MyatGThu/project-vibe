@@ -6,7 +6,7 @@ A static web page that tracks public spending in each Australian state and terri
 
 - A map of the states and territories (ABS ASGS 2021 boundaries), shaded by total or per-person spending. Hover, tap or tab to a state for its full breakdown: rank, share of the national total, change on one and five years, latest quarter, population and each spending component.
 - State & local government spending compared with the taxes states and councils collect (ABS Taxation Revenue 2024-25), with each tax type.
-- Federal contracts of $1m or more by the state of the supplier, collected from AusTender with Apify.
+- Federal contracts of $1m or more in 2025-26 by the state of the supplier, by month, category and the reason given for limited tenders (AusTender).
 - Company tax from the ATO's 2024-25 tax transparency report: most tax payable, largest income with no tax payable, and lowest tax on taxable income over $100m.
 - Claude usage by state from the Anthropic Economic Index, against each state's share of population.
 - Headline figures for the selected financial year (July–June): national total, change on the previous year, spending per person, the highest per-person state and the fastest-growing state.
@@ -56,10 +56,11 @@ Downloads generalised state boundaries from the ABS ASGS 2021 map service and wr
 ```sh
 pip install openpyxl
 python3 scripts/build-tax.py                      # data/state-tax.json, data/company-tax.json
-python3 scripts/build-contracts.py export.json "<window label>" <notices published>   # data/contracts.json
+python3 scripts/fetch-austender.py 2025-07-01 2026-06-30 export.json   # AusTender OCDS API, no key
+python3 scripts/build-contracts.py export.json "<window label>"         # data/contracts.json
 ```
 
-For contracts, run the Apify actor `knotty_mistveil/austender-contract-notices` (date type `contractPublished`, minimum value 1000000, no amendments) and export its dataset as JSON. `data/economic-index.json` holds figures from the Anthropic Economic Index (period 2026-05-01).
+`build-contracts.py` also accepts an Apify dataset export from the actor `knotty_mistveil/austender-contract-notices` (date type `contractPublished`, minimum value 1000000, no amendments); pass the number of notices published as a third argument. Both sources give the same figures. `data/economic-index.json` holds figures from the Anthropic Economic Index (period 2026-05-01).
 
 ## Deploy
 

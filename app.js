@@ -353,13 +353,19 @@ function extraDetail(r) {
     out.push(info(`state & local taxes, ${ty} · cover ${fmtShare(t.total / sl)} of state & local spending`, fmtBn(t.total)));
   }
   const c = state.contracts?.states[r.code];
-  if (c) out.push(info(`federal contracts ≥ $1m won by suppliers based here, Jul–Sep 2026 (${c.count})`, fmtBn(c.value)));
+  if (c) {
+    const m = Object.keys(state.contracts.monthly ?? {});
+    const span = m.length ? ` from ${qMonth(m[0])} to ${qMonth(m[m.length - 1])}` : '';
+    out.push(info(`federal contracts ≥ $1m won by suppliers based here${span} (${c.count})`, fmtBn(c.value)));
+  }
   const e = state.econ?.states[r.code];
   if (state.econ) out.push(info('share of Australia\'s Claude usage (Economic Index)', e ? `${e.share}%` : 'not published'));
   return out;
 }
 
 // Horizontal bars, one or more series per row, with a tooltip per row.
+const qMonth = (m) => new Date(`${m}-01T00:00:00Z`).toLocaleString('en-AU', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+
 function pairBars(box, data, series, fmt, tick, tipFor) {
   const W = Math.max(320, box.clientWidth);
   const left = 44, right = 84, top = 8, barH = 10, gap = 2;
