@@ -17,7 +17,7 @@
   --s4: #eda100;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     color-scheme: dark;
     --page: #0d0d0d;
     --surface: #1a1a19;
@@ -35,6 +35,24 @@
     --s3: #199e70;
     --s4: #c98500;
   }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --text: #ffffff;
+  --text-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.10);
+  --deemph: #4a4a46;
+  --up: #0ca30c;
+  --down: #e66767;
+  --s1: #3987e5;
+  --s2: #d95926;
+  --s3: #199e70;
+  --s4: #c98500;
 }
 
 * { box-sizing: border-box; }
@@ -85,16 +103,21 @@ code { font-size: 13px; }
 .chart text { fill: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .chart .lbl { fill: var(--text-2); font-size: 13px; }
 .chart .val { fill: var(--text); font-size: 12px; }
-.chart .seglbl { fill: #ffffff; font-size: 11px; pointer-events: none; }
 .chart .gridline { stroke: var(--grid); stroke-width: 1; }
 .chart .baseline { stroke: var(--axis); stroke-width: 1; }
 .chart .row { cursor: pointer; }
 .chart .row:hover rect, .chart .row:hover path, .chart .row:focus rect, .chart .row:focus path { opacity: 0.85; }
 .chart .row.sel .lbl { fill: var(--text); font-weight: 600; }
+.map { max-width: 640px; margin: 0 auto; }
+.map .state { stroke: var(--surface); stroke-width: 1.5; stroke-linejoin: round; cursor: pointer; outline: none; }
+.map .state:hover, .map .state:focus { stroke: var(--text); stroke-width: 2.5; }
+.map .state.sel { stroke: var(--text); stroke-width: 2; }
+.map .act-ring { fill: transparent; stroke: var(--text); stroke-width: 1.5; cursor: pointer; }
+.map .maplbl { fill: var(--text); font-size: 26px; font-weight: 600; pointer-events: none; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
 .chart .crosshair { stroke: var(--axis); stroke-width: 1; }
 
 .tooltip {
-  position: fixed; z-index: 10; pointer-events: none; max-width: 280px;
+  position: fixed; z-index: 10; pointer-events: none; max-width: 380px;
   background: var(--surface); color: var(--text); border: 1px solid var(--border);
   border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }

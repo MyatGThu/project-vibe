@@ -72,6 +72,8 @@ async function load() {
     return { ...build(s, p), origin: 'live' };
   } catch (err) {
     console.warn('Live ABS fetch failed, using snapshot', err);
+    const E = window.EMBED; // set by the standalone build
+    if (E) return { ...build(E.spending, E.population), origin: 'snapshot', fetchedAt: E.fetchedAt };
     const [s, p, at] = await Promise.all([
       fetchText(SOURCES.snapshot.spending, 10000),
       fetchText(SOURCES.snapshot.population, 10000),
@@ -210,9 +212,14 @@ function showTip(evt, title, rows) {
   const y = evt.clientY ?? evt.target.getBoundingClientRect().top;
   const w = tip.offsetWidth;
   tip.style.left = `${Math.min(x + 14, window.innerWidth - w - 8)}px`;
-  tip.style.top = `${y + 14}px`;
+  const h = tip.offsetHeight;
+  tip.style.top = `${y + 14 + h > window.innerHeight ? Math.max(8, y - h - 14) : y + 14}px`;
 }
 const hideTip = () => { tip.hidden = true; };
+// Hide on tap or focus elsewhere. Not on blur: re-rendering after a click removes the focused path.
+for (const type of ['pointerdown', 'focusin']) {
+  document.addEventListener(type, (e) => { if (!e.target.closest?.('.state, .act-ring')) hideTip(); });
+}
 
 // ---------- render ----------
 
@@ -220,10 +227,97 @@ function render() {
   const { rows, aus, popPeriod } = yearFigures(state.fy);
   const label = fyLabel(state.fy);
   renderKpis(rows, aus, label);
+  renderMap(rows, aus, label);
   renderFindings(rows, aus, label);
   renderBars(rows, label);
   renderTrend();
   renderTable(rows, aus, label, popPeriod);
+}
+
+// Sequential blue ramp (light to dark), one step per quantile class.
+const RAMP = ['#b7d3f6', '#86b6ef', '#3987e5', '#256abf', '#104281'];
+
+function renderMap(rows, aus, label) {
+  const box = $('map');
+  if (!state.geo) { box.closest('.card').hidden = true; return; }
+  const m = state.metric;
+  const sorted = [...rows].sort((a, b) => a[m] - b[m]);
+  // ponytail: quantile classes over 8 states; switch to fixed breaks if more regions are added.
+  const classOf = (r) => Math.min(RAMP.length - 1, Math.floor(sorted.indexOf(r) * RAMP.length / sorted.length));
+  const rankBy = (k, r) => [...rows].sort((a, b) => b[k] - a[k]).indexOf(r) + 1;
+  const svg = el('svg:svg', { viewBox: state.geo.viewBox, role: 'img', 'aria-label': `Map of public spending by state, ${label}` });
+  const labels = [];
+  for (const r of rows) {
+    const shape = el('svg:path', { d: state.geo.paths[r.code], class: `state${r.code === state.sel ? ' sel' : ''}`, tabindex: '0', role: 'button', 'aria-label': `${r.name}: ${fmtMetric(r[m])}` });
+    shape.style.fill = RAMP[classOf(r)];
+    const show = (e) => showTip(e, `${r.name} · ${label}`, mapDetail(r, aus, rankBy));
+    shape.addEventListener('pointermove', show);
+    shape.addEventListener('pointerdown', show); // touch has no hover
+    shape.addEventListener('focus', show);
+    shape.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') hideTip(); }); // touch: keep it open after the tap
+    const choose = () => { state.sel = r.code; $('state').value = r.code; render(); };
+    shape.addEventListener('click', choose);
+    shape.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
+    svg.append(shape);
+    labels.push([r, shape]);
+  }
+  box.replaceChildren(svg);
+  // Labels go on after the paths are in the DOM so getBBox works.
+  for (const [r, shape] of labels) {
+    const b = shape.getBBox();
+    const small = r.code === '8';
+    let cx = b.x + b.width / 2, cy = b.y + b.height / 2;
+    if (r.code === '1') cx -= b.width * 0.1; // keep NSW label clear of the ACT callout
+    if (small) {
+      // ACT is a few pixels wide: add a larger ring as its hit target and label it outside.
+      const ring = el('svg:circle', { cx, cy, r: 14, class: 'act-ring' });
+      ring.addEventListener('pointermove', (e) => shape.dispatchEvent(new PointerEvent('pointermove', e)));
+      ring.addEventListener('pointerleave', hideTip);
+      ring.addEventListener('click', () => shape.dispatchEvent(new MouseEvent('click')));
+      svg.append(ring);
+      cx += 34; cy += 4;
+    }
+    const t = el('svg:text', { x: cx, y: cy + 5, 'text-anchor': 'middle', class: 'maplbl' }, r.abbr);
+    svg.append(t);
+  }
+  const fmt = state.metric === 'total' ? fmtBn : fmtPp;
+  const items = RAMP.map((c, i) => {
+    const members = sorted.filter((r) => classOf(r) === i);
+    if (!members.length) return null;
+    const s = el('span');
+    const sw = el('i');
+    sw.style.background = c;
+    const lo = members[0][m], hi = members[members.length - 1][m];
+    s.append(sw, `${lo === hi ? fmt(lo) : `${fmt(lo)} – ${fmt(hi)}`} (${members.map((r) => r.abbr).join(', ')})`);
+    return s;
+  }).filter(Boolean);
+  $('map-legend').replaceChildren(...items);
+  $('map-note').textContent = `Financial year ${label}, shaded by ${m === 'total' ? 'total spending' : 'spending per person'}. Hover or tab to a state for the breakdown; click to highlight it below.`;
+}
+
+// Every figure in the map tooltip.
+function mapDetail(r, aus, rankBy) {
+  const { spend, quarters } = state.data;
+  const qs = fyQuarters(state.fy);
+  const fiveAgo = fyQuarters(state.fy - 5);
+  const fiveYr = fiveAgo.every((q) => quarters.includes(q))
+    ? r.total / sumQuarters(r.code, fiveAgo).total - 1 : NaN;
+  const lastQ = spend[r.code][qs[3]].total;
+  const popQ = Object.keys(state.data.pop[r.code]).filter((p) => p <= qs[3]).sort().pop();
+  const info = (label, value) => ({ color: 'transparent', label, value });
+  return [
+    info(`total · rank ${rankBy('total', r)} of 8 · ${(r.total / aus.total * 100).toFixed(1)}% of Australia`, fmtBn(r.total)),
+    info(`per person · rank ${rankBy('perCapita', r)} of 8 · Australia ${fmtPp(aus.perCapita)}`, fmtPp(r.perCapita)),
+    info('change on previous year', fmtPct(r.growth)),
+    info(`change over 5 years (vs ${fyLabel(state.fy - 5)})`, fmtPct(fiveYr)),
+    info(`in the ${qLabel(qs[3])} quarter`, fmtBn(lastQ)),
+    info(`population, ${qLabel(popQ)}`, `${(r.people / 1e6).toFixed(2)}m`),
+    ...PARTS.map((p) => ({
+      color: p.color,
+      label: `${p.label} · ${(r[p.key] / r.total * 100).toFixed(0)}% · ${fmtPp(r[p.key] / r.people)} per person`,
+      value: fmtBn(r[p.key]),
+    })),
+  ];
 }
 
 function renderKpis(rows, aus, label) {
@@ -480,6 +574,7 @@ function setupControls(years) {
   status.textContent = state.data.origin === 'live'
     ? `Live from the ABS Data API · latest quarter ${qLabel(latest)}`
     : `ABS live feed unavailable — showing saved snapshot${state.data.fetchedAt ? ` from ${state.data.fetchedAt.slice(0, 10)}` : ''} · latest quarter ${qLabel(latest)}`;
+  state.geo = window.EMBED?.geo ?? await fetchText('data/states.json', 10000).then(JSON.parse).catch(() => null);
   setupControls(years);
   renderLegend();
   render();
