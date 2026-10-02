@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Australian Government Spending by State</title>
+  <meta name="description" content="Tracks public spending in each Australian state and territory using official ABS State Final Demand data.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="head">
+      <h1>Government spending by state</h1>
+      <p class="sub">Public consumption and investment in each Australian state and territory, from the Australian Bureau of Statistics.</p>
+      <p class="status" id="status" role="status">Loading data from the ABS…</p>
+    </header>
+
+    <section class="controls" aria-label="Filters">
+      <label>Financial year
+        <select id="year"></select>
+      </label>
+      <div class="seg" role="radiogroup" aria-label="Measure">
+        <button type="button" role="radio" aria-checked="true" data-metric="total">Total $</button>
+        <button type="button" role="radio" aria-checked="false" data-metric="perCapita">Per person</button>
+      </div>
+      <label>Highlight state
+        <select id="state"></select>
+      </label>
+    </section>
+
+    <section class="kpis" id="kpis" aria-label="Headline figures"></section>
+
+    <section class="card" aria-labelledby="findings-h">
+      <h2 id="findings-h">Findings</h2>
+      <ul id="findings" class="findings"></ul>
+    </section>
+
+    <section class="card" aria-labelledby="bars-h">
+      <h2 id="bars-h">Spending by state</h2>
+      <p class="note" id="bars-note"></p>
+      <div class="legend" id="legend"></div>
+      <div class="chart" id="bars"></div>
+    </section>
+
+    <section class="card" aria-labelledby="trend-h">
+      <h2 id="trend-h">Trend, rolling 12 months</h2>
+      <p class="note" id="trend-note"></p>
+      <div class="chart" id="trend"></div>
+    </section>
+
+    <section class="card" aria-labelledby="table-h">
+      <h2 id="table-h">Table</h2>
+      <div class="table-wrap"><table id="table"></table></div>
+    </section>
+
+    <section class="card notes" aria-labelledby="about-h">
+      <h2 id="about-h">What these numbers cover</h2>
+      <ul>
+        <li><strong>Source:</strong> ABS Australian National Accounts – State Final Demand (dataflow <code>ANA_SFD</code>), current prices, original series, quarterly. Population: ABS Estimated Resident Population (<code>ERP_Q</code>).</li>
+        <li><strong>Included:</strong> government final consumption (wages of public servants, goods and services bought to run schools, hospitals, police, defence etc.) and public investment (roads, buildings, equipment) by general government and public corporations, located in each state.</li>
+        <li><strong>Commonwealth</strong> consumption is federal spending that takes place in that state. <strong>State &amp; local</strong> covers the state government and its councils.</li>
+        <li><strong>Not included:</strong> transfer payments such as pensions, JobSeeker, family payments, subsidies and interest. Those appear in Government Finance Statistics, which the ABS does not yet publish through its API by state.</li>
+        <li>A financial year runs July to June. "Per person" divides the year's spending by the state's population in the June quarter (or the latest quarter published).</li>
+      </ul>
+    </section>
+  </main>
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
