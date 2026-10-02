@@ -481,6 +481,19 @@ function renderContracts() {
   $('ct-note').textContent = `${c.window}. ${c.national.count.toLocaleString('en-AU')} of the ${c.published.toLocaleString('en-AU')} notices published `
     + `were worth $1m or more, totalling ${fmtBn(c.national.value)}; ${fmtShare(c.national.limited / c.national.count)} used a limited tender. `
     + 'Grouped by the state of the supplier\'s address. Values are the whole contract, which may run for several years.';
+  if (c.monthly) {
+    const months = Object.entries(c.monthly).map(([m, d]) => ({
+      ...d, label: new Date(`${m}-01T00:00:00Z`).toLocaleString('en-AU', { month: 'short', timeZone: 'UTC' }),
+      name: new Date(`${m}-01T00:00:00Z`).toLocaleString('en-AU', { month: 'long', year: 'numeric', timeZone: 'UTC' }), values: [d.value],
+    }));
+    pairBars($('ctmonths'), months, series, fmtBn, (v) => `$${v / 1e9}bn`, (d) => [d.name, [
+      { color: 'var(--s1)', label: `${d.count} contracts`, value: fmtBn(d.value) },
+      { color: 'transparent', label: 'limited tenders', value: `${d.limited} of ${d.count}` },
+    ]]);
+    simpleTable('ct-cat', ['Category (UNSPSC)', 'Contract value'], c.national.topCategories.map(([n, v]) => [n, fmtBn(v)]));
+    simpleTable('ct-why', ['Reason given for a limited tender', 'Contracts'],
+      c.limitedReasons.map(([n, k]) => [n, `${k} (${fmtShare(k / c.national.limited)})`]));
+  }
   simpleTable('ct-sup', ['Supplier', 'Contract value'], c.national.topSuppliers.map(([n, v]) => [n, fmtBn(v)]));
   simpleTable('ct-ag', ['Buying agency', 'Contract value'], c.national.topAgencies.map(([n, v]) => [n, fmtBn(v)]));
 }

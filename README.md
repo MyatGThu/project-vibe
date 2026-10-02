@@ -56,11 +56,11 @@ Downloads generalised state boundaries from the ABS ASGS 2021 map service and wr
 ```sh
 pip install openpyxl
 python3 scripts/build-tax.py                      # data/state-tax.json, data/company-tax.json
-python3 scripts/build-contracts.py export.json    # data/contracts.json
+python3 scripts/build-contracts.py export.json "<window label>" <notices published>   # data/contracts.json
 ```
 
 For contracts, run the Apify actor `knotty_mistveil/austender-contract-notices` (date type `contractPublished`, minimum value 1000000, no amendments) and export its dataset as JSON. `data/economic-index.json` holds figures from the Anthropic Economic Index (period 2026-05-01).
 
 ## Deploy
 
-The site is plain HTML, CSS and JavaScript with no build step, so it can be served from GitHub Pages or any static host.
+The site is plain HTML, CSS and JavaScript with no build step. `.github/workflows/pages.yml` publishes it to GitHub Pages on every push to `main`; the repository's Pages source must be set to **GitHub Actions** (Settings → Pages → Build and deployment).
