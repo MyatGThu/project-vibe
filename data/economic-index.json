@@ -1,0 +1,35 @@
+{
+  "source": "Anthropic Economic Index, period 2026-05-01 (https://www.anthropic.com/economic-index)",
+  "period": "2026-05-01",
+  "national": {
+    "usageIndex": 6.4, "rank": 1, "rankedOutOf": 121,
+    "work": 42.67, "personal": 36.64, "coursework": 20.69,
+    "augmentation": 54.5, "automation": 45.5,
+    "global": { "work": 43.36, "personal": 40.2, "coursework": 16.45, "augmentation": 51.38, "automation": 48.62 },
+    "topCategories": [
+      ["Computer and Mathematical", 21.71, 23.8],
+      ["Arts, Design, Entertainment, Sports, and Media", 14.52, 13.55],
+      ["Educational Instruction and Library", 13.38, 12.79],
+      ["Sales and Related", 8.94, 9.14],
+      ["Office and Administrative Support", 8.38, 7.89],
+      ["Management", 6.13, 5.9],
+      ["Business and Financial Operations", 6.05, 5.77]
+    ],
+    "topTopics": [
+      ["Content Creation & Copywriting", 23.53, 22.72],
+      ["Education & Learning", 16.08, 13.23],
+      ["Research & Intelligence", 11.32, 10.94],
+      ["Hobbies & Lifestyle", 9.14, 9.49],
+      ["Software Development", 8.32, 11.51]
+    ]
+  },
+  "states": {
+    "1": { "share": 37.98, "rank": 1, "work": 42.76, "personal": 37.38, "coursework": 19.86, "augmentation": 54.52, "topCategory": ["Computer and Mathematical", 21.1], "topTopic": ["Content Creation & Copywriting", 23.37] },
+    "2": { "share": 30.9, "rank": 2, "work": 41.46, "personal": 36.44, "coursework": 22.1, "augmentation": 55.04, "topCategory": ["Computer and Mathematical", 22.37], "topTopic": ["Content Creation & Copywriting", 23.4] },
+    "3": { "share": 16.61, "rank": 3, "work": 45.8, "personal": 35.92, "coursework": 18.28, "augmentation": 52.97, "topCategory": ["Computer and Mathematical", 21.92], "topTopic": ["Content Creation & Copywriting", 24.57] },
+    "5": { "share": 7.76, "rank": 4, "work": 42.94, "personal": 35.8, "coursework": 21.27, "augmentation": 54.46, "topCategory": ["Computer and Mathematical", 21.93], "topTopic": ["Content Creation & Copywriting", 22.7] },
+    "4": { "share": 4.63, "rank": 5, "work": 40.82, "personal": 38.22, "coursework": 20.95, "augmentation": 54.74, "topCategory": ["Computer and Mathematical", 20.62], "topTopic": ["Content Creation & Copywriting", 23.96] },
+    "8": { "share": 1.51, "rank": 6, "work": 33.99, "personal": 31.16, "coursework": 34.85, "augmentation": 59.48, "topCategory": ["Computer and Mathematical", 22.93], "topTopic": ["Education & Learning", 25.98] },
+    "6": { "share": 0.5, "rank": 7, "work": 43.25, "personal": 34.75, "coursework": 22.0, "augmentation": 55.24, "topCategory": ["Computer and Mathematical", 24.04], "topTopic": ["Content Creation & Copywriting", 23.49] }
+  }
+}

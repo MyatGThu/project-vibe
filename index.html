@@ -60,6 +60,45 @@
       <div class="table-wrap"><table id="table"></table></div>
     </section>
 
+    <section class="card" id="tax-card" aria-labelledby="tax-h">
+      <h2 id="tax-h">Spending vs taxes collected</h2>
+      <p class="note" id="tax-note"></p>
+      <div class="legend" id="tax-legend"></div>
+      <div class="chart" id="taxbars"></div>
+      <div class="table-wrap"><table id="tax-table"></table></div>
+    </section>
+
+    <section class="card" id="ct-card" aria-labelledby="ct-h">
+      <h2 id="ct-h">Federal contracts by supplier state</h2>
+      <p class="note" id="ct-note"></p>
+      <div class="chart" id="ctbars"></div>
+      <div class="split">
+        <div class="table-wrap"><table id="ct-sup"></table></div>
+        <div class="table-wrap"><table id="ct-ag"></table></div>
+      </div>
+    </section>
+
+    <section class="card" id="co-card" aria-labelledby="co-h">
+      <h2 id="co-h">Company tax</h2>
+      <p class="note" id="co-note"></p>
+      <h3>Most tax payable</h3>
+      <div class="table-wrap"><table id="co-most"></table></div>
+      <h3>Largest income with no tax payable</h3>
+      <div class="table-wrap"><table id="co-none"></table></div>
+      <h3>Taxable income over $100m, lowest tax on it</h3>
+      <div class="table-wrap"><table id="co-low"></table></div>
+      <p class="note">Each row is one reporting entity, not a whole corporate group. Taxable income is income after deductions and past losses, which is not the same as accounting profit. Tax payable is after offsets such as franking credits, foreign tax paid and R&amp;D incentives. The ATO cannot publish a figure of zero or less, so "nil" covers both. A company with no tax payable may have had losses, offsets or deductions; this data does not say which.</p>
+    </section>
+
+    <section class="card" id="ei-card" aria-labelledby="ei-h">
+      <h2 id="ei-h">AI usage by state</h2>
+      <p class="note" id="ei-note"></p>
+      <div class="legend" id="ei-legend"></div>
+      <div class="chart" id="eibars"></div>
+      <div class="table-wrap"><table id="ei-cat"></table></div>
+      <p class="note">Source: <a href="https://www.anthropic.com/economic-index">Anthropic Economic Index</a>. It measures how people use Claude, matched to work tasks. It does not measure jobs or the labour market.</p>
+    </section>
+
     <section class="card notes" aria-labelledby="about-h">
       <h2 id="about-h">What these numbers cover</h2>
       <ul>
@@ -67,6 +106,9 @@
         <li><strong>Included:</strong> government final consumption (wages of public servants, goods and services bought to run schools, hospitals, police, defence etc.) and public investment (roads, buildings, equipment) by general government and public corporations, located in each state.</li>
         <li><strong>Commonwealth</strong> consumption is federal spending that takes place in that state. <strong>State &amp; local</strong> covers the state government and its councils.</li>
         <li><strong>Not included:</strong> transfer payments such as pensions, JobSeeker, family payments, subsidies and interest. Those appear in Government Finance Statistics, which the ABS does not yet publish through its API by state.</li>
+        <li><strong>Taxes:</strong> ABS Taxation Revenue, Australia, 2024-25 (5506.0). State &amp; local taxes are those the state government and its councils levy themselves. GST is a Commonwealth tax and is not included, even though states receive it.</li>
+        <li><strong>Company tax:</strong> ATO Corporate Tax Transparency, Report of Entity Tax Information 2024-25 (data.gov.au).</li>
+        <li><strong>Federal contracts:</strong> AusTender contract notices, collected with the Apify actor <code>knotty_mistveil/austender-contract-notices</code>.</li>
         <li>A financial year runs July to June. "Per person" divides the year's spending by the state's population in the June quarter (or the latest quarter published).</li>
       </ul>
     </section>

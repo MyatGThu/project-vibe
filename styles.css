@@ -65,6 +65,10 @@ body {
 .page { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
 h1 { font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
 h2 { font-size: 17px; margin: 0 0 4px; }
+h3 { font-size: 15px; margin: 16px 0 4px; }
+.split { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 12px; }
+.split > * { min-width: 0; }
+a { color: var(--s1); }
 .sub, .note { color: var(--text-2); margin: 0 0 8px; }
 .status { color: var(--muted); font-size: 13px; margin: 0; }
 .status.warn { color: var(--down); }
@@ -131,6 +135,7 @@ code { font-size: 13px; }
 .table-wrap { overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
 th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+td:first-child { white-space: normal; min-width: 180px; }
 th:first-child, td:first-child { text-align: left; }
 th { color: var(--text-2); font-weight: 500; }
 tr.sel td { font-weight: 600; }

@@ -90,15 +90,15 @@ function build(spendCsv, popCsv) {
   for (const r of parseCsv(spendCsv)) {
     if (r.OBS_VALUE === '' || r.OBS_VALUE === undefined) continue;
     const v = Number(r.OBS_VALUE) * 1e6; // UNIT_MULT 6 = millions of AUD
-    let key = null;
-    if (r.DATA_ITEM === 'FCE' && r.SECTOR === 'GGC') key = 'cc';
-    else if (r.DATA_ITEM === 'FCE' && r.SECTOR === 'GGS_SL') key = 'sc';
-    else if (r.DATA_ITEM === 'GFC' && r.SECTOR === 'GGS') key = 'gi';
-    else if (r.DATA_ITEM === 'GFC' && (r.SECTOR === 'GES_SL' || r.SECTOR === 'GEC')) key = 'pi';
-    if (!key) continue;
+    // sl = all state & local spending (consumption, investment, public corporation investment).
+    const keys = {
+      'FCE GGC': ['cc'], 'FCE GGS_SL': ['sc', 'sl'], 'GFC GGS': ['gi'],
+      'GFC GGS_SL': ['sl'], 'GFC GES_SL': ['pi', 'sl'], 'GFC GEC': ['pi'],
+    }[`${r.DATA_ITEM} ${r.SECTOR}`];
+    if (!keys) continue;
     const s = (spend[r.REGION] ??= {});
-    const q = (s[r.TIME_PERIOD] ??= { cc: 0, sc: 0, gi: 0, pi: 0 });
-    q[key] += v;
+    const q = (s[r.TIME_PERIOD] ??= { cc: 0, sc: 0, gi: 0, pi: 0, sl: 0 });
+    for (const k of keys) q[k] += v;
     periods.add(r.TIME_PERIOD);
   }
   // Keep only quarters where every state has all four components.
@@ -145,7 +145,7 @@ function popAt(code, period) {
 }
 
 function sumQuarters(code, qs) {
-  const acc = { cc: 0, sc: 0, gi: 0, pi: 0, total: 0 };
+  const acc = { cc: 0, sc: 0, gi: 0, pi: 0, sl: 0, total: 0 };
   for (const q of qs) {
     const v = state.data.spend[code][q];
     for (const k in acc) acc[k] += v[k];
@@ -167,9 +167,9 @@ function yearFigures(fy) {
       growth: prev ? cur.total / prev.total - 1 : NaN,
     };
   });
-  const aus = { cc: 0, sc: 0, gi: 0, pi: 0, total: 0, people: 0, prevTotal: 0 };
+  const aus = { cc: 0, sc: 0, gi: 0, pi: 0, sl: 0, total: 0, people: 0, prevTotal: 0 };
   for (const r of rows) {
-    for (const k of ['cc', 'sc', 'gi', 'pi', 'total', 'people']) aus[k] += r[k];
+    for (const k of ['cc', 'sc', 'gi', 'pi', 'sl', 'total', 'people']) aus[k] += r[k];
     if (hasPrev) aus.prevTotal += r.total / (1 + r.growth);
   }
   aus.perCapita = aus.total / aus.people;
@@ -179,7 +179,9 @@ function yearFigures(fy) {
 
 // ---------- formatting ----------
 
-const fmtBn = (v) => `$${(v / 1e9).toLocaleString('en-AU', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}bn`;
+const fmtBn = (v) => (Math.abs(v) < 1e9
+  ? `$${Math.round(v / 1e6).toLocaleString('en-AU')}m`
+  : `$${(v / 1e9).toLocaleString('en-AU', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}bn`);
 const fmtPp = (v) => `$${Math.round(v).toLocaleString('en-AU')}`;
 const fmtPct = (v) => (Number.isFinite(v) ? `${v >= 0 ? '+' : '−'}${Math.abs(v * 100).toFixed(1)}%` : '–');
 const fmtMetric = (v) => (state.metric === 'total' ? fmtBn(v) : fmtPp(v));
@@ -232,6 +234,10 @@ function render() {
   renderBars(rows, label);
   renderTrend();
   renderTable(rows, aus, label, popPeriod);
+  if (state.tax) renderTax();
+  if (state.companies) renderCompanies();
+  if (state.contracts) renderContracts();
+  if (state.econ) renderEcon();
 }
 
 // Sequential blue ramp (light to dark), one step per quantile class.
@@ -312,12 +318,203 @@ function mapDetail(r, aus, rankBy) {
     info(`change over 5 years (vs ${fyLabel(state.fy - 5)})`, fmtPct(fiveYr)),
     info(`in the ${qLabel(qs[3])} quarter`, fmtBn(lastQ)),
     info(`population, ${qLabel(popQ)}`, `${(r.people / 1e6).toFixed(2)}m`),
+    ...extraDetail(r),
     ...PARTS.map((p) => ({
       color: p.color,
       label: `${p.label} · ${(r[p.key] / r.total * 100).toFixed(0)}% · ${fmtPp(r[p.key] / r.people)} per person`,
       value: fmtBn(r[p.key]),
     })),
   ];
+}
+
+// ---------- tax, contracts, economic index ----------
+
+// Latest tax year at or before the selected financial year.
+function taxYear() {
+  const years = Object.keys(state.tax.states['1']).sort();
+  const want = fyLabel(state.fy);
+  return years.includes(want) ? want : years.filter((y) => y < want).pop() ?? years[0];
+}
+
+const TAX_LINES = [
+  ['payroll', 'Payroll tax'], ['conveyance', 'Stamp duty on property sales'], ['land', 'Land tax'],
+  ['rates', 'Council rates'], ['motor', 'Motor vehicle taxes'], ['insurance', 'Insurance taxes'], ['gambling', 'Gambling taxes'],
+];
+const fmtShare = (v) => (Number.isFinite(v) ? `${(v * 100).toFixed(0)}%` : '–');
+
+// Tax, contract and AI-usage lines for the map tooltip.
+function extraDetail(r) {
+  const info = (label, value) => ({ color: 'transparent', label, value });
+  const out = [];
+  if (state.tax) {
+    const ty = taxYear();
+    const t = state.tax.states[r.code][ty];
+    const sl = sumQuarters(r.code, fyQuarters(Number(ty.slice(0, 4)))).sl;
+    out.push(info(`state & local taxes, ${ty} · cover ${fmtShare(t.total / sl)} of state & local spending`, fmtBn(t.total)));
+  }
+  const c = state.contracts?.states[r.code];
+  if (c) out.push(info(`federal contracts ≥ $1m won by suppliers based here, Jul–Sep 2026 (${c.count})`, fmtBn(c.value)));
+  const e = state.econ?.states[r.code];
+  if (state.econ) out.push(info('share of Australia\'s Claude usage (Economic Index)', e ? `${e.share}%` : 'not published'));
+  return out;
+}
+
+// Horizontal bars, one or more series per row, with a tooltip per row.
+function pairBars(box, data, series, fmt, tick, tipFor) {
+  const W = Math.max(320, box.clientWidth);
+  const left = 44, right = 84, top = 8, barH = 10, gap = 2;
+  const rowH = series.length * (barH + gap) + 12;
+  const ticks = niceTicks(Math.max(...data.flatMap((d) => d.values.filter(Number.isFinite))), W < 560 ? 3 : 5);
+  const max = ticks[ticks.length - 1];
+  const H = top + data.length * rowH + 24;
+  const x = (v) => left + (v / max) * (W - left - right);
+  const svg = el('svg:svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': series.map((s) => s.label).join(' and ') });
+  for (const t of ticks) {
+    svg.append(el('svg:line', { class: 'gridline', x1: x(t), x2: x(t), y1: top, y2: H - 20 }));
+    svg.append(el('svg:text', { x: x(t), y: H - 4, 'text-anchor': 'middle' }, tick(t)));
+  }
+  data.forEach((d, i) => {
+    const y0 = top + i * rowH;
+    const g = el('svg:g', { class: 'row', tabindex: '0', 'aria-label': `${d.label}: ${d.values.map(fmt).join(', ')}` });
+    g.append(el('svg:rect', { x: 0, y: y0, width: W, height: rowH, fill: 'transparent' }));
+    g.append(el('svg:text', { class: 'lbl', x: 0, y: y0 + (rowH - 12) / 2 + 4 }, d.label));
+    series.forEach((s, j) => {
+      const v = d.values[j];
+      if (!Number.isFinite(v)) return;
+      const y = y0 + j * (barH + gap);
+      const bar = el('svg:path', { d: roundedRight(left, y, Math.max(1, x(v) - left), barH, 4) });
+      bar.style.fill = s.color;
+      g.append(bar, el('svg:text', { class: 'val', x: x(v) + 6, y: y + barH - 1 }, fmt(v)));
+    });
+    const show = (e) => showTip(e, ...tipFor(d));
+    for (const type of ['pointermove', 'pointerdown', 'focus']) g.addEventListener(type, show);
+    g.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') hideTip(); });
+    svg.append(g);
+  });
+  svg.append(el('svg:line', { class: 'baseline', x1: left, x2: left, y1: top, y2: H - 20 }));
+  box.replaceChildren(svg);
+}
+
+function legendOf(id, series) {
+  $(id).replaceChildren(...series.map((s) => {
+    const span = el('span');
+    const sw = el('i');
+    sw.style.background = s.color;
+    span.append(sw, s.label);
+    return span;
+  }));
+}
+
+function simpleTable(id, head, rows) {
+  const hr = el('tr');
+  head.forEach((h) => hr.append(el('th', { scope: 'col' }, h)));
+  const tbody = el('tbody');
+  for (const r of rows) {
+    const tr = el('tr');
+    r.forEach((c) => tr.append(el('td', {}, c)));
+    tbody.append(tr);
+  }
+  const thead = el('thead');
+  thead.append(hr);
+  $(id).replaceChildren(thead, tbody);
+}
+
+function renderTax() {
+  const ty = taxYear();
+  const fy = Number(ty.slice(0, 4));
+  const { rows } = yearFigures(fy);
+  const per = state.metric === 'perCapita';
+  const series = [
+    { label: 'State & local government spending', color: 'var(--s1)' },
+    { label: 'State & local taxes collected', color: 'var(--s2)' },
+  ];
+  const data = rows.map((r) => {
+    const t = state.tax.states[r.code][ty];
+    const d = per ? r.people : 1;
+    return { r, t, label: r.abbr, values: [r.sl / d, t.total / d] };
+  }).sort((a, b) => b.values[0] - a.values[0]);
+  const fmt = per ? fmtPp : fmtBn;
+  pairBars($('taxbars'), data, series, fmt, tickFmt, (d) => [`${d.r.name} · ${ty}`, [
+    { color: 'var(--s1)', label: 'state & local government spending', value: fmt(d.values[0]) },
+    { color: 'var(--s2)', label: 'state & local taxes collected', value: fmt(d.values[1]) },
+    { color: 'transparent', label: 'of spending covered by these taxes', value: fmtShare(d.t.total / d.r.sl) },
+    ...TAX_LINES.map(([k, name]) => ({ color: 'transparent', label: `${name} · ${fmtShare(d.t[k] / d.t.total)} of taxes`, value: fmt(d.t[k] / (per ? d.r.people : 1)) })),
+  ]]);
+  legendOf('tax-legend', series);
+  const sl = rows.reduce((a, r) => a + r.sl, 0);
+  const tx = data.reduce((a, d) => a + d.t.total, 0);
+  const cover = [...data].sort((a, b) => b.t.total / b.r.sl - a.t.total / a.r.sl);
+  $('tax-note').textContent = `${ty}: states, territories and councils spent ${fmtBn(sl)} and collected ${fmtBn(tx)} in their own taxes, `
+    + `which covers ${fmtShare(tx / sl)} of that spending. Coverage is highest in ${cover[0].r.name} (${fmtShare(cover[0].t.total / cover[0].r.sl)}) `
+    + `and lowest in ${cover[cover.length - 1].r.name} (${fmtShare(cover[cover.length - 1].t.total / cover[cover.length - 1].r.sl)}). `
+    + 'The rest comes mainly from GST and other Commonwealth payments, mining royalties, and fees.';
+  simpleTable('tax-table', ['State', 'Spending', 'Taxes', 'Covered', ...TAX_LINES.map(([, n]) => n)],
+    data.map((d) => [d.r.name, fmt(d.values[0]), fmt(d.values[1]), fmtShare(d.t.total / d.r.sl), ...TAX_LINES.map(([k]) => fmtShare(d.t[k] / d.t.total))]));
+}
+
+function renderCompanies() {
+  const c = state.companies;
+  const pct = (a, b) => (b ? `${(a / b * 100).toFixed(1)}%` : '–');
+  const row = (x) => [x.name, fmtBn(x.income), x.taxable ? fmtBn(x.taxable) : 'nil', x.tax ? fmtBn(x.tax) : 'nil', pct(x.tax, x.taxable)];
+  const head = ['Company (reporting entity)', 'Total income', 'Taxable income', 'Tax payable', 'Tax ÷ taxable income'];
+  simpleTable('co-most', head, c.mostTax.map(row));
+  simpleTable('co-none', head, c.noTaxBiggest.map(row));
+  simpleTable('co-low', head, c.lowRate.map(row));
+  $('co-note').textContent = `${c.year}: ${c.count.toLocaleString('en-AU')} companies with income of $100m or more reported `
+    + `${fmtBn(c.totalIncome)} of total income and ${fmtBn(c.totalTax)} of tax payable. `
+    + `${c.noTaxCount.toLocaleString('en-AU')} of them (${pct(c.noTaxCount, c.count)}) had no tax payable.`;
+}
+
+function renderContracts() {
+  const c = state.contracts;
+  const series = [{ label: 'Value of federal contracts won', color: 'var(--s1)' }];
+  const data = [...STATES.map((s) => ({ ...c.states[s.code], label: s.abbr, name: s.name })),
+    { ...c.states.other, label: 'O/S', name: 'Suppliers outside Australia' }]
+    .filter((d) => d.count).map((d) => ({ ...d, values: [d.value] })).sort((a, b) => b.value - a.value);
+  const tip = (d) => [`${d.name} · ${d.count} contracts`, [
+    { color: 'var(--s1)', label: `total value · ${fmtShare(d.value / c.national.value)} of all`, value: fmtBn(d.value) },
+    { color: 'transparent', label: 'limited tenders (no open competition)', value: `${d.limited} of ${d.count}` },
+    ...d.topSuppliers.slice(0, 3).map(([n, v]) => ({ color: 'transparent', label: `supplier: ${n}`, value: fmtBn(v) })),
+    ...d.topAgencies.slice(0, 3).map(([n, v]) => ({ color: 'transparent', label: `buyer: ${n}`, value: fmtBn(v) })),
+  ]];
+  pairBars($('ctbars'), data, series, fmtBn, (v) => `$${v / 1e9}bn`, tip);
+  $('ct-note').textContent = `${c.window}. ${c.national.count.toLocaleString('en-AU')} of the ${c.published.toLocaleString('en-AU')} notices published `
+    + `were worth $1m or more, totalling ${fmtBn(c.national.value)}; ${fmtShare(c.national.limited / c.national.count)} used a limited tender. `
+    + 'Grouped by the state of the supplier\'s address. Values are the whole contract, which may run for several years.';
+  simpleTable('ct-sup', ['Supplier', 'Contract value'], c.national.topSuppliers.map(([n, v]) => [n, fmtBn(v)]));
+  simpleTable('ct-ag', ['Buying agency', 'Contract value'], c.national.topAgencies.map(([n, v]) => [n, fmtBn(v)]));
+}
+
+function renderEcon() {
+  const e = state.econ;
+  const q = state.data.quarters[state.data.quarters.length - 1];
+  const totalPop = STATES.reduce((a, s) => a + popAt(s.code, q), 0);
+  const series = [
+    { label: 'Share of Australia\'s Claude usage', color: 'var(--s1)' },
+    { label: 'Share of Australia\'s population', color: 'var(--s2)' },
+  ];
+  const data = STATES.map((s) => ({ ...s, ...(e.states[s.code] ?? {}), label: s.abbr, pop: popAt(s.code, q) / totalPop * 100 }))
+    .map((d) => ({ ...d, values: [d.share ?? NaN, d.pop] })).sort((a, b) => b.pop - a.pop);
+  const pctf = (v) => `${v.toFixed(1)}%`;
+  pairBars($('eibars'), data, series, pctf, (v) => `${v}%`, (d) => [d.name, d.share === undefined
+    ? [{ color: 'transparent', label: 'not published for this territory', value: '–' }]
+    : [
+      { color: 'var(--s1)', label: 'share of national Claude usage', value: pctf(d.share) },
+      { color: 'var(--s2)', label: 'share of national population', value: pctf(d.pop) },
+      { color: 'transparent', label: `work · national ${e.national.work}%`, value: `${d.work}%` },
+      { color: 'transparent', label: `personal · national ${e.national.personal}%`, value: `${d.personal}%` },
+      { color: 'transparent', label: `coursework · national ${e.national.coursework}%`, value: `${d.coursework}%` },
+      { color: 'transparent', label: `augmentation (working with Claude) · national ${e.national.augmentation}%`, value: `${d.augmentation}%` },
+      { color: 'transparent', label: `top task category: ${d.topCategory[0]}`, value: `${d.topCategory[1]}%` },
+      { color: 'transparent', label: `top request topic: ${d.topTopic[0]}`, value: `${d.topTopic[1]}%` },
+    ]]);
+  legendOf('ei-legend', series);
+  const n = e.national;
+  $('ei-note').textContent = `Period ${e.period}. Australia ranks ${n.rank} of ${n.rankedOutOf} countries on the Anthropic Usage Index at ${n.usageIndex}: `
+    + 'its share of Claude usage is that many times its share of the world\'s working-age population (1.0 = proportional). '
+    + `Conversations split ${n.work}% work, ${n.personal}% personal and ${n.coursework}% coursework (global ${n.global.work}%, ${n.global.personal}%, ${n.global.coursework}%). `
+    + 'State figures are each state\'s share of Australian usage, which tracks population size; the Northern Territory is not published.';
+  simpleTable('ei-cat', ['Task category', 'Australia', 'Global'], n.topCategories.map(([name, a, g]) => [name, `${a}%`, `${g}%`]));
 }
 
 function renderKpis(rows, aus, label) {
@@ -574,7 +771,12 @@ function setupControls(years) {
   status.textContent = state.data.origin === 'live'
     ? `Live from the ABS Data API · latest quarter ${qLabel(latest)}`
     : `ABS live feed unavailable — showing saved snapshot${state.data.fetchedAt ? ` from ${state.data.fetchedAt.slice(0, 10)}` : ''} · latest quarter ${qLabel(latest)}`;
-  state.geo = window.EMBED?.geo ?? await fetchText('data/states.json', 10000).then(JSON.parse).catch(() => null);
+  const loadJson = (name) => window.EMBED?.[name] ?? fetchText(`data/${name}.json`, 10000).then(JSON.parse).catch(() => null);
+  [state.geo, state.tax, state.companies, state.contracts, state.econ] = await Promise.all(
+    ['states', 'state-tax', 'company-tax', 'contracts', 'economic-index'].map(loadJson));
+  for (const [id, key] of [['tax-card', 'tax'], ['co-card', 'companies'], ['ct-card', 'contracts'], ['ei-card', 'econ']]) {
+    $(id).hidden = !state[key];
+  }
   setupControls(years);
   renderLegend();
   render();

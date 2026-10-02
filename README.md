@@ -5,6 +5,10 @@ A static web page that tracks public spending in each Australian state and terri
 ## What it shows
 
 - A map of the states and territories (ABS ASGS 2021 boundaries), shaded by total or per-person spending. Hover, tap or tab to a state for its full breakdown: rank, share of the national total, change on one and five years, latest quarter, population and each spending component.
+- State & local government spending compared with the taxes states and councils collect (ABS Taxation Revenue 2024-25), with each tax type.
+- Federal contracts of $1m or more by the state of the supplier, collected from AusTender with Apify.
+- Company tax from the ATO's 2024-25 tax transparency report: most tax payable, largest income with no tax payable, and lowest tax on taxable income over $100m.
+- Claude usage by state from the Anthropic Economic Index, against each state's share of population.
 - Headline figures for the selected financial year (July–June): national total, change on the previous year, spending per person, the highest per-person state and the fastest-growing state.
 - Findings written from the data for the selected year.
 - A stacked bar chart per state, split into Commonwealth consumption, state & local consumption, government investment and public corporation investment. You can switch between total dollars and dollars per person.
@@ -46,6 +50,16 @@ python3 scripts/build-map.py
 ```
 
 Downloads generalised state boundaries from the ABS ASGS 2021 map service and writes SVG paths to `data/states.json`.
+
+## Rebuild the tax, contract and AI usage data
+
+```sh
+pip install openpyxl
+python3 scripts/build-tax.py                      # data/state-tax.json, data/company-tax.json
+python3 scripts/build-contracts.py export.json    # data/contracts.json
+```
+
+For contracts, run the Apify actor `knotty_mistveil/austender-contract-notices` (date type `contractPublished`, minimum value 1000000, no amendments) and export its dataset as JSON. `data/economic-index.json` holds figures from the Anthropic Economic Index (period 2026-05-01).
 
 ## Deploy
 
