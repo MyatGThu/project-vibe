@@ -4,7 +4,44 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Australian Government Spending by State</title>
-  <meta name="description" content="Tracks public spending in each Australian state and territory using official ABS State Final Demand data.">
+  <meta name="description" content="Interactive map of Australian government spending by state, compared with state taxes, federal contracts, company tax and AI usage. Official ABS and ATO data.">
+  <link rel="canonical" href="https://myatgthu.github.io/project-vibe/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://myatgthu.github.io/project-vibe/">
+  <meta property="og:title" content="Australian Government Spending by State">
+  <meta property="og:description" content="Interactive map of Australian government spending by state, compared with state taxes, federal contracts, company tax and AI usage. Official ABS and ATO data.">
+  <meta property="og:image" content="https://myatgthu.github.io/project-vibe/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Australian Government Spending by State">
+  <meta name="twitter:description" content="Interactive map of Australian government spending by state, compared with state taxes, federal contracts, company tax and AI usage. Official ABS and ATO data.">
+  <meta name="twitter:image" content="https://myatgthu.github.io/project-vibe/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Australian Government Spending by State",
+    "description": "Interactive map of Australian government spending by state, compared with state taxes, federal contracts, company tax and AI usage. Official ABS and ATO data.",
+    "url": "https://myatgthu.github.io/project-vibe/",
+    "inLanguage": "en-AU",
+    "spatialCoverage": { "@type": "Place", "name": "Australia" },
+    "temporalCoverage": "2010/2026",
+    "isBasedOn": [
+      "https://www.abs.gov.au/statistics/economy/national-accounts/australian-national-accounts-state-accounts",
+      "https://www.abs.gov.au/statistics/economy/government/taxation-revenue-australia/latest-release",
+      "https://data.gov.au/data/dataset/corporate-transparency",
+      "https://www.tenders.gov.au/",
+      "https://www.anthropic.com/economic-index"
+    ],
+    "distribution": [
+      { "@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": "https://myatgthu.github.io/project-vibe/data/spending.csv" },
+      { "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://myatgthu.github.io/project-vibe/data/contracts.json" }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>

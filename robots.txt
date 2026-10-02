@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://myatgthu.github.io/project-vibe/sitemap.xml
