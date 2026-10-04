@@ -97,6 +97,15 @@
       <div class="table-wrap"><table id="table"></table></div>
     </section>
 
+    <section class="card" id="debt-card" aria-labelledby="debt-h">
+      <h2 id="debt-h">How much each state owes</h2>
+      <p class="note" id="debt-note"></p>
+      <div class="legend" id="debt-legend"></div>
+      <div class="chart" id="debtbars"></div>
+      <div class="table-wrap"><table id="debt-table"></table></div>
+      <p class="note">Net debt is borrowings less the cash, deposits and loans a government holds, as defined in ABS Government Finance Statistics. It leaves out superannuation liabilities and investments in shares. State budget papers use their own definitions, so their headline figures can differ, most of all for New South Wales.</p>
+    </section>
+
     <section class="card" id="tax-card" aria-labelledby="tax-h">
       <h2 id="tax-h">Spending vs taxes collected</h2>
       <p class="note" id="tax-note"></p>
@@ -150,6 +159,7 @@
         <li><strong>Commonwealth</strong> consumption is federal spending that takes place in that state. <strong>State &amp; local</strong> covers the state government and its councils.</li>
         <li><strong>Not included:</strong> transfer payments such as pensions, JobSeeker, family payments, subsidies and interest. Those appear in Government Finance Statistics, which the ABS does not yet publish through its API by state.</li>
         <li><strong>Taxes:</strong> ABS Taxation Revenue, Australia, 2024-25 (5506.0). State &amp; local taxes are those the state government and its councils levy themselves. GST is a Commonwealth tax and is not included, even though states receive it.</li>
+        <li><strong>Debt:</strong> ABS Government Finance Statistics, Annual, 2024-25 (5512.0), balance sheets of each state's general government and non-financial public sectors.</li>
         <li><strong>Company tax:</strong> ATO Corporate Tax Transparency, Report of Entity Tax Information 2024-25 (data.gov.au).</li>
         <li><strong>Federal contracts:</strong> AusTender contract notices for 2025-26 from the free AusTender OCDS API. A July–September 2026 run with the Apify actor <code>knotty_mistveil/austender-contract-notices</code> gave the same figures.</li>
         <li>A financial year runs July to June. "Per person" divides the year's spending by the state's population in the June quarter (or the latest quarter published).</li>

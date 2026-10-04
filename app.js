@@ -179,9 +179,9 @@ function yearFigures(fy) {
 
 // ---------- formatting ----------
 
-const fmtBn = (v) => (Math.abs(v) < 1e9
-  ? `$${Math.round(v / 1e6).toLocaleString('en-AU')}m`
-  : `$${(v / 1e9).toLocaleString('en-AU', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}bn`);
+const fmtBn = (v) => `${v < 0 ? '−' : ''}$${Math.abs(v) < 1e9
+  ? `${Math.round(Math.abs(v) / 1e6).toLocaleString('en-AU')}m`
+  : `${(Math.abs(v) / 1e9).toLocaleString('en-AU', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}bn`}`;
 const fmtPp = (v) => `$${Math.round(v).toLocaleString('en-AU')}`;
 const fmtPct = (v) => (Number.isFinite(v) ? `${v >= 0 ? '+' : '−'}${Math.abs(v * 100).toFixed(1)}%` : '–');
 const fmtMetric = (v) => (state.metric === 'total' ? fmtBn(v) : fmtPp(v));
@@ -235,6 +235,7 @@ function render() {
   renderTrend();
   renderTable(rows, aus, label, popPeriod);
   if (state.tax) renderTax();
+  if (state.debt) renderDebt();
   if (state.companies) renderCompanies();
   if (state.contracts) renderContracts();
   if (state.econ) renderEcon();
@@ -352,6 +353,11 @@ function extraDetail(r) {
     const sl = sumQuarters(r.code, fyQuarters(Number(ty.slice(0, 4)))).sl;
     out.push(info(`state & local taxes, ${ty} · cover ${fmtShare(t.total / sl)} of state & local spending`, fmtBn(t.total)));
   }
+  const debt = state.debt?.states[r.code];
+  if (debt) {
+    const dy = Object.keys(debt).sort().pop();
+    out.push(info(`state government net debt, 30 June ${dy.slice(0, 2)}${dy.slice(5)} · ${fmtPp(debt[dy].gg.net / popAt(r.code, `${dy.slice(0, 2)}${dy.slice(5)}-Q2`))} per person`, fmtBn(debt[dy].gg.net)));
+  }
   const c = state.contracts?.states[r.code];
   if (c) {
     const m = Object.keys(state.contracts.monthly ?? {});
@@ -456,6 +462,42 @@ function renderTax() {
     + 'The rest comes mainly from GST and other Commonwealth payments, mining royalties, and fees.';
   simpleTable('tax-table', ['State', 'Spending', 'Taxes', 'Covered', ...TAX_LINES.map(([, n]) => n)],
     data.map((d) => [d.r.name, fmt(d.values[0]), fmt(d.values[1]), fmtShare(d.t.total / d.r.sl), ...TAX_LINES.map(([k]) => fmtShare(d.t[k] / d.t.total))]));
+}
+
+function renderDebt() {
+  const states = state.debt.states;
+  const dy = Object.keys(states['1']).sort().pop();
+  const end = `${dy.slice(0, 2)}${dy.slice(5)}`; // "2024-25" -> "2025"
+  const back = `${Number(dy.slice(0, 4)) - 5}-${String((Number(dy.slice(0, 4)) - 4) % 100).padStart(2, '0')}`;
+  const per = state.metric === 'perCapita';
+  const fmt = per ? fmtPp : fmtBn;
+  const series = [
+    { label: 'State government (general government) net debt', color: 'var(--s1)' },
+    { label: 'Including state-owned businesses (non-financial public sector)', color: 'var(--s2)' },
+  ];
+  const data = STATES.map((st) => {
+    const y = states[st.code][dy];
+    const people = popAt(st.code, `${end}-Q2`);
+    const d = per ? people : 1;
+    return { ...st, y, old: states[st.code][back], people, label: st.abbr, values: [y.gg.net / d, y.nfps.net / d] };
+  }).sort((a, b) => b.values[0] - a.values[0]);
+  pairBars($('debtbars'), data, series, fmt, tickFmt, (d) => [`${d.name} · 30 June ${end}`, [
+    { color: 'var(--s1)', label: 'state government net debt', value: fmt(d.values[0]) },
+    { color: 'var(--s2)', label: 'including state-owned businesses', value: fmt(d.values[1]) },
+    { color: 'transparent', label: 'state government gross debt (before cash and loans held)', value: fmt(d.y.gg.gross / (per ? d.people : 1)) },
+    { color: 'transparent', label: 'net debt per person', value: fmtPp(d.y.gg.net / d.people) },
+    { color: 'transparent', label: `interest paid in ${dy} (excluding super)`, value: fmtBn(d.y.gg.interest) },
+    { color: 'transparent', label: `net debt at 30 June ${Number(end) - 5}`, value: d.old ? fmtBn(d.old.gg.net) : '–' },
+  ]]);
+  legendOf('debt-legend', series);
+  const tot = data.reduce((a, d) => ({ gg: a.gg + d.y.gg.net, nfps: a.nfps + d.y.nfps.net, int: a.int + d.y.gg.interest, old: a.old + (d.old?.gg.net ?? 0) }), { gg: 0, nfps: 0, int: 0, old: 0 });
+  const pp = [...data].sort((a, b) => b.y.gg.net / b.people - a.y.gg.net / a.people);
+  $('debt-note').textContent = `At 30 June ${end} the eight state and territory governments owed ${fmtBn(tot.gg)} in net debt, `
+    + `up from ${fmtBn(tot.old)} five years earlier, and paid ${fmtBn(tot.int)} in interest during ${dy}. `
+    + `Counting state-owned businesses such as transport, water and power utilities, net debt was ${fmtBn(tot.nfps)}. `
+    + `Per person, ${pp[0].name} owes the most (${fmtPp(pp[0].y.gg.net / pp[0].people)}) and ${pp[pp.length - 1].name} the least (${fmtPp(pp[pp.length - 1].y.gg.net / pp[pp.length - 1].people)}).`;
+  simpleTable('debt-table', ['State', 'Net debt', 'Gross debt', 'Per person', `Interest ${dy}`, `Net debt ${Number(end) - 5}`, 'With state businesses'],
+    data.map((d) => [d.name, fmtBn(d.y.gg.net), fmtBn(d.y.gg.gross), fmtPp(d.y.gg.net / d.people), fmtBn(d.y.gg.interest), d.old ? fmtBn(d.old.gg.net) : '–', fmtBn(d.y.nfps.net)]));
 }
 
 function renderCompanies() {
@@ -791,9 +833,9 @@ function setupControls(years) {
     ? `Live from the ABS Data API · latest quarter ${qLabel(latest)}`
     : `ABS live feed unavailable — showing saved snapshot${state.data.fetchedAt ? ` from ${state.data.fetchedAt.slice(0, 10)}` : ''} · latest quarter ${qLabel(latest)}`;
   const loadJson = (name) => window.EMBED?.[name] ?? fetchText(`data/${name}.json`, 10000).then(JSON.parse).catch(() => null);
-  [state.geo, state.tax, state.companies, state.contracts, state.econ] = await Promise.all(
-    ['states', 'state-tax', 'company-tax', 'contracts', 'economic-index'].map(loadJson));
-  for (const [id, key] of [['tax-card', 'tax'], ['co-card', 'companies'], ['ct-card', 'contracts'], ['ei-card', 'econ']]) {
+  [state.geo, state.tax, state.companies, state.contracts, state.econ, state.debt] = await Promise.all(
+    ['states', 'state-tax', 'company-tax', 'contracts', 'economic-index', 'state-debt'].map(loadJson));
+  for (const [id, key] of [['debt-card', 'debt'], ['tax-card', 'tax'], ['co-card', 'companies'], ['ct-card', 'contracts'], ['ei-card', 'econ']]) {
     $(id).hidden = !state[key];
   }
   setupControls(years);

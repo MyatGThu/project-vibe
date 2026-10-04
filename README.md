@@ -5,6 +5,7 @@ A static web page that tracks public spending in each Australian state and terri
 ## What it shows
 
 - A map of the states and territories (ABS ASGS 2021 boundaries), shaded by total or per-person spending. Hover, tap or tab to a state for its full breakdown: rank, share of the national total, change on one and five years, latest quarter, population and each spending component.
+- How much each state owes: net and gross debt, debt per person, interest paid and five-year change (ABS Government Finance Statistics 2024-25).
 - State & local government spending compared with the taxes states and councils collect (ABS Taxation Revenue 2024-25), with each tax type.
 - Federal contracts of $1m or more in 2025-26 by the state of the supplier, by month, category and the reason given for limited tenders (AusTender).
 - Company tax from the ATO's 2024-25 tax transparency report: most tax payable, largest income with no tax payable, and lowest tax on taxable income over $100m.
@@ -56,6 +57,7 @@ Downloads generalised state boundaries from the ABS ASGS 2021 map service and wr
 ```sh
 pip install openpyxl
 python3 scripts/build-tax.py                      # data/state-tax.json, data/company-tax.json
+python3 scripts/build-debt.py                     # data/state-debt.json
 python3 scripts/fetch-austender.py 2025-07-01 2026-06-30 export.json   # AusTender OCDS API, no key
 python3 scripts/build-contracts.py export.json "<window label>"         # data/contracts.json
 ```
