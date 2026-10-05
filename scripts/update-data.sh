@@ -16,5 +16,9 @@ curl -fsS --retry 3 -o data/spending.csv \
 curl -fsS --retry 3 -o data/population.csv \
   "$BASE/ABS,ERP_Q,1.0.0/1.3.TOT.1+2+3+4+5+6+7+8.Q?startPeriod=$START&format=csvfile"
 
+# Job vacancies (thousands), original series, by sector and state.
+curl -fsS --retry 3 -o data/vacancies.csv \
+  "$BASE/ABS,JV,1.0/M1.7+1+2.TOT.10.1+2+3+4+5+6+7+8.Q?startPeriod=2019-Q1&format=csvfile"
+
 date -u +%Y-%m-%dT%H:%M:%SZ > data/fetched-at.txt
-wc -l data/spending.csv data/population.csv
+wc -l data/spending.csv data/population.csv data/vacancies.csv

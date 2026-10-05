@@ -97,6 +97,15 @@
       <div class="table-wrap"><table id="table"></table></div>
     </section>
 
+    <section class="card" id="jobs-card" aria-labelledby="jobs-h">
+      <h2 id="jobs-h">Job openings</h2>
+      <p class="note" id="jobs-note"></p>
+      <div class="legend" id="jobs-legend"></div>
+      <div class="chart" id="jobsbars"></div>
+      <div class="table-wrap"><table id="jobs-table"></table></div>
+      <p class="note">ABS Job Vacancies survey of employers, original series. A vacancy is a job available for immediate filling on the survey date (the third Friday of February, May, August and November) for which the employer has taken recruitment action. The survey excludes businesses mainly in agriculture, forestry and fishing, private households, foreign embassies and the permanent defence forces. State figures are survey estimates with sampling error, most of all for the smaller states and territories.</p>
+    </section>
+
     <section class="card" id="debt-card" aria-labelledby="debt-h">
       <h2 id="debt-h">How much each state owes</h2>
       <p class="note" id="debt-note"></p>
@@ -159,6 +168,7 @@
         <li><strong>Commonwealth</strong> consumption is federal spending that takes place in that state. <strong>State &amp; local</strong> covers the state government and its councils.</li>
         <li><strong>Not included:</strong> transfer payments such as pensions, JobSeeker, family payments, subsidies and interest. Those appear in Government Finance Statistics, which the ABS does not yet publish through its API by state.</li>
         <li><strong>Taxes:</strong> ABS Taxation Revenue, Australia, 2024-25 (5506.0). State &amp; local taxes are those the state government and its councils levy themselves. GST is a Commonwealth tax and is not included, even though states receive it.</li>
+        <li><strong>Job openings:</strong> ABS Job Vacancies, Australia (dataflow <code>JV</code>), quarterly.</li>
         <li><strong>Debt:</strong> ABS Government Finance Statistics, Annual, 2024-25 (5512.0), balance sheets of each state's general government and non-financial public sectors.</li>
         <li><strong>Company tax:</strong> ATO Corporate Tax Transparency, Report of Entity Tax Information 2024-25 (data.gov.au).</li>
         <li><strong>Federal contracts:</strong> AusTender contract notices for 2025-26 from the free AusTender OCDS API. A July–September 2026 run with the Apify actor <code>knotty_mistveil/austender-contract-notices</code> gave the same figures.</li>

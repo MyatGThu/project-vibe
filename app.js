@@ -236,6 +236,7 @@ function render() {
   renderTable(rows, aus, label, popPeriod);
   if (state.tax) renderTax();
   if (state.debt) renderDebt();
+  if (state.jobs) renderJobs();
   if (state.companies) renderCompanies();
   if (state.contracts) renderContracts();
   if (state.econ) renderEcon();
@@ -353,6 +354,11 @@ function extraDetail(r) {
     const sl = sumQuarters(r.code, fyQuarters(Number(ty.slice(0, 4)))).sl;
     out.push(info(`state & local taxes, ${ty} · cover ${fmtShare(t.total / sl)} of state & local spending`, fmtBn(t.total)));
   }
+  const jobs = state.jobs?.[r.code];
+  if (jobs) {
+    const p = Object.keys(jobs).sort().pop();
+    out.push(info(`job vacancies, ${jvLabel(p)} · ${(jobs[p]['7'] / popAt(r.code, p) * 1000).toFixed(1)} per 1,000 people`, jobs[p]['7'].toLocaleString('en-AU')));
+  }
   const debt = state.debt?.states[r.code];
   if (debt) {
     const dy = Object.keys(debt).sort().pop();
@@ -462,6 +468,44 @@ function renderTax() {
     + 'The rest comes mainly from GST and other Commonwealth payments, mining royalties, and fees.';
   simpleTable('tax-table', ['State', 'Spending', 'Taxes', 'Covered', ...TAX_LINES.map(([, n]) => n)],
     data.map((d) => [d.r.name, fmt(d.values[0]), fmt(d.values[1]), fmtShare(d.t.total / d.r.sl), ...TAX_LINES.map(([k]) => fmtShare(d.t[k] / d.t.total))]));
+}
+
+// ABS Job Vacancies are surveyed in the middle month of each quarter.
+const jvLabel = (p) => `${['February', 'May', 'August', 'November'][Number(p.slice(-1)) - 1]} ${p.slice(0, 4)}`;
+
+function renderJobs() {
+  const p = Object.keys(state.jobs['1']).sort().pop();
+  const prev = `${Number(p.slice(0, 4)) - 1}${p.slice(4)}`;
+  const per = state.metric === 'perCapita';
+  const num = (v) => Math.round(v).toLocaleString('en-AU');
+  const fmt = per ? (v) => v.toFixed(1) : num;
+  const series = [
+    { label: 'Private sector vacancies', color: 'var(--s1)' },
+    { label: 'Public sector vacancies', color: 'var(--s2)' },
+  ];
+  const data = STATES.map((st) => {
+    const j = state.jobs[st.code];
+    const people = popAt(st.code, p);
+    const d = per ? people / 1000 : 1;
+    return { ...st, now: j[p], before: j[prev], people, label: st.abbr, values: [j[p]['1'] / d, j[p]['2'] / d] };
+  }).sort((a, b) => (b.values[0] + b.values[1]) - (a.values[0] + a.values[1]));
+  pairBars($('jobsbars'), data, series, fmt, per ? (v) => `${v}` : (v) => `${v / 1000}k`, (d) => [`${d.name} · ${jvLabel(p)}`, [
+    { color: 'transparent', label: 'job vacancies, all sectors', value: num(d.now['7']) },
+    { color: 'var(--s1)', label: 'private sector', value: num(d.now['1']) },
+    { color: 'var(--s2)', label: `public sector · ${fmtShare(d.now['2'] / d.now['7'])} of vacancies`, value: num(d.now['2']) },
+    { color: 'transparent', label: 'vacancies per 1,000 residents', value: (d.now['7'] / d.people * 1000).toFixed(1) },
+    { color: 'transparent', label: `change since ${jvLabel(prev)}`, value: d.before ? fmtPct(d.now['7'] / d.before['7'] - 1) : '–' },
+  ]]);
+  legendOf('jobs-legend', series);
+  const tot = data.reduce((a, d) => ({ now: a.now + d.now['7'], before: a.before + (d.before?.['7'] ?? 0), pub: a.pub + d.now['2'] }), { now: 0, before: 0, pub: 0 });
+  const rate = [...data].sort((a, b) => b.now['7'] / b.people - a.now['7'] / a.people);
+  const chg = [...data].filter((d) => d.before).sort((a, b) => b.now['7'] / b.before['7'] - a.now['7'] / a.before['7']);
+  $('jobs-note').textContent = `In ${jvLabel(p)} employers across the states and territories had ${num(tot.now)} jobs vacant, `
+    + `${fmtPct(tot.now / tot.before - 1)} on a year earlier; ${fmtShare(tot.pub / tot.now)} were in the public sector. `
+    + `Per 1,000 residents, vacancies are highest in ${rate[0].name} (${(rate[0].now['7'] / rate[0].people * 1000).toFixed(1)}) and lowest in ${rate[rate.length - 1].name} (${(rate[rate.length - 1].now['7'] / rate[rate.length - 1].people * 1000).toFixed(1)}). `
+    + `The strongest change over the year was in ${chg[0].name} (${fmtPct(chg[0].now['7'] / chg[0].before['7'] - 1)}) and the weakest in ${chg[chg.length - 1].name} (${fmtPct(chg[chg.length - 1].now['7'] / chg[chg.length - 1].before['7'] - 1)}).`;
+  simpleTable('jobs-table', ['State', 'Vacancies', 'Private', 'Public', 'Per 1,000 people', `Change since ${jvLabel(prev)}`],
+    data.map((d) => [d.name, num(d.now['7']), num(d.now['1']), num(d.now['2']), (d.now['7'] / d.people * 1000).toFixed(1), d.before ? fmtPct(d.now['7'] / d.before['7'] - 1) : '–']));
 }
 
 function renderDebt() {
@@ -835,7 +879,14 @@ function setupControls(years) {
   const loadJson = (name) => window.EMBED?.[name] ?? fetchText(`data/${name}.json`, 10000).then(JSON.parse).catch(() => null);
   [state.geo, state.tax, state.companies, state.contracts, state.econ, state.debt] = await Promise.all(
     ['states', 'state-tax', 'company-tax', 'contracts', 'economic-index', 'state-debt'].map(loadJson));
-  for (const [id, key] of [['debt-card', 'debt'], ['tax-card', 'tax'], ['co-card', 'companies'], ['ct-card', 'contracts'], ['ei-card', 'econ']]) {
+  const jobsCsv = window.EMBED?.vacancies ?? await fetchText('data/vacancies.csv', 10000).catch(() => null);
+  if (jobsCsv) {
+    state.jobs = {};
+    for (const r of parseCsv(jobsCsv)) {
+      if (r.OBS_VALUE) ((state.jobs[r.REGION] ??= {})[r.TIME_PERIOD] ??= {})[r.SECTOR] = Number(r.OBS_VALUE) * 1000;
+    }
+  }
+  for (const [id, key] of [['jobs-card', 'jobs'], ['debt-card', 'debt'], ['tax-card', 'tax'], ['co-card', 'companies'], ['ct-card', 'contracts'], ['ei-card', 'econ']]) {
     $(id).hidden = !state[key];
   }
   setupControls(years);
