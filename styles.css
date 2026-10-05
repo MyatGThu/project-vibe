@@ -143,3 +143,19 @@ tfoot td { border-bottom: 0; font-weight: 600; }
 
 .btn { cursor: pointer; background: var(--text); color: var(--surface); border-color: var(--text); }
 input[type="search"] { min-width: 220px; max-width: 100%; }
+
+#state-dialog {
+  width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+#state-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--grid); position: sticky; top: 0; background: var(--surface); }
+.dialog-head h2 { margin: 0; text-wrap: balance; }
+.dialog-close { font: inherit; font-size: 24px; line-height: 1; min-width: 44px; min-height: 44px; border: 0; border-radius: 8px; background: transparent; color: var(--text); cursor: pointer; }
+.dialog-close:hover, .dialog-close:focus-visible { background: var(--grid); }
+.dialog-body { padding: 12px 16px 16px; display: grid; gap: 8px; font-size: 14px; }
+.dialog-body .r { display: grid; grid-template-columns: 12px minmax(84px, auto) 1fr; align-items: baseline; gap: 10px; }
+.dialog-body .r i { width: 12px; height: 3px; display: inline-block; align-self: center; }
+.dialog-body .r b { font-variant-numeric: tabular-nums; text-align: right; }
+.dialog-body .r span { color: var(--text-2); }

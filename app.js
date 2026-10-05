@@ -218,6 +218,23 @@ function showTip(evt, title, rows) {
   tip.style.top = `${y + 14 + h > window.innerHeight ? Math.max(8, y - h - 14) : y + 14}px`;
 }
 const hideTip = () => { tip.hidden = true; };
+
+// Popup for one state's figures: a native <dialog>, so focus, Escape and the backdrop are handled by the browser.
+const dialog = $('state-dialog');
+function openStateDialog(title, rows) {
+  $('state-dialog-title').textContent = title;
+  $('state-dialog-body').replaceChildren(...rows.map((r) => {
+    const line = el('div', { class: 'r' });
+    const key = el('i');
+    key.style.background = r.color;
+    line.append(key, el('b', {}, r.value), el('span', {}, r.label));
+    return line;
+  }));
+  hideTip();
+  if (!dialog.open) dialog.showModal();
+}
+dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); }); // tap outside closes
+dialog.addEventListener('close', () => document.querySelector('#map path.state.sel')?.focus()); // map re-rendered; refocus the state
 // Hide on tap or focus elsewhere. Not on blur: re-rendering after a click removes the focused path.
 for (const type of ['pointerdown', 'focusin']) {
   document.addEventListener(type, (e) => { if (!e.target.closest?.('.state, .act-ring')) hideTip(); });
@@ -258,12 +275,13 @@ function renderMap(rows, aus, label) {
   for (const r of rows) {
     const shape = el('svg:path', { d: state.geo.paths[r.code], class: `state${r.code === state.sel ? ' sel' : ''}`, tabindex: '0', role: 'button', 'aria-label': `${r.name}: ${fmtMetric(r[m])}` });
     shape.style.fill = RAMP[classOf(r)];
-    const show = (e) => showTip(e, `${r.name} · ${label}`, mapDetail(r, aus, rankBy));
-    shape.addEventListener('pointermove', show);
-    shape.addEventListener('pointerdown', show); // touch has no hover
-    shape.addEventListener('focus', show);
-    shape.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') hideTip(); }); // touch: keep it open after the tap
-    const choose = () => { state.sel = r.code; $('state').value = r.code; render(); };
+    // Tap, click or Enter opens the state's figures in a popup inside the page.
+    const choose = () => {
+      state.sel = r.code;
+      $('state').value = r.code;
+      openStateDialog(`${r.name} · ${label}`, mapDetail(r, aus, rankBy));
+      render();
+    };
     shape.addEventListener('click', choose);
     shape.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
     svg.append(shape);
@@ -279,8 +297,6 @@ function renderMap(rows, aus, label) {
     if (small) {
       // ACT is a few pixels wide: add a larger ring as its hit target and label it outside.
       const ring = el('svg:circle', { cx, cy, r: 14, class: 'act-ring' });
-      ring.addEventListener('pointermove', (e) => shape.dispatchEvent(new PointerEvent('pointermove', e)));
-      ring.addEventListener('pointerleave', hideTip);
       ring.addEventListener('click', () => shape.dispatchEvent(new MouseEvent('click')));
       svg.append(ring);
       cx += 34; cy += 4;
@@ -300,7 +316,7 @@ function renderMap(rows, aus, label) {
     return s;
   }).filter(Boolean);
   $('map-legend').replaceChildren(...items);
-  $('map-note').textContent = `Financial year ${label}, shaded by ${m === 'total' ? 'total spending' : 'spending per person'}. Hover or tab to a state for the breakdown; click to highlight it below.`;
+  $('map-note').textContent = `Financial year ${label}, shaded by ${m === 'total' ? 'total spending' : 'spending per person'}. Tap or click a state (or tab to it and press Enter) to see its figures.`;
 }
 
 // Every figure in the map tooltip.
