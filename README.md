@@ -6,6 +6,7 @@ A static web page that tracks public spending in each Australian state and terri
 
 - A map of the states and territories (ABS ASGS 2021 boundaries), shaded by total or per-person spending. Hover, tap or tab to a state for its full breakdown: rank, share of the national total, change on one and five years, latest quarter, population and each spending component.
 - Job openings by state from the ABS Job Vacancies survey: private and public sector, per 1,000 residents and change on a year earlier.
+- Find a job: keywords and state, linking to Workforce Australia, APSJobs and each state government's job board. Victoria's board opens the search directly; for the others the keywords are copied to paste in.
 - How much each state owes: net and gross debt, debt per person, interest paid and five-year change (ABS Government Finance Statistics 2024-25).
 - State & local government spending compared with the taxes states and councils collect (ABS Taxation Revenue 2024-25), with each tax type.
 - Federal contracts of $1m or more in 2025-26 by the state of the supplier, by month, category and the reason given for limited tenders (AusTender).

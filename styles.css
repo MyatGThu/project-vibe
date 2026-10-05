@@ -75,7 +75,7 @@ a { color: var(--s1); }
 
 .controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: end; margin: 20px 0 16px; }
 .controls label { display: grid; gap: 4px; font-size: 13px; color: var(--text-2); }
-select, .seg button {
+select, input[type="search"], .btn, .seg button {
   font: inherit; color: var(--text); background: var(--surface);
   border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; min-height: 36px;
 }
@@ -140,3 +140,6 @@ th:first-child, td:first-child { text-align: left; }
 th { color: var(--text-2); font-weight: 500; }
 tr.sel td { font-weight: 600; }
 tfoot td { border-bottom: 0; font-weight: 600; }
+
+.btn { cursor: pointer; background: var(--text); color: var(--surface); border-color: var(--text); }
+input[type="search"] { min-width: 220px; max-width: 100%; }

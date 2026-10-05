@@ -508,6 +508,45 @@ function renderJobs() {
     data.map((d) => [d.name, num(d.now['7']), num(d.now['1']), num(d.now['2']), (d.now['7'] / d.people * 1000).toFixed(1), d.before ? fmtPct(d.now['7'] / d.before['7'] - 1) : '–']));
 }
 
+// Official job boards. `q` builds a keyword search URL where the board supports one (checked);
+// otherwise the link opens the board and the keywords are copied for pasting.
+const BOARDS = [
+  { state: 'all', name: 'Workforce Australia', note: 'Australian Government job board, all employers', url: 'https://www.workforceaustralia.gov.au/individuals/jobs/search' },
+  { state: 'all', name: 'APSJobs', note: 'Australian Public Service (federal government) jobs', url: 'https://www.apsjobs.gov.au/s/job-search' },
+  { state: '1', name: 'I work for NSW', note: 'NSW Government jobs', url: 'https://iworkfor.nsw.gov.au/jobs' },
+  { state: '2', name: 'Careers.vic', note: 'Victorian Government jobs', url: 'https://www.careers.vic.gov.au/jobs', q: (k) => `https://www.careers.vic.gov.au/jobs?keywords=${encodeURIComponent(k)}` },
+  { state: '3', name: 'SmartJobs', note: 'Queensland Government jobs', url: 'https://smartjobs.qld.gov.au/' },
+  { state: '4', name: 'I work for SA', note: 'South Australian Government jobs', url: 'https://www.iworkfor.sa.gov.au/' },
+  { state: '5', name: 'WA Government Jobs', note: 'Western Australian Government jobs', url: 'https://search.jobs.wa.gov.au/' },
+  { state: '6', name: 'Tasmanian Government Jobs', note: 'Tasmanian Government jobs', url: 'https://www.jobs.tas.gov.au/' },
+  { state: '7', name: 'NT Government Jobs', note: 'Northern Territory Government jobs', url: 'https://jobs.nt.gov.au/Home/Search' },
+  { state: '8', name: 'ACT Government Jobs', note: 'ACT Government jobs', url: 'https://www.jobs.act.gov.au/' },
+];
+
+function renderJobSearch() {
+  const k = $('job-q').value.trim();
+  const st = $('job-state').value;
+  const boards = BOARDS.filter((b) => b.state === 'all' || st === 'all' || b.state === st);
+  $('job-links').replaceChildren(...boards.map((b) => {
+    const li = el('li');
+    const direct = k && b.q;
+    const a = el('a', { href: direct ? b.q(k) : b.url, target: '_blank', rel: 'noopener' }, b.name);
+    a.addEventListener('click', () => {
+      if (k && !b.q) navigator.clipboard?.writeText(k).then(() => { $('job-msg').textContent = `"${k}" copied. Paste it into the ${b.name} search box.`; }, () => {});
+    });
+    const tag = el('span', { class: 'note' }, ` · ${b.note}${k ? (direct ? ' · opens your search' : ' · copies your keywords') : ''}`);
+    li.append(a, tag);
+    return li;
+  }));
+  const j = state.jobs;
+  if (j) {
+    const codes = st === 'all' ? STATES.map((s) => s.code) : [st];
+    const p = Object.keys(j['1']).sort().pop();
+    const n = codes.reduce((a, c) => a + j[c][p]['7'], 0);
+    $('job-msg').textContent = `${Math.round(n).toLocaleString('en-AU')} jobs were vacant ${st === 'all' ? 'across Australia' : `in ${STATES.find((s) => s.code === st).name}`} in ${jvLabel(p)} (ABS).`;
+  }
+}
+
 function renderDebt() {
   const states = state.debt.states;
   const dy = Object.keys(states['1']).sort().pop();
@@ -890,6 +929,10 @@ function setupControls(years) {
     $(id).hidden = !state[key];
   }
   setupControls(years);
+  $('job-state').replaceChildren(el('option', { value: 'all' }, 'All of Australia'), ...STATES.map((x) => el('option', { value: x.code }, x.name)));
+  $('job-form').addEventListener('submit', (e) => { e.preventDefault(); renderJobSearch(); });
+  $('job-state').addEventListener('change', renderJobSearch);
+  renderJobSearch();
   renderLegend();
   render();
 })();

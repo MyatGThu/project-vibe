@@ -106,6 +106,22 @@
       <p class="note">ABS Job Vacancies survey of employers, original series. A vacancy is a job available for immediate filling on the survey date (the third Friday of February, May, August and November) for which the employer has taken recruitment action. The survey excludes businesses mainly in agriculture, forestry and fishing, private households, foreign embassies and the permanent defence forces. State figures are survey estimates with sampling error, most of all for the smaller states and territories.</p>
     </section>
 
+    <section class="card" id="find-card" aria-labelledby="find-h">
+      <h2 id="find-h">Find a job</h2>
+      <p class="note">Free search across the official government job boards. Results open on each board's own site.</p>
+      <form id="job-form" class="controls" role="search">
+        <label>Keywords
+          <input id="job-q" type="search" placeholder="e.g. nurse, data analyst" autocomplete="off">
+        </label>
+        <label>State or territory
+          <select id="job-state"></select>
+        </label>
+        <button type="submit" class="btn">Show job boards</button>
+      </form>
+      <p class="note" id="job-msg" role="status"></p>
+      <ul class="findings" id="job-links"></ul>
+    </section>
+
     <section class="card" id="debt-card" aria-labelledby="debt-h">
       <h2 id="debt-h">How much each state owes</h2>
       <p class="note" id="debt-note"></p>
