@@ -58,6 +58,15 @@
     </div>
 
     <div id="panel-states" role="tabpanel" aria-labelledby="tab-states">
+    <section class="lead" id="lead" aria-labelledby="lead-h">
+      <p class="kicker" id="lead-kicker">Briefing</p>
+      <h2 id="lead-h"></h2>
+      <p class="standfirst" id="lead-standfirst"></p>
+      <nav class="chapters" aria-label="Jump to a section">
+        <a href="#map-h">Map</a><a href="#jobs-h">Jobs</a><a href="#debt-h">Debt</a><a href="#tax-h">Taxes</a><a href="#ct-h">Contracts</a><a href="#co-h">Company tax</a><a href="#rates" data-tab="rates">Interest rates</a>
+      </nav>
+    </section>
+
 
     <section class="controls" aria-label="Filters">
       <label>Financial year
@@ -75,18 +84,30 @@
     <section class="kpis" id="kpis" aria-label="Headline figures"></section>
 
     <section class="card" aria-labelledby="map-h">
+      <p class="kicker">Where the money goes</p>
       <h2 id="map-h">Map</h2>
       <p class="note" id="map-note"></p>
       <div class="legend" id="map-legend"></div>
-      <div class="chart map" id="map"></div>
+      <div class="map-stage">
+        <div class="chart map" id="map"></div>
+        <aside class="map-panel" id="map-panel" aria-labelledby="map-panel-title" hidden>
+          <div class="map-panel-head">
+            <h3 id="map-panel-title"></h3>
+            <button type="button" class="btn btn-ghost" id="map-exit">Exit zoom</button>
+          </div>
+          <div class="map-panel-body" id="map-panel-body"></div>
+        </aside>
+      </div>
     </section>
 
     <section class="card" aria-labelledby="findings-h">
+      <p class="kicker">What stands out</p>
       <h2 id="findings-h">Findings</h2>
       <ul id="findings" class="findings"></ul>
     </section>
 
     <section class="card" aria-labelledby="bars-h">
+      <p class="kicker">The breakdown</p>
       <h2 id="bars-h">Spending by state</h2>
       <p class="note" id="bars-note"></p>
       <div class="legend" id="legend"></div>
@@ -94,17 +115,20 @@
     </section>
 
     <section class="card" aria-labelledby="trend-h">
+      <p class="kicker">Over time</p>
       <h2 id="trend-h">Trend, rolling 12 months</h2>
       <p class="note" id="trend-note"></p>
       <div class="chart" id="trend"></div>
     </section>
 
     <section class="card" aria-labelledby="table-h">
+      <p class="kicker">Every figure</p>
       <h2 id="table-h">Table</h2>
       <div class="table-wrap"><table id="table"></table></div>
     </section>
 
     <section class="card" id="jobs-card" aria-labelledby="jobs-h">
+      <p class="kicker">Jobs</p>
       <h2 id="jobs-h">Job openings</h2>
       <p class="note" id="jobs-note"></p>
       <div class="legend" id="jobs-legend"></div>
@@ -114,6 +138,7 @@
     </section>
 
     <section class="card" id="find-card" aria-labelledby="find-h">
+      <p class="kicker">Jobs</p>
       <h2 id="find-h">Find a job</h2>
       <p class="note">Free search across the official government job boards. Results open on each board's own site.</p>
       <form id="job-form" class="controls" role="search">
@@ -130,6 +155,7 @@
     </section>
 
     <section class="card" id="debt-card" aria-labelledby="debt-h">
+      <p class="kicker">Money owed</p>
       <h2 id="debt-h">How much each state owes</h2>
       <p class="note" id="debt-note"></p>
       <div class="legend" id="debt-legend"></div>
@@ -139,6 +165,7 @@
     </section>
 
     <section class="card" id="tax-card" aria-labelledby="tax-h">
+      <p class="kicker">Money in</p>
       <h2 id="tax-h">Spending vs taxes collected</h2>
       <p class="note" id="tax-note"></p>
       <div class="legend" id="tax-legend"></div>
@@ -147,6 +174,7 @@
     </section>
 
     <section class="card" id="ct-card" aria-labelledby="ct-h">
+      <p class="kicker">Federal buying</p>
       <h2 id="ct-h">Federal contracts by supplier state</h2>
       <p class="note" id="ct-note"></p>
       <div class="chart" id="ctbars"></div>
@@ -163,6 +191,7 @@
     </section>
 
     <section class="card" id="co-card" aria-labelledby="co-h">
+      <p class="kicker">Company tax</p>
       <h2 id="co-h">Company tax</h2>
       <p class="note" id="co-note"></p>
       <h3>Most tax payable</h3>
@@ -175,6 +204,7 @@
     </section>
 
     <section class="card" id="ei-card" aria-labelledby="ei-h">
+      <p class="kicker">Technology</p>
       <h2 id="ei-h">AI usage by state</h2>
       <p class="note" id="ei-note"></p>
       <div class="legend" id="ei-legend"></div>
@@ -184,6 +214,7 @@
     </section>
 
     <section class="card notes" aria-labelledby="about-h">
+      <p class="kicker">Method</p>
       <h2 id="about-h">What these numbers cover</h2>
       <ul>
         <li><strong>Source:</strong> ABS Australian National Accounts – State Final Demand (dataflow <code>ANA_SFD</code>), current prices, original series, quarterly. Population: ABS Estimated Resident Population (<code>ERP_Q</code>).</li>
@@ -204,25 +235,29 @@
       <section class="kpis" id="rate-kpis" aria-label="Headline rates"></section>
 
       <section class="card" aria-labelledby="rates-h">
-        <h2 id="rates-h">Cash rate and what people pay and earn</h2>
+        <p class="kicker">Interest rates</p>
+      <h2 id="rates-h">Cash rate and what people pay and earn</h2>
         <p class="note" id="rates-note"></p>
         <div class="legend" id="rates-legend"></div>
         <div class="chart" id="rates-chart"></div>
       </section>
 
       <section class="card" aria-labelledby="decisions-h">
-        <h2 id="decisions-h">Cash rate decisions</h2>
+        <p class="kicker">The Reserve Bank</p>
+      <h2 id="decisions-h">Cash rate decisions</h2>
         <p class="note" id="decisions-note"></p>
         <div class="table-wrap"><table id="decisions-table"></table></div>
       </section>
 
       <section class="card" aria-labelledby="ratetable-h">
-        <h2 id="ratetable-h">All rates</h2>
+        <p class="kicker">Every rate</p>
+      <h2 id="ratetable-h">All rates</h2>
         <div class="table-wrap"><table id="rates-table"></table></div>
       </section>
 
       <section class="card notes" aria-labelledby="ratesabout-h">
-        <h2 id="ratesabout-h">What these rates are</h2>
+        <p class="kicker">Method</p>
+      <h2 id="ratesabout-h">What these rates are</h2>
         <ul>
           <li><strong>Cash rate target:</strong> the interest rate the Reserve Bank of Australia (RBA) sets for overnight loans between banks. Banks pass changes on to loan and deposit rates, usually within weeks.</li>
           <li><strong>Home loan, credit card, business and deposit rates</strong> are the RBA's indicator rates: the advertised rates of the major banks, recorded at the end of each month. Many borrowers pay less than the standard variable rate after discounts.</li>
@@ -233,13 +268,6 @@
     </div>
   </main>
   <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
-  <dialog id="state-dialog" aria-labelledby="state-dialog-title">
-    <form method="dialog" class="dialog-head">
-      <h2 id="state-dialog-title"></h2>
-      <button class="dialog-close" aria-label="Close">×</button>
-    </form>
-    <div id="state-dialog-body" class="dialog-body"></div>
-  </dialog>
   <script src="app.js"></script>
 </body>
 </html>

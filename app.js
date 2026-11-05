@@ -219,22 +219,15 @@ function showTip(evt, title, rows) {
 }
 const hideTip = () => { tip.hidden = true; };
 
-// Popup for one state's figures: a native <dialog>, so focus, Escape and the backdrop are handled by the browser.
-const dialog = $('state-dialog');
-function openStateDialog(title, rows) {
-  $('state-dialog-title').textContent = title;
-  $('state-dialog-body').replaceChildren(...rows.map((r) => {
+function detailRows(rows) {
+  return rows.map((r) => {
     const line = el('div', { class: 'r' });
     const key = el('i');
     key.style.background = r.color;
     line.append(key, el('b', {}, r.value), el('span', {}, r.label));
     return line;
-  }));
-  hideTip();
-  if (!dialog.open) dialog.showModal();
+  });
 }
-dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); }); // tap outside closes
-dialog.addEventListener('close', () => document.querySelector('#map path.state.sel')?.focus()); // map re-rendered; refocus the state
 // Hide on tap or focus elsewhere. Not on blur: re-rendering after a click removes the focused path.
 for (const type of ['pointerdown', 'focusin']) {
   document.addEventListener(type, (e) => { if (!e.target.closest?.('.state, .act-ring')) hideTip(); });
@@ -245,6 +238,7 @@ for (const type of ['pointerdown', 'focusin']) {
 function render() {
   const { rows, aus, popPeriod } = yearFigures(state.fy);
   const label = fyLabel(state.fy);
+  renderLead(aus, label);
   renderKpis(rows, aus, label);
   renderMap(rows, aus, label);
   renderFindings(rows, aus, label);
@@ -257,10 +251,116 @@ function render() {
   if (state.companies) renderCompanies();
   if (state.contracts) renderContracts();
   if (state.econ) renderEcon();
+  observeReveals();
+}
+
+// ---------- motion: each section plays once, the first time it scrolls into view ----------
+
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+const easeOut = (t) => 1 - (1 - t) ** 3;
+const revealer = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue;
+    const c = e.target;
+    revealer.unobserve(c);
+    c.dataset.revealed = '1';
+    if (reduceMotion.matches) continue;
+    c.classList.add('reveal-now');
+    for (const v of c.querySelectorAll('.kpi .value')) countUp(v);
+    setTimeout(() => c.classList.remove('reveal-now'), 2600);
+  }
+}, { rootMargin: '0px 0px -8% 0px' }) : null;
+function observeReveals() {
+  if (!revealer) return;
+  for (const c of document.querySelectorAll('.lead, .kpis, .card')) if (!c.dataset.revealed) revealer.observe(c);
+}
+
+// Count a headline number up from zero, keeping its prefix, suffix and decimals ("$845.5bn", "4.85%", "+1.25 pts").
+function countUp(node) {
+  const m = node.textContent.match(/^([^\d]*?)([\d,]+(?:\.\d+)?)(.*)$/);
+  if (!m) return;
+  const [, pre, num, post] = m;
+  const target = Number(num.replace(/,/g, ''));
+  const dp = (num.split('.')[1] || '').length;
+  const t0 = performance.now();
+  const step = (t) => {
+    const k = Math.min(1, (t - t0) / 900);
+    node.textContent = `${pre}${(target * easeOut(k)).toLocaleString('en-AU', { minimumFractionDigits: dp, maximumFractionDigits: dp })}${post}`;
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// ---------- editorial lead ----------
+
+function renderLead(aus, label) {
+  const bits = [];
+  if (state.debt) {
+    const dy = Object.keys(state.debt.states['1']).sort().pop();
+    const owed = STATES.reduce((a, s) => a + state.debt.states[s.code][dy].gg.net, 0);
+    bits.push(`the states owe ${fmtBn(owed)} in net debt`);
+  }
+  if (state.jobs) {
+    const p = Object.keys(state.jobs['1']).sort().pop();
+    bits.push(`${Math.round(STATES.reduce((a, s) => a + state.jobs[s.code][p]['7'], 0)).toLocaleString('en-AU')} jobs are open`);
+  }
+  if (state.rates) bits.push(`the cash rate is ${fmtRate(latest(state.rates.series.FIRMMCRTD)[1])}`);
+  const today = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+  $('lead-kicker').textContent = `Briefing · ${today}`;
+  $('lead-h').textContent = `Australia's governments spent ${fmtBn(aus.total)} across the states in ${label}`;
+  $('lead-standfirst').textContent = bits.length
+    ? `That is ${fmtPp(aus.perCapita)} for every resident, ${fmtPct(aus.growth)} on the year before. Meanwhile ${bits.join(', ').replace(/, ([^,]*)$/, ' and $1')}. Tap any state on the map to zoom in on it.`
+    : `That is ${fmtPp(aus.perCapita)} for every resident. Tap any state on the map to zoom in on it.`;
 }
 
 // Sequential blue ramp (light to dark), one step per quantile class.
 const RAMP = ['#b7d3f6', '#86b6ef', '#3987e5', '#256abf', '#104281'];
+
+let mapView = null; // the viewBox on screen, kept across re-renders so a zoom continues smoothly
+let mapAnim = 0;
+
+// A viewBox around one state, with the full map's aspect ratio so the map never changes height.
+function zoomBox(svg, code) {
+  const full = state.geo.viewBox.split(' ').map(Number);
+  if (!code) return full;
+  const b = svg.querySelector(`path.state[data-code="${code}"]`).getBBox();
+  const ratio = full[2] / full[3];
+  // At mid widths the details panel covers the right of the map, so frame the state in the left 55%.
+  const side = matchMedia('(min-width: 701px) and (max-width: 1039px)').matches ? 0.55 : 1;
+  const w = Math.max(b.width * 1.4 / side, b.height * 1.4 * ratio, full[2] / 8); // ACT stops at 8x
+  const h = w / ratio;
+  return [b.x + b.width / 2 - w * side / 2, b.y + b.height / 2 - h / 2, w, h];
+}
+
+function setView(svg, v) {
+  svg.setAttribute('viewBox', v.map((n) => n.toFixed(2)).join(' '));
+  svg.style.setProperty('--z', (Number(state.geo.viewBox.split(' ')[2]) / v[2]).toFixed(3));
+  mapView = v;
+}
+
+// Move the "camera" from where it is to the target over 0.8s, like a pan-and-zoom shot.
+function flyTo(svg, target) {
+  cancelAnimationFrame(mapAnim);
+  const from = mapView ?? target;
+  if (reduceMotion.matches || from.every((n, i) => Math.abs(n - target[i]) < 0.5)) return setView(svg, target);
+  const t0 = performance.now();
+  const step = (t) => {
+    const k = easeInOut(Math.min(1, (t - t0) / 800));
+    setView(svg, from.map((n, i) => n + (target[i] - n) * k));
+    if (k < 1) mapAnim = requestAnimationFrame(step);
+  };
+  mapAnim = requestAnimationFrame(step);
+}
+
+function exitZoom() {
+  const code = state.zoom;
+  state.zoom = null;
+  render();
+  document.querySelector(`#map path[data-code="${code}"]`)?.focus({ preventScroll: true });
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && state.zoom) exitZoom(); });
+$('map-exit').addEventListener('click', exitZoom);
 
 function renderMap(rows, aus, label) {
   const box = $('map');
@@ -273,21 +373,29 @@ function renderMap(rows, aus, label) {
   const svg = el('svg:svg', { viewBox: state.geo.viewBox, role: 'img', 'aria-label': `Map of public spending by state, ${label}` });
   const labels = [];
   for (const r of rows) {
-    const shape = el('svg:path', { d: state.geo.paths[r.code], class: `state${r.code === state.sel ? ' sel' : ''}`, tabindex: '0', role: 'button', 'aria-label': `${r.name}: ${fmtMetric(r[m])}` });
+    const focus = r.code === state.zoom;
+    const shape = el('svg:path', { d: state.geo.paths[r.code], 'data-code': r.code, class: `state${r.code === state.sel ? ' sel' : ''}${focus ? ' focus' : ''}`, tabindex: '0', role: 'button', 'aria-label': `${r.name}: ${fmtMetric(r[m])}. ${focus ? 'Zoomed in.' : 'Zoom in.'}` });
     shape.style.fill = RAMP[classOf(r)];
-    // Tap, click or Enter opens the state's figures in a popup inside the page.
+    shape.style.setProperty('--i', rows.indexOf(r));
+    // Tap, click or Enter zooms the map onto the state and shows its figures beside it.
     const choose = () => {
       state.sel = r.code;
+      state.zoom = r.code;
       $('state').value = r.code;
-      openStateDialog(`${r.name} · ${label}`, mapDetail(r, aus, rankBy));
       render();
+      document.querySelector(`#map path[data-code="${r.code}"]`)?.focus({ preventScroll: true });
     };
     shape.addEventListener('click', choose);
     shape.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
     svg.append(shape);
     labels.push([r, shape]);
   }
+  if (mapView) setView(svg, mapView); // start from where the previous render left the camera
+  svg.classList.toggle('zoomed', Boolean(state.zoom));
+  svg.addEventListener('click', (e) => { if (e.target === svg && state.zoom) exitZoom(); }); // click the sea to zoom out
   box.replaceChildren(svg);
+  const target = zoomBox(svg, state.zoom);
+  const z = Number(state.geo.viewBox.split(' ')[2]) / target[2];
   // Labels go on after the paths are in the DOM so getBBox works.
   for (const [r, shape] of labels) {
     const b = shape.getBBox();
@@ -299,10 +407,18 @@ function renderMap(rows, aus, label) {
       const ring = el('svg:circle', { cx, cy, r: 14, class: 'act-ring' });
       ring.addEventListener('click', () => shape.dispatchEvent(new MouseEvent('click')));
       svg.append(ring);
-      cx += 34; cy += 4;
+      cx += 34 / z; cy += 4 / z;
     }
-    const t = el('svg:text', { x: cx, y: cy + 5, 'text-anchor': 'middle', class: 'maplbl' }, r.abbr);
+    const t = el('svg:text', { x: cx, y: cy + 5 / z, 'text-anchor': 'middle', class: `maplbl${r.code === state.zoom ? ' focus' : ''}` }, r.abbr);
     svg.append(t);
+  }
+  flyTo(svg, target);
+  const panel = $('map-panel');
+  panel.hidden = !state.zoom;
+  if (state.zoom) {
+    const r = rows.find((x) => x.code === state.zoom);
+    $('map-panel-title').textContent = `${r.name} · ${label}`;
+    $('map-panel-body').replaceChildren(...detailRows(mapDetail(r, aus, rankBy)));
   }
   const fmt = state.metric === 'total' ? fmtBn : fmtPp;
   const items = RAMP.map((c, i) => {
@@ -316,7 +432,7 @@ function renderMap(rows, aus, label) {
     return s;
   }).filter(Boolean);
   $('map-legend').replaceChildren(...items);
-  $('map-note').textContent = `Financial year ${label}, shaded by ${m === 'total' ? 'total spending' : 'spending per person'}. Tap or click a state (or tab to it and press Enter) to see its figures.`;
+  $('map-note').textContent = `Financial year ${label}, shaded by ${m === 'total' ? 'total spending' : 'spending per person'}. ${state.zoom ? 'Click the sea, press Escape or choose Exit zoom to see all of Australia again.' : 'Tap or click a state (or tab to it and press Enter) to zoom in on it.'}`;
 }
 
 // Every figure in the map tooltip.
@@ -416,8 +532,9 @@ function pairBars(box, data, series, fmt, tick, tipFor) {
       const v = d.values[j];
       if (!Number.isFinite(v)) return;
       const y = y0 + j * (barH + gap);
-      const bar = el('svg:path', { d: roundedRight(left, y, Math.max(1, x(v) - left), barH, 4) });
+      const bar = el('svg:path', { d: roundedRight(left, y, Math.max(1, x(v) - left), barH, 4), class: 'bar' });
       bar.style.fill = s.color;
+      bar.style.setProperty('--i', i);
       g.append(bar, el('svg:text', { class: 'val', x: x(v) + 6, y: y + barH - 1 }, fmt(v)));
     });
     const show = (e) => showTip(e, ...tipFor(d));
@@ -573,7 +690,7 @@ const latest = (sr) => { const m = Object.keys(sr.data).sort().pop(); return [m,
 const yearBefore = (sr, m) => sr.data[`${Number(m.slice(0, 4)) - 1}${m.slice(4)}`];
 
 // Multi-line chart with a crosshair tooltip and a direct label at the end of each line.
-function lineChart(box, months, series) {
+function lineChart(box, months, series, notes = []) {
   const W = Math.max(320, box.clientWidth);
   const H = Math.round(Math.min(380, Math.max(260, W * 0.45)));
   const left = 44, right = W < 560 ? 64 : 150, top = 12, bottom = 28;
@@ -599,7 +716,18 @@ function lineChart(box, months, series) {
   }).sort((a, b) => a.y - b.y);
   ends.forEach((e, k) => { if (k && e.y - ends[k - 1].ly < 14) e.ly = ends[k - 1].ly + 14; else e.ly = e.y; });
   for (const s of series) {
-    svg.append(el('svg:path', { d: path(s.values), fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round' }));
+    svg.append(el('svg:path', { d: path(s.values), fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round', class: 'line', pathLength: 1 }));
+  }
+  // Editorial callouts: a dot on the line, a short leader and a label above it.
+  if (W >= 560) {
+    notes.forEach((n, k) => {
+      const nx = x(n.i), ny = y(n.v), ly = Math.max(top + 10, ny - (k % 2 ? 58 : 30));
+      const late = nx > (left + W - right) / 2; // right half: hang the label to the left of its leader, clear of the line-end labels
+      const g = el('svg:g', { class: 'note-mark' });
+      g.append(el('svg:line', { x1: nx, x2: nx, y1: ny - 5, y2: ly + 4 }), el('svg:circle', { cx: nx, cy: ny, r: 3.5 }));
+      g.append(el('svg:text', { x: late ? nx - 4 : Math.max(nx, left + 60), y: ly, 'text-anchor': late ? 'end' : 'middle' }, n.text));
+      svg.append(g);
+    });
   }
   for (const e of ends) {
     svg.append(el('svg:circle', { cx: x(e.i), cy: e.y, r: 4, fill: e.s.color, stroke: 'var(--surface)', 'stroke-width': 2 }));
@@ -656,7 +784,19 @@ function renderRates() {
   ];
   const months = [...new Set(lines.flatMap((l) => Object.keys(S[l.id].data)))].sort();
   const series = lines.map((l) => ({ ...l, label: S[l.id].label, values: months.map((m) => S[l.id].data[m] ?? NaN) }));
-  lineChart($('rates-chart'), months, series);
+  // Turning points in the cash rate: record low, first rise after it, first cut after that, rises resuming.
+  const notes = [];
+  const lowIdx = changes.reduce((b, c, k) => (c[1] < changes[b][1] ? k : b), 0);
+  const at = (k, text) => { const i = months.indexOf(changes[k][0].slice(0, 7)); if (i >= 0) notes.push({ i, v: changes[k][1], text }); };
+  at(lowIdx, `Record low ${fmtRate(changes[lowIdx][1])}`);
+  const dir = (k) => Math.sign(changes[k][1] - changes[k - 1][1]);
+  let k = lowIdx + 1;
+  if (k < changes.length && dir(k) > 0) at(k, `Rises begin, ${monthLabel(changes[k][0].slice(0, 7))}`);
+  while (k < changes.length && dir(k) > 0) k++;
+  if (k < changes.length) at(k, `First cut, ${monthLabel(changes[k][0].slice(0, 7))}`);
+  while (k < changes.length && dir(k) < 0) k++;
+  if (k < changes.length) at(k, `Rises resume, ${monthLabel(changes[k][0].slice(0, 7))}`);
+  lineChart($('rates-chart'), months, series, notes);
   legendOf('rates-legend', series);
   const [, disc] = latest(S.FILRHLBVD);
   const [, sav] = latest(S.FRDIRSAO10K);
@@ -907,6 +1047,8 @@ function renderBars(rows, label) {
         ? el('svg:path', { d: roundedRight(cx, y, Math.max(0, w), barH, 4) })
         : el('svg:rect', { x: cx, y, width: Math.max(0, w - gap), height: barH });
       shape.style.fill = p.color;
+      shape.classList.add('bar');
+      shape.style.setProperty('--i', i);
       const show = (e) => showTip(e, `${r.name}, ${label}`, PARTS.map((pp) => ({
         color: pp.color, label: `${pp.label} (${(r[pp.key] / r.total * 100).toFixed(0)}%)`,
         value: fmtMetric(r[pp.key] * k), sel: pp.key === p.key,
@@ -956,6 +1098,12 @@ function renderTrend() {
     svg.append(el('svg:line', { class: t === 0 ? 'baseline' : 'gridline', x1: left, x2: W - right, y1: y(t), y2: y(t) }));
     svg.append(el('svg:text', { x: left - 6, y: y(t) + 4, 'text-anchor': 'end' }, tickFmt(t)));
   }
+  // Editorial marker: the pandemic years, shaded behind the lines.
+  const c0 = xs.indexOf('2020-Q2'), c1 = xs.indexOf('2021-Q4');
+  if (c0 >= 0 && c1 > c0) {
+    svg.append(el('svg:rect', { class: 'band', x: x(c0), y: top, width: x(c1) - x(c0), height: H - top - bottom }));
+    svg.append(el('svg:text', { class: 'band-lbl', x: (x(c0) + x(c1)) / 2, y: top + 14, 'text-anchor': 'middle' }, 'COVID-19'));
+  }
   const yearStep = W < 560 ? 4 : 2;
   xs.forEach((p, i) => {
     if (p.endsWith('Q2') && Number(p.slice(0, 4)) % yearStep === 0) {
@@ -966,9 +1114,9 @@ function renderTrend() {
   const selected = series.find((s) => s.code === state.sel);
   for (const s of series) {
     if (s === selected) continue;
-    svg.append(el('svg:path', { d: path(s.values), fill: 'none', stroke: 'var(--deemph)', 'stroke-width': 1.5 }));
+    svg.append(el('svg:path', { d: path(s.values), fill: 'none', stroke: 'var(--deemph)', 'stroke-width': 1.5, class: 'line', pathLength: 1 }));
   }
-  svg.append(el('svg:path', { d: path(selected.values), fill: 'none', stroke: 'var(--s1)', 'stroke-width': 2 }));
+  svg.append(el('svg:path', { d: path(selected.values), fill: 'none', stroke: 'var(--s1)', 'stroke-width': 2, class: 'line', pathLength: 1 }));
   const lastI = xs.length - 1;
   svg.append(el('svg:circle', { cx: x(lastI), cy: y(selected.values[lastI]), r: 4, fill: 'var(--s1)', stroke: 'var(--surface)', 'stroke-width': 2 }));
   svg.append(el('svg:text', { class: 'lbl', x: x(lastI) + 8, y: y(selected.values[lastI]) + 4 }, selected.abbr));

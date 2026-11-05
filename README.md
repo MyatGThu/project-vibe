@@ -4,7 +4,9 @@ A static web page that tracks public spending in each Australian state and terri
 
 ## What it shows
 
-- A map of the states and territories (ABS ASGS 2021 boundaries), shaded by total or per-person spending. Tap or click a state (or tab to it and press Enter) to open its full breakdown in a popup: rank, share of the national total, change on one and five years, latest quarter, population and each spending component.
+- A briefing at the top that summarises spending, debt, job openings and the cash rate, with links to each section. Charts carry editorial callouts (the COVID-19 years on the spending trend, turning points in the cash rate), and each section animates in once as it scrolls into view (off when the device asks for reduced motion).
+
+- A map of the states and territories (ABS ASGS 2021 boundaries), shaded by total or per-person spending. Tap or click a state (or tab to it and press Enter) to zoom the map onto it, with its full breakdown in a panel beside it; click the sea, press Escape or choose Exit zoom to go back: rank, share of the national total, change on one and five years, latest quarter, population and each spending component.
 - Job openings by state from the ABS Job Vacancies survey: private and public sector, per 1,000 residents and change on a year earlier.
 - Find a job: keywords and state, linking to Workforce Australia, APSJobs and each state government's job board. Victoria's board opens the search directly; for the others the keywords are copied to paste in.
 - A **Cash rate & interest rates** tab (link: `#rates`): the RBA cash rate target and every decision, home loan, savings, term deposit, credit card, business and bond rates, monthly since 2010, with the change over 12 months.
