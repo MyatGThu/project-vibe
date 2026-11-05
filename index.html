@@ -52,6 +52,13 @@
       <p class="status" id="status" role="status">Loading data from the ABS…</p>
     </header>
 
+    <div class="tabs" role="tablist" aria-label="Views">
+      <button type="button" role="tab" id="tab-states" aria-controls="panel-states" aria-selected="true">States &amp; spending</button>
+      <button type="button" role="tab" id="tab-rates" aria-controls="panel-rates" aria-selected="false" tabindex="-1">Cash rate &amp; interest rates</button>
+    </div>
+
+    <div id="panel-states" role="tabpanel" aria-labelledby="tab-states">
+
     <section class="controls" aria-label="Filters">
       <label>Financial year
         <select id="year"></select>
@@ -191,6 +198,39 @@
         <li>A financial year runs July to June. "Per person" divides the year's spending by the state's population in the June quarter (or the latest quarter published).</li>
       </ul>
     </section>
+    </div>
+
+    <div id="panel-rates" role="tabpanel" aria-labelledby="tab-rates" hidden>
+      <section class="kpis" id="rate-kpis" aria-label="Headline rates"></section>
+
+      <section class="card" aria-labelledby="rates-h">
+        <h2 id="rates-h">Cash rate and what people pay and earn</h2>
+        <p class="note" id="rates-note"></p>
+        <div class="legend" id="rates-legend"></div>
+        <div class="chart" id="rates-chart"></div>
+      </section>
+
+      <section class="card" aria-labelledby="decisions-h">
+        <h2 id="decisions-h">Cash rate decisions</h2>
+        <p class="note" id="decisions-note"></p>
+        <div class="table-wrap"><table id="decisions-table"></table></div>
+      </section>
+
+      <section class="card" aria-labelledby="ratetable-h">
+        <h2 id="ratetable-h">All rates</h2>
+        <div class="table-wrap"><table id="rates-table"></table></div>
+      </section>
+
+      <section class="card notes" aria-labelledby="ratesabout-h">
+        <h2 id="ratesabout-h">What these rates are</h2>
+        <ul>
+          <li><strong>Cash rate target:</strong> the interest rate the Reserve Bank of Australia (RBA) sets for overnight loans between banks. Banks pass changes on to loan and deposit rates, usually within weeks.</li>
+          <li><strong>Home loan, credit card, business and deposit rates</strong> are the RBA's indicator rates: the advertised rates of the major banks, recorded at the end of each month. Many borrowers pay less than the standard variable rate after discounts.</li>
+          <li><strong>Government bond yields</strong> are the return investors get for lending to the Australian Government for 2 or 10 years. They move with expected future cash rates.</li>
+          <li><strong>Source:</strong> RBA statistical tables F1 (cash rate, daily), F5 (indicator lending rates), F4 (retail deposit rates) and F2.1 (government bond yields). Values are per cent a year, at the end of each month.</li>
+        </ul>
+      </section>
+    </div>
   </main>
   <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
   <dialog id="state-dialog" aria-labelledby="state-dialog-title">

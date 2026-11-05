@@ -7,6 +7,7 @@ A static web page that tracks public spending in each Australian state and terri
 - A map of the states and territories (ABS ASGS 2021 boundaries), shaded by total or per-person spending. Tap or click a state (or tab to it and press Enter) to open its full breakdown in a popup: rank, share of the national total, change on one and five years, latest quarter, population and each spending component.
 - Job openings by state from the ABS Job Vacancies survey: private and public sector, per 1,000 residents and change on a year earlier.
 - Find a job: keywords and state, linking to Workforce Australia, APSJobs and each state government's job board. Victoria's board opens the search directly; for the others the keywords are copied to paste in.
+- A **Cash rate & interest rates** tab (link: `#rates`): the RBA cash rate target and every decision, home loan, savings, term deposit, credit card, business and bond rates, monthly since 2010, with the change over 12 months.
 - How much each state owes: net and gross debt, debt per person, interest paid and five-year change (ABS Government Finance Statistics 2024-25).
 - State & local government spending compared with the taxes states and councils collect (ABS Taxation Revenue 2024-25), with each tax type.
 - Federal contracts of $1m or more in 2025-26 by the state of the supplier, by month, category and the reason given for limited tenders (AusTender).
@@ -61,6 +62,7 @@ Downloads generalised state boundaries from the ABS ASGS 2021 map service and wr
 pip install openpyxl
 python3 scripts/build-tax.py                      # data/state-tax.json, data/company-tax.json
 python3 scripts/build-debt.py                     # data/state-debt.json
+python3 scripts/build-rates.py                    # data/rates.json (RBA tables F1, F2.1, F4, F5)
 python3 scripts/fetch-austender.py 2025-07-01 2026-06-30 export.json   # AusTender OCDS API, no key
 python3 scripts/build-contracts.py export.json "<window label>"         # data/contracts.json
 ```

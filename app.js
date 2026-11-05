@@ -563,6 +563,141 @@ function renderJobSearch() {
   }
 }
 
+// ---------- cash rate and interest rates tab ----------
+
+const fmtRate = (v) => (Number.isFinite(v) ? `${v.toFixed(2)}%` : '–');
+const fmtPts = (v) => (Number.isFinite(v) ? `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2)} pts` : '–');
+const monthLabel = (m) => new Date(`${m}-01T00:00:00Z`).toLocaleString('en-AU', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const dayLabel = (d) => new Date(`${d}T00:00:00Z`).toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const latest = (sr) => { const m = Object.keys(sr.data).sort().pop(); return [m, sr.data[m]]; };
+const yearBefore = (sr, m) => sr.data[`${Number(m.slice(0, 4)) - 1}${m.slice(4)}`];
+
+// Multi-line chart with a crosshair tooltip and a direct label at the end of each line.
+function lineChart(box, months, series) {
+  const W = Math.max(320, box.clientWidth);
+  const H = Math.round(Math.min(380, Math.max(260, W * 0.45)));
+  const left = 44, right = W < 560 ? 64 : 150, top = 12, bottom = 28;
+  const all = series.flatMap((s) => s.values.filter(Number.isFinite));
+  const ticks = niceTicks(Math.max(...all), 5);
+  const max = ticks[ticks.length - 1];
+  const x = (i) => left + (i / (months.length - 1)) * (W - left - right);
+  const y = (v) => H - bottom - (v / max) * (H - top - bottom);
+  const svg = el('svg:svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': series.map((s) => s.label).join(', ') });
+  for (const t of ticks) {
+    svg.append(el('svg:line', { class: t === 0 ? 'baseline' : 'gridline', x1: left, x2: W - right, y1: y(t), y2: y(t) }));
+    svg.append(el('svg:text', { x: left - 6, y: y(t) + 4, 'text-anchor': 'end' }, `${t}%`));
+  }
+  const step = W < 560 ? 4 : 2;
+  months.forEach((m, i) => {
+    if (m.endsWith('-01') && Number(m.slice(0, 4)) % step === 0) svg.append(el('svg:text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }, m.slice(0, 4)));
+  });
+  const path = (vals) => vals.map((v, i) => (Number.isFinite(v) ? `${i && Number.isFinite(vals[i - 1]) ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}` : '')).join('');
+  // End labels, nudged apart so they never overlap.
+  const ends = series.map((s) => {
+    const i = s.values.map(Number.isFinite).lastIndexOf(true);
+    return { s, i, y: y(s.values[i]) };
+  }).sort((a, b) => a.y - b.y);
+  ends.forEach((e, k) => { if (k && e.y - ends[k - 1].ly < 14) e.ly = ends[k - 1].ly + 14; else e.ly = e.y; });
+  for (const s of series) {
+    svg.append(el('svg:path', { d: path(s.values), fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round' }));
+  }
+  for (const e of ends) {
+    svg.append(el('svg:circle', { cx: x(e.i), cy: e.y, r: 4, fill: e.s.color, stroke: 'var(--surface)', 'stroke-width': 2 }));
+    svg.append(el('svg:text', { class: 'lbl', x: x(e.i) + 8, y: e.ly + 4 }, W < 560 ? fmtRate(e.s.values[e.i]) : `${e.s.short} ${fmtRate(e.s.values[e.i])}`));
+  }
+  const cross = el('svg:line', { class: 'crosshair', y1: top, y2: H - bottom, visibility: 'hidden' });
+  svg.append(cross);
+  const overlay = el('svg:rect', { x: left, y: top, width: W - left - right, height: H - top - bottom, fill: 'transparent' });
+  const show = (e) => {
+    const r = svg.getBoundingClientRect();
+    const px = (e.clientX - r.left) * (W / r.width);
+    const i = Math.max(0, Math.min(months.length - 1, Math.round(((px - left) / (W - left - right)) * (months.length - 1))));
+    cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i)); cross.setAttribute('visibility', 'visible');
+    showTip(e, monthLabel(months[i]), series.map((s) => ({ color: s.color, label: s.label, value: fmtRate(s.values[i]) })));
+  };
+  overlay.addEventListener('pointermove', show);
+  overlay.addEventListener('pointerdown', show);
+  overlay.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') { cross.setAttribute('visibility', 'hidden'); hideTip(); } });
+  svg.append(overlay);
+  box.replaceChildren(svg);
+}
+
+function renderRates() {
+  const S = state.rates.series;
+  const cash = S.FIRMMCRTD;
+  const [, now] = latest(cash);
+  const changes = cash.changes;
+  const lastChange = changes[changes.length - 1];
+  const prevRate = changes.length > 1 ? changes[changes.length - 2][1] : NaN;
+  const asAt = cash.asAt;
+  const yearAgoDay = `${Number(asAt.slice(0, 4)) - 1}${asAt.slice(4)}`;
+  const yearAgo = [...changes].reverse().find(([d]) => d <= yearAgoDay)?.[1];
+  const [mm, svr] = latest(S.FILRHLBVS);
+  const tile = (label, value, delta, note) => {
+    const card = el('div', { class: 'kpi' });
+    const d = el('div', { class: 'delta' });
+    if (delta) d.append(el('strong', {}, delta), ` ${note}`); // neutral: a rise is bad for borrowers, good for savers
+    else d.textContent = note;
+    card.append(el('div', { class: 'label' }, label), el('div', { class: 'value' }, value), d);
+    return card;
+  };
+  $('rate-kpis').replaceChildren(
+    tile('Cash rate target', fmtRate(now), fmtPts(lastChange[1] - prevRate), `on ${dayLabel(lastChange[0])}`),
+    tile('Change over 12 months', fmtPts(now - yearAgo), null, `from ${fmtRate(yearAgo)} on ${dayLabel(yearAgoDay)}`),
+    tile('Standard variable home loan', fmtRate(svr), null, `banks' advertised rate, ${monthLabel(mm)}`),
+    tile('Online savings account', fmtRate(latest(S.FRDIRSAO10K)[1]), null, `${fmtRate(latest(S.FRDIRBTD10K1Y)[1])} for a 1-year term deposit`),
+  );
+
+  const lines = [
+    { id: 'FIRMMCRTD', short: 'Cash rate', color: 'var(--s1)' },
+    { id: 'FILRHLBVD', short: 'Home loan', color: 'var(--s2)' },
+    { id: 'FRDIRSAO10K', short: 'Savings', color: 'var(--s3)' },
+    { id: 'FCMYGBAG10', short: '10-yr bond', color: 'var(--s4)' },
+  ];
+  const months = [...new Set(lines.flatMap((l) => Object.keys(S[l.id].data)))].sort();
+  const series = lines.map((l) => ({ ...l, label: S[l.id].label, values: months.map((m) => S[l.id].data[m] ?? NaN) }));
+  lineChart($('rates-chart'), months, series);
+  legendOf('rates-legend', series);
+  const [, disc] = latest(S.FILRHLBVD);
+  const [, sav] = latest(S.FRDIRSAO10K);
+  const starts = series.map((x) => `${x.short.toLowerCase()} from ${Object.keys(S[x.id].data).sort()[0].slice(0, 4)}`).join(', ');
+  $('rates-note').textContent = `End of each month (${starts}). The cash rate is ${fmtRate(now)}. `
+    + `A discounted variable home loan costs ${fmtRate(disc)}, ${Math.abs(disc - now).toFixed(2)} percentage points ${disc >= now ? 'above' : 'below'} the cash rate, `
+    + `while an online savings account pays ${fmtRate(sav)}. Hover or tap the chart to read any month.`;
+
+  const recent = changes.slice(-12).reverse();
+  simpleTable('decisions-table', ['Date', 'New cash rate', 'Change'],
+    recent.map(([d, v], i) => {
+      const before = changes[changes.length - 1 - i - 1]?.[1];
+      return [dayLabel(d), fmtRate(v), fmtPts(v - before)];
+    }));
+  const since = changes.filter(([d]) => d >= `${Number(asAt.slice(0, 4)) - 1}${asAt.slice(4)}`).length;
+  $('decisions-note').textContent = `The RBA has changed the cash rate ${since} time${since === 1 ? '' : 's'} in the past 12 months. The latest ${recent.length} decisions, newest first.`;
+
+  simpleTable('rates-table', ['Rate', 'Latest', 'Month', 'A year earlier', 'Change'],
+    Object.values(S).map((sr) => {
+      const [m, v] = latest(sr);
+      const before = yearBefore(sr, m);
+      return [sr.label, fmtRate(v), monthLabel(m), fmtRate(before), fmtPts(v - before)];
+    }));
+}
+
+function showTab(name, focus) {
+  for (const t of ['states', 'rates']) {
+    const on = t === name;
+    $(`tab-${t}`).setAttribute('aria-selected', String(on));
+    $(`tab-${t}`).tabIndex = on ? 0 : -1;
+    $(`panel-${t}`).hidden = !on;
+  }
+  if (focus) $(`tab-${name}`).focus();
+  if ((location.hash === '#rates') !== (name === 'rates')) {
+    try { history.replaceState(null, '', name === 'rates' ? '#rates' : location.pathname + location.search); } catch {}
+  }
+  hideTip();
+  if (name === 'rates' && state.rates) renderRates(); // needs the panel visible to measure its width
+  else render();
+}
+
 function renderDebt() {
   const states = state.debt.states;
   const dy = Object.keys(states['1']).sort().pop();
@@ -912,7 +1047,10 @@ function setupControls(years) {
     });
   }
   let pending;
-  window.addEventListener('resize', () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(render); });
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(pending);
+    pending = requestAnimationFrame(() => ($('panel-rates').hidden ? render() : renderRates()));
+  });
 }
 
 (async function main() {
@@ -945,10 +1083,22 @@ function setupControls(years) {
     $(id).hidden = !state[key];
   }
   setupControls(years);
+  state.rates = await loadJson('rates');
+  $('tab-rates').hidden = !state.rates;
+  for (const t of ['states', 'rates']) $(`tab-${t}`).addEventListener('click', () => showTab(t));
+  $('tab-states').parentElement.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const next = document.activeElement.id === 'tab-states' ? 'rates' : 'states';
+    showTab(next, true);
+  });
   $('job-state').replaceChildren(el('option', { value: 'all' }, 'All of Australia'), ...STATES.map((x) => el('option', { value: x.code }, x.name)));
   $('job-form').addEventListener('submit', (e) => { e.preventDefault(); renderJobSearch(); });
   $('job-state').addEventListener('change', renderJobSearch);
   renderJobSearch();
   renderLegend();
   render();
+  const fromHash = () => showTab(location.hash === '#rates' && state.rates ? 'rates' : 'states');
+  if (location.hash === '#rates') fromHash();
+  window.addEventListener('hashchange', fromHash);
+  setTimeout(() => document.body.classList.add('settled'), 600);
 })();
